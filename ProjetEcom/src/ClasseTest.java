@@ -1,4 +1,8 @@
 
 public class ClasseTest {
-	int uyhfyu;
+
+	
+	
+	
+	int bidule;
 }
