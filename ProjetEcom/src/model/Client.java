@@ -1,5 +1,15 @@
 package model;
 
+import java.util.Collection;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Client {
 
 	private long id;
@@ -8,6 +18,9 @@ public class Client {
 	private String motDePasse;
 	private String nom;
 	private String prenom;
+	private Collection<Avis> lesAvis;
+	private Collection<Commande> lesCommandes;
+	private Collection<MoyenPaiement> lesMoyenDePaiement;
 	
 	public Client(){}
 	
@@ -20,7 +33,9 @@ public class Client {
 		this.prenom = prenom;
 	}
 	
-	
+	@Id 
+	@GeneratedValue(strategy=GenerationType.AUTO) 
+	@Column(name="CLIENT_ID")
 	public long getId() {
 		return id;
 	}
@@ -78,6 +93,31 @@ public class Client {
 
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
+	}
+	@OneToMany(mappedBy="leClient") 
+	public Collection<Avis> getLesAvis() {
+		return lesAvis;
+	}
+	
+	public void setLesAvis(Collection<Avis> lesAvis) {
+		this.lesAvis = lesAvis;
+	}
+
+	public Collection<Commande> getLesCommandes() {
+		return lesCommandes;
+	}
+	@OneToMany(mappedBy="leClient")
+	public void setLesCommandes(Collection<Commande> lesCommandes) {
+		this.lesCommandes = lesCommandes;
+	}
+
+	public Collection<MoyenPaiement> getLesMoyenDePaiement() {
+		return lesMoyenDePaiement;
+	}
+	
+	@OneToMany(mappedBy="leClient")
+	public void setLesMoyenDePaiement(Collection<MoyenPaiement> lesMoyenDePaiement) {
+		this.lesMoyenDePaiement = lesMoyenDePaiement;
 	}
 	
 }

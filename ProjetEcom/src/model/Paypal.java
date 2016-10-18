@@ -1,5 +1,8 @@
 package model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Paypal extends MoyenPaiement {
 
 	private String adressePaypal;
