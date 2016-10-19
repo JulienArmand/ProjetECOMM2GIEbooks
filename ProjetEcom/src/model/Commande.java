@@ -3,7 +3,9 @@ package model;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,12 +16,23 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Commande {
-
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+	
 	private Date dateDeVente;
 	private int prixTotal;
+	
+	
+	@OneToMany(mappedBy="laCommande", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Vente> lesVentes;
+	
+	@ManyToOne 
+	@JoinColumn(name="Client_id") 
 	private Client leClient;
+	
+	@ManyToOne 
+	@JoinColumn(name="MoyenPaiement_id") 
 	private MoyenPaiement leMoyenDePaiement;
 	
 	
@@ -32,8 +45,7 @@ public class Commande {
 		this.prixTotal = prixTotal;
 	}
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	
 	public long getId() {
 		return id;
 	}
@@ -62,7 +74,7 @@ public class Commande {
 		return lesVentes;
 	}
 	
-	@OneToMany(mappedBy="laCommande")
+
 	public void setLesVentes(Collection<Vente> lesVentes) {
 		this.lesVentes = lesVentes;
 	}
@@ -71,8 +83,7 @@ public class Commande {
 		return leClient;
 	}
 	
-	@ManyToOne 
-	@JoinColumn(name="Client_id") 
+
 	public void setLeClient(Client leClient) {
 		this.leClient = leClient;
 	}
@@ -81,8 +92,7 @@ public class Commande {
 		return leMoyenDePaiement;
 	}
 
-	@ManyToOne 
-	@JoinColumn(name="MoyenPaiement_id") 
+
 	public void setLeMoyenDePaiement(MoyenPaiement moyenDePaiement) {
 		this.leMoyenDePaiement = moyenDePaiement;
 	}

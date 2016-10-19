@@ -2,7 +2,9 @@ package model;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,17 +15,23 @@ import javax.persistence.OneToMany;
 @Entity
 public abstract class MoyenPaiement {
 
+	@Id 
+	@GeneratedValue(strategy=GenerationType.AUTO) 
 	private long id;
 	private boolean actif;
+	
+	@OneToMany(mappedBy="leMoyenDePaiement",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Commande> lesCommandes;
+	
+	@ManyToOne 
+	@JoinColumn(name="Client_id")
 	private Client leClient;
 	
 	public MoyenPaiement() {
 		this.actif = true;
 	}
 
-	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO) 
+
 	public long getId() {
 		return id;
 	}
@@ -44,7 +52,7 @@ public abstract class MoyenPaiement {
 		return lesCommandes;
 	}
 
-	@OneToMany(mappedBy="leMoyenDePaiement")
+
 	public void setLesCommandes(Collection<Commande> lesCommandes) {
 		this.lesCommandes = lesCommandes;
 	}
@@ -53,8 +61,7 @@ public abstract class MoyenPaiement {
 		return leClient;
 	}
 	
-	@ManyToOne 
-	@JoinColumn(name="Client_id") 
+ 
 	public void setLeClient(Client leClient) {
 		this.leClient = leClient;
 	}

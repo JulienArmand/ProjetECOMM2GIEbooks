@@ -15,18 +15,21 @@
 
 
 	<servlet>
-
 		<servlet-name>InitBD</servlet-name>
-
 		<servlet-class>servlets.InitBDServlet</servlet-class>
-
 	</servlet>
 	<servlet-mapping>
-
 		<servlet-name>InitBD</servlet-name>
-
 		<url-pattern>/InitBD</url-pattern>
-
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>getFirstLivre</servlet-name>
+		<servlet-class>servlets.GetOneBookServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getFirstLivre</servlet-name>
+		<url-pattern>/First</url-pattern>
 	</servlet-mapping>
 
 </web-app>

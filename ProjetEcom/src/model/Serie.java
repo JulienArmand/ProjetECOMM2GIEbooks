@@ -2,7 +2,9 @@ package model;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,8 +13,12 @@ import javax.persistence.OneToMany;
 @Entity
 public class Serie {
 
+	@Id 
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	private String nom;
+	
+	@OneToMany(mappedBy="laSerie",cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
 	private Collection<Livre> lesLivres;
 	
 	public Serie() {
@@ -23,8 +29,7 @@ public class Serie {
 		this.nom = nom;
 	}
 
-	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO) 
+ 
 	public long getId() {
 		return id;
 	}
@@ -45,7 +50,7 @@ public class Serie {
 		return lesLivres;
 	}
 	
-	@OneToMany(mappedBy="laSerie") 
+
 	public void setLesLivres(Collection<Livre> lesLivres) {
 		this.lesLivres = lesLivres;
 	}

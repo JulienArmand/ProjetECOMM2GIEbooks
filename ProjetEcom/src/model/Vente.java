@@ -10,10 +10,18 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Vente {
 
-	
+	@Id 
+	@GeneratedValue(strategy=GenerationType.AUTO) 
 	private long id;
 	private int prix;
+	
+	
+	@ManyToOne 
+	@JoinColumn(name="Livre_id")
     private Livre livre;
+	
+	@ManyToOne 
+	@JoinColumn(name="Commande_id") 
     private Commande laCommande;
     
 	public Vente() {
@@ -24,8 +32,7 @@ public class Vente {
 		this.prix = prix;
 	}
 
-	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO) 
+
 	public long getId() {
 		return id;
 	}
@@ -45,9 +52,7 @@ public class Vente {
 	public Livre getLivre() {
 		return livre;
 	}
-	
-	@ManyToOne 
-	@JoinColumn(name="Livre_id") 
+ 
 	public void setLivre(Livre livre) {
 		this.livre = livre;
 	}
@@ -56,8 +61,7 @@ public class Vente {
 		return laCommande;
 	}
 
-	@ManyToOne 
-	@JoinColumn(name="Commande_id") 
+
 	public void setLaCommande(Commande laCommande) {
 		this.laCommande = laCommande;
 	}

@@ -10,6 +10,8 @@ import javax.persistence.Id;
 @Entity
 public class Promotion {
 
+	@Id 
+	@GeneratedValue(strategy=GenerationType.AUTO) 
 	private long id;
 	private int tauxReduc;
 	private Date dateDebut;
@@ -26,8 +28,7 @@ public class Promotion {
 		this.dateFin = dateFin;
 	}
 
-	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO) 
+
 	public long getId() {
 		return id;
 	}

@@ -2,8 +2,10 @@ package model;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,14 +14,24 @@ import javax.persistence.OneToMany;
 @Entity
 public class Client {
 
+	@Id 
+	@GeneratedValue(strategy=GenerationType.AUTO) 
+	@Column(name="CLIENT_ID")
 	private long id;
 	private String pseudo;
 	private String email;
 	private String motDePasse;
 	private String nom;
 	private String prenom;
+	
+
+	@OneToMany(mappedBy="leClient",cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
 	private Collection<Avis> lesAvis;
+
+	@OneToMany(mappedBy="leClient",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Commande> lesCommandes;
+
+	@OneToMany(mappedBy="leClient",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<MoyenPaiement> lesMoyenDePaiement;
 	
 	public Client(){}
@@ -33,9 +45,7 @@ public class Client {
 		this.prenom = prenom;
 	}
 	
-	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO) 
-	@Column(name="CLIENT_ID")
+
 	public long getId() {
 		return id;
 	}
@@ -94,7 +104,6 @@ public class Client {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	@OneToMany(mappedBy="leClient") 
 	public Collection<Avis> getLesAvis() {
 		return lesAvis;
 	}
@@ -106,7 +115,6 @@ public class Client {
 	public Collection<Commande> getLesCommandes() {
 		return lesCommandes;
 	}
-	@OneToMany(mappedBy="leClient")
 	public void setLesCommandes(Collection<Commande> lesCommandes) {
 		this.lesCommandes = lesCommandes;
 	}
@@ -115,7 +123,6 @@ public class Client {
 		return lesMoyenDePaiement;
 	}
 	
-	@OneToMany(mappedBy="leClient")
 	public void setLesMoyenDePaiement(Collection<MoyenPaiement> lesMoyenDePaiement) {
 		this.lesMoyenDePaiement = lesMoyenDePaiement;
 	}

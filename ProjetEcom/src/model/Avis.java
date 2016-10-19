@@ -13,11 +13,20 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Avis {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="AVIS_ID")
 	private long id;
 	private int note;
 	private String commentaire;
 	private Date dateDePublication;
+	
+	@ManyToOne 
+	@JoinColumn(name="LIVRE_ID") 
 	private Livre leLivre;
+	
+	@ManyToOne
+	@JoinColumn(name="CLIENT_ID") 
 	private Client leClient;
 
 	public Avis() {
@@ -30,9 +39,7 @@ public class Avis {
 		this.dateDePublication = dateDePublication;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "AVIS_ID")
+
 	public long getId() {
 		return id;
 	}
@@ -65,22 +72,21 @@ public class Avis {
 		this.dateDePublication = dateDePublication;
 	}
 
-	public Livre getLeLivre() {
+	public Livre getleLivre() {
 		return leLivre;
 	}
 	
-	@ManyToOne 
-	@JoinColumn(name="LIVRE_ID") 
-	public void setLeLivre(Livre leLivre) {
+
+	public void setLivre(Livre leLivre) {
 		this.leLivre = leLivre;
 	}
+
 
 	public Client getLeClient() {
 		return leClient;
 	}
 
-	@ManyToOne 
-	@JoinColumn(name="CLIENT_ID") 
+
 	public void setLeClient(Client leClient) {
 		this.leClient = leClient;
 	}

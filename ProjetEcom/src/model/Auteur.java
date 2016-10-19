@@ -10,13 +10,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.CascadeType;;
 
 @Entity
 public class Auteur {
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "AUTEUR_ID")
 	private long id;
+	
 	private String nom;
 	private String prenom;
+	
+	@ManyToMany
+	@JoinTable(name = "LIVRE_AUTEUR_LIEN", joinColumns = @JoinColumn(name = "CI_AUTEUR_ID", referencedColumnName = "AUTEUR_ID"), 
+				inverseJoinColumns = @JoinColumn(name = "CI_LIVRE_ID", referencedColumnName = "LIVRE_ID"))
 	private Collection<Livre> lesLivres;
 
 	public Auteur() {
@@ -28,9 +36,7 @@ public class Auteur {
 		this.prenom = prenom;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "AUTEUR_ID")
+
 	public long getId() {
 		return id;
 	}
@@ -59,9 +65,7 @@ public class Auteur {
 		return lesLivres;
 	}
 	
-	@ManyToMany
-	@JoinTable(name = "LIVRE_AUTEUR_LIEN", joinColumns = @JoinColumn(name = "CI_AUTEUR_ID", referencedColumnName = "AUTEUR_ID"), 
-				inverseJoinColumns = @JoinColumn(name = "CI_LIVRE_ID", referencedColumnName = "LIVRE_ID"))
+	
 	public void setLesLivres(Collection<Livre> lesLivres) {
 		this.lesLivres = lesLivres;
 	}
