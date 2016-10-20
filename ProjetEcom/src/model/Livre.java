@@ -31,6 +31,7 @@ public class Livre {
 	private int prix;
 	private String langue;
 	private String langueOrigine;
+	private String nomCouverture;
 	
 	@ManyToMany(mappedBy="lesLivres",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Auteur> lesAuteurs;
@@ -188,6 +189,14 @@ public class Livre {
  
 	public void setLesVentes(Collection<Vente> lesVentes) {
 		this.lesVentes = lesVentes;
+	}
+
+	public String getNomCouverture() {
+		return nomCouverture;
+	}
+
+	public void setNomCouverture(String nomCouverture) {
+		this.nomCouverture = nomCouverture;
 	}
 	
 }

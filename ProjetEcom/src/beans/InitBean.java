@@ -28,7 +28,7 @@ public class InitBean {
 		Editeur e1 = new Editeur("EditeurBidon");
 		Genre g1 = new Genre("Romans");
 		Livre l1 = new Livre("Les misérables", "isbn0325465", Date.from(Instant.now()), 124, 9, "Francais", "Francais");
-
+		l1.setNomCouverture("defaultCouv.png");
 
 		
 		l1.setEditeur(e1);
