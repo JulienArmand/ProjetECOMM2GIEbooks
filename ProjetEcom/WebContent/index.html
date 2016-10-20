@@ -31,13 +31,13 @@
         <section ng-controller="contentCtrl">
 		<div class="movies-container" id="top">
 		    <ul class="movies">
-		        <li class="col-lg-2" ng-repeat="livre in livres">
+		        <li class="col-lg-1 hidden-xs" ng-repeat="livre in livres">
 		            <div class="row">
 		                <div>
-		                    <img ng-src="images/{{livre.nomCouverture}}" width="200" height="300"/>
+		                    <img ng-src="images/{{livre.nomCouverture}}" class="img-responsive"/>
 		                </div>
 		                <div>
-		                    <a ng-href="#/info/{{livre.id}}"><h4 ng-bind="livre.titre"></h4></a>
+		                    <a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
 		                    <div>
 		                        <span ng-bind="livre.prix"></span> €
 		                    </div>
