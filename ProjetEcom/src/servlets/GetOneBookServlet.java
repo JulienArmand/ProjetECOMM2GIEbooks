@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import beans.InitBean;
-import model.Auteur;
 import model.Livre;
 
 public class GetOneBookServlet extends HttpServlet {
@@ -23,27 +25,14 @@ public class GetOneBookServlet extends HttpServlet {
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		GsonBuilder gb = new GsonBuilder();
+		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
 
-		Livre l = myBean.getFirstLivre();
-		response.getWriter().println("<html><body>");
-		response.getWriter().println("<p>"+l.getIsbn()+"</p>");
-		response.getWriter().println("<p>"+l.getLangue()+"</p>");
-		response.getWriter().println("<p>"+l.getLangueOrigine()+"</p>");
-		response.getWriter().println("<p>"+l.getNbPages()+"</p>");
-		response.getWriter().println("<p>"+l.getTitle()+"</p>");
-		response.getWriter().println("<p>"+l.getDateDePublication()+"</p>");
-		response.getWriter().println("<p>"+l.getEditeur().getNom()+"</p>");
-		if(l.getLesAuteurs() != null)
-			response.getWriter().println("<p>"+l.getLesAuteurs().size()+" auteurs</p>");
-		else
-			response.getWriter().println("<p>pas d'auteurs</p>");
+		List<Livre> l = myBean.getLesLivres();
+		String str = js.toJson(l);
 		
-		List<Auteur> l2 = myBean.getLesAuteurs();
-		for(int i=0; i< l2.size();i++){
-			response.getWriter().println("<p>"+l2.get(i).getNom()+"</p>");
-			
-		}
-		response.getWriter().println("</body></html>");
+		response.setContentType("application/json");
+		response.getWriter().println(str);
 	}
 
 }

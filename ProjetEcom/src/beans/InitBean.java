@@ -21,35 +21,102 @@ public class InitBean {
 	@PersistenceContext(unitName = "Database-unit") 
 	private EntityManager em; 
 	public void init() {
+		suppressionBD();
 		
+		Auteur hugo = creerAuteur("Hugo", "Victor");
+		Auteur herge = creerAuteur("Hergé", "");
 		
-		//Collection<Auteur> al1 = new LinkedList<>();
-		Auteur a1 = new Auteur("Hugo", "Victor");
-		Editeur e1 = new Editeur("EditeurBidon");
-		Genre g1 = new Genre("Romans");
-		Livre l1 = new Livre("Les misérables", "isbn0325465", Date.from(Instant.now()), 124, 9, "Francais", "Francais");
-		l1.setNomCouverture("defaultCouv.png");
+		Editeur galimard = creerEditeur("Galimard");
+		Editeur casterman = creerEditeur("Casterman");
+		
+		Genre romans = creerGenre("Romans");
+		Genre bd = creerGenre("BD");
+		
+		Livre miserable = creerLivre("Les misérables", hugo, galimard, romans, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
+		Livre claudeGueux = creerLivre("Claude Gueux", hugo, galimard, romans, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
+		Livre notreDame = creerLivre("Notre-Dame de Paris", hugo, galimard, romans, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
+		Livre tintinCongo = creerLivre("Tintin au Congo", herge, casterman, bd, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
+		Livre lotusBleu = creerLivre("Tintin : le lotus bleu", herge, casterman, bd, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
+		Livre cigarePharaon = creerLivre("Tintin : les cigares du pharaon", herge, casterman, bd, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");	
 
-		
-		l1.setEditeur(e1);
-		l1.getLesAuteurs().add(a1);
-		a1.getLesLivres().add(l1);
-		//l1.setLesAuteurs(al1);
-		l1.setGenre(g1);
-		
-
-		em.persist(a1);
-		em.persist(e1);
-		em.persist(g1);
-		//em.persist(al1);
-		em.persist(l1);
 	}
 	
-	public Livre getFirstLivre(){
+	public Livre creerLivre(String nom, Auteur a, Editeur e, Genre g, String isbn, int nbpage, int prix, String langue, String langueOriginale, String couverture){
+		
+		Livre l = new Livre(nom, isbn, Date.from(Instant.now()), nbpage, prix, langue, langueOriginale);
+		l.setNomCouverture(couverture);
+
+		
+		l.setEditeur(e);
+		l.getLesAuteurs().add(a);
+		a.getLesLivres().add(l);
+		e.getLesLivres().add(l);
+		l.setGenre(g);
+		g.getLesLivres().add(l);
+		
+		em.persist(l);
+		return l;
+	}
+	
+	public void suppressionBD(){
+		
+		Query q1 = em.createNativeQuery("DELETE FROM Genre");
+	    Query q2 = em.createNativeQuery("DELETE FROM Vente");
+	    Query q3 = em.createNativeQuery("DELETE FROM Editeur");
+	    Query q4 = em.createNativeQuery("DELETE FROM Livre");
+		Query q5 = em.createNativeQuery("DELETE FROM Serie");
+	    Query q6 = em.createNativeQuery("DELETE FROM Avis");
+	    Query q7 = em.createNativeQuery("DELETE FROM Promotion");
+	    Query q8 = em.createNativeQuery("DELETE FROM LIVRE_AUTEUR_LIEN");
+		Query q9 = em.createNativeQuery("DELETE FROM Auteur");
+	    Query q10 = em.createNativeQuery("DELETE FROM Commande");
+	    Query q11 = em.createNativeQuery("DELETE FROM MoyenPaiement");
+	    Query q12 = em.createNativeQuery("DELETE FROM Client");
+		//Query q13 = em.createNativeQuery("DELETE FROM CarteBancaire");
+	    //Query q14 = em.createNativeQuery("DELETE FROM Paypal");
+
+	    q1.executeUpdate();
+	    q2.executeUpdate();
+	    q3.executeUpdate();
+	    q4.executeUpdate();
+	    q5.executeUpdate();
+	    q6.executeUpdate();
+	    q7.executeUpdate();
+	    q8.executeUpdate();
+	    q9.executeUpdate();
+	    q10.executeUpdate();
+	    q11.executeUpdate();
+	    q12.executeUpdate();
+	    //q13.executeUpdate();
+	    //q14.executeUpdate();
+
+
+	}
+	
+	public Auteur creerAuteur(String nom, String prenom){
+		Auteur a = new Auteur(nom, prenom);
+		em.persist(a);
+		
+		return a;
+	}
+	
+	public Editeur creerEditeur(String nom){
+		Editeur e = new Editeur(nom);
+		em.persist(e);
+		return e;
+	}
+	
+	public Genre creerGenre(String nom){
+		Genre g = new Genre(nom);
+		em.persist(g);
+		return g;
+	}
+	
+	public List<Livre> getLesLivres(){
 		
 		Query q = em.createQuery("select OBJECT(b) from Livre b"); 
 		List<Livre> list = (List<Livre>) q.getResultList(); 
-		return list.get(list.size()-1);
+		return list;
 	}
 	
 	public List<Auteur> getLesAuteurs(){

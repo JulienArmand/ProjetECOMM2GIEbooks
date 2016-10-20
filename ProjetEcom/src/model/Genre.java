@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -22,10 +23,12 @@ public class Genre {
 	private Collection<Livre> lesLivres;
 	
 	public Genre() {
+		super();
+		this.lesLivres = new LinkedList<>();
 	}
 
 	public Genre(String nom) {
-		super();
+		this();
 		this.nom = nom;
 	}
 

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,12 +11,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 public class Editeur {
 	
 	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO) 
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Expose 
 	private long id;
+	@Expose
 	private String nom;
 	
 	@OneToMany(mappedBy="editeur",cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
@@ -23,10 +28,12 @@ public class Editeur {
 	
 	
 	public Editeur() {
+		super();
+		this.lesLivres = new LinkedList<>();
 	}
 
 	public Editeur(String nom) {
-		super();
+		this();
 		this.nom = nom;
 	}
 

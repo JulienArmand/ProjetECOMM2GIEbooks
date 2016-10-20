@@ -12,14 +12,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 public class Auteur {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "AUTEUR_ID")
+	@Expose
 	private long id;
 	
+	@Expose
 	private String nom;
+	@Expose
 	private String prenom;
 	
 	@ManyToMany
@@ -72,5 +77,4 @@ public class Auteur {
 	public void setLesLivres(Collection<Livre> lesLivres) {
 		this.lesLivres = lesLivres;
 	}
-
 }

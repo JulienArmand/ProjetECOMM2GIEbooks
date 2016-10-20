@@ -7,14 +7,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 public class Vente {
 
 	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO) 
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Expose
 	private long id;
-	private int prix;
-	
+	@Expose
+	private int prix;	
 	
 	@ManyToOne 
 	@JoinColumn(name="Livre_id")

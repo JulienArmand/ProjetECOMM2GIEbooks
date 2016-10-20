@@ -1,3 +1,4 @@
+
 package model;
 
 import java.util.Collection;
@@ -16,27 +17,38 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 public class Livre {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="LIVRE_ID")
+	@Expose
 	private long id;
 	
-	private String title;
+	@Expose
+	private String titre;
+	@Expose
 	private String isbn;
+	@Expose
 	private Date dateDePublication;
+	@Expose
 	private int nbPages;
+	@Expose
 	private int prix;
+	@Expose
 	private String langue;
+	@Expose
 	private String langueOrigine;
+	@Expose
 	private String nomCouverture;
 	
 	@ManyToMany(mappedBy="lesLivres",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Auteur> lesAuteurs;
 
-	@OneToMany(mappedBy="leLivre",cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
+	@OneToMany(mappedBy="leLivre",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Avis> lesAvis;
 
 	@OneToMany(mappedBy="livre",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -51,7 +63,7 @@ public class Livre {
 	private Editeur editeur;
 	
 	@ManyToOne 
-	@JoinColumn(name="Serie_id") 
+	@JoinColumn(name="Serie_id")
 	private Serie laSerie;
 	
 	public Livre() {
@@ -64,7 +76,7 @@ public class Livre {
 	public Livre(String title, String isbn, Date dateDePublication, int nbPages, int prix, String langue,
 			String langueOrigine) {
 		this();
-		this.title = title;
+		this.titre = title;
 		this.isbn = isbn;
 		this.dateDePublication = dateDePublication;
 		this.nbPages = nbPages;
@@ -83,12 +95,12 @@ public class Livre {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getTitre() {
+		return titre;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setTitre(String titre) {
+		this.titre = titre;
 	}
 
 	public String getIsbn() {
@@ -198,5 +210,13 @@ public class Livre {
 	public void setNomCouverture(String nomCouverture) {
 		this.nomCouverture = nomCouverture;
 	}
+	
+	/*public String toJson(){
+		
+		String json = "{ \"livre\" : ";
+		json+= "{titre: " + this.title + "}"
+		
+		return "";
+	}*/
 	
 }

@@ -13,14 +13,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.google.gson.annotations.Expose;
+
 
 @Entity
 public class Commande {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Expose
 	private long id;
-	
+	@Expose
 	private Date dateDeVente;
+	@Expose
 	private int prixTotal;
 	
 	
