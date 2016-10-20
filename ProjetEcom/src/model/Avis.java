@@ -10,16 +10,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 public class Avis {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "AVIS_ID")
+	@Expose
 	private long id;
-	
+	@Expose
 	private int note;
+	@Expose
 	private String commentaire;
+	@Expose
 	private Date dateDePublication;
 	
 	@ManyToOne 

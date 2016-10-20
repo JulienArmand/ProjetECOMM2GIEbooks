@@ -19,30 +19,34 @@
         <script src="js/main.js" ></script>
     </head>
     <body>
-
-        <section ng-controller="headerCtrl">
+<div class="panel panel-default">
+        <section class="container panel-body" ng-controller="headerCtrl">
             <h1>HEADER</h1>
         </section>
-
+</div>
         <section ng-controller="menuCtrl">
             <h1>MENU</h1>
         </section>
 
         <section ng-controller="contentCtrl">
-		<div class="movies-container" id="top">
-		    <ul class="movies">
-		        <li class="col-lg-1 hidden-xs" ng-repeat="livre in livres">
+         <h2>Promotions</h2>
+		<div id="top">
+		    <ul>
+		        <li class="col-lg-1 hidden-xs list-unstyled" ng-repeat="livre in livres">
 		            <div class="row">
 		                <div>
 		                    <img ng-src="images/{{livre.nomCouverture}}" class="img-responsive"/>
 		                </div>
 		                <div>
 		                    <a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
+		                    <h6>{{livre.lesAuteurs[0].prenom}} {{livre.lesAuteurs[0].nom}}</h6>
 		                    <div>
-		                        <span ng-bind="livre.prix"></span> €
+								<span>{{calculeMoyenne(livre.lesAvis)}}</span>
+								<i class="a-star-small-4-5"></i>
 		                    </div>
-		                    <div class="row">
-								<!-- NOTES -->
+		                    <div>
+		                        <span style="text-decoration:line-through; color: red;">{{livre.prix}} €</span>
+		                        <span style="color: green;">{{livre.prix-(livre.prix*livre.promotion.tauxReduc)/100}} €</span>
 		                    </div>
 		                </div>
 		            </div>
@@ -51,8 +55,8 @@
 		</div>
         </section>
         
-        <section ng-controller="footerCtrl">
+        <footer ng-controller="footerCtrl">
             <h1>FOOTER</h1>
-        </section>
+        </footer>
     </body>
 </html>
