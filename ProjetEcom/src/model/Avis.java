@@ -15,18 +15,19 @@ public class Avis {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="AVIS_ID")
+	@Column(name = "AVIS_ID")
 	private long id;
+	
 	private int note;
 	private String commentaire;
 	private Date dateDePublication;
 	
 	@ManyToOne 
-	@JoinColumn(name="LIVRE_ID") 
+	@JoinColumn(name="CLIENT_ID") 
 	private Livre leLivre;
 	
-	@ManyToOne
-	@JoinColumn(name="CLIENT_ID") 
+	@ManyToOne 
+	@JoinColumn(name="LIVRE_ID") 
 	private Client leClient;
 
 	public Avis() {
@@ -72,15 +73,14 @@ public class Avis {
 		this.dateDePublication = dateDePublication;
 	}
 
-	public Livre getleLivre() {
+	public Livre getLeLivre() {
 		return leLivre;
 	}
 	
-
-	public void setLivre(Livre leLivre) {
+	
+	public void setLeLivre(Livre leLivre) {
 		this.leLivre = leLivre;
 	}
-
 
 	public Client getLeClient() {
 		return leClient;

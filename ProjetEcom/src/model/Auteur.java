@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,10 +29,12 @@ public class Auteur {
 	private Collection<Livre> lesLivres;
 
 	public Auteur() {
+		super();
+		this.lesLivres = new LinkedList<>();
 	}
 
 	public Auteur(String nom, String prenom) {
-		super();
+		this();
 		this.nom = nom;
 		this.prenom = prenom;
 	}
@@ -61,6 +64,7 @@ public class Auteur {
 		this.prenom = prenom;
 	}
 
+	
 	public Collection<Livre> getLesLivres() {
 		return lesLivres;
 	}

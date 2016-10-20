@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.InitBean;
+import model.Auteur;
 import model.Livre;
 
 public class GetOneBookServlet extends HttpServlet {
@@ -32,9 +34,16 @@ public class GetOneBookServlet extends HttpServlet {
 		response.getWriter().println("<p>"+l.getDateDePublication()+"</p>");
 		response.getWriter().println("<p>"+l.getEditeur().getNom()+"</p>");
 		if(l.getLesAuteurs() != null)
-			response.getWriter().println("<p>"+l.getLesAuteurs().size()+" auteurs</p></body></html>");
+			response.getWriter().println("<p>"+l.getLesAuteurs().size()+" auteurs</p>");
 		else
-			response.getWriter().println("<p>pas d'auteurs</p></body></html>");
+			response.getWriter().println("<p>pas d'auteurs</p>");
+		
+		List<Auteur> l2 = myBean.getLesAuteurs();
+		for(int i=0; i< l2.size();i++){
+			response.getWriter().println("<p>"+l2.get(i).getNom()+"</p>");
+			
+		}
+		response.getWriter().println("</body></html>");
 	}
 
 }
