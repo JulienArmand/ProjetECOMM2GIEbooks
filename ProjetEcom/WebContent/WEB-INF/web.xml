@@ -31,5 +31,20 @@
 		<servlet-name>getFirstLivre</servlet-name>
 		<url-pattern>/First</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>InscriptionClient</servlet-name>
+		<servlet-class>servlets.InscriptionClientServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InscriptionClient</servlet-name>
+		<url-pattern>/InscriptionClient</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	
+	
+	
 
 </web-app>
