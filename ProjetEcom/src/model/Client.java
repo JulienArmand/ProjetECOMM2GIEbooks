@@ -11,17 +11,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 public class Client {
 
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO) 
+	@Expose
 	@Column(name="CLIENT_ID")
 	private long id;
+	@Expose
 	private String pseudo;
+	@Expose
 	private String email;
+	@Expose
 	private String motDePasse;
+	@Expose
 	private String nom;
+	@Expose
 	private String prenom;
 	
 
