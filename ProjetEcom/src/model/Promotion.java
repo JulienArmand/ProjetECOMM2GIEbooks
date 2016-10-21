@@ -6,16 +6,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.google.gson.annotations.Expose;
 
 @Entity
 public class Promotion {
 
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO) 
+	@Expose
 	private long id;
+	@Expose
 	private int tauxReduc;
+	@Temporal(TemporalType.DATE)
+	@Expose
 	private Date dateDebut;
+	@Temporal(TemporalType.DATE)
+	@Expose
 	private Date dateFin;
+	@OneToOne
+	private Livre livre;
 	
 	public Promotion() {
 		// TODO Auto-generated constructor stub
@@ -59,6 +72,14 @@ public class Promotion {
 
 	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
+	}
+
+	public Livre getLivre() {
+		return livre;
+	}
+
+	public void setLivre(Livre livre) {
+		this.livre = livre;
 	}
 	
 	
