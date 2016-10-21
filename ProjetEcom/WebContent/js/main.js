@@ -1,5 +1,6 @@
-var app = angular.module("app", ['ui.bootstrap']);
+var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'routeAppControllers']);
 
+var routeAppControllers = angular.module('routeAppControllers', []);
 
 app.controller("headerCtrl", function($scope){
 
@@ -22,7 +23,7 @@ app.controller("menuCtrl", function($scope){
 });
 
 
-app.controller("contentCtrl", function($scope, $http){
+routeAppControllers.controller("contentCtrl", function($scope, $http){
     $http.get("First").then(function(response) {
         $scope.livres = response.data;
         
@@ -38,6 +39,30 @@ app.controller("contentCtrl", function($scope, $http){
     	
     }
 });
+
+routeAppControllers.controller('corpAcceuilCtrl', ['$scope',
+    function($scope){
+        $scope.message = "Bienvenue sur la page d'accueil";
+    }
+]);
+
+app.config(['$routeProvider',
+    function($routeProvider) { 
+        
+        // Système de routage
+        $routeProvider
+        .when('/corpAcceuil', {
+            templateUrl: 'partials/corpAcceuil.html',
+            controller: 'corpAcceuilCtrl'
+        })
+        .otherwise({
+            templateUrl: 'partials/corpAcceuil.html',
+            controller: 'contentCtrl'
+        })
+    }
+]);
+
+
 
 
 

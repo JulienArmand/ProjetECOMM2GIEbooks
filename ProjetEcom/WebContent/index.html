@@ -11,6 +11,7 @@
         <script src="js/libs/angular.min.js" ></script>
         <script src="js/libs/bootstrap.js" ></script>
         <script src="js/libs/ui-bootstrap-tpls-2.1.4.js" ></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
         
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -18,44 +19,25 @@
         <!-- Controller js -->
         <script src="js/main.js" ></script>
     </head>
-    <body>
-<div class="panel panel-default">
-        <section class="container panel-body" ng-controller="headerCtrl">
-            <h1>HEADER</h1>
-        </section>
-</div>
-        <section ng-controller="menuCtrl">
-            <h1>MENU</h1>
-        </section>
-
-        <section ng-controller="contentCtrl">
-         <h2>Promotions</h2>
-		<div id="top">
-		    <ul>
-		        <li class="col-lg-1 hidden-xs list-unstyled" ng-repeat="livre in livres">
-		            <div class="row">
-		                <div>
-		                    <img ng-src="images/{{livre.nomCouverture}}" class="img-responsive"/>
-		                </div>
-		                <div>
-		                    <a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
-		                    <h6>{{livre.lesAuteurs[0].prenom}} {{livre.lesAuteurs[0].nom}}</h6>
-		                    <div>
-								<span>{{calculeMoyenne(livre.lesAvis)}}</span>
-								<i class="a-star-small-4-5"></i>
-		                    </div>
-		                    <div>
-		                        <span style="text-decoration:line-through; color: red;">{{livre.prix}} €</span>
-		                        <span style="color: green;">{{livre.prix-(livre.prix*livre.promotion.tauxReduc)/100}} €</span>
-		                    </div>
-		                </div>
-		            </div>
-		        </li>
-		    </ul>
-		</div>
+    <body class="container-fluid panel-body">
+        <section class="container-fluid panel-body" ng-controller="headerCtrl" style ='background-color: #daefec; margin-bottom:15px;'>
+            <span style="float: left;">
+                <img ng-src="images/logoEcom2.png" class="img-responsive" height="14%" width="14%" />
+            </span>
         </section>
         
-        <footer ng-controller="footerCtrl">
+     	<div class="container-fluid">
+     		<div class="row">
+		        <section ng-controller="menuCtrl" class="col-lg-2" style ='background-color: #a7dbef; margin-bottom:15px;'>
+		            <h1>MENU</h1>
+		        </section>
+				
+		        <section class="col-lg-10" style ='background-color: #d2ecf7; margin-bottom:15px;' ng-view>
+		        </section>
+		     </div>
+        </div>
+        
+        <footer ng-controller="footerCtrl" class="container-fluid panel-body" style ='background-color: #daefec;'>
             <h1>FOOTER</h1>
         </footer>
     </body>
