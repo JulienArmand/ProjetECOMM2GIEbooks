@@ -16,6 +16,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.google.gson.annotations.Expose;
 
@@ -33,6 +36,7 @@ public class Livre {
 	@Expose
 	private String isbn;
 	@Expose
+	@Temporal(TemporalType.DATE) 
 	private Date dateDePublication;
 	@Expose
 	private int nbPages;
@@ -45,9 +49,15 @@ public class Livre {
 	@Expose
 	private String nomCouverture;
 	
+	@Expose
+	@OneToOne
+	private Promotion promotion;
+	
+	@Expose
 	@ManyToMany(mappedBy="lesLivres",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Auteur> lesAuteurs;
 
+	@Expose
 	@OneToMany(mappedBy="leLivre",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Avis> lesAvis;
 
@@ -209,6 +219,14 @@ public class Livre {
 
 	public void setNomCouverture(String nomCouverture) {
 		this.nomCouverture = nomCouverture;
+	}
+
+	public Promotion getPromotion() {
+		return promotion;
+	}
+
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
 	}
 	
 	/*public String toJson(){

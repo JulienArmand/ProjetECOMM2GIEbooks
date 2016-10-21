@@ -9,9 +9,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import model.Auteur;
+import model.Avis;
 import model.Editeur;
 import model.Genre;
 import model.Livre;
+import model.Promotion;
 
 @Stateless
 public class InitBean {
@@ -39,6 +41,14 @@ public class InitBean {
 		Livre lotusBleu = creerLivre("Tintin : le lotus bleu", herge, casterman, bd, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
 		Livre cigarePharaon = creerLivre("Tintin : les cigares du pharaon", herge, casterman, bd, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");	
 
+		creerPromotion(miserable);
+		creerPromotion(claudeGueux);
+		creerPromotion(notreDame);
+		creerPromotion(tintinCongo);
+		
+		creerAvis(tintinCongo, 3);
+		creerAvis(tintinCongo, 4);
+		creerAvis(tintinCongo, 1);
 	}
 	
 	public Livre creerLivre(String nom, Auteur a, Editeur e, Genre g, String isbn, int nbpage, int prix, String langue, String langueOriginale, String couverture){
@@ -56,6 +66,34 @@ public class InitBean {
 		
 		em.persist(l);
 		return l;
+	}
+	
+	public Avis creerAvis(Livre l, int note){
+		
+		Date datePublication = Date.from(Instant.now());
+		
+		Avis a = new Avis(note, "commentaire", datePublication);
+
+		a.setLeLivre(l);
+		l.getLesAvis().add(a);
+		
+		em.persist(a);
+		return a;
+	}
+	
+	public Promotion creerPromotion(Livre l){
+		
+		Date debut = Date.from(Instant.now());
+		Date fin = Date.from(Instant.now());
+		fin.setYear(2017);
+		
+		Promotion p = new Promotion(20, debut, fin);
+
+		p.setLivre(l);
+		l.setPromotion(p);
+		
+		em.persist(p);
+		return p;
 	}
 	
 	public void suppressionBD(){
@@ -115,6 +153,13 @@ public class InitBean {
 	public List<Livre> getLesLivres(){
 		
 		Query q = em.createQuery("select OBJECT(b) from Livre b"); 
+		List<Livre> list = (List<Livre>) q.getResultList(); 
+		return list;
+	}
+	
+	public List<Livre> getLesLivresEnPromotion(){
+		
+		Query q = em.createQuery("select p.livre from Promotion p where p.dateFin > CURRENT_DATE"); 
 		List<Livre> list = (List<Livre>) q.getResultList(); 
 		return list;
 	}

@@ -28,7 +28,7 @@ public class GetOneBookServlet extends HttpServlet {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
 
-		List<Livre> l = myBean.getLesLivres();
+		List<Livre> l = myBean.getLesLivresEnPromotion();
 		String str = js.toJson(l);
 		
 		response.setContentType("application/json");
