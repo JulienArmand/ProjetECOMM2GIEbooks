@@ -41,10 +41,13 @@
 		<url-pattern>/InscriptionClient</url-pattern>
 	</servlet-mapping>
 	
-	
-	
-	
-	
-	
+	<servlet>
+		<servlet-name>GestionPanier</servlet-name>
+		<servlet-class>servlets.GestionPanierServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GestionPanier</servlet-name>
+		<url-pattern>/GestionPanier</url-pattern>
+	</servlet-mapping>
 
 </web-app>

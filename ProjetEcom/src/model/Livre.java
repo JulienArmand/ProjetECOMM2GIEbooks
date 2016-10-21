@@ -41,7 +41,7 @@ public class Livre {
 	@Expose
 	private int nbPages;
 	@Expose
-	private int prix;
+	private float prix;
 	@Expose
 	private String langue;
 	@Expose
@@ -137,7 +137,7 @@ public class Livre {
 		this.nbPages = nbPages;
 	}
 
-	public int getPrix() {
+	public float getPrix() {
 		return prix;
 	}
 
