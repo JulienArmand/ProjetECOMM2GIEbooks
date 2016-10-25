@@ -83,7 +83,7 @@ public class Livre {
 		this.lesVentes = new LinkedList<Vente>();
 	}
 
-	public Livre(String title, String isbn, Date dateDePublication, int nbPages, int prix, String langue,
+	public Livre(String title, String isbn, Date dateDePublication, int nbPages, float prix, String langue,
 			String langueOrigine) {
 		this();
 		this.titre = title;
@@ -141,7 +141,7 @@ public class Livre {
 		return prix;
 	}
 
-	public void setPrix(int prix) {
+	public void setPrix(float prix) {
 		this.prix = prix;
 	}
 

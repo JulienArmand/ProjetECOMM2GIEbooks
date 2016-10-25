@@ -34,12 +34,12 @@ public class InitBean {
 		Genre romans = creerGenre("Romans");
 		Genre bd = creerGenre("BD");
 		
-		Livre miserable = creerLivre("Les misérables", hugo, galimard, romans, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
-		Livre claudeGueux = creerLivre("Claude Gueux", hugo, galimard, romans, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
-		Livre notreDame = creerLivre("Notre-Dame de Paris", hugo, galimard, romans, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
-		Livre tintinCongo = creerLivre("Tintin au Congo", herge, casterman, bd, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
-		Livre lotusBleu = creerLivre("Tintin : le lotus bleu", herge, casterman, bd, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
-		Livre cigarePharaon = creerLivre("Tintin : les cigares du pharaon", herge, casterman, bd, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");	
+		Livre miserable = creerLivre("Les misérables", hugo, galimard, romans, "isbn0325465", 124, 9.99, "Francais", "Francais", "defaultCouv.png");
+		Livre claudeGueux = creerLivre("Claude Gueux", hugo, galimard, romans, "isbn0325465", 124, 9.42, "Francais", "Francais", "defaultCouv.png");
+		Livre notreDame = creerLivre("Notre-Dame de Paris", hugo, galimard, romans, "isbn0325465", 124, 9.12, "Francais", "Francais", "defaultCouv.png");
+		Livre tintinCongo = creerLivre("Tintin au Congo", herge, casterman, bd, "isbn0325465", 124, 9.99, "Francais", "Francais", "defaultCouv.png");
+		Livre lotusBleu = creerLivre("Tintin : le lotus bleu", herge, casterman, bd, "isbn0325465", 124, 9.98, "Francais", "Francais", "defaultCouv.png");
+		Livre cigarePharaon = creerLivre("Tintin : les cigares du pharaon", herge, casterman, bd, "isbn0325465", 124, 9.01, "Francais", "Francais", "defaultCouv.png");	
 
 		creerPromotion(miserable);
 		creerPromotion(claudeGueux);
@@ -51,9 +51,9 @@ public class InitBean {
 		creerAvis(tintinCongo, 1);
 	}
 	
-	public Livre creerLivre(String nom, Auteur a, Editeur e, Genre g, String isbn, int nbpage, int prix, String langue, String langueOriginale, String couverture){
+	public Livre creerLivre(String nom, Auteur a, Editeur e, Genre g, String isbn, int nbpage, double prix, String langue, String langueOriginale, String couverture){
 		
-		Livre l = new Livre(nom, isbn, Date.from(Instant.now()), nbpage, prix, langue, langueOriginale);
+		Livre l = new Livre(nom, isbn, Date.from(Instant.now()), nbpage, (float)prix, langue, langueOriginale);
 		l.setNomCouverture(couverture);
 
 		
