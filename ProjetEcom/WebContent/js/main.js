@@ -22,6 +22,13 @@ app.controller("menuCtrl", function($scope){
 
 });
 
+routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http){
+    $http.get("LivreAvecId", {params:{"id": $routeParams.id}}).then(function(response) {
+    	$scope.livre = response.data;
+    });   
+
+});
+
 
 routeAppControllers.controller("contentCtrl", function($scope, $http){
     $http.get("First").then(function(response) {
@@ -59,6 +66,10 @@ app.config(['$routeProvider',
             templateUrl: 'partials/corpAcceuil.html',
             controller: 'contentCtrl'
         })
+        .when('/info/:id', {
+        templateUrl: 'partials/info.html',
+        controller: 'infoCtrl'
+      })
     }
 ]);
 

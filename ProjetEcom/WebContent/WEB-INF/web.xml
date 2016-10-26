@@ -33,6 +33,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>ChercherLivreAvecId</servlet-name>
+		<servlet-class>servlets.ChercherLivreAvecIdServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChercherLivreAvecId</servlet-name>
+		<url-pattern>/LivreAvecId</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>InscriptionClient</servlet-name>
 		<servlet-class>servlets.InscriptionClientServlet</servlet-class>
 	</servlet>

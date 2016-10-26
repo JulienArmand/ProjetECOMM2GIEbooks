@@ -150,6 +150,12 @@ public class InitBean {
 		return g;
 	}
 	
+	public Livre getLivreAvecId(int id) {
+		Query q = em.createQuery("select OBJECT(b) from Livre b where b.id = " + id);
+		Livre livre = (Livre) q.getSingleResult(); 
+		return livre;
+	}
+	
 	public List<Livre> getLesLivres(){
 		
 		Query q = em.createQuery("select OBJECT(b) from Livre b"); 
