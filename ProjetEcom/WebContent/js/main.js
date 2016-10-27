@@ -45,9 +45,14 @@ routeAppControllers.controller("contentCtrl", function($scope, $http){
     	return (moy / list.length).toFixed(1) + "/5 ("+list.length+")";
     	
     }
+    
+    $scope.calculPromo = function(prix, promo) {
+    	return roundPrix(prix-(prix*promo)/100);
+    }
+    
 });
 
-routeAppControllers.controller('corpAcceuilCtrl', ['$scope',
+routeAppControllers.controller('corpsAccueilCtrl', ['$scope',
     function($scope){
         $scope.message = "Bienvenue sur la page d'accueil";
     }
@@ -58,12 +63,12 @@ app.config(['$routeProvider',
         
         // Système de routage
         $routeProvider
-        .when('/corpAcceuil', {
-            templateUrl: 'partials/corpAcceuil.html',
-            controller: 'corpAcceuilCtrl'
+        .when('/corpsAccueil', {
+            templateUrl: 'partials/corpsAccueil.html',
+            controller: 'corpsAcceuilCtrl'
         })
         .otherwise({
-            templateUrl: 'partials/corpAcceuil.html',
+            templateUrl: 'partials/corpsAccueil.html',
             controller: 'contentCtrl'
         })
         .when('/info/:id', {
@@ -73,6 +78,9 @@ app.config(['$routeProvider',
     }
 ]);
 
+function roundPrix(prix){
+	return Math.round(prix*100)/100
+}
 
 
 

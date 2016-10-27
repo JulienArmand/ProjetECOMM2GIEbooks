@@ -16,7 +16,7 @@
 		                    </div>
 		                    <div>
 		                        <span style="text-decoration:line-through; color: red;">{{livre.prix}} €</span>
-                      <span style="color: green;">{{livre.prix-(livre.prix*livre.promotion.tauxReduc)/100}} €</span>
+                      <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
                   </div>
               </div>
           </div>

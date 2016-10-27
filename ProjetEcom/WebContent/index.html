@@ -15,15 +15,13 @@
         
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
         
         <!-- Controller js -->
         <script src="js/main.js" ></script>
     </head>
     <body class="container-fluid panel-body">
-        <section class="container-fluid panel-body" ng-controller="headerCtrl" style ='background-color: #daefec; margin-bottom:15px;'>
-            <span style="float: left;">
-                <img ng-src="images/logoEcom2.png" class="img-responsive" height="14%" width="14%" />
-            </span>
+        <section class="container-fluid panel-body" ng-controller="headerCtrl" style ='background-color: #daefec; margin-bottom:15px;' ng-include="'partials/header.html'" >
         </section>
         
      	<div class="container-fluid">
@@ -37,8 +35,8 @@
 		     </div>
         </div>
         
-        <footer ng-controller="footerCtrl" class="container-fluid panel-body" style ='background-color: #daefec;'>
-            <h1>FOOTER</h1>
+        <footer ng-controller="footerCtrl" class="container-fluid panel-body" style ='background-color: #daefec;' ng-include="'partials/footer.html'">
+            
         </footer>
     </body>
 </html>
