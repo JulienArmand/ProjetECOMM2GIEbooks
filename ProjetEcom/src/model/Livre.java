@@ -68,7 +68,8 @@ public class Livre {
 	@JoinColumn(name="Genre_id") 
 	private Genre genre;
 	
-	@ManyToOne 
+	@ManyToOne
+	@Expose
 	@JoinColumn(name="Editeur_id")
 	private Editeur editeur;
 	

@@ -3,6 +3,7 @@ package beans;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -53,7 +54,11 @@ public class InitBean {
 	
 	public Livre creerLivre(String nom, Auteur a, Editeur e, Genre g, String isbn, int nbpage, double prix, String langue, String langueOriginale, String couverture){
 		
-		Livre l = new Livre(nom, isbn, Date.from(Instant.now()), nbpage, (float)prix, langue, langueOriginale);
+		Date d = Date.from(Instant.now());
+		Random r = new Random();
+		d.setMonth(r.nextInt(12)+1);
+		
+		Livre l = new Livre(nom, isbn, d, nbpage, (float)prix, langue, langueOriginale);
 		l.setNomCouverture(couverture);
 
 		
