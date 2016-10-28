@@ -15,12 +15,12 @@ import com.google.gson.GsonBuilder;
 import beans.InitBean;
 import model.Livre;
 
-public class GetOneBookServlet extends HttpServlet {
+public class GetLivreEnPromoServlet extends HttpServlet {
 
 	@EJB()  //ou @EJB si nom par défaut 
 	private InitBean myBean; 
 	
-	public GetOneBookServlet() {
+	public GetLivreEnPromoServlet() {
 		// TODO Auto-generated constructor stub
 	}
 	

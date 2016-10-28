@@ -31,7 +31,7 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http)
 
 
 routeAppControllers.controller("contentCtrl", function($scope, $http){
-    $http.get("First").then(function(response) {
+    $http.get("Promos").then(function(response) {
         $scope.livres = response.data;
         
     });
