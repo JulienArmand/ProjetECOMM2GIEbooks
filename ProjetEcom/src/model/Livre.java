@@ -48,7 +48,8 @@ public class Livre {
 	private String langueOrigine;
 	@Expose
 	private String nomCouverture;
-	
+	@Expose
+	private String resume;
 	@Expose
 	@OneToOne
 	private Promotion promotion;
@@ -228,6 +229,14 @@ public class Livre {
 
 	public void setPromotion(Promotion promotion) {
 		this.promotion = promotion;
+	}
+
+	public String getResume() {
+		return resume;
+	}
+
+	public void setResume(String resume) {
+		this.resume = resume;
 	}
 	
 	/*public String toJson(){

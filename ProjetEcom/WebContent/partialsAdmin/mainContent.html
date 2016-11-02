@@ -1,0 +1,25 @@
+
+	<div id="top">
+		<table class="table">
+		<thead style="font-weight:bold;"><tr>
+		<td>Titre</td><td>editeur</td><td>date de publication</td><td>isbn</td><td>nb pages</td><td>prix(€)</td><td>langue</td>
+		<td>langue originale</td><td>URL couv</td><td>Taux de reduction</td><td>Auteur(s)</td>
+		</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="livre in livres">
+				<td>{{livre.titre}}</td>
+				<td>{{livre.editeur.nom}}</td>
+				<td>{{livre.dateDePublication}}</td>
+				<td>{{livre.isbn}}</td>
+				<td>{{livre.nbPages}}</td>
+				<td>{{livre.prix}}</td>
+				<td>{{livre.langue}}</td>
+				<td>{{livre.langueOrigine}}</td>
+				<td>{{livre.nomCouverture}}</td>
+				<td>{{livre.promotion.tauxReduc}}</td>
+				<td>{{livre.lesAuteurs}}</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>

@@ -58,5 +58,16 @@
 		<servlet-name>GestionPanier</servlet-name>
 		<url-pattern>/GestionPanier</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GetAuteurs</servlet-name>
+		<servlet-class>servlets.AuteursLivreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetAuteurs</servlet-name>
+		<url-pattern>/GetAuteurs</url-pattern>
+	</servlet-mapping>
+	
+	
 
 </web-app>

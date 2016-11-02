@@ -1,18 +1,49 @@
-<div>
+<div style="padding-top:5px;">
     <div class="row">
         <div class="col-lg-3 col-md-3">
-            <img class="img-responsive" ng-src="images/{{livre.nomCouverture}}" width="200" height="300"/>
+            <img class="img-responsive" ng-src="{{livre.nomCouverture}}" width="200" height="300"/>
         </div>
         <div class="col-lg-5 col-md-5">
         	<h2>{{livre.titre}}</h2>
         	<h4>De Hergé</h4>
-            <h5>{{livre.editeur.nom}} | Publié le {{livre.dateDePublication | date: 'yyyy'}}</h5>
+            <h5>{{livre.editeur.nom}} | Publié le {{livre.dateDePublication}}</h5>
             <h5>Résume</h5>
-            <h5>Les tintinophiles parlent du Soviets, la première aventure de Tintin, comme les anthropologues parlent de Lucy : avec tendresse, avec passion. Était-elle séduisante ? À l'époque, sans doute; mais aujourd'hui, après tant d'années ? Qu'importe, cette aventure est celle de la naissance de Tintin : elle n'est rien qu'en cela inestimable. Hergé lui-même (il a 22 ans) ne peut imaginer la destinée fabuleuse de ce héros qu'il créé au pied levé, le 10 janvier 1929, pour une publication en feuilleton hebdomadaire. L'album qui suit dès 1930 sera néanmoins tiré à 10 000 exemplaires, preuve du succès immédiat de la série. Mais il ne sera ni réimprimé ni adapté pour la couleur comme le furent les huit autres albums parus ensuite en noir et blanc. Devenu mythique après la guerre et introuvable, il ne fut plus disponible, hors divers tirages limités aux amateurs, avant sa réédition en 1981 en version Fac-similé. Le tirage anniversaire de janvier 99, sous même présentation et prix que les 22 albums en couleurs, est destiné à rendre accessible à tous les amoureux de Tintin ce numéro zéro, dans toute son authenticité et ses hésitations de l'époque.</h5>
+            <h5>Les tintinophiles parlent du Soviets, la première aventure de Tintin, comme les anthropologues parlent de Lucy : 
+            avec tendresse, avec passion. Était-elle séduisante ? À l'époque, sans doute; mais aujourd'hui, après tant 
+            d'années ? Qu'importe, cette aventure est celle de la naissance de Tintin : elle n'est rien qu'en cela inestimable.
+             Hergé lui-même (il a 22 ans) ne peut imaginer la destinée fabuleuse de ce héros qu'il créé au pied levé, le
+              10 janvier 1929, pour une publication en feuilleton hebdomadaire. </h5>
+             <a href="" data-toggle="collapse" data-target="#collapseResume">En lire plus <i class="glyphicon glyphicon-menu-down"></i></a>
+             <h5 id="collapseResume" class="collapse" aria-expanded="false" style="height: 0px;">L'album qui suit dès 1930 sera néanmoins tiré à
+               10 000 exemplaires, preuve du succès immédiat de la série. Mais il ne sera ni réimprimé ni adapté pour la
+                couleur comme le furent les huit autres albums parus ensuite en noir et blanc. Devenu mythique après la guerre
+                 et introuvable, il ne fut plus disponible, hors divers tirages limités aux amateurs, avant sa réédition en 
+                 1981 en version Fac-similé. Le tirage anniversaire de janvier 99, sous même présentation et prix que les 22 
+                 albums en couleurs, est destiné à rendre accessible à tous les amoureux de Tintin ce numéro zéro, dans toute 
+                 son authenticité et ses hésitations de l'époque.</h5>
+        	
+        	
         	<h4>{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</h4>
         </div>
-        <div class="col-lg-3 col-md-3">
-        	<h3>Fiche technique</h3>
+        <div class="col-lg-4 col-md-4">
+        	<div class="panel panel-default">
+		    <div class="panel-heading">
+		        <h3 class="panel-title">Fiche technique</h3>
+		    </div>
+		    <div class="panel-body">
+		    <table>
+		    	<tr><td>Titre </td><td> : </td><td> {{livre.titre}}</td></tr>
+		    	<tr><td>Auteur </td><td> : </td><td></td></tr>
+		    	<tr><td>Editeur </td><td> : </td><td> {{livre.editeur.nom}}</td></tr>
+		    	<tr><td>Collection </td><td> : </td><td></td></tr>
+		    	<tr><td>Date de publication </td><td> : </td><td> {{livre.dateDePublication}}</td></tr>
+		    	<tr><td>Nombre de pages </td><td> : </td><td> {{livre.nbPages}}</td></tr>
+		    	<tr><td>Cat�gories </td><td> : </td><td></td></tr>
+		    	<tr><td>Langue </td><td> : </td><td> {{livre.langue}}</td></tr>
+		    </table>
+		    
+		    </div>
+			</div>
         </div>
     </div>
     <h3>Avis</h3>

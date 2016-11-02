@@ -21,21 +21,21 @@
         <script src="js/main.js" ></script>
     </head>
     <body class="container-fluid panel-body">
-        <section class="container-fluid panel-body" ng-controller="headerCtrl" style ='background-color: #daefec; margin-bottom:15px;' ng-include="'partials/header.html'" >
+        <section class="container-fluid panel-body" ng-controller="headerCtrl" style ='border-radius:6px;background-color: #daefec; margin-bottom:15px;' ng-include="'partials/header.html'" >
         </section>
         
      	<div class="container-fluid">
      		<div class="row">
-		        <section ng-controller="menuCtrl" class="col-lg-2" style ='background-color: #a7dbef; margin-bottom:15px;'>
+		        <section ng-controller="menuCtrl" class="col-lg-2" style ='border-radius:6px;background-color: #a7dbef; margin-bottom:15px;'>
 		            <h1>MENU</h1>
 		        </section>
 				
-		        <section class="col-lg-10" style ='background-color: #d2ecf7; margin-bottom:15px;' ng-view>
+		        <section class="col-lg-10" style ='border-radius:6px;background-color: #d2ecf7; margin-bottom:15px;' ng-view>
 		        </section>
 		     </div>
         </div>
         
-        <footer ng-controller="footerCtrl" class="container-fluid panel-body" style ='background-color: #daefec;' ng-include="'partials/footer.html'">
+        <footer ng-controller="footerCtrl" class="container-fluid panel-body" style ='border-radius:6px;background-color: #daefec;' ng-include="'partials/footer.html'">
             
         </footer>
     </body>

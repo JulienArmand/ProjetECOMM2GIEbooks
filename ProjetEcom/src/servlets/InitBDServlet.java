@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -36,7 +37,15 @@ public class InitBDServlet extends HttpServlet {
 
 	private void initBD() {
 
-		myBean.init();
+		//myBean.init();
+		try {
+			myBean.InitBDFromCSV();
+		} catch (IOException | URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		/*try {
 			userTransaction.begin();
 			userTransaction.commit();

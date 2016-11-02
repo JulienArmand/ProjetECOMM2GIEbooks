@@ -2,10 +2,10 @@
         <h2>Promotions</h2>
 		<div id="top">
 		    <ul>
-		        <li class="col-lg-2 hidden-xs list-unstyled" ng-repeat="livre in livres">
+		        <li class="col-lg-2 hidden-xs list-unstyled" ng-repeat="livre in livres" style="margin-right:5px;">
 		            <div class="row">
 		                <div>
-		                    <img ng-src="images/{{livre.nomCouverture}}" class="img-responsive"/>
+		                    <img ng-src="{{livre.nomCouverture}}" class="img-responsive" style="max-height:10%"/>
 		                </div>
 		                <div>
 		                    <a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
