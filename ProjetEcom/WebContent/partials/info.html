@@ -1,11 +1,13 @@
 <div style="padding-top:5px;">
-    <div class="row">
-        <div class="col-lg-3 col-md-3">
+    <div class="row col-lg-12 col-md-12">
+        <div class="col-lg-2 col-md-2">
             <img class="img-responsive" ng-src="{{livre.nomCouverture}}" width="200" height="300"/>
         </div>
-        <div class="col-lg-5 col-md-5">
+        <div class="col-lg-6 col-md-6">
         	<h2>{{livre.titre}}</h2>
-        	<h4>De Hergé</h4>
+        	<ul class="list-inline">
+        	   <li ng-repeat="auteur in livre.lesAuteurs" >{{auteur.prenom}} {{auteur.nom}}</li>
+        	</ul>
             <h5>{{livre.editeur.nom}} | Publié le {{livre.dateDePublication}}</h5>
             <h5>Résume</h5>
             <h5>Les tintinophiles parlent du Soviets, la première aventure de Tintin, comme les anthropologues parlent de Lucy : 
@@ -23,7 +25,13 @@
                  son authenticité et ses hésitations de l'époque.</h5>
         	
         	
-        	<h4>{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</h4>
+        	<div ng-if="livre.promotion">
+				<span style="text-decoration:line-through; color: red;">{{livre.prix}} €</span>
+		        <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
+	        </div>
+	        <div ng-if="livre.promotion == undefined">
+				<span>{{livre.prix}} € </span>
+	        </div>
         </div>
         <div class="col-lg-4 col-md-4">
         	<div class="panel panel-default">
@@ -31,26 +39,45 @@
 		        <h3 class="panel-title">Fiche technique</h3>
 		    </div>
 		    <div class="panel-body">
-		    <table>
-		    	<tr><td>Titre </td><td> : </td><td> {{livre.titre}}</td></tr>
-		    	<tr><td>Auteur </td><td> : </td><td></td></tr>
-		    	<tr><td>Editeur </td><td> : </td><td> {{livre.editeur.nom}}</td></tr>
-		    	<tr><td>Collection </td><td> : </td><td></td></tr>
-		    	<tr><td>Date de publication </td><td> : </td><td> {{livre.dateDePublication}}</td></tr>
-		    	<tr><td>Nombre de pages </td><td> : </td><td> {{livre.nbPages}}</td></tr>
-		    	<tr><td>Cat�gories </td><td> : </td><td></td></tr>
-		    	<tr><td>Langue </td><td> : </td><td> {{livre.langue}}</td></tr>
+		    <table WIDTH=100% >
+		    	<tr><td>Nombre de pages </td><td > : </td><td ALIGN="right"> {{livre.nbPages}}</td></tr>
+		    	<tr><td>Genre </td><td>  : </td><td ALIGN="right">{{livre.genre.nom}}</td></tr>
+		    	<tr><td>Langue </td><td> : </td><td ALIGN="right"> {{livre.langue}}</td></tr>
+		    	<tr><td>Langue original </td><td> : </td><td ALIGN="right"> {{livre.langueOrigine}}</td></tr>
+		    	<tr><td>ISBN </td><td> : </td><td ALIGN="right"> {{livre.isbn}}</td></tr>
 		    </table>
 		    
 		    </div>
 			</div>
         </div>
     </div>
-    <h3>Avis</h3>
-    <div class="row">
-		<li class="list-unstyled" ng-repeat="avi in livre.lesAvis">
-			<div class="col-lg-10 col-md-10 row">
-				<h4>{{avi.note}}/5 de Machin {{avi.commentaire}}</h4>
+    <h3>Avis client</h3>
+    <div class="panel panel-default row col-lg-4 col-md-4" style="margin-left: 0.2%; text-align: center;">
+			<div class="panel-body">
+				<h4>Note moyenne :</h4>
+				<div ng-if="livre.lesAvis.length > 0">
+					<span style="font-size: 4em;">{{calculeMoyenne(livre.lesAvis)}}</span><span style="font-size: 2em;"> /5</span>
+		        </div>
+		        <div ng-if="livre.lesAvis.length == 0">
+					<h4>Soyez le premier � laisser un avis !</h4>
+		        </div>
+		        <div ng-if="livre.lesAvis.length > 0">
+					<span style="color: yellow; font-size: 2em;">x x </span> <span style="font-size: 2em;"> x x x</span>
+		        </div>
+		        <div ng-if="livre.lesAvis.length > 0">
+					<h4>{{nombreAvis(livre.lesAvis)}} avis</h4>
+		        </div>
+			</div>
+    </div>
+    <div>
+		<li class="list-unstyled row panel panel-default col-lg-12 col-md-12" ng-repeat="avi in livre.lesAvis" style="margin-left: 0.2%;">
+			<div class="col-lg-2 col-md-2">
+				<span style="color: yellow; font-size: 2em;">x x </span> <span style="font-size: 2em;"> x x x</span>
+				<h4>De Machin</h4>
+				<h5>{{formatDateDMY(avi.dateDePublication)}}</h5>
+			</div>
+			<div class="col-lg-10 col-md-10">
+				<h4><br>{{avi.commentaire}}</h4>
 			</div>
 		</li>
     </div>

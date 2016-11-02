@@ -66,6 +66,7 @@ public class Livre {
 	private Collection<Vente> lesVentes;
 	
 	@ManyToOne 
+	@Expose
 	@JoinColumn(name="Genre_id") 
 	private Genre genre;
 	

@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -15,12 +16,12 @@ import com.google.gson.GsonBuilder;
 import beans.InitBean;
 import model.Livre;
 
-public class ChercherLivreAvecIdServlet extends HttpServlet {
+public class GetLivresPlusVenduServlet extends HttpServlet {
 
 	@EJB()  //ou @EJB si nom par défaut 
 	private InitBean myBean; 
 	
-	public ChercherLivreAvecIdServlet() {
+	public GetLivresPlusVenduServlet() {
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -28,8 +29,7 @@ public class ChercherLivreAvecIdServlet extends HttpServlet {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
 
-		Livre l = myBean.getLivreAvecId(Integer.parseInt(request.getParameter("id")));
-		System.out.println(l.getLesAuteurs());
+		Set<Livre> l = myBean.getDixLivresLesPlusVendu();
 		String str = js.toJson(l);
 		
 		response.setContentType("application/json");

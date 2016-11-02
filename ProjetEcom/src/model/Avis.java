@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import com.google.gson.annotations.Expose;
@@ -20,10 +21,15 @@ public class Avis {
 	@Column(name = "AVIS_ID")
 	@Expose
 	private long id;
+	
 	@Expose
 	private int note;
+	
 	@Expose
+	@Lob
+	@Column(length = 10000)
 	private String commentaire;
+	
 	@Expose
 	private Date dateDePublication;
 	

@@ -1,4 +1,4 @@
-var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'routeAppControllers']);
+var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'routeAppControllers', 'slick']);
 
 var routeAppControllers = angular.module('routeAppControllers', []);
 
@@ -26,18 +26,34 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http)
     $http.get("LivreAvecId", {params:{"id": $routeParams.id}}).then(function(response) {
     	$scope.livre = response.data;
     	$scope.livre.dateDePublication = formatDateDMY($scope.livre.dateDePublication);
-    });   
-
+    });
+    $scope.formatDateDMY = formatDateDMY;
+    
     $scope.calculPromo = function(prix, promo) {
     	return roundPrix(prix-(prix*promo)/100);
     }
     
+    $scope.calculeMoyenne = function(list) {
+    	var moy = 0;
+    	for(i=0; i < list.length; i++)
+    		moy += list[i].note;
+    	return (moy / list.length).toFixed(1);
+    }
+    
+    $scope.nombreAvis = function(list) {
+    	return list.length;
+    }
 });
 
 
 routeAppControllers.controller("contentCtrl", function($scope, $http){
     $http.get("Promos").then(function(response) {
-        $scope.livres = response.data;
+        $scope.livresPromo = response.data;
+        
+    });
+    
+    $http.get("PlusVendu").then(function(response) {
+        $scope.livresPlusVendu = response.data;
         
     });
     
@@ -69,11 +85,11 @@ app.config(['$routeProvider',
         // Système de routage
         $routeProvider
         .when('/corpsAccueil', {
-            templateUrl: 'partials/corpsAccueil.html',
+            templateUrl: 'partials/corpsAccueil2.html',
             controller: 'corpsAcceuilCtrl'
         })
         .otherwise({
-            templateUrl: 'partials/corpsAccueil.html',
+            templateUrl: 'partials/corpsAccueil2.html',
             controller: 'contentCtrl'
         })
         .when('/info/:id', {
@@ -88,7 +104,7 @@ function roundPrix(prix){
 }
 
 function formatDateDMY(str){
-	var pattern = /(.{3})\s(\d{2}),\s(\d{4})(.*)/;
+	var pattern = /(.{3})\s(\d{1,2}),\s(\d{4})(.*)/;
 	var mois = str.replace(pattern, '$1');
 	var j = str.replace(pattern, '$2');
 	var an = str.replace(pattern, '$3');

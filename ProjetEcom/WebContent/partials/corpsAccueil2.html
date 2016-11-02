@@ -1,0 +1,45 @@
+<h2>Promotions</h2>
+<slick infinite="true" slides-to-show="5" dots="true" arrows="true" data="livresPromo" init-onload="true">
+	<div  ng-repeat="livre in livresPromo" >
+		<div>
+			<a ng-href="#/info/{{livre.id}}">
+			<img ng-src="{{livre.nomCouverture}}" class="img-responsive" />
+			</a>
+		</div>
+		<div>
+			<a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
+			<h6>{{livre.lesAuteurs[0].prenom}} {{livre.lesAuteurs[0].nom}}</h6>
+			<div>
+				<span>{{calculeMoyenne(livre.lesAvis)}}</span>
+				<i class="a-star-small-4-5"></i>
+			</div>
+			<div>
+				<span style="text-decoration:line-through; color: red;">{{livre.prix}} €</span>
+		        <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
+	        </div>
+       	</div>
+	</div>
+</slick>
+<h2>Livres les plus vendus</h2>
+<slick infinite="true" slides-to-show="5" dots="true" arrows="true" data="livresPlusVendu" init-onload="true">
+	<div  ng-repeat="livre in livresPlusVendu" >
+		<div>
+			<img ng-src="{{livre.nomCouverture}}" class="img-responsive" />
+		</div>
+		<div>
+			<a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
+			<h6>{{livre.lesAuteurs[0].prenom}} {{livre.lesAuteurs[0].nom}}</h6>
+			<div>
+				<span>{{calculeMoyenne(livre.lesAvis)}}</span>
+				<i class="a-star-small-4-5"></i>
+			</div>
+			<div ng-if="livre.promotion">
+				<span style="text-decoration:line-through; color: red;">{{livre.prix}} €</span>
+		        <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
+	        </div>
+	        <div ng-if="livre.promotion == undefined">
+				<span>{{livre.prix}} €</span>
+	        </div>
+       	</div>
+	</div>
+</slick>

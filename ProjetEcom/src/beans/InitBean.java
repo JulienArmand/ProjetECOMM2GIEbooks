@@ -10,10 +10,16 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,10 +28,12 @@ import javax.persistence.Query;
 
 import model.Auteur;
 import model.Avis;
+import model.Client;
 import model.Editeur;
 import model.Genre;
 import model.Livre;
 import model.Promotion;
+import model.Vente;
 
 @Stateless
 public class InitBean {
@@ -63,9 +71,9 @@ public class InitBean {
 		creerPromotion(notreDame,20);
 		creerPromotion(tintinCongo,20);
 
-		creerAvis(tintinCongo, 3);
-		creerAvis(tintinCongo, 4);
-		creerAvis(tintinCongo, 1);
+		creerAvis(tintinCongo, 3, "commentaire1");
+		creerAvis(tintinCongo, 4, "commentaire1");
+		creerAvis(tintinCongo, 1, "commentaire1");
 	}
 
 	public Livre creerLivre(String nom, Auteur a, Editeur e, Genre g, String isbn, int nbpage, double prix,
@@ -88,12 +96,29 @@ public class InitBean {
 		em.persist(l);
 		return l;
 	}
+	
+	public Client creerClient(String nom, String prenom) {
 
-	public Avis creerAvis(Livre l, int note) {
+		Client c = new Client("sevaeb","monemail", "monMDP", nom, prenom);
+
+		em.persist(c);
+		return c;
+	}
+	
+	public Vente creerVente(Livre l) {
+
+		Vente c = new Vente(9);
+		c.setLivre(l);
+
+		em.persist(c);
+		return c;
+	}
+
+	public Avis creerAvis(Livre l, int note, String commentaire) {
 
 		Date datePublication = Date.from(Instant.now());
 
-		Avis a = new Avis(note, "commentaire", datePublication);
+		Avis a = new Avis(note, commentaire, datePublication);
 
 		a.setLeLivre(l);
 		l.getLesAvis().add(a);
@@ -222,25 +247,39 @@ public class InitBean {
 		List<Auteur> list = (List<Auteur>) q.getResultList();
 		return list;
 	}
+	
+	public Set<Livre> getDixLivresLesPlusVendu() {
 
+		Query q = em.createQuery("SELECT v.livre, count(v.livre) as truc FROM Vente v GROUP BY v.livre order by truc Desc");
+		q.setMaxResults(10);
+		List<Object[]> list = q.getResultList();
+		
+		Map<Livre, Long> resultMap = new HashMap<Livre, Long>(list.size());
+		for (Object[] result : list)
+		  resultMap.put((Livre)result[0], (Long)result[1]);
+
+		return resultMap.keySet();
+	}
+	
 	public void InitBDFromCSV() throws IOException, URISyntaxException {
 		suppressionBD();
 		
 		URL url = new URL("http://localhost:8080/exemplesBD.csv");
 		InputStream is = url.openStream();
 		
+		ArrayList<Livre> livres = new ArrayList<Livre>();
 		//File f = new File(new URI("file:///localhost:8080/exemplesBD.csv"));
 		BufferedReader r = new BufferedReader(new InputStreamReader(is));
 		r.readLine();
 		String line = r.readLine();
 		while (line != null && !line.equals("")) {
-			
+			System.out.println(line);
 			//String data[] = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 			String data[] = line.split(";", -1);
 			//System.out.println(line);
 			String titre = data[0];
 			if (titre.equals(""))
-				continue;
+				break;
 			String isbn = data[1];
 			String date = data[2];
 			String nbPages = data[3];
@@ -255,9 +294,17 @@ public class InitBean {
 			String promo = data[12];
 			String collection = data[13];
 			Livre livre = new Livre();
+			livres.add(livre);
 			livre.setTitre(titre);
 			livre.setIsbn(isbn);
-			livre.setDateDePublication(new Date(date));
+			String pattern = "dd/MM/yyyy";
+		    SimpleDateFormat format = new SimpleDateFormat(pattern);
+			try {
+				livre.setDateDePublication(format.parse(date));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			livre.setNbPages(Integer.parseInt(nbPages));
 			livre.setPrix(Float.parseFloat(prix));
 			livre.setLangue(langue);
@@ -282,11 +329,36 @@ public class InitBean {
 					continue;
 				livre.getLesAuteurs().add(x);
 			}
-			
+			em.persist(livre);
 			line = r.readLine();
 		}
 
 		r.close();
+		creerVente(livres.get(0));
+		creerVente(livres.get(1));
+		creerVente(livres.get(0));
+		creerVente(livres.get(1));
+		creerVente(livres.get(0));
+		creerVente(livres.get(1));
+		
+		
+		creerVente(livres.get(2));
+		creerVente(livres.get(2));
+		creerVente(livres.get(2));
+		creerVente(livres.get(2));
+		
+		String commentaire = "Je referme \"le premier miracle\" de Gilles Legardinier. \nHabitué aux comédies loufoques qui m'ont valu des fous rires mémorables, l'auteur revient un peu à ses premières amours, le thriller.Ce nouveau roman, savant mélange d'aventure et d'humour, nous prouve que Gilles a plus d'une corde à son arc.L'impression d'être dans un Indiana Jones, parcourant le monde avec les personnages, découvrant des pans entiers de l'histoire de l'humanité, tentant de percer le secret du premier miracle. Un vrai régal.Le tout bourré d'humour.Les personnages sont touchants, attachants, à la personnalité riche, que l'on découvre au fil des pages. Avec une jolie histoire d'amour à la clé.Un bon moment de lecture.";
+		creerAvis(livres.get(2), 0, commentaire);
+		creerAvis(livres.get(2), 1, commentaire);
+		creerAvis(livres.get(2), 1, commentaire);
+		
+		creerAvis(livres.get(0), 4, commentaire);
+		creerAvis(livres.get(0), 4, commentaire);
+		creerAvis(livres.get(0), 5, commentaire);
+		
+		creerAvis(livres.get(1), 3, commentaire);
+		creerAvis(livres.get(1), 2, commentaire);
+		creerAvis(livres.get(1), 2, commentaire);
 	}
 
 }
