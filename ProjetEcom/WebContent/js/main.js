@@ -26,6 +26,15 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http)
     $http.get("LivreAvecId", {params:{"id": $routeParams.id}}).then(function(response) {
     	$scope.livre = response.data;
     	$scope.livre.dateDePublication = formatDateDMY($scope.livre.dateDePublication);
+    	var premierePartieResume = $scope.livre.resume.substring(0, 350);
+    	var deuxiemePartieResume = $scope.livre.resume.substring(350, $scope.livre.resume.length);
+    	
+    	var index = deuxiemePartieResume.search('\\.|!|\\?') + 1;
+    	
+    	
+    	var tmp = deuxiemePartieResume.substr(0, index);
+    	$scope.premierePartieResume = premierePartieResume + tmp;
+    	$scope.deuxiemePartieResume = deuxiemePartieResume.substr(index, deuxiemePartieResume.length);
     });
     $scope.formatDateDMY = formatDateDMY;
     

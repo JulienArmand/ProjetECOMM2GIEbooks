@@ -1,0 +1,5 @@
+Arg de run config : 
+-javaagent:"/home/sevaeb/apache-tomee-webprofile-7.0.1/lib/openejb-javaagent.jar"
+
+Dans persistence.xml
+<property name="openjpa.RuntimeUnenhancedClasses" value="unsupported"/>

@@ -332,7 +332,7 @@ public class InitBean {
 			String langue = data[5];
 			String langueO = data[6];
 			String couv = data[7];
-			String resume = data[8];
+			String resume = "D'après une nouvelle histoire originale de J.K. Rowling, John Tiffany et Jack Thorne, la nouvelle pièce de théâtre de Jack Thorne, Harry Potter et l'Enfant Maudit est la huitième histoire de la saga Harry Potter et la première histoire de Harry Potter officiellement destinée à la scène. La première mondiale de la pièce a eu lieu à Londres dans un théâtre du West End le 30 juillet 2016. Être Harry Potter n’a jamais été facile et ne l’est pas davantage depuis qu’il est un employé surmené du Ministère de la Magie, marié et père de trois enfants. Tandis que Harry se débat avec un passé qui refuse de le laisser en paix, son plus jeune fils, Albus, doit lutter avec le poids d’un héritage familial dont il n’a jamais voulu. Le destin vient fusionner passé et présent. Père et fils se retrouvent face à une dure vérité : parfois, les ténèbres surviennent des endroits les plus inattendus.";
 			String genre = data[9];
 			String auteurs = data[10];
 			String editeur = data[11];
