@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -28,7 +29,17 @@ public class GetLivreRechercheServlet extends HttpServlet {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
 
-		List<Livre> l = myBean.getLivreRecherche(/*request.getParameter("inputSearchQuerry")*/);
+	//A supprimer TEST
+		String texte ="walking et";
+
+		List<String> genre= new ArrayList<>();
+		String manga ="Manga";
+		String comics="Comics";
+		genre.add(manga);
+		genre.add(comics);
+	//fin supprimer
+		
+		List<Livre> l = myBean.getLivreRecherche(texte,genre/*request.getParameter("inputSearchQuerry")*/);
 		String str = js.toJson(l);
 		
 		response.setContentType("application/json");
