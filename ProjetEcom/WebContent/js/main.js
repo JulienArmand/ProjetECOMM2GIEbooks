@@ -1,8 +1,8 @@
-var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'routeAppControllers', 'slick']);
+var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'ngCart', 'routeAppControllers', 'slick']);
 
 var routeAppControllers = angular.module('routeAppControllers', []);
 
-app.controller("headerCtrl", function($scope){
+app.controller("headerCtrl", function($scope, ngCart){
 
     //...    
 

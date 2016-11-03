@@ -22,6 +22,9 @@
 	        <div ng-if="livre.promotion == undefined">
 				<span>{{livre.prix}} € </span>
 	        </div>
+	        <div>
+	        	<ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1">Add to Cart</ngcart-addtocart>
+	        </div>
         </div>
         <div class="col-lg-4 col-md-4">
         	<div class="panel panel-default">
