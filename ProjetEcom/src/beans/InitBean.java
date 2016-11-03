@@ -1,175 +1,364 @@
 package beans;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import model.Auteur;
 import model.Avis;
+import model.Client;
 import model.Editeur;
 import model.Genre;
 import model.Livre;
 import model.Promotion;
+import model.Vente;
 
 @Stateless
 public class InitBean {
-	
 
-	
-	@PersistenceContext(unitName = "Database-unit") 
-	private EntityManager em; 
+	@PersistenceContext(unitName = "Database-unit")
+	private EntityManager em;
+
 	public void init() {
 		suppressionBD();
-		
+
 		Auteur hugo = creerAuteur("Hugo", "Victor");
 		Auteur herge = creerAuteur("HergÃ©", "");
-		
+
 		Editeur galimard = creerEditeur("Galimard");
 		Editeur casterman = creerEditeur("Casterman");
-		
+
 		Genre romans = creerGenre("Romans");
 		Genre bd = creerGenre("BD");
-		
-		Livre miserable = creerLivre("Les misÃ©rables", hugo, galimard, romans, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
-		Livre claudeGueux = creerLivre("Claude Gueux", hugo, galimard, romans, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
-		Livre notreDame = creerLivre("Notre-Dame de Paris", hugo, galimard, romans, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
-		Livre tintinCongo = creerLivre("Tintin au Congo", herge, casterman, bd, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
-		Livre lotusBleu = creerLivre("Tintin : le lotus bleu", herge, casterman, bd, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");
-		Livre cigarePharaon = creerLivre("Tintin : les cigares du pharaon", herge, casterman, bd, "isbn0325465", 124, 9, "Francais", "Francais", "defaultCouv.png");	
 
-		creerPromotion(miserable);
-		creerPromotion(claudeGueux);
-		creerPromotion(notreDame);
-		creerPromotion(tintinCongo);
-		
-		creerAvis(tintinCongo, 3);
-		creerAvis(tintinCongo, 4);
-		creerAvis(tintinCongo, 1);
+		Livre miserable = creerLivre("Les misÃ©rables", hugo, galimard, romans, "isbn0325465", 124, 9.99, "Francais",
+				"Francais", "images/defaultCouv.png");
+		Livre claudeGueux = creerLivre("Claude Gueux", hugo, galimard, romans, "isbn0325465", 124, 9.42, "Francais",
+				"Francais", "images/defaultCouv.png");
+		Livre notreDame = creerLivre("Notre-Dame de Paris", hugo, galimard, romans, "isbn0325465", 124, 9.12,
+				"Francais", "Francais", "images/defaultCouv.png");
+		Livre tintinCongo = creerLivre("Tintin au Congo", herge, casterman, bd, "isbn0325465", 124, 9.99, "Francais",
+				"Francais", "images/defaultCouv.png");
+		Livre lotusBleu = creerLivre("Tintin : le lotus bleu", herge, casterman, bd, "isbn0325465", 124, 9.98,
+				"Francais", "Francais", "images/defaultCouv.png");
+		Livre cigarePharaon = creerLivre("Tintin : les cigares du pharaon", herge, casterman, bd, "isbn0325465", 124,
+				9.01, "Francais", "Francais", "images/defaultCouv.png");
+
+		creerPromotion(miserable,20);
+		creerPromotion(claudeGueux,20);
+		creerPromotion(notreDame,20);
+		creerPromotion(tintinCongo,20);
+
+		creerAvis(tintinCongo, 3, "commentaire1");
+		creerAvis(tintinCongo, 4, "commentaire1");
+		creerAvis(tintinCongo, 1, "commentaire1");
 	}
-	
-	public Livre creerLivre(String nom, Auteur a, Editeur e, Genre g, String isbn, int nbpage, int prix, String langue, String langueOriginale, String couverture){
-		
-		Livre l = new Livre(nom, isbn, Date.from(Instant.now()), nbpage, prix, langue, langueOriginale);
+
+	public Livre creerLivre(String nom, Auteur a, Editeur e, Genre g, String isbn, int nbpage, double prix,
+			String langue, String langueOriginale, String couverture) {
+
+		Date d = Date.from(Instant.now());
+		Random r = new Random();
+		d.setMonth(r.nextInt(12) + 1);
+
+		Livre l = new Livre(nom, isbn, d, nbpage, (float) prix, langue, langueOriginale);
 		l.setNomCouverture(couverture);
 
-		
 		l.setEditeur(e);
 		l.getLesAuteurs().add(a);
 		a.getLesLivres().add(l);
 		e.getLesLivres().add(l);
 		l.setGenre(g);
 		g.getLesLivres().add(l);
-		
+
 		em.persist(l);
 		return l;
 	}
 	
-	public Avis creerAvis(Livre l, int note){
-		
+	public Client creerClient(String nom, String prenom) {
+
+		Client c = new Client("sevaeb","monemail", "monMDP", nom, prenom);
+
+		em.persist(c);
+		return c;
+	}
+	
+	public Vente creerVente(Livre l) {
+
+		Vente c = new Vente(9);
+		c.setLivre(l);
+
+		em.persist(c);
+		return c;
+	}
+
+	public Avis creerAvis(Livre l, int note, String commentaire) {
+
 		Date datePublication = Date.from(Instant.now());
-		
-		Avis a = new Avis(note, "commentaire", datePublication);
+
+		Avis a = new Avis(note, commentaire, datePublication);
 
 		a.setLeLivre(l);
 		l.getLesAvis().add(a);
-		
+
 		em.persist(a);
 		return a;
 	}
-	
-	public Promotion creerPromotion(Livre l){
-		
+
+	public Promotion creerPromotion(Livre l, int i) {
+
 		Date debut = Date.from(Instant.now());
 		Date fin = Date.from(Instant.now());
 		fin.setYear(2017);
-		
-		Promotion p = new Promotion(20, debut, fin);
+
+		Promotion p = new Promotion(i, debut, fin);
 
 		p.setLivre(l);
 		l.setPromotion(p);
-		
+
 		em.persist(p);
 		return p;
 	}
-	
-	public void suppressionBD(){
-		
+
+	public void suppressionBD() {
+
 		Query q1 = em.createNativeQuery("DELETE FROM Genre");
-	    Query q2 = em.createNativeQuery("DELETE FROM Vente");
-	    Query q3 = em.createNativeQuery("DELETE FROM Editeur");
-	    Query q4 = em.createNativeQuery("DELETE FROM Livre");
+		Query q2 = em.createNativeQuery("DELETE FROM Vente");
+		Query q3 = em.createNativeQuery("DELETE FROM Editeur");
+		Query q4 = em.createNativeQuery("DELETE FROM Livre");
 		Query q5 = em.createNativeQuery("DELETE FROM Serie");
-	    Query q6 = em.createNativeQuery("DELETE FROM Avis");
-	    Query q7 = em.createNativeQuery("DELETE FROM Promotion");
-	    Query q8 = em.createNativeQuery("DELETE FROM LIVRE_AUTEUR_LIEN");
+		Query q6 = em.createNativeQuery("DELETE FROM Avis");
+		Query q7 = em.createNativeQuery("DELETE FROM Promotion");
+		Query q8 = em.createNativeQuery("DELETE FROM LIVRE_AUTEUR_LIEN");
 		Query q9 = em.createNativeQuery("DELETE FROM Auteur");
-	    Query q10 = em.createNativeQuery("DELETE FROM Commande");
-	    Query q11 = em.createNativeQuery("DELETE FROM MoyenPaiement");
-	    Query q12 = em.createNativeQuery("DELETE FROM Client");
-		//Query q13 = em.createNativeQuery("DELETE FROM CarteBancaire");
-	    //Query q14 = em.createNativeQuery("DELETE FROM Paypal");
+		Query q10 = em.createNativeQuery("DELETE FROM Commande");
+		Query q11 = em.createNativeQuery("DELETE FROM MoyenPaiement");
+		Query q12 = em.createNativeQuery("DELETE FROM Client");
+		// Query q13 = em.createNativeQuery("DELETE FROM CarteBancaire");
+		// Query q14 = em.createNativeQuery("DELETE FROM Paypal");
 
-	    q1.executeUpdate();
-	    q2.executeUpdate();
-	    q3.executeUpdate();
-	    q4.executeUpdate();
-	    q5.executeUpdate();
-	    q6.executeUpdate();
-	    q7.executeUpdate();
-	    q8.executeUpdate();
-	    q9.executeUpdate();
-	    q10.executeUpdate();
-	    q11.executeUpdate();
-	    q12.executeUpdate();
-	    //q13.executeUpdate();
-	    //q14.executeUpdate();
-
+		q1.executeUpdate();
+		q2.executeUpdate();
+		q3.executeUpdate();
+		q4.executeUpdate();
+		q5.executeUpdate();
+		q6.executeUpdate();
+		q7.executeUpdate();
+		q8.executeUpdate();
+		q9.executeUpdate();
+		q10.executeUpdate();
+		q11.executeUpdate();
+		q12.executeUpdate();
+		// q13.executeUpdate();
+		// q14.executeUpdate();
 
 	}
-	
-	public Auteur creerAuteur(String nom, String prenom){
-		Auteur a = new Auteur(nom, prenom);
-		em.persist(a);
+
+	public Auteur creerAuteur(String nom, String prenom) {
 		
+		Query q = em.createQuery("select OBJECT(a) from Auteur a where a.nom = \"" + nom + "\" AND a.prenom = \"" + prenom + "\"");
+		List<Auteur> la = q.getResultList();
+		Auteur a = null;
+		if(la == null || la.size() == 0){
+			a = new Auteur(nom, prenom);
+			System.out.println("Auteur "+a.getNom() + " " + a.getPrenom() + " créé");
+			em.persist(a);
+		}else
+			a = la.get(0);
+
 		return a;
 	}
-	
-	public Editeur creerEditeur(String nom){
-		Editeur e = new Editeur(nom);
-		em.persist(e);
+
+	public Editeur creerEditeur(String nom) {
+		
+		Query q = em.createQuery("select OBJECT(e) from Editeur e where e.nom = \"" + nom + "\"");
+		List<Editeur> le = q.getResultList();
+		Editeur e = null;
+		if(le == null || le.size() == 0){
+			e = new Editeur(nom);
+			System.out.println("Editeur "+e.getNom() + " créé");
+			em.persist(e);
+		}else
+			e = le.get(0);
+
 		return e;
 	}
-	
-	public Genre creerGenre(String nom){
-		Genre g = new Genre(nom);
-		em.persist(g);
+
+	public Genre creerGenre(String nom) {
+		
+		Query q = em.createQuery("select OBJECT(g) from Genre g where g.nom = \"" + nom + "\"");
+		List<Genre> lg = q.getResultList();
+		Genre g = null;
+		if(lg == null || lg.size() == 0){
+			g = new Genre(nom);
+			System.out.println("Genre "+g.getNom() + " créé");
+			em.persist(g);
+		}else
+			g = lg.get(0);
+
 		return g;
 	}
-	
-	public List<Livre> getLesLivres(){
-		
-		Query q = em.createQuery("select OBJECT(b) from Livre b"); 
-		List<Livre> list = (List<Livre>) q.getResultList(); 
-		return list;
+
+	public Livre getLivreAvecId(int id) {
+		Query q = em.createQuery("select OBJECT(b) from Livre b where b.id = " + id);
+		Livre livre = (Livre) q.getSingleResult();
+		return livre;
 	}
-	
-	public List<Livre> getLesLivresEnPromotion(){
-		
-		Query q = em.createQuery("select p.livre from Promotion p where p.dateFin > CURRENT_DATE"); 
-		List<Livre> list = (List<Livre>) q.getResultList(); 
-		return list;
-	}
-	
-	public List<Auteur> getLesAuteurs(){
-		
-		Query q = em.createQuery("select OBJECT(b) from Auteur b"); 
-		List<Auteur> list = (List<Auteur>) q.getResultList(); 
+
+	public List<Livre> getLesLivres() {
+
+		Query q = em.createQuery("select OBJECT(b) from Livre b");
+		List<Livre> list = (List<Livre>) q.getResultList();
 		return list;
 	}
 
+	public List<Livre> getLesLivresEnPromotion() {
+
+		Query q = em.createQuery("select p.livre from Promotion p where p.dateFin > CURRENT_DATE");
+		List<Livre> list = (List<Livre>) q.getResultList();
+		return list.subList(0, list.size()-1);
+	}
+
+	public List<Auteur> getLesAuteurs() {
+
+		Query q = em.createQuery("select OBJECT(b) from Auteur b");
+		List<Auteur> list = (List<Auteur>) q.getResultList();
+		return list;
+	}
 	
+	public Set<Livre> getDixLivresLesPlusVendu() {
+
+		Query q = em.createQuery("SELECT v.livre, count(v.livre) as truc FROM Vente v GROUP BY v.livre order by truc Desc");
+		q.setMaxResults(10);
+		List<Object[]> list = q.getResultList();
+		
+		Map<Livre, Long> resultMap = new HashMap<Livre, Long>(list.size());
+		for (Object[] result : list)
+		  resultMap.put((Livre)result[0], (Long)result[1]);
+
+		return resultMap.keySet();
+	}
+	
+	public void InitBDFromCSV() throws IOException, URISyntaxException {
+		suppressionBD();
+		
+		URL url = new URL("http://localhost:8080/exemplesBD.csv");
+		InputStream is = url.openStream();
+		
+		ArrayList<Livre> livres = new ArrayList<Livre>();
+		//File f = new File(new URI("file:///localhost:8080/exemplesBD.csv"));
+		BufferedReader r = new BufferedReader(new InputStreamReader(is));
+		r.readLine();
+		String line = r.readLine();
+		while (line != null && !line.equals("")) {
+			System.out.println(line);
+			//String data[] = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+			String data[] = line.split(";", -1);
+			//System.out.println(line);
+			String titre = data[0];
+			if (titre.equals(""))
+				break;
+			String isbn = data[1];
+			String date = data[2];
+			String nbPages = data[3];
+			String prix = data[4].replace(",", ".");
+			String langue = data[5];
+			String langueO = data[6];
+			String couv = data[7];
+			String resume = data[8];
+			String genre = data[9];
+			String auteurs = data[10];
+			String editeur = data[11];
+			String promo = data[12];
+			String collection = data[13];
+			Livre livre = new Livre();
+			livres.add(livre);
+			livre.setTitre(titre);
+			livre.setIsbn(isbn);
+			String pattern = "dd/MM/yyyy";
+		    SimpleDateFormat format = new SimpleDateFormat(pattern);
+			try {
+				livre.setDateDePublication(format.parse(date));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			livre.setNbPages(Integer.parseInt(nbPages));
+			livre.setPrix(Float.parseFloat(prix));
+			livre.setLangue(langue);
+			livre.setLangueOrigine(langueO);
+			livre.setNomCouverture(couv);
+			livre.setResume(resume);
+			livre.setEditeur(this.creerEditeur(editeur));
+			livre.setGenre(this.creerGenre(genre));
+			em.persist(livre);
+			if(!promo.equals(""))
+				livre.setPromotion(this.creerPromotion(livre,Integer.parseInt(promo)));
+			String a[] = auteurs.split(",");
+			for(int i =0; i<a.length;i++){
+				
+				String str[] = a[i].split("/s");		
+				Auteur x;
+				if(str.length>1)
+					x = creerAuteur(str[1].replace("/s", ""), str[0].replace("/s", ""));
+				else if(str.length==1)
+					x = creerAuteur(str[0].replace("/s", ""), "");
+				else
+					continue;
+				livre.getLesAuteurs().add(x);
+			}
+			em.persist(livre);
+			line = r.readLine();
+		}
+
+		r.close();
+		creerVente(livres.get(0));
+		creerVente(livres.get(1));
+		creerVente(livres.get(0));
+		creerVente(livres.get(1));
+		creerVente(livres.get(0));
+		creerVente(livres.get(1));
+		
+		
+		creerVente(livres.get(2));
+		creerVente(livres.get(2));
+		creerVente(livres.get(2));
+		creerVente(livres.get(2));
+		
+		String commentaire = "Je referme \"le premier miracle\" de Gilles Legardinier. \nHabitué aux comédies loufoques qui m'ont valu des fous rires mémorables, l'auteur revient un peu à ses premières amours, le thriller.Ce nouveau roman, savant mélange d'aventure et d'humour, nous prouve que Gilles a plus d'une corde à son arc.L'impression d'être dans un Indiana Jones, parcourant le monde avec les personnages, découvrant des pans entiers de l'histoire de l'humanité, tentant de percer le secret du premier miracle. Un vrai régal.Le tout bourré d'humour.Les personnages sont touchants, attachants, à la personnalité riche, que l'on découvre au fil des pages. Avec une jolie histoire d'amour à la clé.Un bon moment de lecture.";
+		creerAvis(livres.get(2), 0, commentaire);
+		creerAvis(livres.get(2), 1, commentaire);
+		creerAvis(livres.get(2), 1, commentaire);
+		
+		creerAvis(livres.get(0), 4, commentaire);
+		creerAvis(livres.get(0), 4, commentaire);
+		creerAvis(livres.get(0), 5, commentaire);
+		
+		creerAvis(livres.get(1), 3, commentaire);
+		creerAvis(livres.get(1), 2, commentaire);
+		creerAvis(livres.get(1), 2, commentaire);
+	}
+
 }

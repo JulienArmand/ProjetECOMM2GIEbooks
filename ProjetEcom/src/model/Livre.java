@@ -41,14 +41,15 @@ public class Livre {
 	@Expose
 	private int nbPages;
 	@Expose
-	private int prix;
+	private float prix;
 	@Expose
 	private String langue;
 	@Expose
 	private String langueOrigine;
 	@Expose
 	private String nomCouverture;
-	
+	@Expose
+	private String resume;
 	@Expose
 	@OneToOne
 	private Promotion promotion;
@@ -65,10 +66,12 @@ public class Livre {
 	private Collection<Vente> lesVentes;
 	
 	@ManyToOne 
+	@Expose
 	@JoinColumn(name="Genre_id") 
 	private Genre genre;
 	
-	@ManyToOne 
+	@ManyToOne
+	@Expose
 	@JoinColumn(name="Editeur_id")
 	private Editeur editeur;
 	
@@ -83,7 +86,7 @@ public class Livre {
 		this.lesVentes = new LinkedList<Vente>();
 	}
 
-	public Livre(String title, String isbn, Date dateDePublication, int nbPages, int prix, String langue,
+	public Livre(String title, String isbn, Date dateDePublication, int nbPages, float prix, String langue,
 			String langueOrigine) {
 		this();
 		this.titre = title;
@@ -137,11 +140,11 @@ public class Livre {
 		this.nbPages = nbPages;
 	}
 
-	public int getPrix() {
+	public float getPrix() {
 		return prix;
 	}
 
-	public void setPrix(int prix) {
+	public void setPrix(float prix) {
 		this.prix = prix;
 	}
 
@@ -227,6 +230,14 @@ public class Livre {
 
 	public void setPromotion(Promotion promotion) {
 		this.promotion = promotion;
+	}
+
+	public String getResume() {
+		return resume;
+	}
+
+	public void setResume(String resume) {
+		this.resume = resume;
 	}
 	
 	/*public String toJson(){

@@ -30,7 +30,7 @@
 
         <section ng-controller="contentCtrl">
 		<div>
-			<form action="http://localhost:8080/InscriptionClient" method="POST">
+			<form action="http://localhost:8080/GestionPanier" method="POST">
 				<p>Pseudo : <input type="text" name="pseudo"><br>
 				Nom : <input type="text" name="nom"><br>
 				Prenom : <input type="text" name="prenom"><br>
@@ -42,12 +42,12 @@
 		</div>
 		<br>
 		<div>
-			<form action="http://localhost:8080/InscriptionClient" method="GET">
+			<form action="http://localhost:8080/GestionPanier" method="GET">
 				<input type="text" name="action" value="visualiser" style="display:none;">
 				<input type="submit" value="Voir les clients">
 			</form>
 			<br>
-			<form action="http://localhost:8080/InscriptionClient" method="GET">
+			<form action="http://localhost:8080/GestionPanier" method="GET">
 				<input type="text" name="action" value="supprimer" style="display:none;">
 				<input type="submit" value="Supprimer les clients">
 			</form>

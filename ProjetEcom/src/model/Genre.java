@@ -11,12 +11,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 public class Genre {
 	
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO) 
+	@Expose
 	private long id;
+	@Expose
 	private String nom;
 	
 	@OneToMany(mappedBy="genre",cascade = CascadeType.ALL, fetch = FetchType.EAGER) 

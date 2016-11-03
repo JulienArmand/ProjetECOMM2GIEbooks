@@ -24,12 +24,30 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>getFirstLivre</servlet-name>
-		<servlet-class>servlets.GetOneBookServlet</servlet-class>
+		<servlet-name>getLivresEnPromo</servlet-name>
+		<servlet-class>servlets.GetLivreEnPromoServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>getFirstLivre</servlet-name>
-		<url-pattern>/First</url-pattern>
+		<servlet-name>getLivresEnPromo</servlet-name>
+		<url-pattern>/Promos</url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>getLivresPlusVendu</servlet-name>
+		<servlet-class>servlets.GetLivresPlusVenduServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getLivresPlusVendu</servlet-name>
+		<url-pattern>/PlusVendu</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ChercherLivreAvecId</servlet-name>
+		<servlet-class>servlets.ChercherLivreAvecIdServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChercherLivreAvecId</servlet-name>
+		<url-pattern>/LivreAvecId</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -41,9 +59,23 @@
 		<url-pattern>/InscriptionClient</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>GestionPanier</servlet-name>
+		<servlet-class>servlets.GestionPanierServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GestionPanier</servlet-name>
+		<url-pattern>/GestionPanier</url-pattern>
+	</servlet-mapping>
 	
-	
-	
+	<servlet>
+		<servlet-name>GetAuteurs</servlet-name>
+		<servlet-class>servlets.AuteursLivreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetAuteurs</servlet-name>
+		<url-pattern>/GetAuteurs</url-pattern>
+	</servlet-mapping>
 	
 	
 
