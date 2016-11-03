@@ -267,37 +267,54 @@ public class InitBean {
 	 * 		-tous les mots du champ texte 
 	 * 		-un des genres
 	 */
-	public List<Livre> getLivreRecherche(/*String texte,List<String> genre*/) {
-		//A supprimer 
-		String texte ="walking et";
-
-		List<String> genre= new ArrayList<>();
-		String manga ="Manga";
-		String comics="Comics";
-//		genre.add(manga);
-//		genre.add(comics);
-		//fin supprimer
-		
-		String[] s=texte.split(" ");
+	public List<Livre> getLivreRecherche(String texte,List<String> genre) {
+	
+		String[] s=texte.split(" "); // recupération de la liste des mots
 		String requete="SELECT OBJECT(l) FROM Livre l ";
 		if(s.length>0 || !genre.isEmpty()){
 			requete=requete+ "WHERE ";
+			boolean b=false; // ajout d'un AND / OR ?
+			int compteur=0;
+			//recherche a partir de l'entree de la barre de recherche
+			
 			if(s.length>0 ){
-				int compteur =0;
+				//Les livres possedent dans leur titre tous les mots présents dans texte
+				requete=requete+ "( ";
+				compteur =0;
 				while(compteur<s.length-1){
 					requete= requete + "UPPER(l.titre) LIKE '%"+s[compteur].toUpperCase()+"%' AND ";
 					compteur++;
 				}
 				requete= requete + "UPPER(l.titre) LIKE '%"+s[compteur].toUpperCase()+"%' ";
+				b=true;
+				
+				requete=requete+ "OR ";
+				//PARTIE AUTEUR A MODIF
+				compteur =0;
+				while(compteur<s.length-1){
+					requete= requete + "UPPER(l.titre) LIKE '%"+s[compteur].toUpperCase()+"%' AND ";
+					compteur++;
+				}
+				requete= requete + "UPPER(l.titre) LIKE '%"+s[compteur].toUpperCase()+"%' ";
+				requete=requete+ ") ";
+
+				
 			}
 			
+			//Recherche a partir de la liste de genre
+			//Les livres font parties d'un des genres de la liste :genre
 			if(!genre.isEmpty()){
-				int compteur =0;
+				if(b)
+					requete=requete+ "AND ( ";
+				compteur =0;
 				while(compteur<genre.size()-1){
 					requete= requete + "l.genre.nom = \""+genre.get(compteur)+"\" OR ";
 					compteur++;
 				}
 				requete= requete + "l.genre.nom = \""+genre.get(compteur)+"\" ";
+				if(b)
+					requete=requete+ ") ";
+				b=true;
 			}
 		}
 //		requete="SELECT OBJECT(l) FROM Livre l Where l.titre LIKE '%et%' AND l.titre LIKE '%Walking%' OR l.genre.nom=\"Manga\"";
