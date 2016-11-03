@@ -183,7 +183,7 @@ public class InitBean {
 		Auteur a = null;
 		if(la == null || la.size() == 0){
 			a = new Auteur(nom, prenom);
-			System.out.println("Auteur "+a.getNom() + " " + a.getPrenom() + " créé");
+			System.out.println("Auteur "+a.getNom() + " " + a.getPrenom() + " crï¿½ï¿½");
 			em.persist(a);
 		}else
 			a = la.get(0);
@@ -198,7 +198,7 @@ public class InitBean {
 		Editeur e = null;
 		if(le == null || le.size() == 0){
 			e = new Editeur(nom);
-			System.out.println("Editeur "+e.getNom() + " créé");
+			System.out.println("Editeur "+e.getNom() + " crï¿½ï¿½");
 			em.persist(e);
 		}else
 			e = le.get(0);
@@ -213,7 +213,7 @@ public class InitBean {
 		Genre g = null;
 		if(lg == null || lg.size() == 0){
 			g = new Genre(nom);
-			System.out.println("Genre "+g.getNom() + " créé");
+			System.out.println("Genre "+g.getNom() + " crï¿½ï¿½");
 			em.persist(g);
 		}else
 			g = lg.get(0);
@@ -287,7 +287,7 @@ public class InitBean {
 			String langue = data[5];
 			String langueO = data[6];
 			String couv = data[7];
-			String resume = data[8];
+			String resume = "D'aprÃ¨s une nouvelle histoire originale de J.K. Rowling, John Tiffany et Jack Thorne, la nouvelle piÃ¨ce de thÃ©Ã¢tre de Jack Thorne, Harry Potter et l'Enfant Maudit est la huitiÃ¨me histoire de la saga Harry Potter et la premiÃ¨re histoire de Harry Potter officiellement destinÃ©e Ã  la scÃ¨ne. La premiÃ¨re mondiale de la piÃ¨ce a eu lieu Ã  Londres dans un thÃ©Ã¢tre du West End le 30 juillet 2016. ÃŠtre Harry Potter nâ€™a jamais Ã©tÃ© facile et ne lâ€™est pas davantage depuis quâ€™il est un employÃ© surmenÃ© du MinistÃ¨re de la Magie, mariÃ© et pÃ¨re de trois enfants. Tandis que Harry se dÃ©bat avec un passÃ© qui refuse de le laisser en paix, son plus jeune fils, Albus, doit lutter avec le poids dâ€™un hÃ©ritage familial dont il nâ€™a jamais voulu. Le destin vient fusionner passÃ© et prÃ©sent. PÃ¨re et fils se retrouvent face Ã  une dure vÃ©ritÃ© : parfois, les tÃ©nÃ¨bres surviennent des endroits les plus inattendus.";
 			String genre = data[9];
 			String auteurs = data[10];
 			String editeur = data[11];
@@ -347,7 +347,7 @@ public class InitBean {
 		creerVente(livres.get(2));
 		creerVente(livres.get(2));
 		
-		String commentaire = "Je referme \"le premier miracle\" de Gilles Legardinier. \nHabitué aux comédies loufoques qui m'ont valu des fous rires mémorables, l'auteur revient un peu à ses premières amours, le thriller.Ce nouveau roman, savant mélange d'aventure et d'humour, nous prouve que Gilles a plus d'une corde à son arc.L'impression d'être dans un Indiana Jones, parcourant le monde avec les personnages, découvrant des pans entiers de l'histoire de l'humanité, tentant de percer le secret du premier miracle. Un vrai régal.Le tout bourré d'humour.Les personnages sont touchants, attachants, à la personnalité riche, que l'on découvre au fil des pages. Avec une jolie histoire d'amour à la clé.Un bon moment de lecture.";
+		String commentaire = "Je referme \"le premier miracle\" de Gilles Legardinier. \nHabituï¿½ aux comï¿½dies loufoques qui m'ont valu des fous rires mï¿½morables, l'auteur revient un peu ï¿½ ses premiï¿½res amours, le thriller.Ce nouveau roman, savant mï¿½lange d'aventure et d'humour, nous prouve que Gilles a plus d'une corde ï¿½ son arc.L'impression d'ï¿½tre dans un Indiana Jones, parcourant le monde avec les personnages, dï¿½couvrant des pans entiers de l'histoire de l'humanitï¿½, tentant de percer le secret du premier miracle. Un vrai rï¿½gal.Le tout bourrï¿½ d'humour.Les personnages sont touchants, attachants, ï¿½ la personnalitï¿½ riche, que l'on dï¿½couvre au fil des pages. Avec une jolie histoire d'amour ï¿½ la clï¿½.Un bon moment de lecture.";
 		creerAvis(livres.get(2), 0, commentaire);
 		creerAvis(livres.get(2), 1, commentaire);
 		creerAvis(livres.get(2), 1, commentaire);

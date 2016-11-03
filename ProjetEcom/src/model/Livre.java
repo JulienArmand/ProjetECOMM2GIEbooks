@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -49,6 +50,8 @@ public class Livre {
 	@Expose
 	private String nomCouverture;
 	@Expose
+	@Lob
+	@Column(length = 10000)
 	private String resume;
 	@Expose
 	@OneToOne
