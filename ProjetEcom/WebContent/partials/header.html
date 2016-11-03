@@ -1,20 +1,24 @@
-<div class="row row-same-height">
-	<span class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-		<a href="/"> <img ng-src="../images/logoEcom2.png" class="img-responsive" /></a>
+<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	<span class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px;">
+		<a href="/"> <img ng-src="../images/logoEcom2.png" class="img-responsive" style="height: 10em;width: 10em; "/></a>
 	</span>
-	<form class="col-lg-9 col-md-9 col-sm-9 col-xs-9" role="form" name="form" action="" method="post"">
-		<div class="form-group-lg col-lg-11 col-md-11 col-sm-11 col-xs-11" >
-			<input type="text" name="inputSearchQuerry" class="form-control" placeholder="Ecrivez ici pour chercher un livre ...">
-		</div>
-		<button type="submit" class="btn btn-primary col-lg-1 col-md-1 col-sm-1 col-xs-1">
-			<i class="glyphicon glyphicon-search"></i>
-		</button>
-	</form>
-	<div class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
-		<div class="col-lg-5 col-md-5 col-xs-2 col-sm-2">
-			<a href="#" ><img ng-src="../images/icon_panier.png" class=" img-responsive"/></a>
+	<div class="col-lg-7 col-md-7 col-sm-7 col-xs-6" style="margin-top:2.5%;vertical-align: middle;" >
+		<form role="form" name="form" action="" method="post" style="padding:0px; vertical-align: middle;">
+			
+			<div class="input-group input-group-lg icon-addon addon-lg" style="vertical-align: middle;">
+	        	<input type="text" placeholder="Ecrivez ici pour chercher un livre ..." name="inputSearchQuerry" id="schbox" class="form-control input-lg">
+	        	<i class="icon icon-search"></i>
+	        	<span class="input-group-btn">
+	         	   <button type="submit" class="btn btn-inverse"><i class="glyphicon glyphicon-search"></i></button>
+	        	</span>
+	   		</div>
+		</form>
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 " style="padding:0px;">
+		<ul class="list-unstyled col-lg-7 col-md-7 col-xs-7 col-sm-7" style="padding:0px;">
+			<li><a href="#" ><img ng-src="../images/icon_panier.png" class=" img-responsive" style="height: 6em;width: 6em; margin:auto; padding:0px;"/></a></li>
 			<div class="row row-same-height" style="text-align:center;"><ngcart-summary></ngcart-summary></div>
-		</div>
-		<a href="#" class="col-lg-7 col-md-7 col-sm-7 col-xs-7" style="padding:0px;text-align:center;font-size:200%;">Mon<br>Compte</a>
+		</ul>
+		<a href="#" class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="font-size:150% ;padding:0px;text-align:center; ">Mon<br>Compte</a>
 	</div>
 </div>
