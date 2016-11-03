@@ -48,7 +48,12 @@
 				<div ng-if="livre.lesAvis.length > 0">
 					<span style="font-size: 4em;">{{calculeMoyenne(livre.lesAvis)}}</span><span style="font-size: 2em;"> /5</span>
 		        </div>
-		        <label for="input-2" class="control-label">Rate This</label>
+		        <input id="input-3" name="input-3" value="4" class="rating">
+		        <script>
+				$(document).on('ready', function(){
+				    $('#input-3').rating({displayOnly: true, step: 0.5});
+				});
+				</script>
 		        <div ng-if="livre.lesAvis.length == 0">
 					<h4>Soyez le premier � laisser un avis !</h4>
 		        </div>
