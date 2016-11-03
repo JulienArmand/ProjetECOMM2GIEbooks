@@ -239,6 +239,7 @@ public class InitBean {
 		Query q = em.createQuery("select p.livre from Promotion p where p.dateFin > CURRENT_DATE");
 		List<Livre> list = (List<Livre>) q.getResultList();
 		return list.subList(0, list.size()-1);
+//		return getLivreRecherche();
 	}
 
 	public List<Auteur> getLesAuteurs() {
@@ -259,6 +260,50 @@ public class InitBean {
 		  resultMap.put((Livre)result[0], (Long)result[1]);
 
 		return resultMap.keySet();
+	}
+	
+	/**
+	 * Recherche les livres qui possedent 
+	 * 		-tous les mots du champ texte 
+	 * 		-un des genres
+	 */
+	public List<Livre> getLivreRecherche(/*String texte,List<String> genre*/) {
+		//A supprimer 
+		String texte ="walking et";
+
+		List<String> genre= new ArrayList<>();
+		String manga ="Manga";
+		String comics="Comics";
+//		genre.add(manga);
+//		genre.add(comics);
+		//fin supprimer
+		
+		String[] s=texte.split(" ");
+		String requete="SELECT OBJECT(l) FROM Livre l ";
+		if(s.length>0 || !genre.isEmpty()){
+			requete=requete+ "WHERE ";
+			if(s.length>0 ){
+				int compteur =0;
+				while(compteur<s.length-1){
+					requete= requete + "UPPER(l.titre) LIKE '%"+s[compteur].toUpperCase()+"%' AND ";
+					compteur++;
+				}
+				requete= requete + "UPPER(l.titre) LIKE '%"+s[compteur].toUpperCase()+"%' ";
+			}
+			
+			if(!genre.isEmpty()){
+				int compteur =0;
+				while(compteur<genre.size()-1){
+					requete= requete + "l.genre.nom = \""+genre.get(compteur)+"\" OR ";
+					compteur++;
+				}
+				requete= requete + "l.genre.nom = \""+genre.get(compteur)+"\" ";
+			}
+		}
+//		requete="SELECT OBJECT(l) FROM Livre l Where l.titre LIKE '%et%' AND l.titre LIKE '%Walking%' OR l.genre.nom=\"Manga\"";
+		Query q = em.createQuery(requete);
+		List<Livre> list = (List<Livre>) q.getResultList();
+		return list;
 	}
 	
 	public void InitBDFromCSV() throws IOException, URISyntaxException {
