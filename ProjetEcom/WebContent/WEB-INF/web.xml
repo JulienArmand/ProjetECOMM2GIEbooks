@@ -32,6 +32,15 @@
 		<url-pattern>/Promos</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>getLivresRecherche</servlet-name>
+		<servlet-class>servlets.GetLivreRechercheServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getLivresRecherche</servlet-name>
+		<url-pattern>/Recherche</url-pattern>
+	</servlet-mapping>
+	
 		<servlet>
 		<servlet-name>getLivresPlusVendu</servlet-name>
 		<servlet-class>servlets.GetLivresPlusVenduServlet</servlet-class>
