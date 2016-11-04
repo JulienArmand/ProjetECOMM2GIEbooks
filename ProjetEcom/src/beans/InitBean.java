@@ -390,9 +390,13 @@ public class InitBean {
 					x = creerAuteur(str[0].replace("/s", ""), "");
 				else
 					continue;
+				
 				Collection<Auteur> aut = livre.getLesAuteurs();
 				aut.add(x);
 				livre.setLesAuteurs(aut);
+				Collection<Livre> liv = x.getLesLivres();
+				liv.add(livre);
+				x.setLesLivres(liv);
 				
 			}
 			em.persist(livre);
