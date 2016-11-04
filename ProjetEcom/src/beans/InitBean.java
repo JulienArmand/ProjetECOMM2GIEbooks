@@ -14,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -183,7 +184,7 @@ public class InitBean {
 		Auteur a = null;
 		if(la == null || la.size() == 0){
 			a = new Auteur(nom, prenom);
-			System.out.println("Auteur "+a.getNom() + " " + a.getPrenom() + " cr��");
+			System.out.println("Auteur "+a.getNom() + " " + a.getPrenom() + " créé");
 			em.persist(a);
 		}else
 			a = la.get(0);
@@ -198,7 +199,7 @@ public class InitBean {
 		Editeur e = null;
 		if(le == null || le.size() == 0){
 			e = new Editeur(nom);
-			System.out.println("Editeur "+e.getNom() + " cr��");
+			System.out.println("Editeur "+e.getNom() + " crï¿½ï¿½");
 			em.persist(e);
 		}else
 			e = le.get(0);
@@ -213,7 +214,7 @@ public class InitBean {
 		Genre g = null;
 		if(lg == null || lg.size() == 0){
 			g = new Genre(nom);
-			System.out.println("Genre "+g.getNom() + " cr��");
+			System.out.println("Genre "+g.getNom() + " créé");
 			em.persist(g);
 		}else
 			g = lg.get(0);
@@ -238,7 +239,7 @@ public class InitBean {
 
 		Query q = em.createQuery("select p.livre from Promotion p where p.dateFin > CURRENT_DATE");
 		List<Livre> list = (List<Livre>) q.getResultList();
-		return list.subList(0, list.size()-1);
+		return list;
 //		return getLivreRecherche();
 	}
 
@@ -269,7 +270,7 @@ public class InitBean {
 	 */
 	public List<Livre> getLivreRecherche(String texte,List<String> genre) {
 	
-		String[] s=texte.split(" "); // recupération de la liste des mots
+		String[] s=texte.split(" "); // recupÃ©ration de la liste des mots
 		String requete="SELECT OBJECT(l) FROM Livre l ";
 		if(s.length>0 || !genre.isEmpty()){
 			requete=requete+ "WHERE ";
@@ -278,7 +279,7 @@ public class InitBean {
 			//recherche a partir de l'entree de la barre de recherche
 			
 			if(s.length>0 ){
-				//Les livres possedent dans leur titre tous les mots présents dans texte
+				//Les livres possedent dans leur titre tous les mots prÃ©sents dans texte
 				requete=requete+ "( ";
 				compteur =0;
 				while(compteur<s.length-1){
@@ -349,7 +350,7 @@ public class InitBean {
 			String langue = data[5];
 			String langueO = data[6];
 			String couv = data[7];
-			String resume = "D'après une nouvelle histoire originale de J.K. Rowling, John Tiffany et Jack Thorne, la nouvelle pièce de théâtre de Jack Thorne, Harry Potter et l'Enfant Maudit est la huitième histoire de la saga Harry Potter et la première histoire de Harry Potter officiellement destinée à la scène. La première mondiale de la pièce a eu lieu à Londres dans un théâtre du West End le 30 juillet 2016. Être Harry Potter n’a jamais été facile et ne l’est pas davantage depuis qu’il est un employé surmené du Ministère de la Magie, marié et père de trois enfants. Tandis que Harry se débat avec un passé qui refuse de le laisser en paix, son plus jeune fils, Albus, doit lutter avec le poids d’un héritage familial dont il n’a jamais voulu. Le destin vient fusionner passé et présent. Père et fils se retrouvent face à une dure vérité : parfois, les ténèbres surviennent des endroits les plus inattendus.";
+			String resume = "D'après une nouvelle histoire originale de J.K. Rowling, John Tiffany et Jack Thorne, la nouvelle pièce de théâtre de Jack Thorne, Harry Potter et l'Enfant Maudit est la huitième histoire de la saga Harry Potter et la première histoire de Harry Potter officiellement destinée à  la scène. La première mondiale de la pièce a eu lieu à  Londres dans un théâtre du West End le 30 juillet 2016. Être Harry Potter n'a jamais été facile et ne l'est pas davantage depuis qu'il est un employé surmené du Ministère de la Magie, marié et pére de trois enfants. Tandis que Harry se débat avec un passé qui refuse de le laisser en paix, son plus jeune fils, Albus, doit lutter avec le poids d'un héritage familial dont il n'a jamais voulu. Le destin vient fusionner passé et présent. Père et fils se retrouvent face à une dure vérité : parfois, les ténebres surviennent des endroits les plus inattendus.";
 			String genre = data[9];
 			String auteurs = data[10];
 			String editeur = data[11];
@@ -380,7 +381,7 @@ public class InitBean {
 				livre.setPromotion(this.creerPromotion(livre,Integer.parseInt(promo)));
 			String a[] = auteurs.split(",");
 			for(int i =0; i<a.length;i++){
-				
+				System.out.println("Check loop author");
 				String str[] = a[i].split("/s");		
 				Auteur x;
 				if(str.length>1)
@@ -389,7 +390,10 @@ public class InitBean {
 					x = creerAuteur(str[0].replace("/s", ""), "");
 				else
 					continue;
-				livre.getLesAuteurs().add(x);
+				Collection<Auteur> aut = livre.getLesAuteurs();
+				aut.add(x);
+				livre.setLesAuteurs(aut);
+				
 			}
 			em.persist(livre);
 			line = r.readLine();
@@ -409,7 +413,7 @@ public class InitBean {
 		creerVente(livres.get(2));
 		creerVente(livres.get(2));
 		
-		String commentaire = "Je referme \"le premier miracle\" de Gilles Legardinier. \nHabitu� aux com�dies loufoques qui m'ont valu des fous rires m�morables, l'auteur revient un peu � ses premi�res amours, le thriller.Ce nouveau roman, savant m�lange d'aventure et d'humour, nous prouve que Gilles a plus d'une corde � son arc.L'impression d'�tre dans un Indiana Jones, parcourant le monde avec les personnages, d�couvrant des pans entiers de l'histoire de l'humanit�, tentant de percer le secret du premier miracle. Un vrai r�gal.Le tout bourr� d'humour.Les personnages sont touchants, attachants, � la personnalit� riche, que l'on d�couvre au fil des pages. Avec une jolie histoire d'amour � la cl�.Un bon moment de lecture.";
+		String commentaire = "Je referme \"le premier miracle\" de Gilles Legardinier. \nHabituï¿½ aux comï¿½dies loufoques qui m'ont valu des fous rires mï¿½morables, l'auteur revient un peu ï¿½ ses premiï¿½res amours, le thriller.Ce nouveau roman, savant mï¿½lange d'aventure et d'humour, nous prouve que Gilles a plus d'une corde ï¿½ son arc.L'impression d'ï¿½tre dans un Indiana Jones, parcourant le monde avec les personnages, dï¿½couvrant des pans entiers de l'histoire de l'humanitï¿½, tentant de percer le secret du premier miracle. Un vrai rï¿½gal.Le tout bourrï¿½ d'humour.Les personnages sont touchants, attachants, ï¿½ la personnalitï¿½ riche, que l'on dï¿½couvre au fil des pages. Avec une jolie histoire d'amour ï¿½ la clï¿½.Un bon moment de lecture.";
 		creerAvis(livres.get(2), 0, commentaire);
 		creerAvis(livres.get(2), 1, commentaire);
 		creerAvis(livres.get(2), 1, commentaire);
