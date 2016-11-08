@@ -38,6 +38,7 @@ public class Avis {
 	private Livre leLivre;
 	
 	@ManyToOne 
+	@Expose
 	@JoinColumn(name="LIVRE_ID") 
 	private Client leClient;
 
