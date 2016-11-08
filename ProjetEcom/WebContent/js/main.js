@@ -125,9 +125,13 @@ app.config(['$routeProvider',
             controller: 'contentCtrl'
         })
         .when('/info/:id', {
-        templateUrl: 'partials/info.html',
-        controller: 'infoCtrl'
-      })
+        	templateUrl: 'partials/info.html',
+        	controller: 'infoCtrl'
+        })
+        .when('/panier', {
+        	templateUrl: 'partials/monPanier.html',
+        	controller: 'contentCtrl'
+        })
     }
 ]);
 

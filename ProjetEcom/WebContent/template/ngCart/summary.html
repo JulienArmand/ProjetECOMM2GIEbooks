@@ -15,7 +15,7 @@
 </svg>
     </div>
     <div class="col-md-6">{{ ngCart.getTotalItems() }}
-        <ng-pluralize count="ngCart.getTotalItems()" when="{1: 'item', 'other':'items'}"></ng-pluralize>
-        <br />{{ ngCart.totalCost() | currency }}
+        <ng-pluralize count="ngCart.getTotalItems()" when="{1: 'livre', 'other':'livres'}"></ng-pluralize>
+        <br />{{ ngCart.totalCost() | currency:"€" }}
     </div>
 </div>
