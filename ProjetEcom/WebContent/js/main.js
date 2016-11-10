@@ -93,6 +93,8 @@ routeAppControllers.controller('corpsAccueilCtrl', ['$scope',
     }
 ]);
 
+
+
 app.config(['$routeProvider',
     function($routeProvider) { 
         
@@ -113,6 +115,10 @@ app.config(['$routeProvider',
         .when('/panier', {
         	templateUrl: 'partials/monPanier.html',
         	controller: 'contentCtrl'
+        })
+        .when('/connexion', {
+        	templateUrl: 'partials/connexion.html',
+        	controller: 'connexionCtrl'
         })
     }
 ]);

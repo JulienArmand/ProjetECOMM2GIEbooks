@@ -77,6 +77,13 @@
 		<url-pattern>/GetAuteurs</url-pattern>
 	</servlet-mapping>
 	
-	
+	<servlet>
+		<servlet-name>ConnexionClient</servlet-name>
+		<servlet-class>servlets.ConnexionClientServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ConnexionClient</servlet-name>
+		<url-pattern>/ConnexionClient</url-pattern>
+	</servlet-mapping>
 
 </web-app>
