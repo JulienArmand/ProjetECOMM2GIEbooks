@@ -18,13 +18,14 @@ app.controller("footerCtrl", function($scope){
 
 app.controller("menuCtrl", function($scope){
 
-    //...    
+	  
 
 });
 
-routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http){
+routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,$document){
     $http.get("LivreAvecId", {params:{"id": $routeParams.id}}).then(function(response) {
     	$scope.livre = response.data;
+    	$scope.moyenne = $scope.calculeMoyenne($scope.livre.lesAvis);
     	$scope.livre.dateDePublication = formatDateDMY($scope.livre.dateDePublication);
     	var premierePartieResume = $scope.livre.resume.substring(0, 350);
     	var deuxiemePartieResume = $scope.livre.resume.substring(350, $scope.livre.resume.length);
@@ -32,10 +33,27 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http)
     	var index = deuxiemePartieResume.search('\\.|!|\\?') + 1;
     	
     	
+    	
     	var tmp = deuxiemePartieResume.substr(0, index);
     	$scope.premierePartieResume = premierePartieResume + tmp;
     	$scope.deuxiemePartieResume = deuxiemePartieResume.substr(index, deuxiemePartieResume.length);
     });
+    
+    $scope.init = function(moy, id){
+    	var str = '#input-'+id;
+    	$(str).rating({displayOnly: true, step: 0.1, size:'xl'});
+    	$(str).rating('update', moy);
+    }
+    
+    $scope.range = function(min, max, step) {
+        step = step || 1;
+        var input = [];
+        for (var i = min; i <= max; i += step) {
+            input.push(i);
+        }
+        return input;
+    };
+    
     $scope.formatDateDMY = formatDateDMY;
     
     $scope.calculPromo = function(prix, promo) {

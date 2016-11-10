@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -51,6 +52,7 @@ public class Client {
 		this.motDePasse = motDePasse;
 		this.nom = nom;
 		this.prenom = prenom;
+		this.lesAvis = new LinkedList<Avis>();
 	}
 	
 

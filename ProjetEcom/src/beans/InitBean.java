@@ -123,6 +123,11 @@ public class InitBean {
 
 		a.setLeLivre(l);
 		l.getLesAvis().add(a);
+		
+		Client sevaeb = creerClient("Sebastien", "Ochier");
+		
+		a.setLeClient(sevaeb);
+		sevaeb.getLesAvis().add(a);
 
 		em.persist(a);
 		return a;
