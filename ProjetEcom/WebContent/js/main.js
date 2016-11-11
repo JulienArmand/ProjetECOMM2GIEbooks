@@ -4,7 +4,7 @@ var routeAppControllers = angular.module('routeAppControllers', []);
 
 app.controller("headerCtrl", function($scope, ngCart){
 
-    //...    
+    
 
 });
 
@@ -17,6 +17,12 @@ app.controller("footerCtrl", function($scope){
 
 
 app.controller("menuCtrl", function($scope){
+
+	  
+
+});
+
+app.controller("searchCtrl", function($scope){
 
 	  
 
@@ -105,6 +111,13 @@ routeAppControllers.controller("contentCtrl", function($scope, $http){
     
 });
 
+routeAppControllers.controller("rechercheViaBarre", function($scope, $http, $routeParams){
+    $http.get("RechercheViaBarre", {params:{"req": $routeParams.req}}).then(function(response) {
+        $scope.livres = response.data;
+        alert(response.data);
+    });
+});
+
 routeAppControllers.controller('corpsAccueilCtrl', ['$scope',
     function($scope){
         $scope.message = "Bienvenue sur la page d'accueil";
@@ -127,6 +140,10 @@ app.config(['$routeProvider',
         .when('/info/:id', {
         	templateUrl: 'partials/info.html',
         	controller: 'infoCtrl'
+        })
+        .when('/rechercheViaBarre/:req', {
+        	templateUrl: 'partials/listMosaique.html',
+        	controller: 'rechercheViaBarre'
         })
         .when('/panier', {
         	templateUrl: 'partials/monPanier.html',

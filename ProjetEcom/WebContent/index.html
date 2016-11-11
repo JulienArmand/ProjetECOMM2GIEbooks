@@ -27,12 +27,16 @@
         <link rel="stylesheet" type="text/css" href="css/slick.css">
         <link rel="stylesheet" type="text/css" href="css/slick-theme.css">
         
-        <!-- Stars -->
+        <!-- Etoiles -->
         <link rel="stylesheet" type="text/css" href="css/star-rating.css">
         <script src="js/libs/star-rating.js" ></script>
+        
+        <!-- ElasticSearch -->
+        <script src="js/libs/elasticsearch.angular.js" ></script>
+        <script src="js/libs/elastic.js" ></script>
 				
     </head>
-    <body class="container-fluid panel-body">
+    <body class="container-fluid panel-body" eui-index="'livres'">
         <section class="container-fluid panel-body" ng-controller="headerCtrl" style ='border-radius:6px;background-color: #daefec; margin-bottom:15px;' ng-include="'partials/header.html'" >
         </section>
         
