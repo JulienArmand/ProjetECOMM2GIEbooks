@@ -1,12 +1,14 @@
 package beans;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -26,6 +28,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import model.Auteur;
 import model.Avis;
@@ -96,6 +100,45 @@ public class InitBean {
 
 		em.persist(l);
 		return l;
+	}
+	
+	public void enregistrerDansLIndexage(Livre l) throws IOException{
+		
+		
+		//String req ="{ \"titre\": \"John Doe \"}";
+		
+		String titre = StringEscapeUtils.escapeHtml4(l.getTitre());
+		
+		String req = "\n{\"titre\":\""+titre+"\"}";
+		
+		URL url = new URL("http://localhost:9200/livres/external/"+l.getId()+"?pretty");
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+	    connection.setRequestMethod("PUT");
+	    connection.setRequestProperty("Content-Type", 
+	            "application/x-www-form-urlencoded; charset=utf-8");
+	    connection.setRequestProperty("Content-Language", "en-US");
+	    connection.setRequestProperty("Content-Length", Integer.toString(req.getBytes().length));
+
+	    connection.setUseCaches(false);
+	    connection.setDoOutput(true);
+
+	    //Send request
+	    DataOutputStream wr = new DataOutputStream (connection.getOutputStream());
+	    wr.writeBytes(req);
+	    wr.close();
+	  
+	    InputStream is = connection.getInputStream();
+	    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+	    StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
+	    String line;
+	    while ((line = rd.readLine()) != null) {
+	      response.append(line);
+	      response.append('\r');
+	    }
+	    System.out.println(response.toString());
+	    rd.close();
+	    
+		
 	}
 	
 	public Client creerClient(String nom, String prenom) {
@@ -405,6 +448,7 @@ public class InitBean {
 				
 			}
 			em.persist(livre);
+			enregistrerDansLIndexage(livre);
 			line = r.readLine();
 		}
 
