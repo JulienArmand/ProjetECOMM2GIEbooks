@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -30,6 +32,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import model.Auteur;
 import model.Avis;
@@ -47,7 +52,12 @@ public class InitBean {
 	private EntityManager em;
 
 	public void init() {
-		suppressionBD();
+		try {
+			suppressionBD();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Auteur hugo = creerAuteur("Hugo", "Victor");
 		Auteur herge = creerAuteur("Hergé", "");
@@ -109,7 +119,7 @@ public class InitBean {
 		
 		String titre = StringEscapeUtils.escapeHtml4(l.getTitre());
 		
-		String req = "\n{\"titre\":\""+titre+"\"}";
+		String req = "\n{\"titre\":\""+titre+"\", \"analyzer\": \"french\"}";
 		
 		URL url = new URL("http://localhost:9200/livres/external/"+l.getId()+"?pretty");
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -191,7 +201,7 @@ public class InitBean {
 		return p;
 	}
 
-	public void suppressionBD() {
+	public void suppressionBD() throws Exception {
 
 		Query q1 = em.createNativeQuery("DELETE FROM Genre");
 		Query q2 = em.createNativeQuery("DELETE FROM Vente");
@@ -222,7 +232,23 @@ public class InitBean {
 		q12.executeUpdate();
 		// q13.executeUpdate();
 		// q14.executeUpdate();
-
+		
+		String req = "{\"settings\":{\"analysis\":{\"filter\":{\"french_elision\":{\"type\":\"elision\",\"articles_case\":true,\"articles\":[\"l\",\"m\",\"t\",\"qu\",\"n\",\"s\",\"j\",\"d\",\"c\",\"jusqu\",\"quoiqu\",\"lorsqu\",\"puisqu\"]},\"french_stop\":{\"type\":\"stop\",\"stopwords\":\"_french_\"},\"french_keywords\":{\"type\":\"keyword_marker\",\"keywords\":[]},\"french_stemmer\":{\"type\":\"stemmer\",\"language\":\"light_french\"}},\"analyzer\":{\"french\":{\"tokenizer\":{\"my_tokenizer\":{\"type\":\"ngram\",\"min_gram\":1,\"max_gram\":1,\"token_chars\":[\"letter\",\"digit\"]}},\"filter\":[\"french_elision\",\"lowercase\",\"french_stop\",\"french_keywords\",\"french_stemmer\"]}}}}}";
+		URL url = new URL("http://localhost:9200/livres?pretty");
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+	    connection.setRequestMethod("PUT");
+	    connection.setRequestProperty("Content-Type", 
+	            "application/x-www-form-urlencoded; charset=utf-8");
+	    connection.setRequestProperty("Content-Language", "en-US");
+	    connection.setRequestProperty("Content-Length", Integer.toString(req.getBytes().length));
+	    
+	    connection.setUseCaches(false);
+	    connection.setDoOutput(true);
+	    
+	    DataOutputStream wr = new DataOutputStream (connection.getOutputStream());
+	    wr.writeBytes(req);
+	    wr.close();
+	    
 	}
 
 	public Auteur creerAuteur(String nom, String prenom) {
@@ -373,7 +399,12 @@ public class InitBean {
 	}
 	
 	public void InitBDFromCSV() throws IOException, URISyntaxException {
-		suppressionBD();
+		try {
+			suppressionBD();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		URL url = new URL("http://localhost:8080/exemplesBD.csv");
 		InputStream is = url.openStream();
@@ -478,6 +509,59 @@ public class InitBean {
 		creerAvis(livres.get(1), 3, commentaire);
 		creerAvis(livres.get(1), 2, commentaire);
 		creerAvis(livres.get(1), 2, commentaire);
+	}
+
+	public List<Livre> getLivreAvecRechercheBarre(String recherche) throws Exception {
+		
+		String r = StringEscapeUtils.escapeHtml4(StringEscapeUtils.unescapeHtml4(recherche));
+		
+		String req = "\n{\"query\" :{ \"match\": {\"titre\":\""+r+"\"}}}";
+		//String req = "\n{\"query\" :{ \"bool\": { \"fuzzy\" : [\n{ \"match\" : {\"titre\":\""+r+"\"} } ] }\n }}";
+		//String req = "\n{\"query\" :{ \"constant_score\": { \"filter\" : \n{ \"term\" : {\"titre\":\""+r+"\"} } }  \n }}";
+		System.out.println(req);
+		
+		URL url = new URL("http://localhost:9200/livres/_search");
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+	    connection.setRequestMethod("GET");
+	    connection.setRequestProperty("Content-Type", 
+	            "application/x-www-form-urlencoded; charset=utf-8");
+	    connection.setRequestProperty("Content-Language", "en-US");
+	    connection.setRequestProperty("Content-Length", Integer.toString(req.getBytes().length));
+
+	    connection.setUseCaches(false);
+	    connection.setDoOutput(true);
+
+	    //Send request
+	    DataOutputStream wr = new DataOutputStream (connection.getOutputStream());
+	    wr.writeBytes(req);
+	    wr.close();
+		
+	    InputStream is = connection.getInputStream();
+	    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+	    StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
+	    String line;
+	    JSONObject json = (JSONObject)new JSONParser().parse(rd);
+
+	    rd.close();
+	    String str = "select OBJECT(b) from Livre b where b.id=";
+		
+	    JSONObject hits1 = (JSONObject) json.get("hits");
+	    JSONArray hits2 = (JSONArray) hits1.get("hits");
+	    if(hits2.size() != 0) {
+		    for(int i = 0; i < hits2.size(); i++) {
+		    	JSONObject tmp = (JSONObject) hits2.get(i);
+		    	String id = (String) tmp.get("_id");
+		    	if(i != hits2.size()-1)
+		    		str += id + " or b.id= ";
+		    	else
+		    		str += id;
+		    }
+			Query q = em.createQuery(str);
+			List<Livre> list = (List<Livre>) q.getResultList();
+			return list;
+	    } else {
+	    	return new LinkedList<Livre>();
+	    }
 	}
 
 }

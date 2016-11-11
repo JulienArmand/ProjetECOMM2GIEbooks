@@ -24,6 +24,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>RechercheViaBarre</servlet-name>
+		<servlet-class>servlets.RechercheViaBarreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RechercheViaBarre</servlet-name>
+		<url-pattern>/RechercheViaBarre</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>getLivresEnPromo</servlet-name>
 		<servlet-class>servlets.GetLivreEnPromoServlet</servlet-class>
 	</servlet>
