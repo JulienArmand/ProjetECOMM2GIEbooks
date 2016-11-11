@@ -1,15 +1,22 @@
 package beans;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -26,6 +33,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import model.Auteur;
 import model.Avis;
@@ -95,7 +104,50 @@ public class InitBean {
 		g.getLesLivres().add(l);
 
 		em.persist(l);
+		
+		
+		
+		
 		return l;
+	}
+	
+	public void enregistrerDansLIndexage(Livre l) throws IOException{
+		
+		
+		//String req ="{ \"titre\": \"John Doe \"}";
+		
+		String titre = StringEscapeUtils.escapeHtml4(l.getTitre());
+		
+		String req = "\n{\"titre\":\""+titre+"\"}";
+		
+		URL url = new URL("http://localhost:9200/livres/external/"+l.getId()+"?pretty");
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+	    connection.setRequestMethod("PUT");
+	    connection.setRequestProperty("Content-Type", 
+	            "application/x-www-form-urlencoded; charset=utf-8");
+	    connection.setRequestProperty("Content-Language", "en-US");
+	    connection.setRequestProperty("Content-Length", Integer.toString(req.getBytes().length));
+
+	    connection.setUseCaches(false);
+	    connection.setDoOutput(true);
+
+	    //Send request
+	    DataOutputStream wr = new DataOutputStream (connection.getOutputStream());
+	    wr.writeBytes(req);
+	    wr.close();
+	  
+	    InputStream is = connection.getInputStream();
+	    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+	    StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
+	    String line;
+	    while ((line = rd.readLine()) != null) {
+	      response.append(line);
+	      response.append('\r');
+	    }
+	    System.out.println(response.toString());
+	    rd.close();
+	    
+		
 	}
 	
 	public Client creerClient(String nom, String prenom) {
@@ -204,7 +256,7 @@ public class InitBean {
 		Editeur e = null;
 		if(le == null || le.size() == 0){
 			e = new Editeur(nom);
-			System.out.println("Editeur "+e.getNom() + " crï¿½ï¿½");
+			System.out.println("Editeur "+e.getNom() + " créé");
 			em.persist(e);
 		}else
 			e = le.get(0);
@@ -405,6 +457,7 @@ public class InitBean {
 				
 			}
 			em.persist(livre);
+			enregistrerDansLIndexage(livre);
 			line = r.readLine();
 		}
 
@@ -422,7 +475,7 @@ public class InitBean {
 		creerVente(livres.get(2));
 		creerVente(livres.get(2));
 		
-		String commentaire = "Je referme \"le premier miracle\" de Gilles Legardinier. \nHabituï¿½ aux comï¿½dies loufoques qui m'ont valu des fous rires mï¿½morables, l'auteur revient un peu ï¿½ ses premiï¿½res amours, le thriller.Ce nouveau roman, savant mï¿½lange d'aventure et d'humour, nous prouve que Gilles a plus d'une corde ï¿½ son arc.L'impression d'ï¿½tre dans un Indiana Jones, parcourant le monde avec les personnages, dï¿½couvrant des pans entiers de l'histoire de l'humanitï¿½, tentant de percer le secret du premier miracle. Un vrai rï¿½gal.Le tout bourrï¿½ d'humour.Les personnages sont touchants, attachants, ï¿½ la personnalitï¿½ riche, que l'on dï¿½couvre au fil des pages. Avec une jolie histoire d'amour ï¿½ la clï¿½.Un bon moment de lecture.";
+		String commentaire = "Je referme \"le premier miracle\" de Gilles Legardinier. \nHabitué aux comédies loufoques qui m'ont valu des fous rires mémorables, l'auteur revient un peu é ses premiéres amours, le thriller.Ce nouveau roman, savant mélange d'aventure et d'humour, nous prouve que Gilles a plus d'une corde é son arc.L'impression d'étre dans un Indiana Jones, parcourant le monde avec les personnages, découvrant des pans entiers de l'histoire de l'humanité, tentant de percer le secret du premier miracle. Un vrai régal.Le tout bourré d'humour.Les personnages sont touchants, attachants, é la personnalité riche, que l'on découvre au fil des pages. Avec une jolie histoire d'amour é la clé.Un bon moment de lecture.";
 		creerAvis(livres.get(2), 0, commentaire);
 		creerAvis(livres.get(2), 1, commentaire);
 		creerAvis(livres.get(2), 1, commentaire);

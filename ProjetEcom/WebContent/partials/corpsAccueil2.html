@@ -8,7 +8,7 @@
 		</div>
 		<div>
 			<a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
-			<h6 ng-repeat="auteur in livre.lesAuteurs">{{auteur.prenom}} {{auteur.nom}}</h6>
+			<h6>{{livre.lesAuteurs[0].prenom}} {{livre.lesAuteurs[0].nom}}</h6>
 			<div>
 				<span>{{calculeMoyenne(livre.lesAvis)}}</span>
 				<i class="a-star-small-4-5"></i>
@@ -16,7 +16,6 @@
 			<div>
 				<span style="text-decoration:line-through; color: red;">{{livre.prix}} €</span>
 		        <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
-                <ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1">Ajouter au panier</ngcart-addtocart>
 	        </div>
        	</div>
 	</div>
@@ -41,11 +40,10 @@
 	        <div ng-if="livre.promotion == undefined">
 				<span>{{livre.prix}} €</span>
 	        </div>
-	        <ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1">Ajouter au panier</ngcart-addtocart>
        	</div>
 	</div>
 </slick>
-<!--  <h2>Recherche</h2>
+<h2>Recherche</h2>
 <slick infinite="true" slides-to-show="5" dots="true" arrows="true" data="livresRecherche" init-onload="true">
 	<div  ng-repeat="livre in livresRecherche" >
  		
@@ -55,7 +53,7 @@
 			</a>
 		</div>
 		<div>
-
+		<!-- -->
 			<a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
 			<h6>{{livre.lesAuteurs[0].prenom}} {{livre.lesAuteurs[0].nom}}</h6>
 			<div>
@@ -69,12 +67,11 @@
 	        <div ng-if="livre.promotion == undefined">
 				<span>{{livre.prix}} €</span>
 	        </div>
-	        <ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1">Ajouter au panier</ngcart-addtocart>
        	</div>
        	
 	</div> 
 </slick>
--->
+
 
 
 
