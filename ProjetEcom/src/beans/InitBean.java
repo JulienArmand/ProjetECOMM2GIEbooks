@@ -2,15 +2,10 @@ package beans;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.ParseException;
@@ -114,14 +109,10 @@ public class InitBean {
 	
 	public void enregistrerDansLIndexage(Livre l) throws IOException{
 		
-		
-		//String req ="{ \"titre\": \"John Doe \"}";
-		
 		String titre = StringEscapeUtils.escapeHtml4(l.getTitre());
+		String req = "\n{\"titre\":\""+titre+"\"}";
 		
-		String req = "\n{\"titre\":\""+titre+"\", \"analyzer\": \"french\"}";
-		
-		URL url = new URL("http://localhost:9200/livres/external/"+l.getId()+"?pretty");
+		URL url = new URL("http://localhost:9200/livres/type_rechercheTitreGenreAuteur/"+l.getId());
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 	    connection.setRequestMethod("PUT");
 	    connection.setRequestProperty("Content-Type", 
@@ -145,7 +136,7 @@ public class InitBean {
 	      response.append(line);
 	      response.append('\r');
 	    }
-	    System.out.println(response.toString());
+	    System.out.println(titre + " : " + response.toString());
 	    rd.close();
 	    
 		
@@ -233,8 +224,8 @@ public class InitBean {
 		// q13.executeUpdate();
 		// q14.executeUpdate();
 		
-		String req = "{\"settings\":{\"analysis\":{\"filter\":{\"french_elision\":{\"type\":\"elision\",\"articles_case\":true,\"articles\":[\"l\",\"m\",\"t\",\"qu\",\"n\",\"s\",\"j\",\"d\",\"c\",\"jusqu\",\"quoiqu\",\"lorsqu\",\"puisqu\"]},\"french_stop\":{\"type\":\"stop\",\"stopwords\":\"_french_\"},\"french_keywords\":{\"type\":\"keyword_marker\",\"keywords\":[]},\"french_stemmer\":{\"type\":\"stemmer\",\"language\":\"light_french\"}},\"analyzer\":{\"french\":{\"tokenizer\":{\"my_tokenizer\":{\"type\":\"ngram\",\"min_gram\":1,\"max_gram\":1,\"token_chars\":[\"letter\",\"digit\"]}},\"filter\":[\"french_elision\",\"lowercase\",\"french_stop\",\"french_keywords\",\"french_stemmer\"]}}}}}";
-		URL url = new URL("http://localhost:9200/livres?pretty");
+		String req = "{\"settings\":{\"analysis\":{\"filter\":{\"autocomplete_filter\":{\"type\":\"ngram\",\"min_gram\":1,\"max_gram\":20}},\"analyzer\":{\"autocomplete\":{\"type\":\"custom\",\"tokenizer\":\"standard\",\"filter\":[\"lowercase\",\"autocomplete_filter\"]}}}},\"mappings\":{\"type_rechercheTitreGenreAuteur\":{\"properties\":{\"titre\":{\"type\":\"text\",\"analyzer\":\"autocomplete\",\"search_analyzer\":\"simple\"}}}}}";
+		URL url = new URL("http://localhost:9200/livres");
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 	    connection.setRequestMethod("PUT");
 	    connection.setRequestProperty("Content-Type", 
@@ -249,6 +240,16 @@ public class InitBean {
 	    wr.writeBytes(req);
 	    wr.close();
 	    
+	    InputStream is = connection.getInputStream();
+	    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+	    StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
+	    String line;
+	    while ((line = rd.readLine()) != null) {
+	      response.append(line);
+	      response.append('\r');
+	    }
+	    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + response.toString() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	    rd.close();
 	}
 
 	public Auteur creerAuteur(String nom, String prenom) {
@@ -515,10 +516,8 @@ public class InitBean {
 		
 		String r = StringEscapeUtils.escapeHtml4(StringEscapeUtils.unescapeHtml4(recherche));
 		
-		String req = "\n{\"query\" :{ \"match\": {\"titre\":\""+r+"\"}}}";
-		//String req = "\n{\"query\" :{ \"bool\": { \"fuzzy\" : [\n{ \"match\" : {\"titre\":\""+r+"\"} } ] }\n }}";
-		//String req = "\n{\"query\" :{ \"constant_score\": { \"filter\" : \n{ \"term\" : {\"titre\":\""+r+"\"} } }  \n }}";
-		System.out.println(req);
+		
+		String req = "{\"query\":{\"match\":{\"titre\":{\"query\":\""+r+"\",\"fuzziness\":\"AUTO\",\"operator\":\"and\"}}}}";		
 		
 		URL url = new URL("http://localhost:9200/livres/_search");
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -538,10 +537,9 @@ public class InitBean {
 		
 	    InputStream is = connection.getInputStream();
 	    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-	    StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
-	    String line;
-	    JSONObject json = (JSONObject)new JSONParser().parse(rd);
 
+	    JSONObject json = (JSONObject)new JSONParser().parse(rd);
+	    System.out.println(json);
 	    rd.close();
 	    String str = "select OBJECT(b) from Livre b where b.id=";
 		
