@@ -28,11 +28,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.settings.Settings.Builder;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -58,7 +53,7 @@ public class InitBean {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}   
 
 		Auteur hugo = creerAuteur("Hugo", "Victor");
 		Auteur herge = creerAuteur("Hergé", "");
@@ -229,7 +224,7 @@ public class InitBean {
 		// q13.executeUpdate();
 		// q14.executeUpdate();
 
-
+		try {
 		 String req = "{\"settings\":{\"analysis\":{\"filter\":{\"autocomplete_filter\":{\"type\":\"ngram\",\"min_gram\":1,\"max_gram\":20}},\"analyzer\":{\"autocomplete\":{\"type\":\"custom\",\"tokenizer\":\"standard\",\"filter\":[\"lowercase\",\"autocomplete_filter\"]}}}},\"mappings\":{\"type_rechercheTitreGenreAuteur\":{\"properties\":{\"titre\":{\"type\":\"text\",\"analyzer\":\"autocomplete\",\"search_analyzer\":\"simple\"}}}}}";
 		 URL url = new URL("http://localhost:9200/livres");
 		 
@@ -255,6 +250,10 @@ public class InitBean {
 			 response.append('\r'); 
 		 }
 		 rd.close();
+		}
+		catch (Exception e) {
+			
+		}
 	}
 
 	public Auteur creerAuteur(String nom, String prenom) {
