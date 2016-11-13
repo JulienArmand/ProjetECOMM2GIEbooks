@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -110,9 +111,10 @@ public class InitBean {
 
 	public void enregistrerDansLIndexage(Livre l) throws IOException {
 
-		String titre = StringEscapeUtils.escapeHtml4(l.getTitre());
-		String req = "\n{\"titre\":\"" + titre + "\"}";
+		String req = "\n{\"titre\":\"" + normalisationString(l.getTitre()) + "\"}";
 
+		System.out.println("TITRE " + normalisationString(l.getTitre()));
+		
 		URL url = new URL("http://localhost:9200/livres/type_rechercheTitreGenreAuteur/" + l.getId());
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("PUT");
@@ -137,9 +139,7 @@ public class InitBean {
 			response.append(line);
 			response.append('\r');
 		}
-		System.out.println(titre + " : " + response.toString());
 		rd.close();
-
 	}
 
 	public Client creerClient(String nom, String prenom) {
@@ -405,6 +405,16 @@ public class InitBean {
 		return list;
 	}
 
+	public String normalisationString(String s) {
+		return
+		    Normalizer
+		        .normalize(s, Normalizer.Form.NFD)
+		        .replaceAll("[^\\p{ASCII}]", "")
+		        .replaceAll("\"", "")
+		        .replaceAll("'", "");
+	}
+	
+	
 	public void InitBDFromCSV() throws IOException, URISyntaxException {
 		try {
 			suppressionBD();
@@ -520,7 +530,7 @@ public class InitBean {
 
 	public List<Livre> getLivreAvecRechercheBarre(String recherche) throws Exception {
 
-		String r = StringEscapeUtils.escapeHtml4(StringEscapeUtils.unescapeHtml4(recherche));
+		String r = normalisationString(StringEscapeUtils.unescapeHtml4(recherche));
 
 		String req = "{\"query\":{\"match\":{\"titre\":{\"query\":\"" + r
 				+ "\",\"fuzziness\":\"AUTO\",\"operator\":\"and\"}}}}";
