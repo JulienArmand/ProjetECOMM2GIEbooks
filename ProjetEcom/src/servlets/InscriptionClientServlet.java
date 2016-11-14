@@ -20,7 +20,7 @@ public class InscriptionClientServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 268367471001606128L;
 	
-	@EJB()  //ou @EJB si nom par dÃ©faut 
+	@EJB()  //ou @EJB si nom par défaut 
 	private InscriptionClientBean myBean; 
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
