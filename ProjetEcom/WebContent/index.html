@@ -27,27 +27,31 @@
         <link rel="stylesheet" type="text/css" href="css/slick.css">
         <link rel="stylesheet" type="text/css" href="css/slick-theme.css">
         
-        <!-- Stars -->
+        <!-- Etoiles -->
         <link rel="stylesheet" type="text/css" href="css/star-rating.css">
         <script src="js/libs/star-rating.js" ></script>
+        
+        <!-- ElasticSearch -->
+        <script src="js/libs/elasticsearch.angular.js" ></script>
+        <script src="js/libs/elastic.js" ></script>
 				
     </head>
-    <body class="container-fluid panel-body">
-        <section class="container-fluid panel-body" ng-controller="headerCtrl" style ='border-radius:6px;background-color: #daefec; margin-bottom:15px;' ng-include="'partials/header.html'" >
+    <body class="container-fluid panel-body" eui-index="'livres'">
+        <section class="container-fluid panel-body col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-controller="headerCtrl" style ='border-radius:6px;background-color: #daefec; margin-bottom:15px;' ng-include="'partials/header.html'" >
         </section>
         
      	<div class="container-fluid">
      		<div class="row">
-		        <section ng-controller="menuCtrl" class="col-lg-2" style ='border-radius:6px;background-color: #a7dbef; margin-bottom:15px;'>
+		        <section ng-controller="menuCtrl" class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style ='border-radius:6px;background-color: #a7dbef; margin-bottom:15px;'  ng-include="'partials/menu.html'">
 		            <h1>MENU</h1>
 		        </section>
 				
-		        <section id="vue" class="col-lg-10" style ='border-radius:6px;background-color: #d2ecf7; margin-bottom:15px;' ng-view>
+		        <section id="vue" class="col-lg-10 col-md-10 col-sm-10 col-xs-12" style ='border-radius:6px;background-color: #d2ecf7; margin-bottom:15px;' ng-view>
 		        </section>
 		     </div>
         </div>
         
-        <footer ng-controller="footerCtrl" class="container-fluid panel-body" style ='border-radius:6px;background-color: #daefec;' ng-include="'partials/footer.html'">
+        <footer ng-controller="footerCtrl" class="container-fluid panel-body col-lg-12 col-md-12 col-sm-12 col-xs-12" style ='border-radius:6px;background-color: #daefec;' ng-include="'partials/footer.html'">
             
         </footer>
     </body>
