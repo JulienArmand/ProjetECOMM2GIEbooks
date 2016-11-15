@@ -6,6 +6,8 @@
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
+        
+        
         <!-- Librairie js -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" ></script>
         <script src="js/libs/angular.min.js" ></script>
@@ -34,6 +36,10 @@
         <!-- ElasticSearch -->
         <script src="js/libs/elasticsearch.angular.js" ></script>
         <script src="js/libs/elastic.js" ></script>
+        
+        
+        <link rel="stylesheet" type="text/css" href="css/testClem.css">
+        
 				
     </head>
     <body class="container-fluid panel-body" eui-index="'livres'">
@@ -42,11 +48,11 @@
         
      	<div class="container-fluid">
      		<div class="row">
-		        <section ng-controller="menuCtrl" class="col-lg-2" style ='border-radius:6px;background-color: #a7dbef; margin-bottom:15px;'>
+		        <section id="menu" ng-controller="menuCtrl" class="col-lg-2">
 		            <h1>MENU</h1>
 		        </section>
 				
-		        <section id="vue" class="col-lg-10" style ='border-radius:6px;background-color: #d2ecf7; margin-bottom:15px;' ng-view>
+		        <section id="vuePrincipale" class="col-lg-10" ng-view>
 		        </section>
 		     </div>
         </div>

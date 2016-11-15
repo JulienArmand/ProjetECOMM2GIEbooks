@@ -1,0 +1,23 @@
+body {
+	font-family: "Palatino Linotype", Serif;
+}
+
+.no-padding {
+	padding: 0px;
+}
+
+.padding1 {
+	padding-right: 1px;
+}
+
+#menu {
+	border-radius: 6px;
+	background-color: #a7dbef;
+	margin-bottom: 15px;
+}
+
+#vuePrincipale {
+	border-radius: 6px;
+	background-color: #d2ecf7;
+	margin-bottom: 15px;
+}
