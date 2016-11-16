@@ -1,1 +1,57 @@
-<span>{{livres}}</span>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	<div>
+		<!-- ON NE MET PAS LE CONTROLEUR CAR IL EST APPELER VIA LE BOUTON RECHERCHE, A VOIR -->
+		<h1>Resultat recherche</h1>
+		<!-- Changement de trie marche par, par defaut par titre -->
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav">
+					<li class="active"><label><input type="radio" ng-model="ordonneur" value="titre">Titre</label></li>
+    				<li><label><input type="radio" ng-model="ordonneur" value="prix">Prix</label></li>
+				</ul>
+				<form class="navbar-form navbar-right inline-form">
+					<div class="form-group">
+						<input type="search" class="input-sm form-control"
+							placeholder="Recherche">
+						<button type="submit" class="btn btn-primary btn-sm">
+							<span class="glyphicon glyphicon-eye-open"></span> Chercher
+						</button>
+					</div>
+				</form>
+			</div>
+		</nav>
+		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"
+			dir-paginate="livre in livres | orderBy:ordonneur | itemsPerPage: pageSize"
+			current-page="currentPage">
+			<div>
+				<a ng-href="#/info/{{livre.id}}"> <img
+					ng-src="{{livre.nomCouverture}}" class="img-responsive" />
+				</a>
+			</div>
+			<div>
+				<a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
+				<h6 ng-repeat="auteur in livre.lesAuteurs">{{auteur.prenom}}
+					{{auteur.nom}}</h6>
+				<div>
+					<span>{{calculeMoyenne(livre.lesAvis)}}</span> <i
+						class="a-star-small-4-5"></i>
+				</div>
+				<div>
+					<span style="text-decoration: line-through; color: red;">{{livre.prix}}
+						€</span> <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}}
+						€</span>
+					<ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}"
+						price="{{livre.prix}}" quantity="1">Ajouter au
+					panier</ngcart-addtocart>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="text-center">
+				<dir-pagination-controls boundary-links="true"
+					template-url="partials/dirPagination.tpl.html"></dir-pagination-controls>
+			</div>
+		</div>
+	</div>
+</div>
