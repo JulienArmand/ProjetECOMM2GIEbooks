@@ -1,4 +1,4 @@
-var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'ngCart', 'routeAppControllers', 'slick']);
+var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'ngCart', 'routeAppControllers', 'slick', 'angularUtils.directives.dirPagination']);
 
 var routeAppControllers = angular.module('routeAppControllers', []);
 
@@ -43,6 +43,18 @@ app.controller("paiementCtrl", function($scope){
 		{nom : "Novembre", valeur : "11"},
 		{nom : "Décembre", valeur : "12"},
 	];
+
+});
+
+app.controller("searchCtrl", function($scope){
+
+	  
+});
+
+app.controller("pageChange", function($scope){
+	/*$scope.pageChangeHandler = function(num) {
+		alert(num);
+	};*/
 });
 
 routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,$document){
@@ -133,6 +145,34 @@ routeAppControllers.controller("rechercheViaBarre", function($scope, $http, $rou
         $scope.livres = response.data;
         alert(response.data);
     });
+    
+    $scope.currentPage = 1;
+    $scope.pageSize = 2;
+    $scope.ordonneur = "titre";
+
+    $scope.pageChangeHandler = function(num) {
+        alert(num);
+    };
+    
+    $scope.calculeMoyenne = function(list) {
+    	var moy = 0;
+    	if(list.length == 0)
+    		return "Pas d'avis";
+    	for(i=0; i < list.length; i++)
+    		moy += list[i].note;
+    	return (moy / list.length).toFixed(1) + "/5 ("+list.length+")";
+    	
+    }
+    
+    $scope.changeOrdonneur = function(ordonneur) {
+        $scope.ordonneur = ordonneur;
+        alert(ordonneur);
+    }
+    
+    $scope.calculPromo = function(prix, promo) {
+    	return roundPrix(prix-(prix*promo)/100);
+    }
+
 });
 
 routeAppControllers.controller('corpsAccueilCtrl', ['$scope',

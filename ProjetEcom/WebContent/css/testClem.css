@@ -11,13 +11,31 @@ body {
 }
 
 #menu {
-	border-radius: 6px;
-	background-color: #a7dbef;
+	background-color: #ECF3F2;
+}
+
+#header {
+	margin-top: 15px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	padding-top: 15px;
+	padding-left: 50px;
+	background-color: #ECF3F2;
+}
+
+#trait {
+	padding-top: 10px;
+	border-bottom : 2px solid #C0C0C0;
+	background-color: #ECF3F2;
+}
+
+#footer {
+	background-color: #ECF3F2;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 	margin-bottom: 15px;
 }
 
 #vuePrincipale {
-	border-radius: 6px;
-	background-color: #d2ecf7;
-	margin-bottom: 15px;
+	background-color: #ECF3F2;
 }
