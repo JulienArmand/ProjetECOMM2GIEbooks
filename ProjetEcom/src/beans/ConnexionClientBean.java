@@ -11,36 +11,24 @@ import model.Client;
 public class ConnexionClientBean {
 	
 	@PersistenceContext(unitName = "Database-unit") 
-	private EntityManager em; 
+	private EntityManager em;
 	
 	public boolean checkPseudoExiste(String pseudo){
 		boolean result = false;
-		System.out.println("Check2");
-		Query q = em.createQuery("select OBJECT(b) from Client b");
-		System.out.println("Check3");
+		Query q = em.createQuery("select OBJECT(b) from Client b WHERE b.pseudo LIKE :reqpseudo").setParameter("reqpseudo", pseudo);
 		List<Client> list = (List<Client>) q.getResultList();
-		System.out.println("Check4");
-		System.out.println(list.size());
-		int i = 0;
-		while(i< list.size() || !result){
-			if(list.get(i).getPseudo().equals(pseudo)){
-				result = true;
-			}
-			i++;
+		if(list.size() != 0){
+			result = true;
 		}
 		return result;
 	}
 	
 	public boolean checkMotDePasseCorrect(String pseudo, String motDePasse){
 		boolean result = false;
-		Query q = em.createQuery("select OBJECT(b) from Client b"); 
+		Query q = em.createQuery("select OBJECT(b) from Client b WHERE b.pseudo LIKE :reqpseudo AND b.motDePasse LIKE :reqmotDePasse").setParameter("reqpseudo", pseudo).setParameter("reqmotDePasse", motDePasse); 
 		List<Client> list = (List<Client>) q.getResultList(); 
-		int i = 0;
-		while(i< list.size() || !result){
-			if(list.get(i).getPseudo().equals(pseudo) && list.get(i).getMotDePasse().equals(motDePasse)){
-				result = true;
-			}
-			i++;
+		if(list.size() != 0){
+			result = true;
 		}
 		return result;
 	}
