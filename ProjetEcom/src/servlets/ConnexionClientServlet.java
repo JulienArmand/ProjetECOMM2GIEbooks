@@ -21,8 +21,6 @@ public class ConnexionClientServlet extends HttpServlet {
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getParameter("pseudo"));
-		System.out.println(request.getParameter("motDePasse"));
 		if(checkPseudoClientExiste(request.getParameter("pseudo"))){
 			if(checkMotDePasseCorrect(request.getParameter("pseudo"), request.getParameter("motDePasse"))){
 				//Pseudo existe et mot de passe correct -> valider la connexion
@@ -40,9 +38,7 @@ public class ConnexionClientServlet extends HttpServlet {
 	}
 	
 	private boolean checkPseudoClientExiste(String pseudo){
-		System.out.println("Point de passage 1");
 		boolean result = myBean.checkPseudoExiste(pseudo);
-		System.out.println("Point de passage 2");
 		return result;
 	}
 	
