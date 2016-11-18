@@ -167,8 +167,3 @@ function formatDateDMY(str){
 	}
 	return j+"/"+mois+"/"+an;
 }
-
-
-
-
-
