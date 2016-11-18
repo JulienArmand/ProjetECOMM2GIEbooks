@@ -28,6 +28,23 @@ app.controller("searchCtrl", function($scope){
 
 });
 
+app.controller("paiementCtrl", function($scope){
+	$scope.mois = [
+		{nom : "Janvier", valeur : "1"},
+		{nom : "Février", valeur : "2"},
+		{nom : "Mars", valeur : "3"},
+		{nom : "Avril", valeur : "4"},
+		{nom : "Mai", valeur : "5"},
+		{nom : "Juin", valeur : "6"},
+		{nom : "Juillet", valeur : "7"},
+		{nom : "Aout", valeur : "8"},
+		{nom : "Septembre", valeur : "9"},
+		{nom : "Octobre", valeur : "10"},
+		{nom : "Novembre", valeur : "11"},
+		{nom : "Décembre", valeur : "12"},
+	];
+});
+
 routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,$document){
     $http.get("LivreAvecId", {params:{"id": $routeParams.id}}).then(function(response) {
     	$scope.livre = response.data;
@@ -154,6 +171,10 @@ app.config(['$routeProvider',
         .when('/connexion', {
         	templateUrl: 'partials/connexion.html',
         	controller: 'connexionCtrl'
+        })
+        .when('/paiement', {
+        	templateUrl: 'partials/paiement.html',
+        	controller: 'paiementCtrl'
         })
     }
 ]);
