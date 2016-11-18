@@ -48,46 +48,6 @@ public class InitBean {
 	@PersistenceContext(unitName = "Database-unit")
 	private EntityManager em;
 
-	public void init() {
-		try {
-			suppressionBD();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}   
-
-		Auteur hugo = creerAuteur("Hugo", "Victor");
-		Auteur herge = creerAuteur("Hergé", "");
-
-		Editeur galimard = creerEditeur("Galimard");
-		Editeur casterman = creerEditeur("Casterman");
-
-		Genre romans = creerGenre("Romans");
-		Genre bd = creerGenre("BD");
-
-		Livre miserable = creerLivre("Les misérables", hugo, galimard, romans, "isbn0325465", 124, 9.99, "Francais",
-				"Francais", "images/defaultCouv.png");
-		Livre claudeGueux = creerLivre("Claude Gueux", hugo, galimard, romans, "isbn0325465", 124, 9.42, "Francais",
-				"Francais", "images/defaultCouv.png");
-		Livre notreDame = creerLivre("Notre-Dame de Paris", hugo, galimard, romans, "isbn0325465", 124, 9.12,
-				"Francais", "Francais", "images/defaultCouv.png");
-		Livre tintinCongo = creerLivre("Tintin au Congo", herge, casterman, bd, "isbn0325465", 124, 9.99, "Francais",
-				"Francais", "images/defaultCouv.png");
-		Livre lotusBleu = creerLivre("Tintin : le lotus bleu", herge, casterman, bd, "isbn0325465", 124, 9.98,
-				"Francais", "Francais", "images/defaultCouv.png");
-		Livre cigarePharaon = creerLivre("Tintin : les cigares du pharaon", herge, casterman, bd, "isbn0325465", 124,
-				9.01, "Francais", "Francais", "images/defaultCouv.png");
-
-		creerPromotion(miserable, 20);
-		creerPromotion(claudeGueux, 20);
-		creerPromotion(notreDame, 20);
-		creerPromotion(tintinCongo, 20);
-
-		creerAvis(tintinCongo, 3, "commentaire1");
-		creerAvis(tintinCongo, 4, "commentaire1");
-		creerAvis(tintinCongo, 1, "commentaire1");
-	}
-
 	public Livre creerLivre(String nom, Auteur a, Editeur e, Genre g, String isbn, int nbpage, double prix,
 			String langue, String langueOriginale, String couverture) {
 
@@ -111,10 +71,11 @@ public class InitBean {
 
 	public void enregistrerDansLIndexage(Livre l) throws IOException {
 
-		String req = "\n{\"titre\":\"" + normalisationString(l.getTitre()) + "\"}";
+		String req = "\n{\"titre\":\"" + normalisationString(l.getTitre()) + "\", \"prix\":" + l.getPrix()
+				+ ", \"genre\":\"" + normalisationString(l.getGenre().getNom()) + "\", \"avis\":" + l.calculMoyenneAvis() + "}";
 
-		System.out.println("TITRE " + normalisationString(l.getTitre()));
-		
+		System.out.println(req);
+
 		URL url = new URL("http://localhost:9200/livres/type_rechercheTitreGenreAuteur/" + l.getId());
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("PUT");
@@ -159,7 +120,7 @@ public class InitBean {
 		return c;
 	}
 
-	public Avis creerAvis(Livre l, int note, String commentaire) {
+	public Avis creerAvis(Livre l, int note, String commentaire) throws Exception {
 
 		Date datePublication = Date.from(Instant.now());
 
@@ -172,7 +133,39 @@ public class InitBean {
 
 		a.setLeClient(sevaeb);
 		sevaeb.getLesAvis().add(a);
+		
+		String req = "\n{\"doc\" : {\"avis\":"+l.calculMoyenneAvis()+"}}";
 
+		System.out.println("MAJ " + req + " id : "+l.getId());
+		
+		URL url = new URL("http://localhost:9200/livres/type_rechercheTitreGenreAuteur/" + l.getId()+"/_update");
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		connection.setRequestMethod("POST");
+		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+		connection.setRequestProperty("Content-Language", "en-US");
+		connection.setRequestProperty("Content-Length", Integer.toString(req.getBytes().length));
+		
+		connection.setUseCaches(false);
+		connection.setDoOutput(true);
+		
+		// Send request
+		DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
+		wr.writeBytes(req);
+		wr.close();
+		
+		InputStream is = connection.getInputStream();
+		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		StringBuilder response = new StringBuilder(); // or StringBuffer if
+														// Java version 5+
+		String line;
+		while ((line = rd.readLine()) != null) {
+			response.append(line);
+			response.append('\r');
+		}
+		System.out.println(line);
+		rd.close();
+		
+		
 		em.persist(a);
 		return a;
 	}
@@ -225,34 +218,35 @@ public class InitBean {
 		// q14.executeUpdate();
 
 		try {
-		 String req = "{\"settings\":{\"analysis\":{\"filter\":{\"autocomplete_filter\":{\"type\":\"ngram\",\"min_gram\":1,\"max_gram\":20}},\"analyzer\":{\"autocomplete\":{\"type\":\"custom\",\"tokenizer\":\"standard\",\"filter\":[\"lowercase\",\"autocomplete_filter\"]}}}},\"mappings\":{\"type_rechercheTitreGenreAuteur\":{\"properties\":{\"titre\":{\"type\":\"text\",\"analyzer\":\"autocomplete\",\"search_analyzer\":\"simple\"}}}}}";
-		 URL url = new URL("http://localhost:9200/livres");
-		 
-		 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		 
-		 connection.setRequestMethod("PUT");
-		 connection.setRequestProperty("Content-Type",
-		 "application/x-www-form-urlencoded; charset=utf-8");
-		 connection.setRequestProperty("Content-Language", "en-US");
-		 connection.setRequestProperty("Content-Length", Integer.toString(req.getBytes().length));
-		
-		 connection.setUseCaches(false); 
-		 connection.setDoOutput(true);
-		 
-		 DataOutputStream wr = new DataOutputStream (connection.getOutputStream()); wr.writeBytes(req); wr.close();
-		 
-		 InputStream is = connection.getInputStream(); 
-		 BufferedReader rd = new BufferedReader(new InputStreamReader(is)); 
-		 StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+ 
-		 String line; 
-		 while ((line = rd.readLine()) != null) { 
-			 response.append(line);
-			 response.append('\r'); 
-		 }
-		 rd.close();
-		}
-		catch (Exception e) {
-			
+			String req = "{\"settings\":{\"analysis\":{\"filter\":{\"autocomplete_filter\":{\"type\":\"ngram\",\"min_gram\":1,\"max_gram\":20}},\"analyzer\":{\"autocomplete\":{\"type\":\"custom\",\"tokenizer\":\"standard\",\"filter\":[\"lowercase\",\"autocomplete_filter\"]}}}},\"mappings\":{\"type_rechercheTitreGenreAuteur\":{\"properties\":{\"titre\":{\"type\":\"text\",\"analyzer\":\"autocomplete\",\"search_analyzer\":\"simple\"}}}}}";
+			URL url = new URL("http://localhost:9200/livres");
+
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+			connection.setRequestMethod("PUT");
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+			connection.setRequestProperty("Content-Language", "en-US");
+			connection.setRequestProperty("Content-Length", Integer.toString(req.getBytes().length));
+
+			connection.setUseCaches(false);
+			connection.setDoOutput(true);
+
+			DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
+			wr.writeBytes(req);
+			wr.close();
+
+			InputStream is = connection.getInputStream();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+			StringBuilder response = new StringBuilder(); // or StringBuffer if
+															// Java version 5+
+			String line;
+			while ((line = rd.readLine()) != null) {
+				response.append(line);
+				response.append('\r');
+			}
+			rd.close();
+		} catch (Exception e) {
+
 		}
 	}
 
@@ -406,15 +400,10 @@ public class InitBean {
 	}
 
 	public String normalisationString(String s) {
-		return
-		    Normalizer
-		        .normalize(s, Normalizer.Form.NFD)
-		        .replaceAll("[^\\p{ASCII}]", "")
-		        .replaceAll("\"", "")
-		        .replaceAll("'", "");
+		return Normalizer.normalize(s, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "").replaceAll("\"", "")
+				.replaceAll("'", "");
 	}
-	
-	
+
 	public void InitBDFromCSV() throws IOException, URISyntaxException {
 		try {
 			suppressionBD();
@@ -515,26 +504,82 @@ public class InitBean {
 		creerVente(livres.get(2));
 
 		String commentaire = "Je referme \"le premier miracle\" de Gilles Legardinier. \nHabituï¿½ aux comï¿½dies loufoques qui m'ont valu des fous rires mï¿½morables, l'auteur revient un peu ï¿½ ses premiï¿½res amours, le thriller.Ce nouveau roman, savant mï¿½lange d'aventure et d'humour, nous prouve que Gilles a plus d'une corde ï¿½ son arc.L'impression d'ï¿½tre dans un Indiana Jones, parcourant le monde avec les personnages, dï¿½couvrant des pans entiers de l'histoire de l'humanitï¿½, tentant de percer le secret du premier miracle. Un vrai rï¿½gal.Le tout bourrï¿½ d'humour.Les personnages sont touchants, attachants, ï¿½ la personnalitï¿½ riche, que l'on dï¿½couvre au fil des pages. Avec une jolie histoire d'amour ï¿½ la clï¿½.Un bon moment de lecture.";
-		creerAvis(livres.get(2), 0, commentaire);
-		creerAvis(livres.get(2), 1, commentaire);
-		creerAvis(livres.get(2), 1, commentaire);
+		try {
+			creerAvis(livres.get(2), 0, commentaire);
+			creerAvis(livres.get(2), 1, commentaire);
+			creerAvis(livres.get(2), 1, commentaire);
 
-		creerAvis(livres.get(0), 4, commentaire);
-		creerAvis(livres.get(0), 4, commentaire);
-		creerAvis(livres.get(0), 5, commentaire);
+			creerAvis(livres.get(0), 4, commentaire);
+			creerAvis(livres.get(0), 4, commentaire);
+			creerAvis(livres.get(0), 5, commentaire);
 
-		creerAvis(livres.get(1), 3, commentaire);
-		creerAvis(livres.get(1), 2, commentaire);
-		creerAvis(livres.get(1), 2, commentaire);
+			creerAvis(livres.get(1), 3, commentaire);
+			creerAvis(livres.get(1), 2, commentaire);
+			creerAvis(livres.get(1), 2, commentaire);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public List<Livre> getLivreAvecRechercheBarre(String recherche) throws Exception {
+	public String rechercheElasticSearch(String requeteBarre, int prixMin, int prixMax, String genre, int avisMin)
+			throws Exception {
 
-		String r = normalisationString(StringEscapeUtils.unescapeHtml4(recherche));
+		String reqBarre = normalisationString(StringEscapeUtils.unescapeHtml4(requeteBarre));
 
-		String req = "{\"query\":{\"match\":{\"titre\":{\"query\":\"" + r
-				+ "\",\"fuzziness\":\"AUTO\",\"operator\":\"and\"}}}}";
+		boolean prec = false;
+		String blocReqBarre = "";
+		if (!reqBarre.equals("@")) {
+			blocReqBarre = "{ \"match\":{ \"titre\":{ \"query\":\"" + reqBarre
+					+ "\",\"fuzziness\":\"AUTO\",\"operator\":\"and\"}}}";
+			prec = true;
+		}
+		String blocReqPrix = "";
+		if (prixMin != -1 || prixMax != -1) {
 
+			if (prec)
+				blocReqPrix += ",";
+			if (prixMin != -1 && prixMax != -1) {
+				blocReqPrix += "{ \"range\" : { \"prix\" : {\"lte\" : " + prixMax + "  ,\"gte\" : " + prixMin + " }}}";
+				
+			}
+			else if (prixMin != -1 && prixMax == -1) {
+				blocReqPrix += "{ \"range\" : { \"prix\" : {\"gte\" : " + prixMin + " }}}";
+
+			} else { // prixMin == -1 || prixMax != -1
+				blocReqPrix += "{ \"range\" : { \"prix\" : {\"lte\" : " + prixMax + " }}}";
+			}
+
+			prec = true;
+		}
+		String blocReqGenre = "";
+		if (!genre.equals("@")) {
+
+			if (prec)
+				blocReqGenre += ",";
+			blocReqGenre += "{ \"term\" : { \"genre\" : \"" + genre.toLowerCase() + "\"} }";
+
+			prec = true;
+		}
+		String blocReqAvis = "";
+		if (avisMin != -1) {
+			if (prec)
+				blocReqAvis += ",";
+			blocReqAvis += "{ \"range\" : { \"avis\" : {\"gte\" : " + avisMin + " }}}";
+			prec = true;
+		}
+
+		String req = "{\"from\" : 0, \"size\" : 10000,\"query\":{\"bool\": { \"must\": [" + blocReqBarre + ""
+				+ blocReqPrix + "" + blocReqGenre + "" + blocReqAvis + "]}}}";
+
+		return req;
+	}
+
+	public List<CoupleLivreVente> recherche(String requeteBarre, int prixMin, int prixMax, String genre, int avisMin)
+			throws Exception {
+
+		String req = rechercheElasticSearch(requeteBarre, prixMin, prixMax, genre, avisMin);
+		System.out.println(req);
 		URL url = new URL("http://localhost:9200/livres/_search");
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("GET");
@@ -559,7 +604,9 @@ public class InitBean {
 		String str = "select OBJECT(b) from Livre b where b.id=";
 
 		JSONObject hits1 = (JSONObject) json.get("hits");
+		System.out.println(hits1.size());
 		JSONArray hits2 = (JSONArray) hits1.get("hits");
+		System.out.println(hits2.size());
 		if (hits2.size() != 0) {
 			for (int i = 0; i < hits2.size(); i++) {
 				JSONObject tmp = (JSONObject) hits2.get(i);
@@ -571,9 +618,14 @@ public class InitBean {
 			}
 			Query q = em.createQuery(str);
 			List<Livre> list = (List<Livre>) q.getResultList();
-			return list;
+			List<CoupleLivreVente> res = new LinkedList<>();
+			for (int i = 0; i < list.size(); i++) {
+				res.add(new CoupleLivreVente(list.get(i), list.get(i).getLesVentes().size()));
+			}
+			System.out.println(res.size());
+			return res;
 		} else {
-			return new LinkedList<Livre>();
+			return new LinkedList<>();
 		}
 	}
 

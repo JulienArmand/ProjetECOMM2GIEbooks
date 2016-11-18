@@ -3,6 +3,7 @@ package model;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.persistence.CascadeType;
@@ -242,13 +243,20 @@ public class Livre {
 	public void setResume(String resume) {
 		this.resume = resume;
 	}
-	
-	/*public String toJson(){
+
+	public int calculMoyenneAvis(){
 		
-		String json = "{ \"livre\" : ";
-		json+= "{titre: " + this.title + "}"
+		if(this.lesAvis.size() == 0)
+			return 0;
 		
-		return "";
-	}*/
+		int x = 0;
+		Iterator<Avis> it = this.lesAvis.iterator();
+		while(it.hasNext())
+			x+=it.next().getNote();
+		
+		return x/this.lesAvis.size();
+		
+		
+	}
 	
 }
