@@ -72,6 +72,12 @@ app.controller("menuCtrl", function($scope, $rootScope){
 	
 });
 
+app.controller("searchCtrl", function($scope){
+
+	  
+
+});
+
 app.controller("paiementCtrl", function($scope){
 	$scope.mois = [
 		{nom : "Janvier", valeur : "1"},
@@ -87,12 +93,9 @@ app.controller("paiementCtrl", function($scope){
 		{nom : "Novembre", valeur : "11"},
 		{nom : "Décembre", valeur : "12"},
 	];
+
 });
 
-app.controller("searchCtrl", function($scope){
-
-	  
-});
 
 app.controller("pageChange", function($scope){
 	/*$scope.pageChangeHandler = function(num) {
@@ -249,6 +252,8 @@ routeAppControllers.controller('corpsAccueilCtrl', ['$scope',
     }
 ]);
 
+
+
 app.config(['$routeProvider',
     function($routeProvider) { 
         
@@ -273,6 +278,10 @@ app.config(['$routeProvider',
         .when('/panier', {
         	templateUrl: 'partials/monPanier.html',
         	controller: 'contentCtrl'
+        })
+        .when('/connexion', {
+        	templateUrl: 'partials/connexion.html',
+        	controller: 'connexionCtrl'
         })
         .when('/paiement', {
         	templateUrl: 'partials/paiement.html',
