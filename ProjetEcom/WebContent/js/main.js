@@ -46,10 +46,6 @@ app.controller("paiementCtrl", function($scope){
 
 });
 
-app.controller("searchCtrl", function($scope){
-
-	  
-});
 
 app.controller("pageChange", function($scope){
 	/*$scope.pageChangeHandler = function(num) {
