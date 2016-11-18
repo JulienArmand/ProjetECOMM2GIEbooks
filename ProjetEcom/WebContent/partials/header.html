@@ -1,3 +1,20 @@
+<head>
+<script>
+		var name = "login=";
+    	var ca = document.cookie.split(';');
+    	for(var i = 0; i <ca.length; i++) {
+        	var c = ca[i];
+        	while (c.charAt(0)==' ') {
+            	c = c.substring(1);
+        	}
+        	if (c.indexOf(name) == 0) {
+            	document.getElementById('login').innerHTML = c.substring(name.length,c.length);
+        	}
+    	}
+</script>
+</head>
+
+
 <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	<span class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px;">
 		<a href="/"> <img ng-src="../images/logoEcom2.png" class="img-responsive" style="height: 10em;width: 10em; "/></a>
@@ -22,6 +39,9 @@
 					<div class="row row-same-height" style="text-align:center;"><ngcart-summary></ngcart-summary>
 				</a></div>
 		</ul>
-		<a href="#/connexion" class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="font-size:150% ;padding:0px;text-align:center; ">Mon<br>Compte</a>
+		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+		<a href="#/connexion" style="font-size:150% ;padding:0px;text-align:center; ">Mon<br>Compte</a>
+		<a id="login"></a>
+		</div>
 	</div>
 </div>
