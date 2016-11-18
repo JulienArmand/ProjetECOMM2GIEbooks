@@ -2,6 +2,7 @@ var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'ngCart', 'routeAppC
 
 var routeAppControllers = angular.module('routeAppControllers', []);
 
+
 app.controller("headerCtrl", function($scope, ngCart){
 
     //...    
@@ -71,6 +72,7 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     	return list.length;
     }
 });
+
 
 
 routeAppControllers.controller("contentCtrl", function($scope, $http){
