@@ -41,7 +41,7 @@
 	        <div ng-if="livre.promotion == undefined">
 				<span>{{livre.prix}} €</span>
 	        </div>
-	        <ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1">Ajouter au panier</ngcart-addtocart>
+	        <ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{calculPromo(livre.prix,livre.promotion.tauxReduc)}}" quantity="1">Ajouter au panier</ngcart-addtocart>
        	</div>
 	</div>
 </slick>

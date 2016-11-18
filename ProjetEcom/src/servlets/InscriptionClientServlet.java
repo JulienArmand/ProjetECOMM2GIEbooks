@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +52,8 @@ public class InscriptionClientServlet extends HttpServlet {
 		response.getWriter().println("Le prenom est :" + request.getParameter("prenom"));
 		response.getWriter().println("Le mot de passe est :" + request.getParameter("motDePasse"));
 		response.getWriter().println("Le mail est :" + request.getParameter("email"));
+		RequestDispatcher dispatcher = request.getRequestDispatcher("html/inscriptionClient.html");
+		dispatcher.forward(request,response);
 		
 	}
 

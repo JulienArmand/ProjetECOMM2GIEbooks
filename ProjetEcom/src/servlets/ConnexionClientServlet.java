@@ -25,27 +25,7 @@ public class ConnexionClientServlet extends HttpServlet {
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(checkPseudoClientExiste(request.getParameter("pseudo"))){
-			if(checkMotDePasseCorrect(request.getParameter("pseudo"), request.getParameter("motDePasse"))){
-				//Pseudo existe et mot de passe correct -> valider la connexion
-				Cookie login = new Cookie("login", request.getParameter("pseudo"));
-				response.addCookie(login);
-				PrintWriter out = response.getWriter();  
-				response.setContentType("text/html");  
-				out.println("<script type=\"text/javascript\">");  
-				out.println("alert('Bienvenue "+login.getValue()+"');");
-				out.println("document.location.href = 'index.html'");
-				out.println("</script>");
-			}
-			else{
-				//Pseudo existe mais mot de passe incorrect
-				response.getWriter().println("Le mot de passe que vous avez saisi est incorrect.");
-			}
-		}
-		else{
-			//Pseudo n'existe pas
-			response.getWriter().println("Le pseudo que vous avez saisi n'existe pas..");
-		}
+		doPost(request,response);
 	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -54,25 +34,24 @@ public class ConnexionClientServlet extends HttpServlet {
 				//Pseudo existe et mot de passe correct -> valider la connexion
 				Cookie login = new Cookie("login", request.getParameter("pseudo"));
 				response.addCookie(login);
-				PrintWriter out = response.getWriter();  
-				response.setContentType("text/html");  
-				out.println("<script type=\"text/javascript\">");  
-				out.println("alert('Bienvenue2 "+request.getParameter("pseudo")+"');");  
-				out.println("</script>");
-				//Redirect to main page
-				//response.sendRedirect("");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("index.html");
-				dispatcher.forward(request,response);
+				
+				
 			}
 			else{
-				//Pseudo existe mais mot de passe incorrect
-				response.getWriter().println("Le mot de passe que vous avez saisi est incorrect.");
+				//Mot de passe non correct
+				Cookie erreur = new Cookie("erreur", "true");
+				response.addCookie(erreur);
+
 			}
 		}
 		else{
 			//Pseudo n'existe pas
-			response.getWriter().println("Le pseudo que vous avez saisi n'existe pas..");
+			Cookie erreur = new Cookie("erreur", "true");
+			response.addCookie(erreur);
 		}
+		//Redirect to main page
+		RequestDispatcher dispatcher = request.getRequestDispatcher("");
+		dispatcher.forward(request,response);
 	}
 	
 	
