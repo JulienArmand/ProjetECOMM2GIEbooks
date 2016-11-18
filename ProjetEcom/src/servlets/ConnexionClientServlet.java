@@ -32,10 +32,9 @@ public class ConnexionClientServlet extends HttpServlet {
 				PrintWriter out = response.getWriter();  
 				response.setContentType("text/html");  
 				out.println("<script type=\"text/javascript\">");  
-				out.println("alert('Bienvenue "+request.getParameter("pseudo")+"');");  
+				out.println("alert('Bienvenue "+login.getValue()+"');");
+				out.println("document.location.href = 'index.html'");
 				out.println("</script>");
-				//Redirect to main page
-				//response.sendRedirect("");
 			}
 			else{
 				//Pseudo existe mais mot de passe incorrect
