@@ -1,8 +1,11 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +27,15 @@ public class ConnexionClientServlet extends HttpServlet {
 		if(checkPseudoClientExiste(request.getParameter("pseudo"))){
 			if(checkMotDePasseCorrect(request.getParameter("pseudo"), request.getParameter("motDePasse"))){
 				//Pseudo existe et mot de passe correct -> valider la connexion
-				response.getWriter().println("Bienvenue " + request.getParameter("pseudo"));
+				Cookie login = new Cookie("login", request.getParameter("pseudo"));
+				response.addCookie(login);
+				PrintWriter out = response.getWriter();  
+				response.setContentType("text/html");  
+				out.println("<script type=\"text/javascript\">");  
+				out.println("alert('Bienvenue "+request.getParameter("pseudo")+"');");  
+				out.println("</script>");
+				//Redirect to main page
+				//response.sendRedirect("");
 			}
 			else{
 				//Pseudo existe mais mot de passe incorrect
