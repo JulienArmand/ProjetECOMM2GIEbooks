@@ -1,39 +1,47 @@
-<!DOCTYPE html>
-<html>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<body>
-	<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		<span class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px;">
-			<a href="/"> <img ng-src="../images/logoEcom2.png" class="img-responsive" style="height: 10em;width: 10em; "/></a>
-		</span>
-		<div class="col-lg-7 col-md-7 col-sm-7 col-xs-6" style="margin-top:2.5%;vertical-align: middle;" >
-			<form role="form" name="form" action="" method="post" style="padding:0px; vertical-align: middle;">
-				
-				<div class="input-group input-group-lg icon-addon addon-lg" style="vertical-align: middle;">
-		        	<input type="text" placeholder="Ecrivez ici pour chercher un livre ..." name="inputSearchQuerry" id="schbox" class="form-control input-lg">
-		        	<i class="icon icon-search"></i>
-		        	<span class="input-group-btn">
-		         	   <button type="submit" class="btn btn-inverse"><i class="glyphicon glyphicon-search"></i></button>
-		        	</span>
-		   		</div>
-			</form>
-		</div>
-		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 " style="padding:0px;">
-			<ul class="list-unstyled col-lg-7 col-md-7 col-xs-7 col-sm-7" style="padding:0px;">
-				<li><a ng-href="#/panier" ></li>
-						<!-- <img ng-src="../images/icon_panier.png" class=" img-responsive" style="height: 6em;width: 6em; margin:auto; padding:0px;"/>-->
-						<div class="row row-same-height" style="text-align:center;"><ngcart-summary></ngcart-summary>
-					</a></div>
-			</ul>
-			<a href="#/connexion" class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="font-size:150% ;padding:0px;text-align:center; ">Mon<br>Compte</a>
+<head>
+<script>
+		var name = "login=";
+    	var ca = document.cookie.split(';');
+    	for(var i = 0; i <ca.length; i++) {
+        	var c = ca[i];
+        	while (c.charAt(0)==' ') {
+            	c = c.substring(1);
+        	}
+        	if (c.indexOf(name) == 0) {
+            	document.getElementById('login').innerHTML = c.substring(name.length,c.length);
+        	}
+    	}
+</script>
+</head>
 
-			<div ng-controller="myCtrl">
-				<p>My first expression: {{ 5 + 5 }} {{firstName + " " + lastName}}</p>
-			</div>
-		
+
+<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	<span class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px;">
+		<a href="/"> <img ng-src="../images/logoEcom2.png" class="img-responsive" style="height: 10em;width: 10em; "/></a>
+	</span>
+	<div class="col-lg-7 col-md-7 col-sm-7 col-xs-6" style="margin-top:2.5%;vertical-align: middle;" >
+		<form role="form" name="form" action="" method="post" style="padding:0px; vertical-align: middle;">
+			
+			<div class="input-group input-group-lg icon-addon addon-lg" style="vertical-align: middle;">
+	        	<input type="text" placeholder="Ecrivez ici pour chercher un livre ..." name="inputSearchQuerry" id="schbox" class="form-control input-lg">
+	        	<i class="icon icon-search"></i>
+	        	<span class="input-group-btn">
+	         	   <button type="submit" class="btn btn-inverse"><i class="glyphicon glyphicon-search"></i></button>
+	        	</span>
+	   		</div>
+		</form>
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 " style="padding:0px;">
+		<ul class="list-unstyled col-lg-7 col-md-7 col-xs-7 col-sm-7" style="padding:0px;">
+			<li><a ng-href="#/panier" ></li>
+					<!-- <img ng-src="../images/icon_panier.png" class=" img-responsive" style="height: 6em;width: 6em; margin:auto; padding:0px;"/>-->
+					<div class="row row-same-height" style="text-align:center;"><ngcart-summary></ngcart-summary>
+				</a></div>
+		</ul>
+		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+		<a href="#/connexion" style="font-size:150% ;padding:0px;text-align:center; ">Mon<br>Compte</a>
+		<a id="login"></a>
 		</div>
 	</div>
+</div>
 
-	
-</body>
-</html>
