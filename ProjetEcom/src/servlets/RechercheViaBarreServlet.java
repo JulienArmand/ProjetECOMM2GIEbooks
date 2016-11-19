@@ -16,13 +16,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import beans.CoupleLivreVente;
+import beans.GestionLivre;
 import beans.InitBean;
 import model.Livre;
 
 public class RechercheViaBarreServlet extends HttpServlet {
 
 	@EJB()  //ou @EJB si nom par défaut 
-	private InitBean myBean; 
+	private GestionLivre myBean; 
 	
 	public RechercheViaBarreServlet() {
 		// TODO Auto-generated constructor stub

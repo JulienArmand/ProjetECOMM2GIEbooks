@@ -28,17 +28,17 @@ import com.google.gson.annotations.Expose;
 public class Livre {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="LIVRE_ID")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "LIVRE_ID")
 	@Expose
 	private long id;
-	
+
 	@Expose
 	private String titre;
 	@Expose
 	private String isbn;
 	@Expose
-	@Temporal(TemporalType.DATE) 
+	@Temporal(TemporalType.DATE)
 	private Date dateDePublication;
 	@Expose
 	private int nbPages;
@@ -57,32 +57,32 @@ public class Livre {
 	@Expose
 	@OneToOne
 	private Promotion promotion;
-	
+
 	@Expose
-	@ManyToMany(mappedBy="lesLivres",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "lesLivres", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Auteur> lesAuteurs;
 
 	@Expose
-	@OneToMany(mappedBy="leLivre",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "leLivre", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Avis> lesAvis;
 
-	@OneToMany(mappedBy="livre",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "livre", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Vente> lesVentes;
-	
-	@ManyToOne 
-	@Expose
-	@JoinColumn(name="Genre_id") 
-	private Genre genre;
-	
+
 	@ManyToOne
 	@Expose
-	@JoinColumn(name="Editeur_id")
+	@JoinColumn(name = "Genre_id")
+	private Genre genre;
+
+	@ManyToOne
+	@Expose
+	@JoinColumn(name = "Editeur_id")
 	private Editeur editeur;
-	
-	@ManyToOne 
-	@JoinColumn(name="Serie_id")
+
+	@ManyToOne
+	@JoinColumn(name = "Serie_id")
 	private Serie laSerie;
-	
+
 	public Livre() {
 		super();
 		this.lesAuteurs = new LinkedList<Auteur>();
@@ -102,8 +102,6 @@ public class Livre {
 		this.langueOrigine = langueOrigine;
 	}
 
-	
-	
 	public long getId() {
 		return id;
 	}
@@ -171,7 +169,6 @@ public class Livre {
 	public Collection<Auteur> getLesAuteurs() {
 		return lesAuteurs;
 	}
-	
 
 	public void setLesAuteurs(Collection<Auteur> lesAuteurs) {
 		this.lesAuteurs = lesAuteurs;
@@ -180,7 +177,7 @@ public class Livre {
 	public Collection<Avis> getLesAvis() {
 		return lesAvis;
 	}
-	
+
 	public void setLesAvis(Collection<Avis> lesAvis) {
 		this.lesAvis = lesAvis;
 	}
@@ -188,7 +185,6 @@ public class Livre {
 	public Genre getGenre() {
 		return genre;
 	}
-	
 
 	public void setGenre(Genre genre) {
 		this.genre = genre;
@@ -197,7 +193,6 @@ public class Livre {
 	public Editeur getEditeur() {
 		return editeur;
 	}
-	
 
 	public void setEditeur(Editeur editeur) {
 		this.editeur = editeur;
@@ -207,7 +202,6 @@ public class Livre {
 		return laSerie;
 	}
 
-
 	public void setLaSerie(Serie laSerie) {
 		this.laSerie = laSerie;
 	}
@@ -215,7 +209,7 @@ public class Livre {
 	public Collection<Vente> getLesVentes() {
 		return lesVentes;
 	}
- 
+
 	public void setLesVentes(Collection<Vente> lesVentes) {
 		this.lesVentes = lesVentes;
 	}
@@ -244,19 +238,31 @@ public class Livre {
 		this.resume = resume;
 	}
 
-	public int calculMoyenneAvis(){
-		
-		if(this.lesAvis.size() == 0)
+	public int calculMoyenneAvis() {
+
+		if (this.lesAvis.size() == 0)
 			return 0;
-		
+
 		int x = 0;
 		Iterator<Avis> it = this.lesAvis.iterator();
-		while(it.hasNext())
-			x+=it.next().getNote();
-		
-		return x/this.lesAvis.size();
-		
-		
+		while (it.hasNext())
+			x += it.next().getNote();
+
+		return x / this.lesAvis.size();
+
 	}
-	
+
+	public void addAuteur(Auteur a) {
+
+		if (a != null) {
+
+			if (this.lesAuteurs == null)
+
+				this.lesAuteurs = new LinkedList<>();
+
+			this.lesAuteurs.add(a);
+		}
+
+	}
+
 }
