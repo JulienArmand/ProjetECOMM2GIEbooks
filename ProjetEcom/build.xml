@@ -1,0 +1,21 @@
+<project  name="ProjetEcom" default="build" basedir=".">
+	<property name="build" location="/home/im2ag/apache-tomee-webprofile-7.0.1/webapps/ROOT/WEB-INF/classes"/>
+	<target name="init">
+		<mkdir dir="${build}"/>
+		<copy todir="/home/im2ag/apache-tomee-webprofile-7.0.1/webapps/ROOT/">
+			<fileset dir="/home/im2ag/git/ProjetECOMM2GIEbooks/ProjetEcom/WebContent"/>
+		</copy>
+	</target>
+	<target name="build" depends="init">
+        	<javac srcdir="src" destdir="${build}">
+			<classpath>
+			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.1/webapps/ROOT/WEB-INF/lib/gson-2.3.1.jar"/>
+			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.1/webapps/ROOT/WEB-INF/lib/json_simple.jar"/>
+			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.1/lib/javaee-api-7.0.jar"/>
+
+			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.1/lib/commons-lang3-3.4.jar"/>
+<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.1/lib/servlet-api.jar"/>
+			</classpath>
+		</javac>
+    	</target>
+</project>

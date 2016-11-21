@@ -1,9 +1,9 @@
 <h2>Promotions</h2>
-<slick infinite="true" slides-to-show="8" dots="true" arrows="true" data="livresPromo" init-onload="true">
-	<div  ng-repeat="livre in livresPromo" >
+<slick infinite="true" slides-to-show="7" dots="true" arrows="true" data="livresPromo" init-onload="true">
+	<div  ng-repeat="livre in livresPromo" class="mosaique-item">
 		<div>
 			<a ng-href="#/info/{{livre.id}}">
-			<img ng-src="{{livre.nomCouverture}}" class="img-responsive" />
+				<img ng-src="{{livre.nomCouverture}}" class="img-responsive" />
 			</a>
 		</div>
 		<div>
@@ -16,16 +16,19 @@
 			<div>
 				<span style="text-decoration:line-through; color: red;">{{livre.prix}} €</span>
 		        <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
-                <ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1">Ajouter au panier</ngcart-addtocart>
+                <ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1">
+                <i class="glyphicon glyphicon-shopping-cart"></i></ngcart-addtocart>
 	        </div>
        	</div>
 	</div>
 </slick>
 <h2>Livres les plus vendus</h2>
-<slick infinite="true" slides-to-show="5" dots="true" arrows="true" data="livresPlusVendu" init-onload="true">
-	<div  ng-repeat="livre in livresPlusVendu" >
+<slick infinite="true" slides-to-show="7" dots="true" arrows="true" data="livresPlusVendu" init-onload="true">
+	<div  ng-repeat="livre in livresPlusVendu" class="mosaique-item">
 		<div>
-			<img ng-src="{{livre.nomCouverture}}" class="img-responsive" />
+			<a ng-href="#/info/{{livre.id}}">
+				<img ng-src="{{livre.nomCouverture}}" class="img-responsive" />
+			</a>
 		</div>
 		<div>
 			<a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
@@ -41,7 +44,8 @@
 	        <div ng-if="livre.promotion == undefined">
 				<span>{{livre.prix}} €</span>
 	        </div>
-	        <ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1">Ajouter au panier</ngcart-addtocart>
+	        <ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1">
+	        <i class="glyphicon glyphicon-shopping-cart"></i></ngcart-addtocart>
        	</div>
 	</div>
 </slick>

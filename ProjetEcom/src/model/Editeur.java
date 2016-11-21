@@ -62,5 +62,18 @@ public class Editeur {
 	public void setLesLivres(Collection<Livre> lesLivres) {
 		this.lesLivres = lesLivres;
 	}
+	
+	public void addLivre(Livre l) {
+
+		if (l != null) {
+
+			if (this.lesLivres == null)
+
+				this.lesLivres = new LinkedList<>();
+
+			this.lesLivres.add(l);
+		}
+
+	}
 
 }
