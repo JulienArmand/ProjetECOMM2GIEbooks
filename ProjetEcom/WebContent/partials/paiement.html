@@ -19,19 +19,59 @@
 		<div style="clear: both;"></div>
 		<h3>Moyens de paiement</h3>
 		<div class="radio">
-			<label> <input type="radio" name="inlineRadioOptions"
-				id="optionsCB" value="CB" checked> <img
-				src="images/masterCard.png" class="img-responsive" alt="MasterCard">
-				<img src="images/visa.png" class="img-responsive" alt="Visa">
-			</label> 
-			<input type="text" class="form-control" placeholder="Titulaire de la carte">
-			<input type="text" class="form-control" placeholder="Numéro de carte"> 
-			<select class="form-control" ng-model="selectedMois" placeholder="Mois">
-				<option ng-repeat="m in mois" value="{{m.valeur}}">{{m.nom}}</option>
-			</select> 
-			<input type="text" class="form-control" placeholder="Année">
-			<input type="text" class="form-control" placeholder="Cryptogramme">
-
+			<div class="container-fluid">
+				<form action="" role="form">
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					
+						<div class="form-group">
+						<input type="radio" name="inlineRadioOptions" id="optionsCB" value="CB" checked>	
+							<label for="optionsCB">									 
+										<img src="images/masterCard.png" class="img-responsive col-lg-4 col-md-2 col-sm-2 col-xs-1" alt="MasterCard"> 
+										<img src="images/visa.png" class="img-responsive  col-lg-4 col-md-2 col-sm-2 col-xs-1" alt="Visa">
+								
+							</label>
+							</div>
+						</div>
+					</div>
+					<div style="clear: both;"></div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+						<div class="form-group">
+							<input type="text" class="form-control"
+								placeholder="Titulaire de la carte">
+						</div>
+					</div>
+					<div style="clear: both;"></div>
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+						<div class="form-group">
+							<input type="text" class="form-control"
+								placeholder="Numéro de carte">
+						</div>
+					</div>
+					<div style="clear: both;"></div>
+					<div class="row">
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+							<div class="form-group">
+								<select class="form-control " ng-model="selectedMois"
+									placeholder="Mois">
+									<option ng-repeat="m in mois" value="{{m.valeur}}">{{m.nom}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Année">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+						<div class="form-group">
+							<input type="text" class="form-control"
+								placeholder="Cryptogramme">
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
 		<div class="radio">
 			<label> <input type="radio" name="inlineRadioOptions"
@@ -44,7 +84,7 @@
 	<div class="text-right">
 		<span class=""> <a ng-href="#/paiement">
 				<button class="btn btn-primary">
-					<i class="glyphicon glyphicon-barcode"></i> Valider s <i
+					<i class="glyphicon glyphicon-barcode"></i> Valider<i
 						class="glyphicon glyphicon-barcode"></i>
 				</button>
 		</a>
