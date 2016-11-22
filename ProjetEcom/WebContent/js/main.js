@@ -1,16 +1,51 @@
-var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'ngCart', 'routeAppControllers', 'slick', 'angularUtils.directives.dirPagination']);
+var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'ngCart', 'routeAppControllers', 'slick', 'angularUtils.directives.dirPagination', 'elasticsearch']);
 
 var routeAppControllers = angular.module('routeAppControllers', []);
 
-app.controller("headerCtrl", function($scope, ngCart, $rootScope){
+app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchSuggestion){
+	
 
+	$scope.suggestion = function() {
+		var req = $("#schbox").val().replace(/[^\x00-\x7F]/g, "").replace("\"","").replace("'","");
+		elasticSearchSuggestion.suggest({
+	        index: "livres",
+	        body: {
+		        suggest_titre: {
+		            text: req,
+		            completion: {
+		                field: "suggest_titre"
+		            }
+		        },
+		        suggest_auteur:{
+		            text: req,
+		            completion: {
+		                field : "suggest_auteurs"
+		            }
+		        }
+	        }
+	    }).then(function (resp) {
+	    	console.log(resp);
+	    	var auteurs = resp.suggest_auteur[0].options;
+	    	var titres = resp.suggest_titre[0].options;
+	    	$("#barreRecherche").empty();
+	    	
+	    	for(var i = 0; i < titres.length; i++)
+	    		$("#barreRecherche").append("<option ng-selected=\"rechercheBarre()\"  value='" + titres[i]._source.titre.trim() + "'>");
+	    	
+	    	for(var i = 0; i < auteurs.length; i++)
+	    		$("#barreRecherche").append("<option ng-selected=\"rechercheBarre()\" value='" + auteurs[i]._source.auteurs.trim() + "'>");
+	    	
+		});
+	}
+	
+	
 	$rootScope.req = "@";
 	$rootScope.genre = "@"; 
 	$rootScope.minPrix = -1;
 	$rootScope.maxPrix = -1;
 	$rootScope.avisMin = -1;
 
-	console.log("barre : max : " +$rootScope.maxPrix );
+	
 	
 	$scope.rechercheBarre = function(){
 		
@@ -317,6 +352,11 @@ function formatDateDMY(str){
 	return j+"/"+mois+"/"+an;
 }
 
+app.service('elasticSearchSuggestion', function (esFactory) {
+	  return esFactory({
+	    host: 'localhost:9200'
+	  });
+});
 
 
 

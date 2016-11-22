@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -59,11 +60,40 @@ public class InitBean {
 	private GestionEditeur gestionEditeur;
 
 	public void enregistrerDansLIndexage(Livre l) throws IOException {
-
+		String auteurs = "";
+		
+		
+		Iterator<Auteur> it = l.getLesAuteurs().iterator();
+		while(it.hasNext()){
+			Auteur a = it.next();
+			auteurs += a.getPrenom() + " " + a.getNom() + " ";
+		}
+		
+		auteurs = Tools.normalisationString(auteurs);
+		
+		String tabTitre = "";
+		String tabAuteurs = "";
+		
+		String [] tmpTitre = Tools.normalisationString(l.getTitre()).split(" ");
+		for(int i = 0; i < tmpTitre.length; i++ ) {
+			if(i == tmpTitre.length-1)
+				tabTitre += "\"" + tmpTitre[i] + "\"";
+			else tabTitre += "\"" + tmpTitre[i] + "\"" + ", ";
+		}
+		
+		String [] tmpAuteurs = auteurs.split(" ");
+		for(int i = 0; i < tmpAuteurs.length; i++ ) {
+			if(!tmpAuteurs[i].equals("")){
+				if(i == tmpAuteurs.length-1)
+					tabAuteurs += "\"" + tmpAuteurs[i] + "\"";
+				else tabAuteurs += "\"" + tmpAuteurs[i] + "\"" + ", ";
+			}
+		}
+		
 		String req = "\n{\"titre\":\"" + Tools.normalisationString(l.getTitre()) + "\", \"prix\":" + l.getPrix()
 				+ ", \"genre\":\"" + Tools.normalisationString(l.getGenre().getNom()) + "\", \"avis\":"
-				+ l.calculMoyenneAvis() + "}";
-
+				+ l.calculMoyenneAvis() + ", \"auteurs\":\""	+ auteurs + "\", \"suggest_titre\": { \"input\": ["+tabTitre+"] }, \"suggest_auteurs\": { \"input\": ["+tabAuteurs+"]}}";
+		System.out.println(req);
 		InputStream is = ElasticSearchTools
 				.doRequest("http://localhost:9200/livres/type_rechercheTitreGenreAuteur/" + l.getId(), "PUT", req);
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is));

@@ -35,7 +35,7 @@ public class ElasticSearchTools {
 
 	public static void creerIndex() throws IOException {
 
-		String req = "{\"settings\":{\"analysis\":{\"filter\":{\"autocomplete_filter\":{\"type\":\"ngram\",\"min_gram\":1,\"max_gram\":20}},\"analyzer\":{\"autocomplete\":{\"type\":\"custom\",\"tokenizer\":\"standard\",\"filter\":[\"lowercase\",\"autocomplete_filter\"]}}}},\"mappings\":{\"type_rechercheTitreGenreAuteur\":{\"properties\":{\"titre\":{\"type\":\"text\",\"analyzer\":\"autocomplete\",\"search_analyzer\":\"simple\"}}}}}";
+		String req = "{\"settings\":{\"analysis\":{\"filter\":{\"autocomplete_filter\":{\"type\":\"ngram\",\"min_gram\":1,\"max_gram\":20}},\"analyzer\":{\"autocomplete\":{\"type\":\"custom\",\"tokenizer\":\"standard\",\"filter\":[\"lowercase\",\"autocomplete_filter\"]}}}},\"mappings\":{\"type_rechercheTitreGenreAuteur\":{\"properties\":{\"titre\":{\"type\":\"text\",\"analyzer\":\"autocomplete\",\"search_analyzer\":\"simple\"},\"suggest_titre\":{\"type\": \"completion\",\"analyzer\": \"simple\", \"search_analyzer\": \"simple\"},\"suggest_auteurs\": {\"type\": \"completion\",\"analyzer\": \"simple\",\"search_analyzer\": \"simple\"}}}}}";
 
 		InputStream is = ElasticSearchTools.doRequest("http://localhost:9200/livres", "PUT", req);
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -58,8 +58,8 @@ public class ElasticSearchTools {
 		boolean prec = false;
 		String blocReqBarre = "";
 		if (!reqBarre.equals("@")) {
-			blocReqBarre = "{ \"match\":{ \"titre\":{ \"query\":\"" + reqBarre
-					+ "\",\"fuzziness\":\"AUTO\",\"operator\":\"and\"}}}";
+			blocReqBarre = "{ \"multi_match\":{ \"query\":\"" + reqBarre
+					+ "\",\"fuzziness\":\"AUTO\",\"operator\":\"and\", \"fields\": [ \"titre\", \"auteurs\" ]}}";
 			prec = true;
 		}
 		String blocReqPrix = "";
