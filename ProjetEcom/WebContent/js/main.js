@@ -92,8 +92,17 @@ app.controller("paiementCtrl", function($scope){
 		{nom : "Octobre", valeur : "10"},
 		{nom : "Novembre", valeur : "11"},
 		{nom : "Décembre", valeur : "12"},
+		{nom : "Mois", valeur : "0", selected : "true", disabled : "true"}
 	];
-
+	$scope.selectedMois = $scope.mois[0].value;
+	
+	$scope.changeRadio = function(idForm, bool){
+		$(idForm).hidden(bool);
+	}
+	
+	$scope.moyenPaiement = {
+		moyen : "CB"
+	}
 });
 
 
@@ -285,6 +294,10 @@ app.config(['$routeProvider',
         })
         .when('/paiement', {
         	templateUrl: 'partials/paiement.html',
+        	controller: 'paiementCtrl'
+        })
+        .when('/confirmation', {
+        	templateUrl: 'partials/confirmation.html',
         	controller: 'paiementCtrl'
         })
     }
