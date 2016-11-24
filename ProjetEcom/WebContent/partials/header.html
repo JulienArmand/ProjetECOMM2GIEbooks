@@ -1,17 +1,49 @@
 <head>
 <script>
-		var name = "login=";
-    	var ca = document.cookie.split(';');
-    	for(var i = 0; i <ca.length; i++) {
-        	var c = ca[i];
-        	while (c.charAt(0)==' ') {
-            	c = c.substring(1);
-        	}
-        	if (c.indexOf(name) == 0) {
-            	document.getElementById('login').innerHTML = c.substring(name.length,c.length);
-        	}
+		var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+		if (cookieValue != null && cookieValue != "") {
+        	document.getElementById('login').innerHTML = cookieValue;
+        	document.getElementById('connexion').style.display = "none";
+        	document.getElementById('profil').style.display = "";
     	}
+		var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+		if (cookieValue == "true") {
+        	document.getElementById('erreurIdentifiant').style.visibility = "visible";
+        	document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    	}else{
+    		document.getElementById('erreurIdentifiant').style.visibility = "hidden";
+    	}
+		
+
+// 		var name = "login=";
+//     	var ca = document.cookie.split(';');
+//     	for(var i = 0; i <ca.length; i++) {
+//         	var c = ca[i];
+//         	while (c.charAt(0)==' ') {
+//             	c = c.substring(1);
+//         	}
+//         	if (c.indexOf(name) == 0) {
+//             	document.getElementById('login').innerHTML = c.substring(name.length,c.length);
+//             	document.getElementById('1').style.display = "none";
+//             	document.getElementById('2').style.display = "";
+//         	}
+//     	}	
+
+    	function deconnexion(){
+    		document.getElementById('connexion').style.display = "";
+        	document.getElementById('profil').style.display = "none";
+        	document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        	document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
+    	}
+    	function afficheCookies(){
+    		 alert(document.cookie);
+    	}
+    	
+    	
 </script>
+
+
 </head>
 
 
@@ -39,9 +71,30 @@
 					<div class="row row-same-height" style="text-align:center;"><ngcart-summary></ngcart-summary>
 				</a></div>
 		</ul>
+		
 		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-		<a href="#/connexion" style="font-size:150% ;padding:0px;text-align:center; ">Mon<br>Compte</a>
-		<a id="login"></a>
-		</div>
+				<div id="connexion">
+				<form action="ConnexionClient" method="POST">
+				<fieldset>
+					<span id="erreurIdentifiant" style="visibility:hidden;color:red;">Identifiant ou mot de passe incorrect</span><br>
+					<input type="text" name="pseudo" placeholder="Identifiant" value=""><br>
+					<input type="password" name="motDePasse" placeholder="Mot de passe"><br>
+					<input type="submit" value="Connexion">
+				</fieldset>
+				</form>
+				<form action="html/inscriptionClient.html">
+					<input type="submit" value="Inscription">
+				</form>
+			</div>
+			<div id="profil" style="display:none">
+				<a href="#/connexion" style="font-size:150% ;padding:0px;text-align:center; ">Mon<br>Compte</a>
+				<a id="login"></a>
+				<form>
+					<input type="submit" onclick="deconnexion()" value="Deconnexion"></p>
+				</form>
+			</div>
+			<form >
+				<input type="submit" onclick="afficheCookies()" value="affiche Cookies"></p>
+			</form>
 	</div>
 </div>

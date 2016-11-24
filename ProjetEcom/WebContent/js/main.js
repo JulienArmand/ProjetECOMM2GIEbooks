@@ -2,6 +2,7 @@ var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'ngCart', 'routeAppC
 
 var routeAppControllers = angular.module('routeAppControllers', []);
 
+
 app.controller("headerCtrl", function($scope, ngCart){
 
     
@@ -99,6 +100,7 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     	return list.length;
     }
 });
+
 
 
 routeAppControllers.controller("contentCtrl", function($scope, $http){
@@ -203,13 +205,11 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/monPanier.html',
         	controller: 'contentCtrl'
         })
-<<<<<<< HEAD
         .when('/paiement', {
         	templateUrl: 'partials/paiement.html',
         	controller: 'paiementCtrl'
         })
-=======
->>>>>>> refs/remotes/origin/Julien
+
         .when('/connexion', {
         	templateUrl: 'partials/connexion.html',
         	controller: 'connexionCtrl'
