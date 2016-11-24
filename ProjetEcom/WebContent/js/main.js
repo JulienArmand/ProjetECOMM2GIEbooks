@@ -2,9 +2,8 @@ var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'ngCart', 'routeAppC
 
 var routeAppControllers = angular.module('routeAppControllers', []);
 
-app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchSuggestion){
-	
 
+app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchSuggestion){
 	$scope.suggestion = function() {
 		var req = $("#schbox").val().replace(/[^\x00-\x7F]/g, "").replace("\"","").replace("'","");
 		elasticSearchSuggestion.suggest({
@@ -206,6 +205,7 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
 	$rootScope.maxPrix = -1;
 	$rootScope.avisMin = -1;
 	
+
     $http.get("Promos").then(function(response) {
         $scope.livresPromo = response.data;
         
@@ -298,6 +298,8 @@ routeAppControllers.controller('corpsAccueilCtrl', ['$scope',
 
 
 
+
+
 app.config(['$routeProvider',
     function($routeProvider) { 
         
@@ -323,13 +325,13 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/monPanier.html',
         	controller: 'contentCtrl'
         })
-        .when('/connexion', {
-        	templateUrl: 'partials/connexion.html',
-        	controller: 'connexionCtrl'
-        })
         .when('/paiement', {
         	templateUrl: 'partials/paiement.html',
         	controller: 'paiementCtrl'
+        })
+        .when('/connexion', {
+        	templateUrl: 'partials/connexion.html',
+        	controller: 'connexionCtrl'
         })
         .when('/confirmation', {
         	templateUrl: 'partials/confirmation.html',
@@ -370,7 +372,3 @@ app.service('elasticSearchSuggestion', function (esFactory) {
 	    host: 'localhost:9200'
 	  });
 });
-
-
-
-
