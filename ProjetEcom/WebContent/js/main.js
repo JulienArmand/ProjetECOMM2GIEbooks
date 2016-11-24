@@ -174,6 +174,8 @@ routeAppControllers.controller('corpsAccueilCtrl', ['$scope',
     }
 ]);
 
+
+
 app.config(['$routeProvider',
     function($routeProvider) { 
         
@@ -202,6 +204,10 @@ app.config(['$routeProvider',
         .when('/paiement', {
         	templateUrl: 'partials/paiement.html',
         	controller: 'paiementCtrl'
+        })
+        .when('/connexion', {
+        	templateUrl: 'partials/connexion.html',
+        	controller: 'connexionCtrl'
         })
     }
 ]);
