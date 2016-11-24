@@ -1,11 +1,62 @@
-var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'ngCart', 'routeAppControllers', 'slick', 'angularUtils.directives.dirPagination']);
+var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'ngCart', 'routeAppControllers', 'slick', 'angularUtils.directives.dirPagination', 'elasticsearch']);
 
 var routeAppControllers = angular.module('routeAppControllers', []);
 
 
-app.controller("headerCtrl", function($scope, ngCart){
+app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchSuggestion){
+	$scope.suggestion = function() {
+		var req = $("#schbox").val().replace(/[^\x00-\x7F]/g, "").replace("\"","").replace("'","");
+		elasticSearchSuggestion.suggest({
+	        index: "livres",
+	        body: {
+		        suggest_titre: {
+		            text: req,
+		            completion: {
+		                field: "suggest_titre"
+		            }
+		        },
+		        suggest_auteur:{
+		            text: req,
+		            completion: {
+		                field : "suggest_auteurs"
+		            }
+		        }
+	        }
+	    }).then(function (resp) {
+	    	console.log(resp);
+	    	var auteurs = resp.suggest_auteur[0].options;
+	    	var titres = resp.suggest_titre[0].options;
+	    	$("#barreRecherche").empty();
+	    	
+	    	for(var i = 0; i < titres.length; i++)
+	    		$("#barreRecherche").append("<option ng-selected=\"rechercheBarre()\"  value='" + titres[i]._source.titre.trim() + "'>");
+	    	
+	    	for(var i = 0; i < auteurs.length; i++)
+	    		$("#barreRecherche").append("<option ng-selected=\"rechercheBarre()\" value='" + auteurs[i]._source.auteurs.trim() + "'>");
+	    	
+		});
+	}
+	
+	
+	$rootScope.req = "@";
+	$rootScope.genre = "@"; 
+	$rootScope.minPrix = -1;
+	$rootScope.maxPrix = -1;
+	$rootScope.avisMin = -1;
 
-    
+	
+	
+	$scope.rechercheBarre = function(){
+		
+		$rootScope.req = $("#schbox").val();
+		$rootScope.genre = "@"; 
+		$rootScope.minPrix = -1;
+		$rootScope.maxPrix = -1;
+		$rootScope.avisMin = -1;
+
+		window.location.href = "#/recherche/"+$rootScope.req+"/"+$rootScope.genre+"/"+$rootScope.minPrix+"/"+$rootScope.maxPrix+"/"+$rootScope.avisMin;
+		
+	}
 
 });
 
@@ -17,7 +68,45 @@ app.controller("footerCtrl", function($scope){
 });
 
 
-app.controller("menuCtrl", function($scope){
+app.controller("menuCtrl", function($scope, $rootScope){
+
+	$scope.range = function(min, max, step) {
+        step = step || 1;
+        var input = [];
+        for (var i = min; i <= max; i += step) {
+            input.push(i);
+        }
+        return input;
+    };
+    
+	$scope.rechercheMenu = function(){
+		
+		window.location.href = "#/recherche/"+$rootScope.req+"/"+$rootScope.genre+"/"+$rootScope.minPrix+"/"+$rootScope.maxPrix+"/"+$rootScope.avisMin;
+		
+	}
+	$scope.setGenre = function(genre){
+		$rootScope.genre = genre;
+	}
+	$scope.setAvisMin = function(event){
+		
+		$rootScope.avisMin = event.currentTarget.attributes.value.value;
+	}
+	$scope.setPrixMin = function(p){
+		if(p)
+			$rootScope.minPrix = p;//$("menuPrixMin").val();
+		else
+			$rootScope.minPrix = -1;
+	}
+	$scope.setPrixMax = function(p){
+		if(p)
+			$rootScope.maxPrix = p;//$("menuPrixMax").val();
+		else
+			$rootScope.maxPrix = -1;
+	}
+	
+});
+
+app.controller("searchCtrl", function($scope){
 
 	  
 
@@ -37,13 +126,19 @@ app.controller("paiementCtrl", function($scope){
 		{nom : "Octobre", valeur : "10"},
 		{nom : "Novembre", valeur : "11"},
 		{nom : "Décembre", valeur : "12"},
+		{nom : "Mois", valeur : "0", selected : "true", disabled : "true"}
 	];
+	$scope.selectedMois = $scope.mois[0].value;
+	
+	$scope.changeRadio = function(idForm, bool){
+		$(idForm).hidden(bool);
+	}
+	
+	$scope.moyenPaiement = {
+		moyen : "CB"
+	}
 });
 
-app.controller("searchCtrl", function($scope){
-
-	  
-});
 
 app.controller("pageChange", function($scope){
 	/*$scope.pageChangeHandler = function(num) {
@@ -102,8 +197,15 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
 });
 
 
+routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope){
+	
+	$rootScope.req = "@";
+	$rootScope.genre = "@"; 
+	$rootScope.minPrix = -1;
+	$rootScope.maxPrix = -1;
+	$rootScope.avisMin = -1;
+	
 
-routeAppControllers.controller("contentCtrl", function($scope, $http){
     $http.get("Promos").then(function(response) {
         $scope.livresPromo = response.data;
         
@@ -135,19 +237,39 @@ routeAppControllers.controller("contentCtrl", function($scope, $http){
     
 });
 
-routeAppControllers.controller("rechercheViaBarre", function($scope, $http, $routeParams){
-    $http.get("RechercheViaBarre", {params:{"req": $routeParams.req}}).then(function(response) {
-        $scope.livres = response.data;
-        alert(response.data);
+routeAppControllers.controller("recherche", function($scope, $http, $routeParams,$rootScope){
+    
+	$scope.calculPromo = function(prix, promo) {
+    	return roundPrix(prix-(prix*promo)/100);
+    }
+	
+	$http.get("RechercheViaBarre", {params:{"req": $routeParams.req, "genre": $routeParams.genre, "pmin": $routeParams.pmin, "pmax": $routeParams.pmax, "avisMin": $routeParams.avisMin}}).then(function(response){
+        
+    	var data = response.data;
+		$scope.livres=[];
+    	for(var i=0; i<data.length;i++){
+    		
+    		var l = data[i].l
+    		l.ventes = data[i].v;
+    		l.prixPromo = (l.promotion) ? $scope.calculPromo(l.prix,l.promotion.tauxReduc) : l.prix;
+    		$scope.livres.push(l);
+
+    	}
+
+		console.log($scope.livres.length);
+        
     });
     
     $scope.currentPage = 1;
-    $scope.pageSize = 2;
+    $scope.pageSizeMos = 12;
+    $scope.pageSizeList = 8;
     $scope.ordonneur = "titre";
+    $scope.modeAffichage = "mosaique";
 
-    $scope.pageChangeHandler = function(num) {
+
+    /*$scope.pageChangeHandler = function(num) {
         alert(num);
-    };
+    };*/
     
     $scope.calculeMoyenne = function(list) {
     	var moy = 0;
@@ -164,9 +286,7 @@ routeAppControllers.controller("rechercheViaBarre", function($scope, $http, $rou
         alert(ordonneur);
     }
     
-    $scope.calculPromo = function(prix, promo) {
-    	return roundPrix(prix-(prix*promo)/100);
-    }
+    
 
 });
 
@@ -197,9 +317,9 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/info.html',
         	controller: 'infoCtrl'
         })
-        .when('/rechercheViaBarre/:req', {
+        .when('/recherche/:req/:genre/:pmin/:pmax/:avisMin', {
         	templateUrl: 'partials/listMosaique.html',
-        	controller: 'rechercheViaBarre'
+        	controller: 'recherche'
         })
         .when('/panier', {
         	templateUrl: 'partials/monPanier.html',
@@ -209,10 +329,13 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/paiement.html',
         	controller: 'paiementCtrl'
         })
-
         .when('/connexion', {
         	templateUrl: 'partials/connexion.html',
         	controller: 'connexionCtrl'
+        })
+        .when('/confirmation', {
+        	templateUrl: 'partials/confirmation.html',
+        	controller: 'paiementCtrl'
         })
     }
 ]);
@@ -243,3 +366,9 @@ function formatDateDMY(str){
 	}
 	return j+"/"+mois+"/"+an;
 }
+
+app.service('elasticSearchSuggestion', function (esFactory) {
+	  return esFactory({
+	    host: 'localhost:9200'
+	  });
+});

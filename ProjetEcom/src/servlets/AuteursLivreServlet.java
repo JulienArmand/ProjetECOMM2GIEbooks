@@ -12,13 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import beans.GestionLivre;
 import beans.InitBean;
 import model.Livre;
 
 public class AuteursLivreServlet extends HttpServlet {
 
 	@EJB()  //ou @EJB si nom par défaut 
-	private InitBean myBean; 
+	private GestionLivre myBean; 
 	
 	public AuteursLivreServlet() {
 		// TODO Auto-generated constructor stub
