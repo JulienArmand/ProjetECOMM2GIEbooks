@@ -176,6 +176,8 @@ routeAppControllers.controller('corpsAccueilCtrl', ['$scope',
 
 
 
+
+
 app.config(['$routeProvider',
     function($routeProvider) { 
         
@@ -201,10 +203,13 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/monPanier.html',
         	controller: 'contentCtrl'
         })
+<<<<<<< HEAD
         .when('/paiement', {
         	templateUrl: 'partials/paiement.html',
         	controller: 'paiementCtrl'
         })
+=======
+>>>>>>> refs/remotes/origin/Julien
         .when('/connexion', {
         	templateUrl: 'partials/connexion.html',
         	controller: 'connexionCtrl'
