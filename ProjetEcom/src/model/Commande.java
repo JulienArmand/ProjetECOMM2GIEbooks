@@ -25,7 +25,7 @@ public class Commande {
 	@Expose
 	private Date dateDeVente;
 	@Expose
-	private int prixTotal;
+	private float prixTotal;
 	
 	
 	@OneToMany(mappedBy="laCommande", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -43,7 +43,7 @@ public class Commande {
 	public Commande() {
 	}
 
-	public Commande(Date dateDeVente, int prixTotal) {
+	public Commande(Date dateDeVente, float prixTotal) {
 		super();
 		this.dateDeVente = dateDeVente;
 		this.prixTotal = prixTotal;
@@ -66,11 +66,11 @@ public class Commande {
 		this.dateDeVente = dateDeVente;
 	}
 
-	public int getPrixTotal() {
+	public float getPrixTotal() {
 		return prixTotal;
 	}
 
-	public void setPrixTotal(int prixTotal) {
+	public void setPrixTotal(float prixTotal) {
 		this.prixTotal = prixTotal;
 	}
 

@@ -20,6 +20,11 @@ public class GestionClient {
 		em.persist(c);
 		return c;
 	}
+	
+	public Client getClient(long id){
+		Query q = em.createQuery("select OBJECT(b) from Client b where b.id =" + id);
+		return (Client)q.getSingleResult();
+	}
 
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Client");

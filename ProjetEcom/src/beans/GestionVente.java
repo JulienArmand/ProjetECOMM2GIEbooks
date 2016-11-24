@@ -1,11 +1,14 @@
 package beans;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import model.Client;
+import model.Commande;
 import model.Livre;
 import model.Vente;
 
@@ -16,12 +19,16 @@ public class GestionVente {
 	private EntityManager em;
 
 	public Vente creerVente(Livre l) {
-
 		Vente c = new Vente(9);
 		c.setLivre(l);
-
 		em.persist(c);
 		return c;
+	}
+
+	public List<Vente> getVentes(Commande c) {
+		Query q = em.createQuery("select OBJECT(b) from Vente b where b.laCommande =" + c);
+		List<Vente> list = (List<Vente>) q.getResultList();
+		return list;
 	}
 
 	public void supprimerTous() {

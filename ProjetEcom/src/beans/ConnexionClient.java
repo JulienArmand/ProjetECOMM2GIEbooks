@@ -8,7 +8,7 @@ import javax.persistence.Query;
 import model.Client;
 
 @Stateless
-public class ConnexionClientBean {
+public class ConnexionClient {
 	
 	@PersistenceContext(unitName = "Database-unit") 
 	private EntityManager em;

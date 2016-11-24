@@ -31,7 +31,6 @@ public abstract class MoyenPaiement {
 		this.actif = true;
 	}
 
-
 	public long getId() {
 		return id;
 	}
