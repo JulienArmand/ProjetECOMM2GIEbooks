@@ -64,7 +64,6 @@ public class GestionCommandeServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Creer commande
-
 		Client client = clientBean.getClient(Long.parseLong(request.getParameter("idClient")));
 
 		Commande c = commandeBean.creerCommande(new Date(), Float.parseFloat(request.getParameter("prixTotal")), client, paiementBean.getMoyenPaiement(client, request.getParameter("type")));

@@ -84,12 +84,20 @@ app.controller("menuCtrl", function($scope, $rootScope){
 		window.location.href = "#/recherche/"+$rootScope.req+"/"+$rootScope.genre+"/"+$rootScope.minPrix+"/"+$rootScope.maxPrix+"/"+$rootScope.avisMin;
 		
 	}
-	$scope.setGenre = function(genre){
-		$rootScope.genre = genre;
+	$scope.setGenre = function(genre, id){
+		if(genre == $rootScope.genre) {
+			$("#"+id).prop('checked', false);
+			$rootScope.genre = "@";
+		}
+		else {$rootScope.genre = genre;}
 	}
-	$scope.setAvisMin = function(event){
+	$scope.setAvisMin = function(avisMin, id){
 		
-		$rootScope.avisMin = event.currentTarget.attributes.value.value;
+		if(avisMin == $rootScope.avisMin) {
+			$("#avis"+id).prop('checked', false);
+			$rootScope.avisMin = -1;
+		}
+		else {$rootScope.avisMin = avisMin;}
 	}
 	$scope.setPrixMin = function(p){
 		if(p)
@@ -205,6 +213,14 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
 	$rootScope.maxPrix = -1;
 	$rootScope.avisMin = -1;
 	
+	$scope.breakpoints = [{
+	    breakpoint: 1200,
+	    settings: {
+	      slidesToShow: 4,
+	      slidesToScroll: 4
+	    }
+	  }
+	];
 
     $http.get("Promos").then(function(response) {
         $scope.livresPromo = response.data;
