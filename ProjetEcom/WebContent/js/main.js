@@ -37,6 +37,10 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 		});
 	}
 	
+	$scope.redirection = function(){
+		window.location.href = "/index.html";
+	}
+	
 	
 	$rootScope.req = "@";
 	$rootScope.genre = "@"; 
@@ -79,6 +83,16 @@ app.controller("menuCtrl", function($scope, $rootScope){
         return input;
     };
     
+	$scope.genres = [
+		{nom : "Science fiction"},
+		{nom : "Jeunesse"},
+		{nom : "Fantasy"},
+		{nom : "Policier"},
+		{nom : "Biographies"},
+		{nom : "Documentaires"}
+	];
+    
+    
 	$scope.rechercheMenu = function(){
 		
 		window.location.href = "#/recherche/"+$rootScope.req+"/"+$rootScope.genre+"/"+$rootScope.minPrix+"/"+$rootScope.maxPrix+"/"+$rootScope.avisMin;
@@ -86,7 +100,7 @@ app.controller("menuCtrl", function($scope, $rootScope){
 	}
 	$scope.setGenre = function(genre, id){
 		if(genre == $rootScope.genre) {
-			$("#"+id).prop('checked', false);
+			$("#"+genre).prop('checked', false);
 			$rootScope.genre = "@";
 		}
 		else {$rootScope.genre = genre;}
