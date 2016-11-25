@@ -25,7 +25,6 @@ public class ModificationProfileServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
 	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,7 +38,6 @@ public class ModificationProfileServlet extends HttpServlet {
 		if(!pseudo.equals(c.getPseudo())){
 			System.out.println("Pseudo modifié.");
 			myBean.updateClientPseudo(c, pseudo);
-			
 		}
 		if(!nom.equals(c.getNom())){
 			System.out.println("Nom modifié.");
