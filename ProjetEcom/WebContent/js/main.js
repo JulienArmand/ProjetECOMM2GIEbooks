@@ -267,6 +267,23 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
     
 });
 
+routeAppControllers.controller("inscriptionClient", function($scope, $http,$rootScope){
+	
+
+    $http.get("InscriptionClient").then(function(response) {
+        $scope.message = response.data;
+        
+        console.log($scope.message);
+        
+    });
+
+    
+});
+
+
+
+
+
 routeAppControllers.controller("recherche", function($scope, $http, $routeParams,$rootScope){
     
 	$scope.calculPromo = function(prix, promo) {
@@ -367,6 +384,10 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/confirmation.html',
         	controller: 'paiementCtrl'
         })
+//        .when('/inscriptionClient', {
+//        	templateUrl: 'partials/inscriptionClient.html',
+//        	controller: 'inscriptionClient'
+//        })
     }
 ]);
 

@@ -47,11 +47,13 @@ public class InscriptionClientServlet extends HttpServlet {
 			response.getWriter().println("Client créé");
 		}
 		System.out.println("Test 1");
-		response.getWriter().println("Le pseudo est :" + request.getParameter("pseudo"));
-		response.getWriter().println("Le nom est :" + request.getParameter("nom"));
-		response.getWriter().println("Le prenom est :" + request.getParameter("prenom"));
-		response.getWriter().println("Le mot de passe est :" + request.getParameter("motDePasse"));
-		response.getWriter().println("Le mail est :" + request.getParameter("email"));
+//		response.getWriter().println("Le pseudo est :" + request.getParameter("pseudo"));
+//		response.getWriter().println("Le nom est :" + request.getParameter("nom"));
+//		response.getWriter().println("Le prenom est :" + request.getParameter("prenom"));
+//		response.getWriter().println("Le mot de passe est :" + request.getParameter("motDePasse"));
+//		response.getWriter().println("Le mail est :" + request.getParameter("email"));
+		
+		String resultat="ok";
 		RequestDispatcher dispatcher = request.getRequestDispatcher("html/inscriptionClient.html");
 		dispatcher.forward(request,response);
 		
