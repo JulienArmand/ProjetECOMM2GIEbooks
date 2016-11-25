@@ -265,12 +265,6 @@ routeAppControllers.controller("recherche", function($scope, $http, $routeParams
     $scope.pageSizeList = 8;
     $scope.ordonneur = "titre";
     $scope.modeAffichage = "mosaique";
-
-
-    /*$scope.pageChangeHandler = function(num) {
-        alert(num);
-    };*/
-    
     $scope.calculeMoyenne = function(list) {
     	var moy = 0;
     	if(list.length == 0)
@@ -297,7 +291,17 @@ routeAppControllers.controller('corpsAccueilCtrl', ['$scope',
 ]);
 
 
-
+routeAppControllers.controller("compteClient", function($scope, $http, $routeParams,$rootScope){
+	
+	$http.get("GetInfoClient", {params:{"pseudo": $routeParams.pseudo}}).then(function(response) {
+		var data = response.data;
+    	$scope.pseudo = data.pseudo;
+    	$scope.nom = data.nom;
+    	$scope.prenom = data.prenom;
+    	$scope.mail = data.email;
+    });
+    
+});
 
 
 app.config(['$routeProvider',
@@ -336,6 +340,10 @@ app.config(['$routeProvider',
         .when('/confirmation', {
         	templateUrl: 'partials/confirmation.html',
         	controller: 'paiementCtrl'
+        })
+        .when('/compteClient/:pseudo',{
+        	templateUrl : 'partials/CompteClient.html',
+        	controller: 'compteClient'
         })
     }
 ]);

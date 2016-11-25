@@ -94,5 +94,14 @@
 		<servlet-name>ConnexionClient</servlet-name>
 		<url-pattern>/ConnexionClient</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GetInfoClient</servlet-name>
+		<servlet-class>servlets.GetInfoClientServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetInfoClient</servlet-name>
+		<url-pattern>/GetInfoClient</url-pattern>
+	</servlet-mapping>
 
 </web-app>

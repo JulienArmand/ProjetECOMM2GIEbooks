@@ -14,21 +14,6 @@
     		document.getElementById('erreurIdentifiant').style.visibility = "hidden";
     	}
 		
-
-// 		var name = "login=";
-//     	var ca = document.cookie.split(';');
-//     	for(var i = 0; i <ca.length; i++) {
-//         	var c = ca[i];
-//         	while (c.charAt(0)==' ') {
-//             	c = c.substring(1);
-//         	}
-//         	if (c.indexOf(name) == 0) {
-//             	document.getElementById('login').innerHTML = c.substring(name.length,c.length);
-//             	document.getElementById('1').style.display = "none";
-//             	document.getElementById('2').style.display = "";
-//         	}
-//     	}	
-
     	function deconnexion(){
     		document.getElementById('connexion').style.display = "";
         	document.getElementById('profil').style.display = "none";
@@ -40,7 +25,9 @@
     		 alert(document.cookie);
     	}
     	
-    	
+    	function redirectCompteClient(){
+    		window.location.href=("#/compteClient/" + document.cookie.replace(/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
+    	}
 </script>
 
 
@@ -87,7 +74,7 @@
 				</form>
 			</div>
 			<div id="profil" style="display:none">
-				<a href="#/connexion" style="font-size:150% ;padding:0px;text-align:center; ">Mon<br>Compte</a>
+				<a onclick="redirectCompteClient();" style="font-size:150% ;padding:0px;text-align:center; ">Mon<br>Compte</a>
 				<a id="login"></a>
 				<form>
 					<input type="submit" onclick="deconnexion()" value="Deconnexion"></p>

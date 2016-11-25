@@ -27,4 +27,9 @@ public class GestionClient {
 		q.executeUpdate();
 		q2.executeUpdate();
 	}
+
+	public Client getClientFromPseudo(String pseudo) {
+		Query q = em.createQuery("select OBJECT(b) from Client b where b.pseudo = '" + pseudo+"'");
+		return (Client)q.getSingleResult();
+	}
 }
