@@ -103,5 +103,14 @@
 		<servlet-name>GetInfoClient</servlet-name>
 		<url-pattern>/GetInfoClient</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ModificationProfile</servlet-name>
+		<servlet-class>servlets.ModificationProfileServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ModificationProfile</servlet-name>
+		<url-pattern>/ModificationProfile</url-pattern>
+	</servlet-mapping>
 
 </web-app>

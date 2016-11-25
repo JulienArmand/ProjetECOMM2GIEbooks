@@ -32,4 +32,24 @@ public class GestionClient {
 		Query q = em.createQuery("select OBJECT(b) from Client b where b.pseudo = '" + pseudo+"'");
 		return (Client)q.getSingleResult();
 	}
+	
+	public void updateClientPseudo(Client c, String pseudo){
+		Query q = em.createNativeQuery("");
+		q.executeUpdate();
+	}
+	
+	public void updateClientNom(Client c, String nom){
+		Query q = em.createNativeQuery("");
+		q.executeUpdate();
+	}
+	
+	public void updateClientPrenom(Client c, String prenom){
+		Query q = em.createNativeQuery("");
+		q.executeUpdate();
+	}
+	
+	public void updateClientEmail(Client c, String email){
+		Query q = em.createNativeQuery("");
+		q.executeUpdate();
+	}
 }

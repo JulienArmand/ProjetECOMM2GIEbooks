@@ -4,7 +4,6 @@ import java.io.IOException;
 import javax.ejb.EJB;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,9 +27,7 @@ public class GetInfoClientServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
-		Cookie[] cookies = request.getCookies();
-		Cookie cookie = cookies[0];
-		String pseudo = cookie.getValue();
+		String pseudo = request.getParameter("pseudo");
 		Client c = myBean.getClientFromPseudo(pseudo);
 		String str = js.toJson(c);
 		response.setContentType("application/json");

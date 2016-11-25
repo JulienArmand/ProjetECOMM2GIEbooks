@@ -299,6 +299,9 @@ routeAppControllers.controller("compteClient", function($scope, $http, $routePar
     	$scope.nom = data.nom;
     	$scope.prenom = data.prenom;
     	$scope.mail = data.email;
+    	$scope.redirectToModificationPseudo = function(){
+    		window.location.href=("#/ModificationPseudo/");
+    	}
     });
     
 });

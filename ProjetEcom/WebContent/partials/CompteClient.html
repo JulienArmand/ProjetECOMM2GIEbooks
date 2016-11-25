@@ -16,12 +16,15 @@
         <script src="../js/main.js" ></script>
     </head>
     <body>
-        <section>
+        <section>	
 		<div>
-				<p>Pseudo : {{pseudo}}<br>
-				<p>Nom :	{{nom}}<br>
-				<p>Prénom :	{{prenom}}<br>
-				<p>Email : {{mail}}<br>
+			<form action="../ModificationProfile" method="POST">
+				<input type="text" name="pseudo" value= {{pseudo}}><br>
+				<input type="text" name="nom" value={{nom}}><br>
+				<input type="text" name="prenom" value={{prenom}}><br>
+				<input type="text" name="email" value={{mail}}><br>
+				<input type="submit" value="Modifier">
+			</form>
 		</div>
 		<br>
         </section>
