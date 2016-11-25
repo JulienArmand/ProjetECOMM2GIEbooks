@@ -68,6 +68,12 @@ input.tri:checked + label {
     text-decoration : underline;
 }
 
+input.avis:checked + img {
+	border-width:1px;
+ 	border-style:dotted;
+ 	border-color:black;
+}
+
 .triFiltres{
 	padding-top : 5px;
 	padding-right : 15px;

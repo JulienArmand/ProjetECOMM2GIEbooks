@@ -16,21 +16,7 @@
 	<h4>Avis</h4>
 	<ul class="col-lg-12 col-md-12 no-padding ">
 		<li ng-repeat="i in range(1, 4)" class="list-unstyled no-padding ">
-			<input name="avis" id="avis{{i}}" type="radio" ng-click="setAvisMin(i, i); rechercheMenu()">
-			<label for="avis{{i}}" class="rating-container rating-animate no-padding">
-				<div class="rating no-padding " style="font-size: 1.25em;">
-					<label for="avis{{i}}" class="empty-stars">
-						<span id="etoiles{{i}}" class="star" ng-repeat="j in range(1, 5)" >
-						<i id="etoiles{{i}}"  class="glyphicon glyphicon-star-empty"></i>
-						</span>
-					</label>
-					<label for="avis{{i}}" class="filled-stars" style="width:{{i*100/5}}%">
-						<span id="etoiles{{i}}" class="star" ng-repeat="k in range(0, i)" >
-						<i class="glyphicon glyphicon-star"></i>
-						</span>
-					</label>
-				</div>
-			</label>
+			<label> <input class="radioNoCircle avis" name="avis" id="avis{{i}}" type="radio" ng-click="setAvisMin(i, i); rechercheMenu()"><img for="avis{{i}}" src="images/etoiles/etoiles{{i}}.png"></img></label>
 		</li>
 	</ul>
 	<h4>Prix</h4>

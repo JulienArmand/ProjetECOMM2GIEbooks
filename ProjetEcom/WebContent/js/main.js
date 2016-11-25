@@ -89,13 +89,12 @@ app.controller("menuCtrl", function($scope, $rootScope){
 			$("#"+id).prop('checked', false);
 			$rootScope.genre = "@";
 		}
-		else $rootScope.genre = genre;
+		else {$rootScope.genre = genre;}
 	}
 	$scope.setAvisMin = function(avisMin, id){
 		
 		if(avisMin == $rootScope.avisMin) {
 			$("#avis"+id).prop('checked', false);
-			
 			$rootScope.avisMin = -1;
 		}
 		else {$rootScope.avisMin = avisMin;}
