@@ -15,18 +15,18 @@ import javax.persistence.OneToMany;
 @Entity
 public abstract class MoyenPaiement {
 
-	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO) 
-	private long id;
-	private boolean actif;
-	
-	@OneToMany(mappedBy="leMoyenDePaiement",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Collection<Commande> lesCommandes;
-	
-	@ManyToOne 
-	@JoinColumn(name="Client_id")
-	private Client leClient;
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long					id;
+	private boolean					actif;
+
+	@OneToMany(mappedBy = "leMoyenDePaiement", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Collection<Commande>	lesCommandes;
+
+	@ManyToOne
+	@JoinColumn(name = "Client_id")
+	private Client					leClient;
+
 	public MoyenPaiement() {
 		this.actif = true;
 	}
@@ -51,7 +51,6 @@ public abstract class MoyenPaiement {
 		return lesCommandes;
 	}
 
-
 	public void setLesCommandes(Collection<Commande> lesCommandes) {
 		this.lesCommandes = lesCommandes;
 	}
@@ -59,10 +58,9 @@ public abstract class MoyenPaiement {
 	public Client getLeClient() {
 		return leClient;
 	}
-	
- 
+
 	public void setLeClient(Client leClient) {
 		this.leClient = leClient;
 	}
-	
+
 }

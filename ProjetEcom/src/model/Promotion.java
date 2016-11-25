@@ -81,21 +81,5 @@ public class Promotion {
 	public void setLivre(Livre livre) {
 		this.livre = livre;
 	}
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }
