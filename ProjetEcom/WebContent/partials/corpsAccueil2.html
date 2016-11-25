@@ -1,5 +1,8 @@
+<section id="menu" ng-controller="menuCtrl" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 " ng-include="'partials/menu.html'">
+</section>
+<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
 <h2>Promotions</h2>
-<slick infinite="true" slides-to-show="7" dots="true" arrows="true" data="livresPromo" init-onload="true">
+<slick infinite="true" slides-to-show="7" responsive="breakpoints" dots="true" arrows="true" data="livresPromo" init-onload="true">
 	<div  ng-repeat="livre in livresPromo" class="mosaique-item">
 		<div>
 			<a ng-href="#/info/{{livre.id}}">
@@ -22,7 +25,7 @@
 	</div>
 </slick>
 <h2>Livres les plus vendus</h2>
-<slick infinite="true" slides-to-show="7" dots="true" arrows="true" data="livresPlusVendu" init-onload="true">
+<slick infinite="true" slides-to-show="7" responsive="breakpoints" dots="true" arrows="true" data="livresPlusVendu" init-onload="true">
 	<div  ng-repeat="livre in livresPlusVendu" class="mosaique-item">
 		<div>
 			<a ng-href="#/info/{{livre.id}}">
@@ -47,6 +50,7 @@
        	</div>
 	</div>
 </slick>
+</div>
 <!--  <h2>Recherche</h2>
 <slick infinite="true" slides-to-show="5" dots="true" arrows="true" data="livresRecherche" init-onload="true">
 	<div  ng-repeat="livre in livresRecherche" >

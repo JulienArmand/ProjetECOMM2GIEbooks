@@ -1,16 +1,17 @@
-
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 corps">
+<section id="menu" ng-controller="menuCtrl" class="col-lg-2 col-md-3 col-sm-3 col-xs-12" ng-include="'partials/menu.html'">
+</section>
+<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 corps">
 	<div>
 		<!-- ON NE MET PAS LE CONTROLEUR CAR IL EST APPELER VIA LE BOUTON RECHERCHE, A VOIR -->
 		<nav class="navbar navbar-default triFiltres">
 			<div class="container-fluid">
-				<ul class="nav navbar-nav">
+				<ul class="col-lg-11 col-md-11 col-sm-11 col-xs-11 nav navbar-nav no-padding" >
 					 <li><input class="radioNoCircle tri" id="titreAZ" type="radio" ng-model="ordonneur" value="titre"><label for="titreAZ">Titre A-Z</label><span style="font-size:2em;"> | </span></li>
 					 <li><input class="radioNoCircle tri" id="titreZA" type="radio" ng-model="ordonneur" value="-titre"><label for="titreZA">Titre Z-A</label><span style="font-size:2em;"> | </span></li>
 					 <li><input class="radioNoCircle tri" id="meilleuresVentes" type="radio" ng-model="ordonneur" value="-ventes"><label for="meilleuresVentes">Meilleures Ventes</label><span style="font-size:2em;"> | </span></li>
     				 <li><input class="radioNoCircle tri" id="prix" type="radio" ng-model="ordonneur" value="prixPromo"><label for="prix">Prix</label><span style="font-size:2em;"></span></li>
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
+				<ul class="col-lg-1 col-md-1 col-sm-1 col-xs-1 nav navbar-nav navbar-right no-padding">
 					<li><input class="radioNoCircle affichage" id="mosaique" type="radio" ng-model="modeAffichage" value="mosaique"><label for="mosaique"><span class="glyphicon glyphicon-th"></span></label></li>
    					<li><input class="radioNoCircle affichage" id="liste" type="radio" ng-model="modeAffichage" value="liste"><label for="liste" ><span class="glyphicon glyphicon-th-list"></span></label></li>
 				</ul>
