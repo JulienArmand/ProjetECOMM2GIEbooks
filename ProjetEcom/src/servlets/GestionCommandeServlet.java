@@ -63,6 +63,7 @@ public class GestionCommandeServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 		// Creer commande
 		Client client = clientBean.getClient(Long.parseLong(request.getParameter("idClient")));
 
@@ -70,11 +71,13 @@ public class GestionCommandeServlet extends HttpServlet {
 
 		// Creer ventes
 		Collection<Vente> lesVentes = new LinkedList<Vente>();
-		for (int i = 1; i <= Integer.parseInt(request.getParameter("nbArticle")); i++) {
-			lesVentes.add(venteBean.creerVente(LivreBean.getLivreAvecId(Long.parseLong(request.getParameter("idLivre" + i)))));
+		String[] livres = request.getParameter("livres").split(",");
+		for (int i = 0; i < livres.length; i++) {
+			lesVentes.add(venteBean.creerVente(LivreBean.getLivreAvecId(Long.parseLong(livres[i]))));
 		}
 		// Ajouter ventes
 		commandeBean.setVentesCommande(c.getId(), lesVentes);
+		
 
 	}
 }
