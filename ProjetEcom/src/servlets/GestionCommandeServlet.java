@@ -53,12 +53,12 @@ public class GestionCommandeServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Creer commande
-		Commande c = myBean.creerCommande(new Date(), Float.parseFloat(request.getParameter("prixTotal")), 
+		/*Commande c = myBean.creerCommande(new Date(), Float.parseFloat(request.getParameter("prixTotal")), 
 											clientBean.getClient(Long.parseLong(request.getParameter("idClient"))), );
 		// Creer ventes
 		Collection<Vente> lesVentes = null;
 		// Ajouter ventes
-		myBean.setVentesCommande(c.getId(), lesVentes);
+		myBean.setVentesCommande(c.getId(), lesVentes);*/
 
 	}
 }
