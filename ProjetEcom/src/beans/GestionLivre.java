@@ -78,7 +78,7 @@ public class GestionLivre {
 		return list;
 	}
 
-	public Livre getLivreAvecId(int id) {
+	public Livre getLivreAvecId(long id) {
 		Query q = em.createQuery("select OBJECT(b) from Livre b where b.id = " + id);
 		Livre livre = (Livre) q.getSingleResult();
 		return livre;

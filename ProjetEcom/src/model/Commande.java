@@ -15,31 +15,28 @@ import javax.persistence.OneToMany;
 
 import com.google.gson.annotations.Expose;
 
-
 @Entity
 public class Commande {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Expose
-	private long id;
+	private long				id;
 	@Expose
-	private Date dateDeVente;
+	private Date				dateDeVente;
 	@Expose
-	private float prixTotal;
-	
-	
-	@OneToMany(mappedBy="laCommande", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Collection<Vente> lesVentes;
-	
-	@ManyToOne 
-	@JoinColumn(name="Client_id") 
-	private Client leClient;
-	
-	@ManyToOne 
-	@JoinColumn(name="MoyenPaiement_id") 
-	private MoyenPaiement leMoyenDePaiement;
-	
-	
+	private float				prixTotal;
+
+	@OneToMany(mappedBy = "laCommande", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Collection<Vente>	lesVentes;
+
+	@ManyToOne
+	@JoinColumn(name = "Client_id")
+	private Client				leClient;
+
+	@ManyToOne
+	@JoinColumn(name = "MoyenPaiement_id")
+	private MoyenPaiement		leMoyenDePaiement;
+
 	public Commande() {
 	}
 
@@ -49,7 +46,6 @@ public class Commande {
 		this.prixTotal = prixTotal;
 	}
 
-	
 	public long getId() {
 		return id;
 	}
@@ -77,7 +73,6 @@ public class Commande {
 	public Collection<Vente> getLesVentes() {
 		return lesVentes;
 	}
-	
 
 	public void setLesVentes(Collection<Vente> lesVentes) {
 		this.lesVentes = lesVentes;
@@ -86,7 +81,6 @@ public class Commande {
 	public Client getLeClient() {
 		return leClient;
 	}
-	
 
 	public void setLeClient(Client leClient) {
 		this.leClient = leClient;
@@ -96,11 +90,8 @@ public class Commande {
 		return leMoyenDePaiement;
 	}
 
-
 	public void setLeMoyenDePaiement(MoyenPaiement moyenDePaiement) {
 		this.leMoyenDePaiement = moyenDePaiement;
 	}
-	
-	
 
 }

@@ -1,12 +1,23 @@
-<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	version="1.0">
 
-  <persistence-unit name="Database-unit">
-    <jta-data-source>Database</jta-data-source>
-    <!--  <non-jta-data-source>movieDatabaseUnmanaged</non-jta-data-source>-->
+	<persistence-unit name="Database-unit"> <jta-data-source>Database</jta-data-source> 
+		<properties> <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/> 
+		<property name="openjpa.RuntimeUnenhancedClasses" value="unsupported"/> </properties> 
+		</persistence-unit>
 
-    <properties>
-      <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
-      <property name="openjpa.RuntimeUnenhancedClasses" value="unsupported"/>
-    </properties>
-  </persistence-unit>
+	<!--<persistence-unit name="Database-unit"
+		transaction-type="JTA">
+		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl
+		</provider>
+		<non-jta-data-source>mySQLDataSource</non-jta-data-source>
+		<properties>
+			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)" />
+			<property name="openjpa.RuntimeUnenhancedClasses" value="unsupported" />
+			<property name="openjpa.jdbc.DBDictionary" value="mysql" />
+			<property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO" />
+		</properties>
+	</persistence-unit>-->
+
+
 </persistence>
