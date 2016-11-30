@@ -67,7 +67,7 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 
 app.controller("footerCtrl", function($scope){
 
-    //...    
+    // ...
 
 });
 
@@ -115,13 +115,13 @@ app.controller("menuCtrl", function($scope, $rootScope){
 	}
 	$scope.setPrixMin = function(p){
 		if(p)
-			$rootScope.minPrix = p;//$("menuPrixMin").val();
+			$rootScope.minPrix = p;// $("menuPrixMin").val();
 		else
 			$rootScope.minPrix = -1;
 	}
 	$scope.setPrixMax = function(p){
 		if(p)
-			$rootScope.maxPrix = p;//$("menuPrixMax").val();
+			$rootScope.maxPrix = p;// $("menuPrixMax").val();
 		else
 			$rootScope.maxPrix = -1;
 	}
@@ -134,7 +134,7 @@ app.controller("searchCtrl", function($scope){
 
 });
 
-app.controller("paiementCtrl", function($scope){
+app.controller("paiementCtrl", function($scope, $http, ngCart){
 	$scope.mois = [
 		{nom : "Janvier", valeur : "1"},
 		{nom : "Février", valeur : "2"},
@@ -159,13 +159,34 @@ app.controller("paiementCtrl", function($scope){
 	$scope.moyenPaiement = {
 		moyen : "CB"
 	}
+	
+	creerCommande = function(){
+		idLivres = [];
+		for (i = 0; i < ngCart.getCart().items.length;i++){
+			idLivres.push((ngCart.getCart().items[i])._id);
+		};
+		console.log(idLivres);
+		req = { method: 'POST', url: '/GestionCommande', headers: { 'Content-Type': undefined }, 
+				data: { 
+					idClient : "12",
+					prixTotal : ngCart.totalCost(),
+					type : "CB",
+					livres : idLivres }};
+		
+
+		$http(req).then(function(){
+					
+		}, function(){
+					
+		});
+	}
 });
 
 
 app.controller("pageChange", function($scope){
-	/*$scope.pageChangeHandler = function(num) {
-		alert(num);
-	};*/
+	/*
+	 * $scope.pageChangeHandler = function(num) { alert(num); };
+	 */
 });
 
 routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,$document){
@@ -328,9 +349,9 @@ routeAppControllers.controller("recherche", function($scope, $http, $routeParams
     $scope.modeAffichage = "mosaique";
 
 
-    /*$scope.pageChangeHandler = function(num) {
-        alert(num);
-    };*/
+    /*
+	 * $scope.pageChangeHandler = function(num) { alert(num); };
+	 */
     
     $scope.calculeMoyenne = function(list) {
     	var moy = 0;
@@ -398,10 +419,10 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/confirmation.html',
         	controller: 'paiementCtrl'
         })
-//        .when('/inscriptionClient', {
-//        	templateUrl: 'partials/inscriptionClient.html',
-//        	controller: 'inscriptionClient'
-//        })
+// .when('/inscriptionClient', {
+// templateUrl: 'partials/inscriptionClient.html',
+// controller: 'inscriptionClient'
+// })
     }
 ]);
 
