@@ -16,7 +16,7 @@
 			<div>
 				<span style="text-decoration:line-through; color: red;">{{livre.prix}} €</span>
 		        <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
-                <ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{calculPromo(livre.prix,livre.promotion.tauxReduc)}}" quantity="1">Ajouter au panier</ngcart-addtocart>
+                <ngcart-addtocart class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" id="{{livre.id}}" name="{{livre.titre}}" price="{{calculPromo(livre.prix,livre.promotion.tauxReduc)}}" quantity="1"></ngcart-addtocart>
 	        </div>
        	</div>
 	</div>

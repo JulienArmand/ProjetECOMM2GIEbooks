@@ -86,7 +86,7 @@ app.controller("menuCtrl", function($scope, $rootScope){
 	$scope.genres = [
 		{nom : "Science fiction"},
 		{nom : "Jeunesse"},
-		{nom : "Fantasy"},
+		{nom : "Fantastique"},
 		{nom : "Policier"},
 		{nom : "Biographies"},
 		{nom : "Documentaires"}
@@ -228,7 +228,21 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
 	$rootScope.avisMin = -1;
 	
 	$scope.breakpoints = [{
-	    breakpoint: 1200,
+	    breakpoint: 1200, // Pc portable
+	    settings: {
+	      slidesToShow: 5,
+	      slidesToScroll: 5
+	    }
+	  },
+	  {
+	    breakpoint: 768, // Smartphone
+	    settings: {
+	      slidesToShow: 3,
+	      slidesToScroll: 3
+	    }
+	  },
+	  {
+	    breakpoint: 992, // Tablette
 	    settings: {
 	      slidesToShow: 4,
 	      slidesToScroll: 4
