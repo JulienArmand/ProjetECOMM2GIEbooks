@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Cookie;
 import beans.GestionClient;
 import model.Client;
-import javax.servlet.http.Cookie;
 
 public class ModificationProfileServlet extends HttpServlet {
 
@@ -41,13 +40,10 @@ public class ModificationProfileServlet extends HttpServlet {
 			System.out.println("Pseudo modifié.");
 			myBean.updateClientPseudo(c, pseudo);
 			int nbCookies = cookies.length;
-			String[] nameCookies = new String[nbCookies];
-			String[] valueCookies = new String[nbCookies];
 			for(int i = 0; i < nbCookies; i++){
-				nameCookies[i] = cookies[0].getName();
-				valueCookies[i] = cookies[0].getValue();
 				cookies[0].setMaxAge(0);
 			}
+			//Réinitialisation des cookies login et idClient
 			Cookie login = new Cookie("login", request.getParameter("pseudo"));
 			response.addCookie(login);
 			Cookie idClient = new Cookie("idClient", String.valueOf(c.getId()));
