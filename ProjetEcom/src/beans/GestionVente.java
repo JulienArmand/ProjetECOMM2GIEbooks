@@ -19,7 +19,11 @@ public class GestionVente {
 	private EntityManager em;
 
 	public Vente creerVente(Livre l) {
-		Vente c = new Vente(9);
+		Vente c = null;
+		if (l.getPromotion() != null)
+			c = new Vente(l.getPrix() * ((100 - l.getPromotion().getTauxReduc()) / 100));
+		else
+			c = new Vente(l.getPrix());
 		c.setLivre(l);
 		em.persist(c);
 		return c;

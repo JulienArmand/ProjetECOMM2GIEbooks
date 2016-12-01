@@ -95,6 +95,7 @@
 		<url-pattern>/ConnexionClient</url-pattern>
 	</servlet-mapping>
 	
+	
 		<servlet>
 		<servlet-name>GetTousLesGenres</servlet-name>
 		<servlet-class>servlets.GetTousLesGenres</servlet-class>
@@ -103,5 +104,15 @@
 		<servlet-name>GetTousLesGenres</servlet-name>
 		<url-pattern>/Genres</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GestionCommande</servlet-name>
+		<servlet-class>servlets.GestionCommandeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GestionCommande</servlet-name>
+		<url-pattern>/GestionCommande</url-pattern>
+	</servlet-mapping>
+	
 
 </web-app>

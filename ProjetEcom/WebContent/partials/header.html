@@ -16,20 +16,6 @@
 		document.getElementById('erreurIdentifiant').style.display = "none";
 	}
 
-	// 		var name = "login=";
-	//     	var ca = document.cookie.split(';');
-	//     	for(var i = 0; i <ca.length; i++) {
-	//         	var c = ca[i];
-	//         	while (c.charAt(0)==' ') {
-	//             	c = c.substring(1);
-	//         	}
-	//         	if (c.indexOf(name) == 0) {
-	//             	document.getElementById('login').innerHTML = c.substring(name.length,c.length);
-	//             	document.getElementById('1').style.display = "none";
-	//             	document.getElementById('2').style.display = "";
-	//         	}
-	//     	}	
-
 	function deconnexion() {
 		document.getElementById('connexion').style.display = "";
 		document.getElementById('profil').style.display = "none";
@@ -47,7 +33,7 @@
 
 
 <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
-	<span class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding"> <a href="/"> <img ng-src="../images/logoEcom2.png" class="img-responsive" style="height: 10em; width: 10em;" /></a>
+	<span class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding"> <a href="" ng-click="redirection()"> <img ng-src="../images/logoEcom2.png" class="img-responsive" style="height: 10em; width: 10em;" /></a>
 	</span>
 	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-10" style="margin-top: 2.5%; vertical-align: middle;">
 		<form ng-submit="rechercheBarre()" role="form" name="form" action="" method="post" style="padding: 0px; vertical-align: middle;">
@@ -58,6 +44,7 @@
 				<i class="icon icon-search"></i> <span class="input-group-btn"> <a ng-click="rechercheBarre()" href="" class="btn btn-info" role="button"><i class="glyphicon glyphicon-search"></i></a>
 				</span>
 			</div>
+
 		</form>
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-9 col-xs-12 no-padding">
@@ -71,21 +58,20 @@
 				<form action="ConnexionClient" method="POST" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
 					<fieldset>
 						<span id="erreurIdentifiant" style="display: none; color: red;">Identifiant ou mot de passe incorrect</span>
-						<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" type="text" name="pseudo" placeholder="Identifiant" value="">
+						<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" type="text" name="pseudo" placeholder="Identifiant" >
 						<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" type="password" name="motDePasse" placeholder="Mot de passe">
 						<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-primary" type="submit" value="Connexion">
 					</fieldset>
 				</form>
-				<form action="html/inscriptionClient.html" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" style="padding-top: 5px;">
+				<form action="#/inscription" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" style="padding-top: 5px;">
 					<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-primary" type="submit" value="Inscription">
 				</form>
 			</div>
 			<div id="profil" style="display: none; text-align: center;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
 				<a href="#/connexion" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="font-size: 150%;">Mon<br>Compte
 				</a> <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="login"></a>
-				<form class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<form action="../index.html" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<input class="btn btn-primary" type="submit" onclick="deconnexion()" value="Deconnexion">
-					</p>
 				</form>
 			</div>
 			<!--<form>

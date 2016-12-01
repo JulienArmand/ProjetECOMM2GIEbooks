@@ -28,14 +28,14 @@ public class GestionCommande {
 		em.persist(c);
 		return c;
 	}
-	
-	public Commande setVentesCommande(long idCommande, Collection<Vente> lesVentes){
+
+	public Commande setVentesCommande(long idCommande, Collection<Vente> lesVentes) {
 		Commande c = getCommande(idCommande);
 		c.setLesVentes(lesVentes);
 		em.persist(c);
 		return c;
 	}
-	
+
 	public Commande getCommande(long id) {
 
 		Query q = em.createQuery("select OBJECT(b) from Commande b where b.id =" + id);
@@ -49,7 +49,7 @@ public class GestionCommande {
 		List<Commande> list = (List<Commande>) q.getResultList();
 		return list;
 	}
-	
+
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Commande");
 		Query q2 = em.createNativeQuery("ALTER TABLE Commande {ALTER id RESTART WITH 0} ");
