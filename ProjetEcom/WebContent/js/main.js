@@ -457,7 +457,20 @@ routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeP
 
 });
 
-
+routeAppControllers.controller("compteClient", function($scope, $http, $routeParams,$rootScope){
+	
+	$http.get("GetInfoClient", {params:{"pseudo": $routeParams.pseudo}}).then(function(response) {
+		var data = response.data;
+    	$scope.pseudo = data.pseudo;
+    	$scope.nom = data.nom;
+    	$scope.prenom = data.prenom;
+    	$scope.mail = data.email;
+    	$scope.redirectToModificationPseudo = function(){
+    		window.location.href=("#/ModificationPseudo/");
+    	}
+    });
+    
+});
 
 
 app.config(['$routeProvider',
@@ -509,6 +522,10 @@ app.config(['$routeProvider',
 // templateUrl: 'partials/inscriptionClient.html',
 // controller: 'inscriptionClient'
 // })
+        .when('/compteClient/:pseudo',{
+        	templateUrl : 'partials/CompteClient.html',
+        	controller: 'compteClient'
+        })
     }
 ]);
 

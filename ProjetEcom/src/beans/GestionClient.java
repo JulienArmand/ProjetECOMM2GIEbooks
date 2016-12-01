@@ -32,4 +32,29 @@ public class GestionClient {
 		q.executeUpdate();
 		q2.executeUpdate();
 	}
+
+	public Client getClientFromPseudo(String pseudo) {
+		Query q = em.createQuery("select OBJECT(b) from Client b where b.pseudo = '" + pseudo+"'");
+		return (Client)q.getSingleResult();
+	}
+	
+	public void updateClientPseudo(Client c, String pseudo){
+		c.setPseudo(pseudo);
+		em.merge(c);
+	}
+	
+	public void updateClientNom(Client c, String nom){
+		c.setNom(nom);
+		em.merge(c);
+	}
+	
+	public void updateClientPrenom(Client c, String prenom){
+		c.setPrenom(prenom);
+		em.merge(c);
+	}
+	
+	public void updateClientEmail(Client c, String email){
+		c.setEmail(email);
+		em.merge(c);
+	}
 }
