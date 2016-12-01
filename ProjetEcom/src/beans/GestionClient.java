@@ -34,22 +34,22 @@ public class GestionClient {
 	}
 	
 	public void updateClientPseudo(Client c, String pseudo){
-		Query q = em.createNativeQuery("UPDATE Client set pseudo ='"+ pseudo +" where pseudo = "+c.getPseudo());
-		q.executeUpdate();
+		c.setPseudo(pseudo);
+		em.merge(c);
 	}
 	
 	public void updateClientNom(Client c, String nom){
-		Query q = em.createNativeQuery("UPDATE Client set nom =\""+ nom +"\" where pseudo = \""+c.getPseudo()+"\"");
-		q.executeUpdate();
+		c.setNom(nom);
+		em.merge(c);
 	}
 	
 	public void updateClientPrenom(Client c, String prenom){
-		Query q = em.createNativeQuery("UPDATE Client set prenom =\""+ prenom +"\" where pseudo = \""+c.getPseudo()+"\"");
-		q.executeUpdate();
+		c.setPrenom(prenom);
+		em.merge(c);
 	}
 	
 	public void updateClientEmail(Client c, String email){
-		Query q = em.createNativeQuery("UPDATE Client set email =\""+ email +"\" where pseudo = \""+c.getPseudo()+"\"");
-		q.executeUpdate();
+		c.setEmail(email);
+		em.merge(c);
 	}
 }

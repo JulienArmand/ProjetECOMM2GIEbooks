@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Cookie;
 import beans.GestionClient;
 import model.Client;
+import javax.servlet.http.Cookie;
 
 public class ModificationProfileServlet extends HttpServlet {
 
@@ -38,6 +39,7 @@ public class ModificationProfileServlet extends HttpServlet {
 		if(!pseudo.equals(c.getPseudo())){
 			System.out.println("Pseudo modifié.");
 			myBean.updateClientPseudo(c, pseudo);
+			cookies[0].setValue(pseudo);	
 		}
 		if(!nom.equals(c.getNom())){
 			System.out.println("Nom modifié.");
