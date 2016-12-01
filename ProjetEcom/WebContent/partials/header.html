@@ -1,34 +1,19 @@
 <head>
 <script>
-		var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-		if (cookieValue != null && cookieValue != "") {
-        	document.getElementById('login').innerHTML = cookieValue;
+		var cookieLogin = document.cookie.replace(/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+		if (cookieLogin != null && cookieLogin != "") {
+        	document.getElementById('login').innerHTML = cookieLogin;
         	document.getElementById('connexion').style.display = "none";
         	document.getElementById('profil').style.display = "";
     	}
-		var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-		if (cookieValue == "true") {
+		var cookieErreur = document.cookie.replace(/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+		if (cookieErreur == "true") {
         	document.getElementById('erreurIdentifiant').style.visibility = "visible";
         	document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     	}else{
     		document.getElementById('erreurIdentifiant').style.visibility = "hidden";
     	}
 		
-
-// 		var name = "login=";
-//     	var ca = document.cookie.split(';');
-//     	for(var i = 0; i <ca.length; i++) {
-//         	var c = ca[i];
-//         	while (c.charAt(0)==' ') {
-//             	c = c.substring(1);
-//         	}
-//         	if (c.indexOf(name) == 0) {
-//             	document.getElementById('login').innerHTML = c.substring(name.length,c.length);
-//             	document.getElementById('1').style.display = "none";
-//             	document.getElementById('2').style.display = "";
-//         	}
-//     	}	
-
     	function deconnexion(){
     		document.getElementById('connexion').style.display = "";
         	document.getElementById('profil').style.display = "none";
@@ -66,35 +51,70 @@
 	</div>
 	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 " style="padding:0px;">
 		<ul class="list-unstyled col-lg-7 col-md-7 col-xs-7 col-sm-7" style="padding:0px;">
-			<li><a ng-href="#/panier" ></li>
+			<li>
+				<a ng-href="#/panier">
 					<!-- <img ng-src="../images/icon_panier.png" class=" img-responsive" style="height: 6em;width: 6em; margin:auto; padding:0px;"/>-->
-					<div class="row row-same-height" style="text-align:center;"><ngcart-summary></ngcart-summary>
-				</a></div>
+					<div class="row row-same-height" style="text-align:center;">
+					<ngcart-summary></ngcart-summary>
+					</div>
+				</a>
+			</li>
 		</ul>
 		
-		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-				<div id="connexion">
+		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"  >
+<!-- 					<div ng-controller="ExampleController"> -->
+<!-- 					  <div ng-switch on="selection"> -->
+<!-- 					      <div  ng-switch-when="connecte"> -->
+<!-- 					      <div ng-include="'partials/homeView.html'"> -->
+<!-- 					      </div> -->
+<!-- 					      </div> -->
+<!-- 					      <div  ng-switch-when="visiteur"> -->
+<!-- 					      <div ng-include="'partials/loginView.html'"> -->
+<!-- 					      	</div> -->
+<!-- 					      </div> -->
+<!-- 					      <div  ng-switch-default> -->
+<!-- 					      <div ng-include="'partials/loginView.html'"> -->
+<!-- 					      	</div> -->
+<!-- 					      </div> -->
+<!-- 					  </div> -->
+<!-- 					</div> -->
+<!-- 					<form ng-controller="CookiesCtrl"> -->
+<!-- 						  <input type="submit" onclick="afficheCookies()" value="affiche Cookies"></p> -->
+<!-- 					</form> -->
+
+			    
+			    
+			    
+			    
+			    
+			    
+
+			<div id="connexion">
 				<form action="ConnexionClient" method="POST">
-				<fieldset>
-					<span id="erreurIdentifiant" style="visibility:hidden;color:red;">Identifiant ou mot de passe incorrect</span><br>
-					<input type="text" name="pseudo" placeholder="Identifiant" value=""><br>
-					<input type="password" name="motDePasse" placeholder="Mot de passe"><br>
-					<input type="submit" value="Connexion">
-				</fieldset>
+					<fieldset>
+						<span id="erreurIdentifiant" style="visibility:hidden;color:red;">Identifiant ou mot de passe incorrect</span><br>
+						<input type="text" name="pseudo" placeholder="Identifiant" ><br>
+						<input type="password" name="motDePasse" placeholder="Mot de passe"><br>
+						<input type="submit" value="Connexion">
+					</fieldset>
 				</form>
-				<form action="html/inscriptionClient.html">
+<!-- 				<form action="html/inscriptionClient.html"> -->
+				<form action="#/inscription">
 					<input type="submit" value="Inscription">
 				</form>
 			</div>
+			
 			<div id="profil" style="display:none">
 				<a href="#/connexion" style="font-size:150% ;padding:0px;text-align:center; ">Mon<br>Compte</a>
 				<a id="login"></a>
-				<form>
+				<form action="../index.html">
 					<input type="submit" onclick="deconnexion()" value="Deconnexion"></p>
 				</form>
 			</div>
 			<form >
 				<input type="submit" onclick="afficheCookies()" value="affiche Cookies"></p>
 			</form>
+			
+		</div>
 	</div>
 </div>

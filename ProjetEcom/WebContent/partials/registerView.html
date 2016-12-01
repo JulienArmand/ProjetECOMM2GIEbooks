@@ -1,0 +1,130 @@
+<!doctype html>
+<html ng-app="app">
+
+    <head>
+        <title>Futura Books</title>
+        
+        <meta charset="UTF-8" >
+        
+        <!-- Librairie js -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" ></script>
+        <script src="../js/libs/angular.min.js" ></script>
+        <script src="../js/libs/bootstrap.js" ></script>
+        <script src="../js/libs/ui-bootstrap-tpls-2.1.4.js" ></script>
+        
+        <!-- Bootstrap -->
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+        
+        <!-- Controller js -->
+        <script src="../js/main.js" ></script>
+        
+        
+        <script>
+		
+    	function afficheCookies(){
+    		document.cookie = document.getElementById('infId').name +"="+ document.getElementById('infId').value;
+    		document.cookie = document.getElementById('infName').name +"="+ document.getElementById('infName').value;
+    		document.cookie = document.getElementById('infPre').name +"="+ document.getElementById('infPre').value;
+    		document.cookie = document.getElementById('infMDP').name +"="+ document.getElementById('infMDP').value;
+    		document.cookie = document.getElementById('infMDP2').name +"="+ document.getElementById('infMDP2').value;
+    		document.cookie = document.getElementById('infEmail').name +"="+ document.getElementById('infEmail').value;
+    		 alert(document.cookie);
+    	}
+    	
+    	function redirectInscription(){
+    		var s = document.getElementById('infId').value;
+    		s=s+"/"+document.getElementById('infName').value;
+    		s=s+"/"+document.getElementById('infPre').value;
+    		s=s+"/"+document.getElementById('infMDP').value;
+    		s=s+"/"+document.getElementById('infMDP2').value;
+    		s=s+"/"+document.getElementById('infEmail').value;
+
+			var url = "#/inscription/" +s;
+			if(window.location.hash != url){
+    			window.location.href=(url);
+    		}else{
+    			window.location.href=("#/inscription/");
+    			window.location.href=(url);
+    		}
+    	}
+    	
+    	
+</script>
+        
+        
+        
+    </head>
+    <body>
+
+        
+		
+<!-- 	      <div  ng-if="rez==='EnAttente'"> -->
+<!-- 	      <span>EnAttente</span> -->
+<!-- 	      </div> -->
+<!-- 	      <div  ng-if="rez===''"> -->
+<!-- 	      <span>SUCCES</span> -->
+<!-- 	      </div> -->
+<!-- 	      <div  ng-else> -->
+<!-- 	      <span>ERREUR</span> -->
+<!-- 	      </div> -->
+	  
+		<section>
+		<div>
+			<form id="informations">
+				<input id="infId" type="text" name="identifiant" placeholder="Identifiant"><br>
+				<input id="infName"type="text" name="nom" placeholder="Nom"><br>
+				<input id="infPre"type="text" name="prenom" placeholder="Prenom"><br>
+				<input id="infMDP"type="password" name="motdepasse" placeholder="Mot de passe"><br>
+				<input id="infMDP2"type="password" name="motdepasseconfirm" placeholder="Confirmer mot de passe"><br>
+				<input id="infEmail"type="text" name="email" placeholder="Email" "><br>
+				<input type="submit" onclick="redirectInscription()" value="Inscription">
+			</form>
+		</div>
+		<br>
+		<div>
+			<form action="../InscriptionClient" method="POST">
+				<input type="text" name="action" value="visualiser" style="display:none;">
+				<input type="submit" value="Voir les clients">
+			</form>
+			<br>
+			<form action="../InscriptionClient" method="POST">
+				<input type="text" name="action" value="supprimer" style="display:none;">
+				<input type="submit" value="Supprimer les clients">
+			</form>
+			
+			<form action="../index.html" >
+				<input type="submit" value="Retour">
+			</form>
+		</div>
+        </section>
+<!-- 		<span>Resultat: {{rez}}</span> -->
+        
+        
+        
+    </body>
+</html>
+
+
+
+
+
+<!-- <div class="col-md-6 col-md-offset-3"> -->
+<!--   <h2>Register</h2> -->
+<!--   <form name="form" ng-submit="vm.register()" role="form"> -->
+<!--     <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }"> -->
+<!--       <label for="username">First name</label> -->
+<!--       <input type="text" name="firstName" id="firstName" class="form-control" ng-model="vm.user.firstName" required /> <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span> </div> -->
+<!--     <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }"> -->
+<!--       <label for="username">Last name</label> -->
+<!--       <input type="text" name="lastName" id="Text1" class="form-control" ng-model="vm.user.lastName" required /> <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span> </div> -->
+<!--     <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }"> -->
+<!--       <label for="username">Username</label> -->
+<!--       <input type="text" name="username" id="username" class="form-control" ng-model="vm.user.username" required /> <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span> </div> -->
+<!--     <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }"> -->
+<!--       <label for="password">Password</label> -->
+<!--       <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" required /> <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span> </div> -->
+<!--     <div class="form-actions"> -->
+<!--       <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Register</button> <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" -->
+<!--       /> <a href="#/login" class="btn btn-link">Cancel</a> </div> -->
+<!--   </form> -->
+<!-- </div> -->

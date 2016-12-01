@@ -1,10 +1,14 @@
 package beans;
 
+
 import java.util.List;
+import java.util.ListIterator;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import model.Client;
 
 @Stateless
@@ -35,6 +39,26 @@ public class InscriptionClientBean {
 	    
 	    q1.executeUpdate();
 
+	}
+	
+	public boolean pseudoDejaPris(String pseudo){
+		List<Client> list = getLesClients();
+		for(Client c : list){
+			if( c.getPseudo().equals(pseudo)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean emailDejaPris(String email){
+		List<Client> list = getLesClients();
+		for(Client c : list){
+			if( c.getEmail().equals(email)){
+				return true;
+			}
+		}
+		return false;
 	}
 		
 }

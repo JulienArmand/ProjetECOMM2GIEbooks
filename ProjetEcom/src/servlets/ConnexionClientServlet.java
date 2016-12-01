@@ -50,8 +50,7 @@ public class ConnexionClientServlet extends HttpServlet {
 			response.addCookie(erreur);
 		}
 		//Redirect to main page
-		RequestDispatcher dispatcher = request.getRequestDispatcher("");
-		dispatcher.forward(request,response);
+		response.sendRedirect(request.getContextPath()+"/index.html");
 	}
 	
 	

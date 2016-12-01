@@ -68,6 +68,45 @@ app.controller("footerCtrl", function($scope){
 });
 
 
+
+app.controller('ExampleController', ['$scope', function($scope) {
+	$scope.items = ['connecte', 'visiteur','autre'];
+	  $scope.selection = $scope.items[1];
+	  $scope.list = [];
+      $scope.text = 'hello';
+      $scope.submit = function() {
+        if ($scope.text) {
+          $scope.list.push(this.text);
+          $scope.text = '';
+        }
+      };
+}]);
+
+
+app.controller('CookiesCtrl', ['$cookies', function($cookies) {
+	  // Retrieving a cookie
+	  var favoriteCookie = $cookies.get('myFavorite');
+	  // Setting a cookie
+	  $cookies.put('myFavorite', 'oatmeal');
+}]);
+
+
+
+
+
+
+
+
+app.controller("coDecoCtrl", function($scope){
+
+	$scope.getInclude = function(){
+		return "'partials/loginView.html'";
+	  
+	}
+
+});
+
+
 app.controller("menuCtrl", function($scope, $rootScope){
 
 	$scope.range = function(min, max, step) {
@@ -204,6 +243,14 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
 	$rootScope.minPrix = -1;
 	$rootScope.maxPrix = -1;
 	$rootScope.avisMin = -1;
+			
+	
+	$rootScope.identifiant = "@";
+	$rootScope.nom = "@"; 
+	$rootScope.prenom = "@";
+	$rootScope.motdepasse = "@";
+	$rootScope.motdepasseconfirm = "@";
+	$rootScope.email = "@";
 	
 
     $http.get("Promos").then(function(response) {
@@ -236,6 +283,12 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
     }
     
 });
+
+
+
+
+
+
 
 routeAppControllers.controller("recherche", function($scope, $http, $routeParams,$rootScope){
     
@@ -297,6 +350,16 @@ routeAppControllers.controller('corpsAccueilCtrl', ['$scope',
 ]);
 
 
+routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeParams,$rootScope){
+
+ 
+	$http.get("InscriptionClient",{params:{"identifiant":$routeParams.identifiant,"nom":$routeParams.nom,"prenom":$routeParams.prenom,"motdepasse":$routeParams.motdepasse,"motdepasseconfirm":$routeParams.motdepasseconfirm,"email":$routeParams.email}}).then(function(response) {
+			var data = response.data;
+			$scope.rez = data;
+	});
+
+});
+
 
 
 
@@ -336,6 +399,14 @@ app.config(['$routeProvider',
         .when('/confirmation', {
         	templateUrl: 'partials/confirmation.html',
         	controller: 'paiementCtrl'
+        })
+        .when('/inscription/:identifiant/:nom/:prenom/:motdepasse/:motdepasseconfirm/:email', {
+        	templateUrl: 'partials/registerView.html',
+        	controller: 'inscriptionCtrl'
+        })
+        .when('/inscription', {
+        	templateUrl: 'partials/registerView.html',
+//        	controller: 'inscriptionCtrl'
         })
     }
 ]);
