@@ -1,6 +1,7 @@
 package beans;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Date;
@@ -21,6 +22,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import Tools.ElasticSearchTools;
+import Tools.Tools;
 import model.Auteur;
 import model.Editeur;
 import model.Genre;
@@ -37,7 +39,17 @@ public class GestionLivre {
 			String langue, String langueOriginale, String couverture, Promotion promo, String resume, Date datePub) {
 
 		Livre l = new Livre(nom, isbn, datePub, nbpage, (float) prix, langue, langueOriginale);
-		l.setNomCouverture(couverture);
+		
+		String couvertureUrl = "file://home/s/soulierc/Images/"+l.getId()+".png";
+		
+		try {
+			Tools.sauvegarderImage(couverture, 400, 600, couvertureUrl);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			couvertureUrl = "images/defaultCouv.png";
+		}
+		System.out.println(couvertureUrl);
+		l.setNomCouverture(couvertureUrl);
 
 		l.setResume(resume);
 		l.setPromotion(promo);

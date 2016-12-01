@@ -94,5 +94,14 @@
 		<servlet-name>ConnexionClient</servlet-name>
 		<url-pattern>/ConnexionClient</url-pattern>
 	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>GetTousLesGenres</servlet-name>
+		<servlet-class>servlets.GetTousLesGenres</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetTousLesGenres</servlet-name>
+		<url-pattern>/Genres</url-pattern>
+	</servlet-mapping>
 
 </web-app>
