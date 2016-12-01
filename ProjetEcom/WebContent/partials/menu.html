@@ -1,47 +1,37 @@
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-5">
-	<h3>Genre</h3>
-	<div class="list-group">
-	  <a ng-click="setGenre('Science fiction'); rechercheMenu()" href="" class="list-group-item">Science fiction</a>
-	  <a ng-click="setGenre('Jeunesse'); rechercheMenu()" href="" class="list-group-item">Jeunesse</a>
-	  <a ng-click="setGenre('Fantastique'); rechercheMenu()" href="" class="list-group-item">Fantasy</a>
-	  <a ng-click="setGenre('Policier'); rechercheMenu()" href="" class="list-group-item">Policier</a>
-	  <a ng-click="setGenre('Biographie'); rechercheMenu()" href="" class="list-group-item">Biographies</a>
-	  <a ng-click="setGenre('Documentaires'); rechercheMenu()" href="" class="list-group-item">Documentaires</a>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-6 no-padding">
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding fondTitre">
+		<h3>Genre</h3>
+	</div>
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+		<div class="fondElement">
+			<ul class="list-unstyled">
+				<li ng-repeat="genre in genres"><input class="radioNoCircle tri" name="genre" id="{{genre.nom}}" type="radio" ng-click="setGenre(genre.nom, genre.nom); rechercheMenu()"><label size="2" for="{{genre.nom}}">{{genre.nom}}</label></li>
+			</ul>
+		</div>
 	</div>
 </div>
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-5">
-	<h3>Affiner</h3>
-	<h4>Avis</h4>
-	<ul class="col-lg-12 col-md-12 no-padding ">
-		<li ng-repeat="i in range(1, 4)" class=" list-unstyled no-padding ">
-			<div class="rating-container rating-animate no-padding ">
-				<div class="rating no-padding " style="font-size: 1.25em; " >
-					<a ng-click="setAvisMin($event); rechercheMenu()" ng-model="avis" value="{{i}}" href="" class="empty-stars">
-						<span class="star" ng-repeat="j in range(1, 5)" >
-						<i class="glyphicon glyphicon-star-empty"></i>
-						</span>
-					</a>
-					<a ng-click="setAvisMin($event) ;rechercheMenu()" ng-model="avis" value="{{i}}" href="" class="filled-stars" style="width:{{i*100/5}}%">
-						<span class="star" ng-repeat="k in range(0, i)" >
-						<i class="glyphicon glyphicon-star"></i>
-						</span>
-					</a>
-				</div>
-			</div>
-		</li>
-	</ul>
-	<h4>Prix</h4>
-	<form action="" class="form-horizontal" >
-	    <div class="form-group">
-	        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-6" style="padding:0px;">
-	            <input id="menuPrixMin" ng-model="prixMin" ng-change="setPrixMin(prixMin)" type="text" class="form-control" placeholder="Prix Min">
-	        </div>
-	        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-6" style="padding:0px;">
-	            <input id="menuPrixMax" ng-model="prixMax" ng-change="setPrixMax(prixMax)" type="text" class="form-control" placeholder="Prix Max">
-	        </div>
-	        <span class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="padding:0px;">
-         	   <a ng-click="rechercheMenu()" href="" class="btn btn-info" role="button"><i class="glyphicon glyphicon-search"></i></a>
-        	</span>
-	    </div>
-	</form>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-6 no-padding">
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding fondTitre">
+		<h3>Affiner</h3>
+	</div>
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding fondElement">
+		<h4>Avis</h4>
+		<ul class="col-lg-12 col-md-12 no-padding">
+			<li ng-repeat="i in range(1, 4)" class="list-unstyled no-padding "><label> <input class="radioNoCircle avis input-hidden" name="avis" id="avis{{i}}" type="radio" ng-click="setAvisMin(i, i); rechercheMenu()"><img class="img-responsive" for="avis{{i}}" src="images/etoiles/etoiles{{i}}.png"></img></label></li>
+		</ul>
+		<h4>Prix</h4>
+		<form action="" class="form-horizontal">
+			<ul class="list-inline">
+				<li class="col-lg-2"><label>De</label></li>
+				<li class="col-lg-3"><input id="menuPrixMin" ng-model="prixMin" ng-change="setPrixMin(prixMin)" type="text" class="form-control"></li>
+				<li class="col-lg-2"><label>à</label></li>
+				<li class="col-lg-3"><input id="menuPrixMax" ng-model="prixMax" ng-change="setPrixMax(prixMax)" type="text" class="form-control"></li>
+				<li class="col-lg-2"><span> <a ng-click="rechercheMenu()" href="" class="btn btn-info" role="button"><i class="glyphicon glyphicon-search"></i></a>
+				</span></li>
+			</ul>
+		</form>
+	</div>
 </div>
+	
+	
+	

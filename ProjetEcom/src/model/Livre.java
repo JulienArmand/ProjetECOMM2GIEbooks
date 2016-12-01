@@ -31,57 +31,57 @@ public class Livre {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "LIVRE_ID")
 	@Expose
-	private long id;
+	private long				id;
 
 	@Expose
-	private String titre;
+	private String				titre;
 	@Expose
-	private String isbn;
+	private String				isbn;
 	@Expose
 	@Temporal(TemporalType.DATE)
-	private Date dateDePublication;
+	private Date				dateDePublication;
 	@Expose
-	private int nbPages;
+	private int					nbPages;
 	@Expose
-	private float prix;
+	private float				prix;
 	@Expose
-	private String langue;
+	private String				langue;
 	@Expose
-	private String langueOrigine;
+	private String				langueOrigine;
 	@Expose
-	private String nomCouverture;
+	private String				nomCouverture;
 	@Expose
 	@Lob
 	@Column(length = 10000)
-	private String resume;
+	private String				resume;
 	@Expose
 	@OneToOne
-	private Promotion promotion;
+	private Promotion			promotion;
 
 	@Expose
 	@ManyToMany(mappedBy = "lesLivres", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Collection<Auteur> lesAuteurs;
+	private Collection<Auteur>	lesAuteurs;
 
 	@Expose
 	@OneToMany(mappedBy = "leLivre", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Collection<Avis> lesAvis;
+	private Collection<Avis>	lesAvis;
 
 	@OneToMany(mappedBy = "livre", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Collection<Vente> lesVentes;
+	private Collection<Vente>	lesVentes;
 
 	@ManyToOne
 	@Expose
 	@JoinColumn(name = "Genre_id")
-	private Genre genre;
+	private Genre				genre;
 
 	@ManyToOne
 	@Expose
 	@JoinColumn(name = "Editeur_id")
-	private Editeur editeur;
+	private Editeur				editeur;
 
 	@ManyToOne
 	@JoinColumn(name = "Serie_id")
-	private Serie laSerie;
+	private Serie				laSerie;
 
 	public Livre() {
 		super();
@@ -90,8 +90,7 @@ public class Livre {
 		this.lesVentes = new LinkedList<Vente>();
 	}
 
-	public Livre(String title, String isbn, Date dateDePublication, int nbPages, float prix, String langue,
-			String langueOrigine) {
+	public Livre(String title, String isbn, Date dateDePublication, int nbPages, float prix, String langue, String langueOrigine) {
 		this();
 		this.titre = title;
 		this.isbn = isbn;

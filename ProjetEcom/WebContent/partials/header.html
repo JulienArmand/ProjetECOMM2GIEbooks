@@ -1,120 +1,83 @@
 <head>
 <script>
-		var cookieLogin = document.cookie.replace(/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-		if (cookieLogin != null && cookieLogin != "") {
-        	document.getElementById('login').innerHTML = cookieLogin;
-        	document.getElementById('connexion').style.display = "none";
-        	document.getElementById('profil').style.display = "";
-    	}
-		var cookieErreur = document.cookie.replace(/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-		if (cookieErreur == "true") {
-        	document.getElementById('erreurIdentifiant').style.visibility = "visible";
-        	document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    	}else{
-    		document.getElementById('erreurIdentifiant').style.visibility = "hidden";
-    	}
-		
-    	function deconnexion(){
-    		document.getElementById('connexion').style.display = "";
-        	document.getElementById('profil').style.display = "none";
-        	document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        	document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+	var cookieValue = document.cookie.replace(
+			/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	if (cookieValue != null && cookieValue != "") {
+		document.getElementById('login').innerHTML = cookieValue;
+		document.getElementById('connexion').style.display = "none";
+		document.getElementById('profil').style.display = "";
+	}
+	var cookieValue = document.cookie.replace(
+			/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	if (cookieValue == "true") {
+		document.getElementById('erreurIdentifiant').style.display = "block";
+		document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+	} else {
+		document.getElementById('erreurIdentifiant').style.display = "none";
+	}
 
-    	}
-    	function afficheCookies(){
-    		 alert(document.cookie);
-    	}
-    	
-    	
+	function deconnexion() {
+		document.getElementById('connexion').style.display = "";
+		document.getElementById('profil').style.display = "none";
+		document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
+	}
+	function afficheCookies() {
+		alert(document.cookie);
+	}
 </script>
 
 
 </head>
 
 
-<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<span class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px;">
-		<a href="/"> <img ng-src="../images/logoEcom2.png" class="img-responsive" style="height: 10em;width: 10em; "/></a>
+<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+	<span class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding"> <a href="" ng-click="redirection()"> <img ng-src="../images/logoEcom2.png" class="img-responsive" style="height: 10em; width: 10em;" /></a>
 	</span>
-	<div class="col-lg-7 col-md-7 col-sm-7 col-xs-6" style="margin-top:2.5%;vertical-align: middle;" >
-		<form ng-submit="rechercheBarre()" role="form" name="form" action="" method="post" style="padding:0px; vertical-align: middle;">
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-10" style="margin-top: 2.5%; vertical-align: middle;">
+		<form ng-submit="rechercheBarre()" role="form" name="form" action="" method="post" style="padding: 0px; vertical-align: middle;">
 			<div class="input-group input-group-lg icon-addon addon-lg" style="vertical-align: middle;">
-	        	<input list="barreRecherche" type="text" ng-model="recherche" placeholder="Ecrivez ici pour chercher un livre ..." ng-change="suggestion()" name="inputSearchQuerry" id="schbox" class="form-control input-lg">
-	        	<datalist id="barreRecherche">
+				<input list="barreRecherche" type="text" ng-model="recherche" placeholder="Ecrivez ici pour chercher un livre ..." ng-change="suggestion()" name="inputSearchQuerry" id="schbox" class="form-control input-lg">
+				<datalist id="barreRecherche">
 				</datalist>
-	        	<i class="icon icon-search"></i>
-	        	<span class="input-group-btn">
-	         	   <a ng-click="rechercheBarre()" href="" class="btn btn-info" role="button"><i class="glyphicon glyphicon-search"></i></a>
-	        	</span>
-	   		</div>
+				<i class="icon icon-search"></i> <span class="input-group-btn"> <a ng-click="rechercheBarre()" href="" class="btn btn-info" role="button"><i class="glyphicon glyphicon-search"></i></a>
+				</span>
+			</div>
+
 		</form>
 	</div>
-	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 " style="padding:0px;">
-		<ul class="list-unstyled col-lg-7 col-md-7 col-xs-7 col-sm-7" style="padding:0px;">
-			<li>
-				<a ng-href="#/panier">
-					<!-- <img ng-src="../images/icon_panier.png" class=" img-responsive" style="height: 6em;width: 6em; margin:auto; padding:0px;"/>-->
-					<div class="row row-same-height" style="text-align:center;">
-					<ngcart-summary></ngcart-summary>
-					</div>
-				</a>
-			</li>
-		</ul>
-		
-		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"  >
-<!-- 					<div ng-controller="ExampleController"> -->
-<!-- 					  <div ng-switch on="selection"> -->
-<!-- 					      <div  ng-switch-when="connecte"> -->
-<!-- 					      <div ng-include="'partials/homeView.html'"> -->
-<!-- 					      </div> -->
-<!-- 					      </div> -->
-<!-- 					      <div  ng-switch-when="visiteur"> -->
-<!-- 					      <div ng-include="'partials/loginView.html'"> -->
-<!-- 					      	</div> -->
-<!-- 					      </div> -->
-<!-- 					      <div  ng-switch-default> -->
-<!-- 					      <div ng-include="'partials/loginView.html'"> -->
-<!-- 					      	</div> -->
-<!-- 					      </div> -->
-<!-- 					  </div> -->
-<!-- 					</div> -->
-<!-- 					<form ng-controller="CookiesCtrl"> -->
-<!-- 						  <input type="submit" onclick="afficheCookies()" value="affiche Cookies"></p> -->
-<!-- 					</form> -->
+	<div class="col-lg-4 col-md-4 col-sm-9 col-xs-12 no-padding">
+		<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 no-padding">
+			<a ng-href="#/panier"> <!-- <img ng-src="../images/icon_panier.png" class=" img-responsive" style="height: 6em;width: 6em; margin:auto; padding:0px;"/>--> <ngcart-summary></ngcart-summary>
+			</a>
+		</div>
 
-			    
-			    
-			    
-			    
-			    
-			    
-
+		<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 no-padding">
 			<div id="connexion">
-				<form action="ConnexionClient" method="POST">
+				<form action="ConnexionClient" method="POST" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
 					<fieldset>
-						<span id="erreurIdentifiant" style="visibility:hidden;color:red;">Identifiant ou mot de passe incorrect</span><br>
-						<input type="text" name="pseudo" placeholder="Identifiant" ><br>
-						<input type="password" name="motDePasse" placeholder="Mot de passe"><br>
-						<input type="submit" value="Connexion">
+						<span id="erreurIdentifiant" style="display: none; color: red;">Identifiant ou mot de passe incorrect</span>
+						<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" type="text" name="pseudo" placeholder="Identifiant" >
+						<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" type="password" name="motDePasse" placeholder="Mot de passe">
+						<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-primary" type="submit" value="Connexion">
 					</fieldset>
 				</form>
-<!-- 				<form action="html/inscriptionClient.html"> -->
-				<form action="#/inscription">
-					<input type="submit" value="Inscription">
+				<form action="#/inscription" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" style="padding-top: 5px;">
+					<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-primary" type="submit" value="Inscription">
 				</form>
 			</div>
-			
-			<div id="profil" style="display:none">
-				<a href="#/connexion" style="font-size:150% ;padding:0px;text-align:center; ">Mon<br>Compte</a>
-				<a id="login"></a>
-				<form action="../index.html">
-					<input type="submit" onclick="deconnexion()" value="Deconnexion"></p>
+			<div id="profil" style="display: none; text-align: center;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+				<a href="#/connexion" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="font-size: 150%;">Mon<br>Compte
+				</a> <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="login"></a>
+				<form action="../index.html" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<input class="btn btn-primary" type="submit" onclick="deconnexion()" value="Deconnexion">
 				</form>
 			</div>
-			<form >
-				<input type="submit" onclick="afficheCookies()" value="affiche Cookies"></p>
-			</form>
-			
+			<!--<form>
+				<input type="submit" onclick="afficheCookies()"
+					value="affiche Cookies">
+				</p>
+			</form>-->
 		</div>
 	</div>
-</div>

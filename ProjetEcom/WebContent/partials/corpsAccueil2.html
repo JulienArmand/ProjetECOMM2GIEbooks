@@ -1,6 +1,6 @@
 <h2>Promotions</h2>
-<slick infinite="true" slides-to-show="7" dots="true" arrows="true" data="livresPromo" init-onload="true">
-	<div  ng-repeat="livre in livresPromo" class="mosaique-item">
+<slick infinite="true" slides-to-show="7" responsive="breakpoints" dots="true" arrows="true" data="livresPromo" init-onload="true">
+	<div  ng-repeat="livre in livresPromo" class="mosaique-item" >
 		<div>
 			<a ng-href="#/info/{{livre.id}}">
 				<img ng-src="{{livre.nomCouverture}}" class="img-responsive" />
@@ -16,13 +16,13 @@
 			<div>
 				<span style="text-decoration:line-through; color: red;">{{livre.prix}} €</span>
 		        <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
-                <ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{calculPromo(livre.prix,livre.promotion.tauxReduc)}}" quantity="1">Ajouter au panier</ngcart-addtocart>
+                <ngcart-addtocart class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" id="{{livre.id}}" name="{{livre.titre}}" price="{{calculPromo(livre.prix,livre.promotion.tauxReduc)}}" quantity="1"></ngcart-addtocart>
 	        </div>
        	</div>
 	</div>
 </slick>
 <h2>Livres les plus vendus</h2>
-<slick infinite="true" slides-to-show="7" dots="true" arrows="true" data="livresPlusVendu" init-onload="true">
+<slick infinite="true" slides-to-show="7" responsive="breakpoints" dots="true" arrows="true" data="livresPlusVendu" init-onload="true">
 	<div  ng-repeat="livre in livresPlusVendu" class="mosaique-item">
 		<div>
 			<a ng-href="#/info/{{livre.id}}">
@@ -47,6 +47,7 @@
        	</div>
 	</div>
 </slick>
+</div>
 <!--  <h2>Recherche</h2>
 <slick infinite="true" slides-to-show="5" dots="true" arrows="true" data="livresRecherche" init-onload="true">
 	<div  ng-repeat="livre in livresRecherche" >

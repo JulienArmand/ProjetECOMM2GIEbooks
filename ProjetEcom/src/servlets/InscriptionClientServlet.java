@@ -142,6 +142,23 @@ public class InscriptionClientServlet extends HttpServlet {
         response.setContentType("application/json");
         response.getWriter().write(json);
 	//	response.sendRedirect(request.getContextPath()+"/#/inscription");
+//=======
+//	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		if(request.getParameter("motDePasse").equals(request.getParameter("motDePasseConfirm"))){
+//			inscriptionClient(request.getParameter("pseudo"), request.getParameter("email"), request.getParameter("motDePasse"), request.getParameter("nom"), request.getParameter("prenom"));
+//			response.getWriter().println("Client créé");
+//		}
+//		System.out.println("Test 1");
+////		response.getWriter().println("Le pseudo est :" + request.getParameter("pseudo"));
+////		response.getWriter().println("Le nom est :" + request.getParameter("nom"));
+////		response.getWriter().println("Le prenom est :" + request.getParameter("prenom"));
+////		response.getWriter().println("Le mot de passe est :" + request.getParameter("motDePasse"));
+////		response.getWriter().println("Le mail est :" + request.getParameter("email"));
+//		
+//		String resultat="ok";
+//		RequestDispatcher dispatcher = request.getRequestDispatcher("html/inscriptionClient.html");
+//		dispatcher.forward(request,response);
+//>>>>>>> branch 'master' of https://github.com/JulienArmand/ProjetECOMM2GIEbooks.git
 		
 	}
 

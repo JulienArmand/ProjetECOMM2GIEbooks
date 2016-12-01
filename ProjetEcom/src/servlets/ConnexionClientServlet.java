@@ -10,7 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import beans.ConnexionClientBean;
+import beans.ConnexionClient;
 
 public class ConnexionClientServlet extends HttpServlet {
 	
@@ -18,7 +18,7 @@ public class ConnexionClientServlet extends HttpServlet {
 	private static final long serialVersionUID = 5024415012647003429L;
 	
 	@EJB()
-	private ConnexionClientBean myBean;
+	private ConnexionClient myBean;
 	
 	public ConnexionClientServlet() {
 		// TODO Auto-generated constructor stub
