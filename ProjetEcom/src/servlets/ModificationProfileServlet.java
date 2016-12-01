@@ -35,11 +35,23 @@ public class ModificationProfileServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		Cookie[] cookies = request.getCookies();
 		String cookiePseudo = cookies[0].getValue();
+		System.out.println(cookiePseudo);
 		Client c = myBean.getClientFromPseudo(cookiePseudo);
 		if(!pseudo.equals(c.getPseudo())){
 			System.out.println("Pseudo modifié.");
 			myBean.updateClientPseudo(c, pseudo);
-			cookies[0].setValue(pseudo);	
+			int nbCookies = cookies.length;
+			String[] nameCookies = new String[nbCookies];
+			String[] valueCookies = new String[nbCookies];
+			for(int i = 0; i < nbCookies; i++){
+				nameCookies[i] = cookies[0].getName();
+				valueCookies[i] = cookies[0].getValue();
+				cookies[0].setMaxAge(0);
+			}
+			Cookie login = new Cookie("login", request.getParameter("pseudo"));
+			response.addCookie(login);
+			Cookie idClient = new Cookie("idClient", String.valueOf(c.getId()));
+			response.addCookie(idClient);
 		}
 		if(!nom.equals(c.getNom())){
 			System.out.println("Nom modifié.");
