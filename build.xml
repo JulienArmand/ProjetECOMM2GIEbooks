@@ -1,0 +1,6 @@
+<project  name="ProjetEcomMain" default="build" basedir=".">
+	
+	<target name="build">
+        	<ant antfile="ProjetEcom/build.xml" target="build"/>
+    	</target>
+</project>
