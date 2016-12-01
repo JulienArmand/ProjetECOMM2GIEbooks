@@ -34,8 +34,9 @@ public class Tools {
 	public static void sauvegarderImage(String urlImage,  int destWidth, int destHeight, String destPath) throws IOException {
 		
 		BufferedImage bImage;
-
-		urlImage = "http://www.arbres.org/images/arbre-petition.jpg";
+		throw new IOException();
+		
+		/*urlImage = "http://www.arbres.org/images/arbre-petition.jpg";
 		System.err.println("etape -1 ok " + urlImage);
 		URL url = new URL(urlImage);
 		
@@ -67,7 +68,7 @@ public class Tools {
         File outputfile = new File(destPath);
         ImageIO.write(bImageNew, "png", outputfile);
         f.delete();
-		System.err.println("Ecriture ok");
+		System.err.println("Ecriture ok");*/
     }
 	
 }

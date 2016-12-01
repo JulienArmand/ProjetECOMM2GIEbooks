@@ -46,9 +46,9 @@ public class GestionLivre {
 			Tools.sauvegarderImage(couverture, 400, 600, couvertureUrl);
 		} catch (IOException e1) {
 			e1.printStackTrace();
-			couvertureUrl = "images/defaultCouv.png";
+			couvertureUrl = couverture;//"images/defaultCouv.png";
 		}
-		System.out.println(couvertureUrl);
+		//System.out.println(couvertureUrl);
 		l.setNomCouverture(couvertureUrl);
 
 		l.setResume(resume);
