@@ -33,27 +33,15 @@ public class Tools {
 	 */
 	public static void sauvegarderImage(String urlImage,  int destWidth, int destHeight, String destPath) throws IOException {
 		
-		BufferedImage bImage;
-		throw new IOException();
+		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("http.proxyPort", "3128");
+		System.setProperty("https.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("https.proxyPort", "3128");
 		
-		/*urlImage = "http://www.arbres.org/images/arbre-petition.jpg";
-		System.err.println("etape -1 ok " + urlImage);
+		BufferedImage bImage;		
 		URL url = new URL(urlImage);
+		bImage = ImageIO.read(url);    
 		
-		System.err.println("etape 0 ok");
-		ReadableByteChannel rbc = Channels.newChannel(url.openStream());
-		System.err.println("etape 1 ok");
-		File f = File.createTempFile("temp", ".png");
-		System.err.println("etape 2 ok");
-		FileOutputStream fos = new FileOutputStream(f);
-
-		System.err.println("etape 3 ok");
-		fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-
-		System.err.println("YOLOOO ok");
-		bImage = ImageIO.read(f);    
-		
-		System.err.println("Lecture ok");
 		//créer l'image de destination
         GraphicsConfiguration configuration = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
         BufferedImage bImageNew = configuration.createCompatibleImage(destWidth, destHeight);
@@ -64,11 +52,10 @@ public class Tools {
         graphics.drawImage(bImage, 0, 0, destWidth, destHeight, 0, 0, bImage.getWidth(), bImage.getHeight(), null);
         graphics.dispose();
  
-		System.err.println("Redimensionnement ok");
-        File outputfile = new File(destPath);
+		File outputfile = new File(destPath);
+        if(!outputfile.exists())
+        	outputfile.createNewFile();
         ImageIO.write(bImageNew, "png", outputfile);
-        f.delete();
-		System.err.println("Ecriture ok");*/
     }
 	
 }
