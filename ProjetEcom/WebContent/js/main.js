@@ -204,17 +204,13 @@ app.controller("paiementCtrl", function($scope, $http, ngCart){
 		for (i = 0; i < ngCart.getCart().items.length;i++){
 			idLivres.push((ngCart.getCart().items[i])._id);
 		};
-		console.log(idLivres);
-		req = { method: 'POST', url: '/GestionCommande', headers: { 'Content-Type': undefined }, 
-				data: { 
-					idClient : "12",
-					prixTotal : ngCart.totalCost(),
-					type : "CB",
-					livres : idLivres }};
-		
-
-		$http(req).then(function(){
-					
+		$http.get("GestionCommande", {
+			params:{"action" :"post", 
+			"idClient" : "12",
+			"prixTotal" : ngCart.totalCost(),
+			"type" : "CB",
+			"livres" : idLivres }}).then(function(response) {
+					wiwdow.location.href="#/confirmation";
 		}, function(){
 					
 		});
@@ -432,13 +428,32 @@ routeAppControllers.controller('corpsAccueilCtrl', ['$scope',
 ]);
 
 
-routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeParams,$rootScope){
+routeAppControllers.controller("connexionCtrl", function($scope, $http,$routeParams,$rootScope){
 
- 
-	$http.get("InscriptionClient",{params:{"identifiant":$routeParams.identifiant,"nom":$routeParams.nom,"prenom":$routeParams.prenom,"motdepasse":$routeParams.motdepasse,"motdepasseconfirm":$routeParams.motdepasseconfirm,"email":$routeParams.email}}).then(function(response) {
-			var data = response.data;
-			$scope.rez = data;
-	});
+	
+
+});
+
+
+routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeParams,$rootScope){	
+	$scope.rez=true;
+	if($routeParams.identifiant==null && $routeParams.nom==null && $routeParams.prenom==null && $routeParams.motdepasse==null && $routeParams.motdepasseconfirm==null && $routeParams.email==null ){
+		// $scope.rez = "Inscription";
+	}else if($routeParams.identifiant==null || $routeParams.nom==null || $routeParams.prenom==null || $routeParams.motdepasse==null || $routeParams.motdepasseconfirm==null || $routeParams.email==null ){
+		$scope.rez = "Tous les champs doivent etre remplis";
+	}else{
+		$scope.IDSave = $routeParams.identifiant;
+		$scope.nomSave = $routeParams.nom;
+		$scope.prenomSave = $routeParams.prenom;
+		$scope.emailSave = $routeParams.email;
+		
+		$http.get("InscriptionClient",{params:{"identifiant":$routeParams.identifiant,"nom":$routeParams.nom,"prenom":$routeParams.prenom,"motdepasse":$routeParams.motdepasse,"motdepasseconfirm":$routeParams.motdepasseconfirm,"email":$routeParams.email}}).then(function(response) {
+				var data = response.data;
+				$scope.rez = data;
+				
+				
+		});
+	}
 
 });
 
@@ -482,14 +497,14 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/confirmation.html',
         	controller: 'paiementCtrl'
         })
-        .when('/inscription/:identifiant/:nom/:prenom/:motdepasse/:motdepasseconfirm/:email', {
+        .when('/inscription/:identifiant?/:nom?/:prenom?/:motdepasse?/:motdepasseconfirm?/:email?', {
         	templateUrl: 'partials/registerView.html',
         	controller: 'inscriptionCtrl'
         })
-        .when('/inscription', {
-        	templateUrl: 'partials/registerView.html',
-//        	controller: 'inscriptionCtrl'
-        })
+// .when('/inscription', {
+// templateUrl: 'partials/registerView.html',
+// // controller: 'inscriptionCtrl'
+// })
 // .when('/inscriptionClient', {
 // templateUrl: 'partials/inscriptionClient.html',
 // controller: 'inscriptionClient'

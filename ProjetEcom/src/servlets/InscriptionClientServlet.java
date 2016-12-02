@@ -66,7 +66,6 @@ public class InscriptionClientServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("TEST GET");
 		String resultat;
-//        Map<String, String> erreurs = new HashMap<String, String>();
 		String erreurs="";
         /* Récupération des champs du formulaire. */
         String email = request.getParameter( CHAMP_EMAIL );
@@ -86,7 +85,6 @@ public class InscriptionClientServlet extends HttpServlet {
         try {
             validationEmail( email );
         } catch ( Exception e ) {
-//            erreurs.put( CHAMP_EMAIL, e.getMessage() );
             erreurs=e.getMessage();
             System.out.println("ERREUR "+e);
         }
@@ -95,7 +93,6 @@ public class InscriptionClientServlet extends HttpServlet {
         try {
             validationMotsDePasse( motDePasse, confirmation );
         } catch ( Exception e ) {
-//            erreurs.put( CHAMP_PASS, e.getMessage() );
         	erreurs=e.getMessage();
         	System.out.println("ERREUR "+e);
         }
@@ -104,7 +101,6 @@ public class InscriptionClientServlet extends HttpServlet {
         try {
             validationIdentifiant( identifiant );
         } catch ( Exception e ) {
-//            erreurs.put( CHAMP_IDENTIFIANT, e.getMessage() );
             erreurs=e.getMessage();
             System.out.println("ERREUR "+e);
         }
@@ -116,50 +112,13 @@ public class InscriptionClientServlet extends HttpServlet {
         } else {
             resultat = "Échec de l'inscription.";
         }
-        
-        /* Stockage du résultat et des messages d'erreur dans l'objet request */
-//        request.setAttribute( ATT_ERREURS, erreurs );
-//        request.setAttribute( ATT_RESULTAT, resultat );
 
-        /* Transmission de la paire d'objets request/response à notre JSP */
-//        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
-		
-//		if(motDePasse.equals(confirmation)){
-//			inscriptionClient(identifiant, email, motDePasse, nom, prenom);
-//			inscriptionClient(request.getParameter("pseudo"), request.getParameter("email"), request.getParameter("motDePasse"), request.getParameter("nom"), request.getParameter("prenom"));
-//			response.getWriter().println("Client créé");
-//		}
-//		response.getWriter().println("Le pseudo est :" + request.getParameter("pseudo"));
-//		response.getWriter().println("Le nom est :" + request.getParameter("nom"));
-//		response.getWriter().println("Le prenom est :" + request.getParameter("prenom"));
-//		response.getWriter().println("Le mot de passe est :" + request.getParameter("motDePasse"));
-//		response.getWriter().println("Le mail est :" + request.getParameter("email"));
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("html/inscriptionClient.html");
-//		dispatcher.forward(request,response);
         System.out.println("RESULTAT "+ resultat);
         
         String json = new Gson().toJson(erreurs);
         response.setContentType("application/json");
         response.getWriter().write(json);
-	//	response.sendRedirect(request.getContextPath()+"/#/inscription");
-//=======
-//	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		if(request.getParameter("motDePasse").equals(request.getParameter("motDePasseConfirm"))){
-//			inscriptionClient(request.getParameter("pseudo"), request.getParameter("email"), request.getParameter("motDePasse"), request.getParameter("nom"), request.getParameter("prenom"));
-//			response.getWriter().println("Client créé");
-//		}
-//		System.out.println("Test 1");
-////		response.getWriter().println("Le pseudo est :" + request.getParameter("pseudo"));
-////		response.getWriter().println("Le nom est :" + request.getParameter("nom"));
-////		response.getWriter().println("Le prenom est :" + request.getParameter("prenom"));
-////		response.getWriter().println("Le mot de passe est :" + request.getParameter("motDePasse"));
-////		response.getWriter().println("Le mail est :" + request.getParameter("email"));
-//		
-//		String resultat="ok";
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("html/inscriptionClient.html");
-//		dispatcher.forward(request,response);
-//>>>>>>> branch 'master' of https://github.com/JulienArmand/ProjetECOMM2GIEbooks.git
-		
+
 	}
 
 	private void inscriptionClient(String pseudo, String email, String motDePasse, String nom, String prenom) {
