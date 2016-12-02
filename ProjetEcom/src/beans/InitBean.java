@@ -59,54 +59,6 @@ public class InitBean {
 	@EJB // ou @EJB si nom par défaut
 	private GestionEditeur gestionEditeur;
 
-	public void enregistrerDansLIndexage(Livre l) throws IOException {
-		String auteurs = "";
-		
-		
-		Iterator<Auteur> it = l.getLesAuteurs().iterator();
-		while(it.hasNext()){
-			Auteur a = it.next();
-			auteurs += a.getPrenom() + " " + a.getNom() + " ";
-		}
-		
-		auteurs = Tools.normalisationString(auteurs);
-		
-		String tabTitre = "";
-		String tabAuteurs = "";
-		
-		String [] tmpTitre = Tools.normalisationString(l.getTitre()).split(" ");
-		for(int i = 0; i < tmpTitre.length; i++ ) {
-			if(i == tmpTitre.length-1)
-				tabTitre += "\"" + tmpTitre[i] + "\"";
-			else tabTitre += "\"" + tmpTitre[i] + "\"" + ", ";
-		}
-		
-		String [] tmpAuteurs = auteurs.split(" ");
-		for(int i = 0; i < tmpAuteurs.length; i++ ) {
-			if(!tmpAuteurs[i].equals("")){
-				if(i == tmpAuteurs.length-1)
-					tabAuteurs += "\"" + tmpAuteurs[i] + "\"";
-				else tabAuteurs += "\"" + tmpAuteurs[i] + "\"" + ", ";
-			}
-		}
-		
-		String req = "\n{\"titre\":\"" + Tools.normalisationString(l.getTitre()) + "\", \"prix\":" + l.getPrix()
-				+ ", \"genre\":\"" + Tools.normalisationString(l.getGenre().getNom()) + "\", \"avis\":"
-				+ l.calculMoyenneAvis() + ", \"auteurs\":\""	+ auteurs + "\", \"suggest_titre\": { \"input\": ["+tabTitre+"] }, \"suggest_auteurs\": { \"input\": ["+tabAuteurs+"]}}";
-		System.out.println(req);
-		InputStream is = ElasticSearchTools
-				.doRequest("http://localhost:9200/livres/type_rechercheTitreGenreAuteur/" + l.getId(), "PUT", req);
-		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-		StringBuilder response = new StringBuilder(); // or StringBuffer if Java
-														// version 5+
-		String line;
-		while ((line = rd.readLine()) != null) {
-			response.append(line);
-			response.append('\r');
-		}
-		rd.close();
-	}
-
 	public void suppressionBD() throws Exception {
 
 		Query q1 = em.createNativeQuery("DELETE FROM Genre");
@@ -209,14 +161,21 @@ public class InitBean {
 				lesAuteurs.add(x);
 			}
 
-			Livre livre = gestionLivre.creerLivre(titre, lesAuteurs, editeur, genre, isbn, nbPages, prix, langue,
-					langueO, couv, promo, resume, datePub);
-			livres.add(livre);
+			Livre livre;
 			try {
-				enregistrerDansLIndexage(livre);
+				livre = gestionLivre.creerLivre(titre, lesAuteurs, editeur, genre, isbn, nbPages, prix, langue,
+						langueO, couv, promo, resume, datePub);
+				livres.add(livre);
 			} catch (Exception e) {
-				System.err.println("Erreur durant l'indexage du livre dans elasticsearch : " + e.getMessage());
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			
+			//try {
+			//	ElasticSearchTools.enregistrerDansLIndexage(livre);
+			//} catch (Exception e) {
+			//	System.err.println("Erreur durant l'indexage du livre dans elasticsearch : " + e.getMessage());
+			//}
 
 			line = r.readLine();
 		}

@@ -32,7 +32,7 @@ public class GestionCommande {
 	public Commande setVentesCommande(long idCommande, Collection<Vente> lesVentes) {
 		Commande c = getCommande(idCommande);
 		c.setLesVentes(lesVentes);
-		em.persist(c);
+		//em.persist(c);
 		return c;
 	}
 
@@ -40,7 +40,7 @@ public class GestionCommande {
 
 		Query q = em.createQuery("select OBJECT(b) from Commande b where b.id =" + id);
 		List<Commande> list = (List<Commande>) q.getResultList();
-		return (Commande) q.getSingleResult();
+		return (Commande) list.get(0);
 	}
 
 	public List<Commande> getCommandeClient(Client leClient) {

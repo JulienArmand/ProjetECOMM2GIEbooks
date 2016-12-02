@@ -1,6 +1,7 @@
 
 package model;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -143,6 +144,15 @@ public class Livre {
 
 	public float getPrix() {
 		return prix;
+	}
+	
+	public float getPrixAvecPromo() {
+		Promotion p = this.getPromotion();
+		System.out.println(p);
+		if(p != null && p.getDateDebut().before(Date.from(Instant.now())) &&  p.getDateFin().after(Date.from(Instant.now())))
+			return prix-(prix*p.getTauxReduc())/100;
+		else
+			return prix;
 	}
 
 	public void setPrix(float prix) {

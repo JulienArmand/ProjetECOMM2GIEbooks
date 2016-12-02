@@ -7,8 +7,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Iterator;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+
+import model.Auteur;
+import model.Livre;
 
 
 public class ElasticSearchTools {
@@ -102,6 +106,54 @@ public class ElasticSearchTools {
 				+ blocReqPrix + "" + blocReqGenre + "" + blocReqAvis + "]}}}";
 
 		return req;
+	}
+	
+	public static void enregistrerDansLIndexage(Livre l) throws IOException {
+		String auteurs = "";
+		
+		
+		Iterator<Auteur> it = l.getLesAuteurs().iterator();
+		while(it.hasNext()){
+			Auteur a = it.next();
+			auteurs += a.getPrenom() + " " + a.getNom() + " ";
+		}
+		
+		auteurs = Tools.normalisationString(auteurs);
+		
+		String tabTitre = "";
+		String tabAuteurs = "";
+		
+		String [] tmpTitre = Tools.normalisationString(l.getTitre()).split(" ");
+		for(int i = 0; i < tmpTitre.length; i++ ) {
+			if(i == tmpTitre.length-1)
+				tabTitre += "\"" + tmpTitre[i] + "\"";
+			else tabTitre += "\"" + tmpTitre[i] + "\"" + ", ";
+		}
+		
+		String [] tmpAuteurs = auteurs.split(" ");
+		for(int i = 0; i < tmpAuteurs.length; i++ ) {
+			if(!tmpAuteurs[i].equals("")){
+				if(i == tmpAuteurs.length-1)
+					tabAuteurs += "\"" + tmpAuteurs[i] + "\"";
+				else tabAuteurs += "\"" + tmpAuteurs[i] + "\"" + ", ";
+			}
+		}
+		
+		String req = "\n{\"titre\":\"" + Tools.normalisationString(l.getTitre()) + "\", \"prix\":" + l.getPrixAvecPromo()
+				+ ", \"genre\":\"" + Tools.normalisationString(l.getGenre().getNom()) + "\", \"avis\":"
+				+ l.calculMoyenneAvis() + ", \"auteurs\":\""	+ auteurs + "\", \"suggest_titre\": { \"input\": ["+tabTitre+"] }, \"suggest_auteurs\": { \"input\": ["+tabAuteurs+"]}}";
+		System.out.println(req);
+		InputStream is = ElasticSearchTools
+				.doRequest("http://localhost:9200/livres/type_rechercheTitreGenreAuteur/" + l.getId(), "PUT", req);
+		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		StringBuilder response = new StringBuilder(); // or StringBuffer if Java
+														// version 5+
+		String line;
+		while ((line = rd.readLine()) != null) {
+			response.append(line);
+			response.append('\r');
+		}
+		rd.close();
 	}
 
 }

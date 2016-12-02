@@ -126,8 +126,7 @@ app.controller("menuCtrl", function($scope, $rootScope, $http){
     	$scope.genres = response.data;
     });
 
-    
-    
+
 	$scope.rechercheMenu = function(){
 		
 		window.location.href = "#/recherche/"+$rootScope.req+"/"+$rootScope.genre+"/"+$rootScope.minPrix+"/"+$rootScope.maxPrix+"/"+$rootScope.avisMin;
@@ -202,11 +201,11 @@ app.controller("paiementCtrl", function($scope, $http, ngCart){
 		};
 		$http.get("GestionCommande", {
 			params:{"action" :"post", 
-			"idClient" : "12",
+			"idClient" : "1701",
 			"prixTotal" : ngCart.totalCost(),
 			"type" : "CB",
 			"livres" : idLivres }}).then(function(response) {
-					wiwdow.location.href="#/confirmation";
+					window.location.href="#/confirmation";
 		}, function(){
 					
 		});
@@ -254,9 +253,9 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     
     $scope.formatDateDMY = formatDateDMY;
     
-    $scope.calculPromo = function(prix, promo) {
-    	return roundPrix(prix-(prix*promo)/100);
-    }
+    $scope.calculPromo = calculPromo;
+    
+    $scope.estEnPromo = estEnPromo;
     
     $scope.calculeMoyenne = function(list) {
     	var moy = 0;
@@ -264,6 +263,11 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     		moy += list[i].note;
     	return (moy / list.length).toFixed(1);
     }
+    
+    $scope.posterCommentaire = function(note, commentaire) {
+    	alert("A faire, poster un commentaire : " + note +" "+commentaire);
+    }
+    
     
     $scope.nombreAvis = function(list) {
     	return list.length;
@@ -288,7 +292,7 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
 	$rootScope.email = "@";
 	
 	$scope.breakpoints = [{
-	    breakpoint: 1200, // Pc portable
+	    breakpoint: 1290, // Pc portable
 	    settings: {
 	      slidesToShow: 5,
 	      slidesToScroll: 5
@@ -302,7 +306,7 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
 	    }
 	  },
 	  {
-	    breakpoint: 992, // Tablette
+	    breakpoint: 980, // Tablette
 	    settings: {
 	      slidesToShow: 4,
 	      slidesToScroll: 4
@@ -335,9 +339,9 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
     	
     }
     
-    $scope.calculPromo = function(prix, promo) {
-    	return roundPrix(prix-(prix*promo)/100);
-    }
+    $scope.calculPromo = calculPromo;
+    
+    $scope.estEnPromo = estEnPromo;
     
 });
 
@@ -375,16 +379,12 @@ routeAppControllers.controller("recherche", function($scope, $http, $routeParams
     	var data = response.data;
 		$scope.livres=[];
     	for(var i=0; i<data.length;i++){
-    		
     		var l = data[i].l
     		l.ventes = data[i].v;
     		l.prixPromo = (l.promotion) ? $scope.calculPromo(l.prix,l.promotion.tauxReduc) : l.prix;
     		$scope.livres.push(l);
 
-    	}
-
-		console.log($scope.livres.length);
-        
+    	}        
     });
     
     $scope.currentPage = 1;
@@ -407,21 +407,7 @@ routeAppControllers.controller("recherche", function($scope, $http, $routeParams
     	return (moy / list.length).toFixed(1) + "/5 ("+list.length+")";
     	
     }
-    
-    $scope.changeOrdonneur = function(ordonneur) {
-        $scope.ordonneur = ordonneur;
-        alert(ordonneur);
-    }
-    
-    
-
 });
-
-routeAppControllers.controller('corpsAccueilCtrl', ['$scope',
-    function($scope){
-        $scope.message = "Bienvenue sur la page d'accueil";
-    }
-]);
 
 
 routeAppControllers.controller("connexionCtrl", function($scope, $http,$routeParams,$rootScope){
@@ -453,18 +439,26 @@ routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeP
 
 });
 
-
-
+routeAppControllers.controller("compteClient", function($scope, $http, $routeParams,$rootScope){
+	
+	$http.get("GetInfoClient", {params:{"pseudo": $routeParams.pseudo}}).then(function(response) {
+		var data = response.data;
+    	$scope.pseudo = data.pseudo;
+    	$scope.nom = data.nom;
+    	$scope.prenom = data.prenom;
+    	$scope.mail = data.email;
+    	$scope.redirectToModificationPseudo = function(){
+    		window.location.href=("#/ModificationPseudo/");
+    	}
+    });
+    
+});
 
 app.config(['$routeProvider',
     function($routeProvider) { 
         
         // Système de routage
         $routeProvider
-        .when('/corpsAccueil', {
-            templateUrl: 'partials/corpsAccueil2.html',
-            controller: 'corpsAcceuilCtrl'
-        })
         .otherwise({
             templateUrl: 'partials/corpsAccueil2.html',
             controller: 'contentCtrl'
@@ -505,6 +499,10 @@ app.config(['$routeProvider',
 // templateUrl: 'partials/inscriptionClient.html',
 // controller: 'inscriptionClient'
 // })
+        .when('/compteClient/:pseudo',{
+        	templateUrl : 'partials/CompteClient.html',
+        	controller: 'compteClient'
+        })
     }
 ]);
 
@@ -533,6 +531,23 @@ function formatDateDMY(str){
 	default : 	 mois = "??";break;
 	}
 	return j+"/"+mois+"/"+an;
+}
+
+function estEnPromo (promo) {
+	if(promo != undefined) {
+		var dateDebutPromo = new Date(promo.dateDebut).getTime();
+		var dateFinPromo = new Date(promo.dateFin).getTime();
+		var dateActuelle = new Date().getTime();
+		if(dateDebutPromo <= dateActuelle && dateFinPromo >= dateActuelle) {
+			return true;
+		}
+		else return false;
+	}
+	else return false;
+}
+
+function calculPromo (prix, promo) {
+	return roundPrix(prix-(prix*promo)/100);
 }
 
 app.service('elasticSearchSuggestion', function (esFactory) {

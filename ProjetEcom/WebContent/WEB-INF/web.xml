@@ -95,8 +95,7 @@
 		<url-pattern>/ConnexionClient</url-pattern>
 	</servlet-mapping>
 	
-	
-		<servlet>
+	<servlet>
 		<servlet-name>GetTousLesGenres</servlet-name>
 		<servlet-class>servlets.GetTousLesGenres</servlet-class>
 	</servlet>
@@ -114,5 +113,22 @@
 		<url-pattern>/GestionCommande</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>GetInfoClient</servlet-name>
+		<servlet-class>servlets.GetInfoClientServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetInfoClient</servlet-name>
+		<url-pattern>/GetInfoClient</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ModificationProfile</servlet-name>
+		<servlet-class>servlets.ModificationProfileServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ModificationProfile</servlet-name>
+		<url-pattern>/ModificationProfile</url-pattern>
+	</servlet-mapping>
 
 </web-app>

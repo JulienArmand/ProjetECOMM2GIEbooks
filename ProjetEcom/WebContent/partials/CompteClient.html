@@ -1,0 +1,32 @@
+<!doctype html>
+<html ng-app="app">
+
+    <head>
+        <title>Futura Books - Mon Compte</title>
+        <meta charset="UTF-8" >     
+        <!-- Librairie js -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" ></script>
+        <script src="../js/libs/angular.min.js" ></script>
+        <script src="../js/libs/bootstrap.js" ></script>
+        <script src="../js/libs/ui-bootstrap-tpls-2.1.4.js" ></script>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+        
+        <!-- Controller js -->
+        <script src="../js/main.js" ></script>
+    </head>
+    <body>
+        <section>	
+		<div>
+			<form action="../ModificationProfile" method="POST">
+				<input type="text" name="pseudo" value= {{pseudo}}><br>
+				<input type="text" name="nom" value={{nom}}><br>
+				<input type="text" name="prenom" value={{prenom}}><br>
+				<input type="text" name="email" value={{mail}}><br>
+				<input type="submit" value="Modifier">
+			</form>
+		</div>
+		<br>
+        </section>
+    </body>
+</html>
