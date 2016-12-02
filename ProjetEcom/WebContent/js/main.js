@@ -291,7 +291,11 @@ routeAppControllers.controller('corpsAccueilCtrl', ['$scope',
 ]);
 
 
-routeAppControllers.controller("compteClient", function($scope, $http, $routeParams,$rootScope){
+routeAppControllers.controller("compteClient", function($scope, $http, $routeParams, $location, $rootScope){
+	
+	$scope.redirectModificationMotDePasse = function() {
+		window.location.href=("#/modificationMotDePasse");
+    }
 	
 	$http.get("GetInfoClient", {params:{"pseudo": $routeParams.pseudo}}).then(function(response) {
 		var data = response.data;
@@ -299,11 +303,7 @@ routeAppControllers.controller("compteClient", function($scope, $http, $routePar
     	$scope.nom = data.nom;
     	$scope.prenom = data.prenom;
     	$scope.mail = data.email;
-    	$scope.redirectToModificationPseudo = function(){
-    		window.location.href=("#/ModificationPseudo/");
-    	}
-    });
-    
+    }); 
 });
 
 
@@ -347,6 +347,10 @@ app.config(['$routeProvider',
         .when('/compteClient/:pseudo',{
         	templateUrl : 'partials/CompteClient.html',
         	controller: 'compteClient'
+        })
+        .when('/modificationMotDePasse',{
+        	templateUrl : 'partials/ModificationMotDePasse.html',
+        	controller: 'modificationMotDePasse'
         })
     }
 ]);

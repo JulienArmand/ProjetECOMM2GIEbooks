@@ -52,4 +52,9 @@ public class GestionClient {
 		c.setEmail(email);
 		em.merge(c);
 	}
+	
+	public void updateClientMotDePasse(Client c, String motDePasse){
+		c.setMotDePasse(motDePasse);
+		em.merge(c);
+	}
 }
