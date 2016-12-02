@@ -81,8 +81,8 @@ public class GestionCommandeServlet extends HttpServlet {
 				Commande c = commandeBean.getCommande(Long.parseLong(request.getParameter("idCommande")));
 				str = js.toJson(c);
 			} else if (request.getParameter("action").equals("commandeClient")) {
-
-				List<Commande> l = commandeBean.getCommandeClient(clientBean.getClient(Long.parseLong(request.getParameter("idClient"))));
+				Client client = clientBean.getClientByCookie(request);
+				List<Commande> l = commandeBean.getCommandeClient(client);
 				str = js.toJson(l);
 			}
 			

@@ -161,6 +161,18 @@ app.controller("searchCtrl", function($scope){
 
 });
 
+
+app.controller("commandeClientCtrl", function($scope, $http, $rootScope, ngCart){
+	$http.get("GestionCommande", {
+		params:{"action" :"commandeClient"}}).then(function(response) {				
+				$scope.commandes = response.data;
+		}, function(){
+					
+		});
+});
+
+
+
 app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart){
 	$scope.mois = [
 		{nom : "Janvier", valeur : "1"},

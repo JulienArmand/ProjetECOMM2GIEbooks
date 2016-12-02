@@ -4,7 +4,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
+import Tools.GestionCookies;
 import model.Client;
 
 @Stateless
@@ -24,6 +27,13 @@ public class GestionClient {
 	public Client getClient(long id){
 		Query q = em.createQuery("select OBJECT(b) from Client b where b.id =" + id);
 		return (Client)q.getSingleResult();
+	}
+	
+	public Client getClientByCookie(HttpServletRequest request){
+		Cookie[] cookies = request.getCookies();
+		GestionCookies g = new GestionCookies();
+		String idClient = g.getCookieByName(cookies, "idClient").getValue();
+		return em.find(Client.class, idClient);
 	}
 
 	public void supprimerTous() {

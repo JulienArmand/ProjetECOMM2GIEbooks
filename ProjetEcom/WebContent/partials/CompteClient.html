@@ -1,16 +1,79 @@
-<section>	
+<section>
 	<div>
-	<h1>Bienvenue sur votre profile.</h1>
+
+		<h3 style="margin: 1em 1em 1em 1em">Paramètres du compte</h3>
 		<form action="../ModificationProfile" method="POST">
-			<input type="text" name="pseudo" value= {{pseudo}}><br>
-			<input type="text" name="nom" value={{nom}}><br>
-			<input type="text" name="prenom" value={{prenom}}><br>
-			<input type="text" name="email" value={{mail}}><br>
-			<input type="submit" value="Modifier">
+
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Modifier vos informations</h3>
+					</div>
+					<div class="panel-body">
+						<table WIDTH=100%>
+							<tr>
+								<td>Pseudo</td>
+								<td>:</td>
+								<td ALIGN="right"><input type="text" name="pseudo"
+									value={{pseudo}}></td>
+							</tr>
+							<tr>
+								<td>Nom</td>
+								<td>:</td>
+								<td ALIGN="right"><input type="text" name="nom"
+									value={{nom}}></td>
+							</tr>
+							<tr>
+								<td>Prenom</td>
+								<td>:</td>
+								<td ALIGN="right"><input type="text" name="prenom"
+									value={{prenom}}></td>
+							</tr>
+							<tr>
+								<td>Email</td>
+								<td>:</td>
+								<td ALIGN="right"><input type="text" name="email"
+									value={{mail}}></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td ALIGN="right"><input type="submit" value="Modifier"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
 		</form>
+		
+		
+		<form action="" method="POST">
+
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" ng-controller="commandeClientCtrl">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Vos commandes</h3>
+					</div>
+					<div class="panel-body">
+						<table WIDTH=100%>
+							<tr ng-repeat="cmd in commandes">
+								<td>Numéro de commande</td>
+								<td>:</td>
+								<td ALIGN="right">{{cmd.id}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</form>
+		
+		
+		
+		
+		
 	</div>
 	<br>
 	<form action="#/modificationMotDePasse">
-    <input type="submit" value="Modification du mot de passe" />
-</form>
+		<input type="submit" value="Modification du mot de passe" />
+	</form>
 </section>
