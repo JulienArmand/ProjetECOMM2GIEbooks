@@ -38,7 +38,7 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 	}
 	
 	$scope.redirection = function(){
-		window.location.href = "/index.html";
+		window.location.href = "index.html";
 	}
 	
 	
@@ -127,7 +127,7 @@ app.controller("menuCtrl", function($scope, $rootScope, $http){
 	}
 	$scope.setGenre = function(genre, id){
 		if(genre == $rootScope.genre) {
-			$("#"+genre).prop('checked', false);
+			$("#"+id).prop('checked', false);
 			$rootScope.genre = "@";
 		}
 		else {$rootScope.genre = genre;}
