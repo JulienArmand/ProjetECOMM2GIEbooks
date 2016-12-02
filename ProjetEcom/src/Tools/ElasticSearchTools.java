@@ -7,11 +7,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Iterator;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-public class ElasticSearchTools {
+import model.Auteur;
+import model.Livre;
 
+
+public class ElasticSearchTools {
+	
 	public static InputStream doRequest(String urlS, String methode, String data) throws IOException {
 
 		URL url = new URL(urlS);
@@ -36,7 +41,6 @@ public class ElasticSearchTools {
 	public static void creerIndex() throws IOException {
 
 		String req = "{\"settings\":{\"analysis\":{\"filter\":{\"autocomplete_filter\":{\"type\":\"ngram\",\"min_gram\":1,\"max_gram\":20}},\"analyzer\":{\"autocomplete\":{\"type\":\"custom\",\"tokenizer\":\"standard\",\"filter\":[\"lowercase\",\"autocomplete_filter\"]}}}},\"mappings\":{\"type_rechercheTitreGenreAuteur\":{\"properties\":{\"titre\":{\"type\":\"text\",\"analyzer\":\"autocomplete\",\"search_analyzer\":\"simple\"},\"suggest_titre\":{\"type\": \"completion\",\"analyzer\": \"simple\", \"search_analyzer\": \"simple\"},\"suggest_auteurs\": {\"type\": \"completion\",\"analyzer\": \"simple\",\"search_analyzer\": \"simple\"}}}}}";
-
 		InputStream is = ElasticSearchTools.doRequest("http://localhost:9200/livres", "PUT", req);
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 		StringBuilder response = new StringBuilder(); // or StringBuffer if
@@ -52,6 +56,7 @@ public class ElasticSearchTools {
 	
 	public static String rechercheElasticSearch(String requeteBarre, int prixMin, int prixMax, String genre, int avisMin)
 			throws Exception {
+
 
 		String reqBarre = Tools.normalisationString(StringEscapeUtils.unescapeHtml4(requeteBarre));
 
@@ -101,6 +106,54 @@ public class ElasticSearchTools {
 				+ blocReqPrix + "" + blocReqGenre + "" + blocReqAvis + "]}}}";
 
 		return req;
+	}
+	
+	public static void enregistrerDansLIndexage(Livre l) throws IOException {
+		String auteurs = "";
+		
+		
+		Iterator<Auteur> it = l.getLesAuteurs().iterator();
+		while(it.hasNext()){
+			Auteur a = it.next();
+			auteurs += a.getPrenom() + " " + a.getNom() + " ";
+		}
+		
+		auteurs = Tools.normalisationString(auteurs);
+		
+		String tabTitre = "";
+		String tabAuteurs = "";
+		
+		String [] tmpTitre = Tools.normalisationString(l.getTitre()).split(" ");
+		for(int i = 0; i < tmpTitre.length; i++ ) {
+			if(i == tmpTitre.length-1)
+				tabTitre += "\"" + tmpTitre[i] + "\"";
+			else tabTitre += "\"" + tmpTitre[i] + "\"" + ", ";
+		}
+		
+		String [] tmpAuteurs = auteurs.split(" ");
+		for(int i = 0; i < tmpAuteurs.length; i++ ) {
+			if(!tmpAuteurs[i].equals("")){
+				if(i == tmpAuteurs.length-1)
+					tabAuteurs += "\"" + tmpAuteurs[i] + "\"";
+				else tabAuteurs += "\"" + tmpAuteurs[i] + "\"" + ", ";
+			}
+		}
+		
+		String req = "\n{\"titre\":\"" + Tools.normalisationString(l.getTitre()) + "\", \"prix\":" + l.getPrixAvecPromo()
+				+ ", \"genre\":\"" + Tools.normalisationString(l.getGenre().getNom()) + "\", \"avis\":"
+				+ l.calculMoyenneAvis() + ", \"auteurs\":\""	+ auteurs + "\", \"suggest_titre\": { \"input\": ["+tabTitre+"] }, \"suggest_auteurs\": { \"input\": ["+tabAuteurs+"]}}";
+		System.out.println(req);
+		InputStream is = ElasticSearchTools
+				.doRequest("http://localhost:9200/livres/type_rechercheTitreGenreAuteur/" + l.getId(), "PUT", req);
+		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		StringBuilder response = new StringBuilder(); // or StringBuffer if Java
+														// version 5+
+		String line;
+		while ((line = rd.readLine()) != null) {
+			response.append(line);
+			response.append('\r');
+		}
+		rd.close();
 	}
 
 }

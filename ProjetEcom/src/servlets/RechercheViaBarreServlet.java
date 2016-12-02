@@ -39,7 +39,7 @@ public class RechercheViaBarreServlet extends HttpServlet {
 		try {
 			//res = myBean.recherche(request.getParameter("req"), 0, 500, "Fantastique", 0);
 			System.out.println("avis : " + request.getParameter("avisMin"));
-			res = myBean.recherche(request.getParameter("req"), Integer.parseInt(request.getParameter("pmin")), Integer.parseInt(request.getParameter("pmax")), request.getParameter("genre"), Integer.parseInt(request.getParameter("avisMin")));
+			res = myBean.recherche(request.getParameter("req"), Integer.parseInt(request.getParameter("pmin")), Integer.parseInt(request.getParameter("pmax")), request.getParameter("genre").replaceAll("\\+", " "), Integer.parseInt(request.getParameter("avisMin")));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

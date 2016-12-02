@@ -33,9 +33,9 @@ public class ConnexionClientServlet extends HttpServlet {
 			if(checkMotDePasseCorrect(request.getParameter("pseudo"), request.getParameter("motDePasse"))){
 				//Pseudo existe et mot de passe correct -> valider la connexion
 				Cookie login = new Cookie("login", request.getParameter("pseudo"));
+				Cookie idClient = new Cookie("idClient", String.valueOf(myBean.getIdClient(request.getParameter("pseudo"))));
 				response.addCookie(login);
-				
-				
+				response.addCookie(idClient);	
 			}
 			else{
 				//Mot de passe non correct
@@ -50,8 +50,8 @@ public class ConnexionClientServlet extends HttpServlet {
 			response.addCookie(erreur);
 		}
 		//Redirect to main page
-		response.sendRedirect(request.getContextPath()+"/index.html");
-		
+
+		//response.sendRedirect(request.getContextPath()+"/index.html");
 	}
 	
 	

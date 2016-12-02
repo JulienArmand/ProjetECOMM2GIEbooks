@@ -16,8 +16,8 @@
 		<a ng-href="#/confirmation"><div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bg-warning text-center btn disabled">Confirmation</div></a>
 		<div style="clear: both;"></div>
 		<h3 style="margin : 1em 1em 1em 1em">Confirmation</h3>
-		<p>
-		Le paiement de votre commande n°X a bien été effectué, elle s'élève à {{ ngCart.totalCost() | currency:"€" }}€.
+		<p ng-controller="paiementCtrl">
+		Le paiement de votre commande n°{{numeroCommande}} a bien été effectué, elle s'élève à {{prixCommande}}€.
 		<br>
 		Un mail de confirmation vous a été envoyé à l'adresse suivante : (@mailClient).
 		</p>

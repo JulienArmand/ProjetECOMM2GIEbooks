@@ -3,6 +3,8 @@ package beans;
 import java.util.List;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,9 +21,9 @@ public class GestionCommande {
 	@PersistenceContext(unitName = "Database-unit")
 	private EntityManager em;
 
-	public Commande creerCommande(Date dateVente, float prixTotal, Client leClient, MoyenPaiement paiement) {
+	public Commande creerCommande(Date dateVente, Client leClient, MoyenPaiement paiement) {
 
-		Commande c = new Commande(dateVente, prixTotal);
+		Commande c = new Commande(dateVente);
 		em.persist(c);
 		c.setLeClient(leClient);
 		c.setLeMoyenDePaiement(paiement);
@@ -32,15 +34,24 @@ public class GestionCommande {
 	public Commande setVentesCommande(long idCommande, Collection<Vente> lesVentes) {
 		Commande c = getCommande(idCommande);
 		c.setLesVentes(lesVentes);
-		em.persist(c);
+		float prix =0;
+		Iterator it = (Iterator) lesVentes.iterator();
+		while(it.hasNext()){
+			Vente v = (Vente) it.next();
+			prix += v.getPrix();
+			System.out.println(v.getPrix() + " , " + prix);
+		}
+		c.setPrixTotal(prix);
+		em.merge(c);
 		return c;
 	}
 
 	public Commande getCommande(long id) {
 
-		Query q = em.createQuery("select OBJECT(b) from Commande b where b.id =" + id);
-		List<Commande> list = (List<Commande>) q.getResultList();
-		return (Commande) q.getSingleResult();
+		//Query q = em.createQuery("select OBJECT(b) from Commande b where b.id =" + id);
+		return em.find(Commande.class, id);
+//		List<Commande> list = (List<Commande>) q.getResultList();
+//		return (Commande) list.get(0);
 	}
 
 	public List<Commande> getCommandeClient(Client leClient) {

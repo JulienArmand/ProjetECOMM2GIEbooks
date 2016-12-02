@@ -2,86 +2,71 @@
 	<div>
 		<!-- ON NE MET PAS LE CONTROLEUR CAR IL EST APPELER VIA LE BOUTON RECHERCHE, A VOIR -->
 		<nav class="navbar navbar-default triFiltres">
-			<div class="container-fluid">
-				<ul class="col-lg-11 col-md-11 col-sm-11 col-xs-11 nav navbar-nav no-padding" >
-					 <li><input class="radioNoCircle tri" id="titreAZ" type="radio" ng-model="ordonneur" value="titre"><label for="titreAZ">Titre A-Z</label><span style="font-size:2em;"> | </span></li>
-					 <li><input class="radioNoCircle tri" id="titreZA" type="radio" ng-model="ordonneur" value="-titre"><label for="titreZA">Titre Z-A</label><span style="font-size:2em;"> | </span></li>
-					 <li><input class="radioNoCircle tri" id="meilleuresVentes" type="radio" ng-model="ordonneur" value="-ventes"><label for="meilleuresVentes">Meilleures Ventes</label><span style="font-size:2em;"> | </span></li>
-    				 <li><input class="radioNoCircle tri" id="prix" type="radio" ng-model="ordonneur" value="prixPromo"><label for="prix">Prix</label><span style="font-size:2em;"></span></li>
+			<div class="container-fluid col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<ul class="col-lg-11 col-md-10 col-sm-10 col-xs-10 nav navbar-nav no-padding">
+					<li><input class="radioNoCircle tri" id="titreAZ" type="radio" ng-model="ordonneur" value="titre"><label for="titreAZ">Titre A-Z</label><span style="font-size: 2em;"> | </span></li>
+					<li><input class="radioNoCircle tri" id="titreZA" type="radio" ng-model="ordonneur" value="-titre"><label for="titreZA">Titre Z-A</label><span style="font-size: 2em;"> | </span></li>
+					<li><input class="radioNoCircle tri" id="meilleuresVentes" type="radio" ng-model="ordonneur" value="-ventes"><label for="meilleuresVentes">Meilleures Ventes</label><span style="font-size: 2em;"> | </span></li>
+					<li><input class="radioNoCircle tri" id="prix" type="radio" ng-model="ordonneur" value="prixPromo"><label for="prix">Prix</label><span style="font-size: 2em;"></span></li>
 				</ul>
-				<ul class="col-lg-1 col-md-1 col-sm-1 col-xs-1 nav navbar-nav navbar-right no-padding">
+				<ul class="col-lg-1 col-md-2 col-sm-2 col-xs-2 nav navbar-nav navbar-right no-padding">
 					<li><input class="radioNoCircle affichage" id="mosaique" type="radio" ng-model="modeAffichage" value="mosaique"><label for="mosaique"><span class="glyphicon glyphicon-th"></span></label></li>
-   					<li><input class="radioNoCircle affichage" id="liste" type="radio" ng-model="modeAffichage" value="liste"><label for="liste" ><span class="glyphicon glyphicon-th-list"></span></label></li>
+					<li><input class="radioNoCircle affichage" id="liste" type="radio" ng-model="modeAffichage" value="liste"><label for="liste"><span class="glyphicon glyphicon-th-list"></span></label></li>
 				</ul>
 			</div>
 		</nav>
 		<div layout="row" ng-if="modeAffichage == 'mosaique'" layout-wrap>
-			<div class="mosaique-item"
-				dir-paginate="livre in livres | orderBy:ordonneur | itemsPerPage: pageSizeMos"
-				current-page="currentPage" flex="25" >
-				<div class="item" style="height:100%;">
+			<div class="mosaique-item" dir-paginate="livre in livres | orderBy:ordonneur | itemsPerPage: pageSizeMos" current-page="currentPage" flex="25">
+				<div class="item" style="height: 100%;">
 					<div>
-						<a ng-href="#/info/{{livre.id}}"> <img
-							ng-src="{{livre.nomCouverture}}" class="img-responsive" />
+						<a ng-href="#/info/{{livre.id}}"> <img ng-src="{{livre.nomCouverture}}" class="img-responsive" />
 						</a>
 					</div>
 					<div>
 						<a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
-						<h6 ng-repeat="auteur in livre.lesAuteurs">{{auteur.prenom}}
-							{{auteur.nom}}</h6>
+						<h6 ng-repeat="auteur in livre.lesAuteurs">{{auteur.prenom}} {{auteur.nom}}</h6>
 						<div>
-							<span>{{calculeMoyenne(livre.lesAvis)}}</span> <i
-								class="a-star-small-4-5"></i>
+							<span>{{calculeMoyenne(livre.lesAvis)}}</span> <i class="a-star-small-4-5"></i>
 						</div>
-						<div ng-if="livre.promotion">
-							<span style="text-decoration:line-through; color: red;">{{livre.prix}} €</span>
-					        <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
-				        </div>
-				        <div ng-if="livre.promotion == undefined">
+						<div ng-if="estEnPromo(livre.promotion)">
+							<span style="text-decoration: line-through; color: red;">{{livre.prix}} €</span> <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
+							<ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{calculPromo(livre.prix,livre.promotion.tauxReduc)}}" quantity="1"></ngcart-addtocart>
+						</div>
+						<div ng-if="!estEnPromo(livre.promotion)">
 							<span>{{livre.prix}} €</span>
-				        </div>
-				        <ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1">
-				        <i class="glyphicon glyphicon-shopping-cart"></i></ngcart-addtocart>
+							<ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1"></ngcart-addtocart>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div ng-if="modeAffichage == 'liste'">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 affichageList"
-				dir-paginate="livre in livres | orderBy:ordonneur | itemsPerPage: pageSizeList"
-				current-page="currentPage">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 affichageList" dir-paginate="livre in livres | orderBy:ordonneur | itemsPerPage: pageSizeList" current-page="currentPage">
 				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-					<a ng-href="#/info/{{livre.id}}"> <img
-						ng-src="{{livre.nomCouverture}}" class="img-responsive" />
+					<a ng-href="#/info/{{livre.id}}"> <img ng-src="{{livre.nomCouverture}}" class="img-responsive" />
 					</a>
 				</div>
 				<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
 					<a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
-					<h6 ng-repeat="auteur in livre.lesAuteurs">{{auteur.prenom}}
-						{{auteur.nom}}</h6>
+					<h6 ng-repeat="auteur in livre.lesAuteurs">{{auteur.prenom}} {{auteur.nom}}</h6>
 					<h5>{{livre.resume}}</h5>
 					<div>
-						<span>{{calculeMoyenne(livre.lesAvis)}}</span> <i
-							class="a-star-small-4-5"></i>
+						<span>{{calculeMoyenne(livre.lesAvis)}}</span> <i class="a-star-small-4-5"></i>
 					</div>
 					<div ng-if="livre.promotion">
-						<span style="text-decoration:line-through; color: red;">{{livre.prix}} €</span>
-				        <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
-			        </div>
-			        <div ng-if="livre.promotion == undefined">
+						<span style="text-decoration: line-through; color: red;">{{livre.prix}} €</span> <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
+					</div>
+					<div ng-if="livre.promotion == undefined">
 						<span>{{livre.prix}} €</span>
-			        </div>
-			        <ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1">
-			        <i class="glyphicon glyphicon-shopping-cart"></i></ngcart-addtocart>
+					</div>
+					<ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1"> <i class="glyphicon glyphicon-shopping-cart"></i></ngcart-addtocart>
 				</div>
-				<div id="trait" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    			</div>
+				<div id="trait" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
 			</div>
 		</div>
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="text-center">
-				<dir-pagination-controls boundary-links="true"
-					template-url="partials/dirPagination.tpl.html"></dir-pagination-controls>
+				<dir-pagination-controls boundary-links="true" template-url="partials/dirPagination.tpl.html"></dir-pagination-controls>
 			</div>
 		</div>
 	</div>

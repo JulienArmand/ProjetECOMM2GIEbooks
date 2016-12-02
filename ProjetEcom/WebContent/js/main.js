@@ -57,7 +57,8 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 		$rootScope.minPrix = -1;
 		$rootScope.maxPrix = -1;
 		$rootScope.avisMin = -1;
-
+		
+		
 		window.location.href = "#/recherche/"+$rootScope.req+"/"+$rootScope.genre+"/"+$rootScope.minPrix+"/"+$rootScope.maxPrix+"/"+$rootScope.avisMin;
 		
 	}
@@ -94,13 +95,6 @@ app.controller('CookiesCtrl', ['$cookies', function($cookies) {
 	  $cookies.put('myFavorite', 'oatmeal');
 }]);
 
-
-
-
-
-
-
-
 app.controller("coDecoCtrl", function($scope){
 
 	$scope.getInclude = function(){
@@ -110,8 +104,7 @@ app.controller("coDecoCtrl", function($scope){
 
 });
 
-
-app.controller("menuCtrl", function($scope, $rootScope){
+app.controller("menuCtrl", function($scope, $rootScope, $http){
 
 	$scope.range = function(min, max, step) {
         step = step || 1;
@@ -122,16 +115,11 @@ app.controller("menuCtrl", function($scope, $rootScope){
         return input;
     };
     
-	$scope.genres = [
-		{nom : "Science fiction"},
-		{nom : "Jeunesse"},
-		{nom : "Fantastique"},
-		{nom : "Policier"},
-		{nom : "Biographies"},
-		{nom : "Documentaires"}
-	];
-    
-    
+    $http.get("Genres").then(function(response) {
+    	$scope.genres = response.data;
+    });
+
+
 	$scope.rechercheMenu = function(){
 		
 		window.location.href = "#/recherche/"+$rootScope.req+"/"+$rootScope.genre+"/"+$rootScope.minPrix+"/"+$rootScope.maxPrix+"/"+$rootScope.avisMin;
@@ -205,15 +193,25 @@ app.controller("paiementCtrl", function($scope, $http, ngCart){
 			idLivres.push((ngCart.getCart().items[i])._id);
 		};
 		$http.get("GestionCommande", {
-			params:{"action" :"post", 
-			"idClient" : "12",
-			"prixTotal" : ngCart.totalCost(),
-			"type" : "CB",
-			"livres" : idLivres }}).then(function(response) {
-					wiwdow.location.href="#/confirmation";
+			params:{"action" :"post",
+			"type" : $scope.moyenPaiement.moyen,
+			"livres" : idLivres }}).then(function(response) {				
+				for(i = ngCart.getItems().length; i >= 0; i--){
+					ngCart.removeItem(i);
+				}
+				commande = response.data;
+				console.log(response.data);
+				$scope.prixCommande = commande.prixTotal;
+				console.log(commande.prixTotal + " , " + $scope.prixCommande);
+				$scope.numeroCommande = commande.id;
+				window.location.href="#/confirmation";
 		}, function(){
 					
 		});
+	}
+	
+	afficher = function(){
+		return $scope.prixCommande;
 	}
 });
 
@@ -224,7 +222,7 @@ app.controller("pageChange", function($scope){
 	 */
 });
 
-routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,$document){
+routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http, $document, $uibModal){
     $http.get("LivreAvecId", {params:{"id": $routeParams.id}}).then(function(response) {
     	$scope.livre = response.data;
     	$scope.moyenne = $scope.calculeMoyenne($scope.livre.lesAvis);
@@ -258,9 +256,9 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     
     $scope.formatDateDMY = formatDateDMY;
     
-    $scope.calculPromo = function(prix, promo) {
-    	return roundPrix(prix-(prix*promo)/100);
-    }
+    $scope.calculPromo = calculPromo;
+    
+    $scope.estEnPromo = estEnPromo;
     
     $scope.calculeMoyenne = function(list) {
     	var moy = 0;
@@ -269,8 +267,57 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     	return (moy / list.length).toFixed(1);
     }
     
+    $scope.posterCommentaire = function(note, commentaire) {
+    	if(document.cookie != "" && note != undefined && commentaire != undefined) {
+    		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : 31001}}).then(function(response) {
+    			$scope.livre = response.data;
+    		});
+    	} else if ( note == undefined || commentaire == undefined ) {
+    		document.getElementById('erreurPosterUnCommentaire').style.display = "block";
+    	}
+    	else { // popup connection
+    		var modalInstance = $uibModal.open({
+    		      // animation: $ctrl.animationsEnabled,
+    		      ariaLabelledBy: 'modal-title',
+    		      ariaDescribedBy: 'modal-body',
+    		      templateUrl: '/template/modalConnection/modalConnection.html',
+    		      controller: 'modalConnexionCtrl'
+    		      // controllerAs: '$ctrl',
+    		      // size: size,
+    		      // appendTo: parentElem,
+    		      /*
+					 * resolve: { items: function () { return $ctrl.items; } }
+					 */
+    		    });
+    	}
+    }
+    
+    
     $scope.nombreAvis = function(list) {
     	return list.length;
+    }
+});
+
+app.controller("modalConnexionCtrl", function($scope, $http, $uibModalInstance){
+	$scope.connexion = function(pseudo, mdp) {
+    	$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
+    		var cookieValue = document.cookie.replace(
+    				/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    		if (cookieValue != null && cookieValue != "") {
+    			document.getElementById('login').innerHTML = cookieValue;
+    			document.getElementById('connexion').style.display = "none";
+    			document.getElementById('profil').style.display = "";
+    		}
+    		var cookieValue = document.cookie.replace(
+    				/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    		if (cookieValue == "true") {
+    			document.getElementById('erreurIdentifiantModal').style.display = "block";
+    			document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    		} else {
+    			$uibModalInstance.close();
+    			document.getElementById('erreurIdentifiant').style.display = "none";
+    		}
+    	});
     }
 });
 
@@ -292,7 +339,7 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
 	$rootScope.email = "@";
 	
 	$scope.breakpoints = [{
-	    breakpoint: 1200, // Pc portable
+	    breakpoint: 1290, // Pc portable
 	    settings: {
 	      slidesToShow: 5,
 	      slidesToScroll: 5
@@ -306,7 +353,7 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
 	    }
 	  },
 	  {
-	    breakpoint: 992, // Tablette
+	    breakpoint: 980, // Tablette
 	    settings: {
 	      slidesToShow: 4,
 	      slidesToScroll: 4
@@ -339,9 +386,9 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
     	
     }
     
-    $scope.calculPromo = function(prix, promo) {
-    	return roundPrix(prix-(prix*promo)/100);
-    }
+    $scope.calculPromo = calculPromo;
+    
+    $scope.estEnPromo = estEnPromo;
     
 });
 
@@ -379,16 +426,12 @@ routeAppControllers.controller("recherche", function($scope, $http, $routeParams
     	var data = response.data;
 		$scope.livres=[];
     	for(var i=0; i<data.length;i++){
-    		
     		var l = data[i].l
     		l.ventes = data[i].v;
     		l.prixPromo = (l.promotion) ? $scope.calculPromo(l.prix,l.promotion.tauxReduc) : l.prix;
     		$scope.livres.push(l);
 
-    	}
-
-		console.log($scope.livres.length);
-        
+    	}        
     });
     
     $scope.currentPage = 1;
@@ -412,20 +455,10 @@ routeAppControllers.controller("recherche", function($scope, $http, $routeParams
     	
     }
     
-    $scope.changeOrdonneur = function(ordonneur) {
-        $scope.ordonneur = ordonneur;
-        alert(ordonneur);
-    }
+    $scope.calculPromo = calculPromo;
     
-    
-
+    $scope.estEnPromo = estEnPromo;
 });
-
-routeAppControllers.controller('corpsAccueilCtrl', ['$scope',
-    function($scope){
-        $scope.message = "Bienvenue sur la page d'accueil";
-    }
-]);
 
 
 routeAppControllers.controller("connexionCtrl", function($scope, $http,$routeParams,$rootScope){
@@ -452,18 +485,26 @@ routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeP
 	
 });
 
-
-
+routeAppControllers.controller("compteClient", function($scope, $http, $routeParams, $location, $rootScope){
+	
+	$scope.redirectModificationMotDePasse = function() {
+		window.location.href=("#/modificationMotDePasse");
+    }
+	
+	$http.get("GetInfoClient", {params:{"pseudo": $routeParams.pseudo}}).then(function(response) {
+		var data = response.data;
+    	$scope.pseudo = data.pseudo;
+    	$scope.nom = data.nom;
+    	$scope.prenom = data.prenom;
+    	$scope.mail = data.email;
+    }); 
+});
 
 app.config(['$routeProvider',
     function($routeProvider) { 
         
         // Système de routage
         $routeProvider
-        .when('/corpsAccueil', {
-            templateUrl: 'partials/corpsAccueil2.html',
-            controller: 'corpsAcceuilCtrl'
-        })
         .otherwise({
             templateUrl: 'partials/corpsAccueil2.html',
             controller: 'contentCtrl'
@@ -496,6 +537,14 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/registerView.html',
         	controller: 'inscriptionCtrl'
         })
+        .when('/compteClient/:pseudo',{
+        	templateUrl : 'partials/CompteClient.html',
+        	controller: 'compteClient'
+        })
+        .when('/modificationMotDePasse',{
+        	templateUrl : 'partials/ModificationMotDePasse.html',
+        	controller: 'modificationMotDePasse'
+        })
     }
 ]);
 
@@ -524,6 +573,23 @@ function formatDateDMY(str){
 	default : 	 mois = "??";break;
 	}
 	return j+"/"+mois+"/"+an;
+}
+
+function estEnPromo (promo) {
+	if(promo != undefined) {
+		var dateDebutPromo = new Date(promo.dateDebut).getTime();
+		var dateFinPromo = new Date(promo.dateFin).getTime();
+		var dateActuelle = new Date().getTime();
+		if(dateDebutPromo <= dateActuelle && dateFinPromo >= dateActuelle) {
+			return true;
+		}
+		else return false;
+	}
+	else return false;
+}
+
+function calculPromo (prix, promo) {
+	return roundPrix(prix-(prix*promo)/100);
 }
 
 app.service('elasticSearchSuggestion', function (esFactory) {

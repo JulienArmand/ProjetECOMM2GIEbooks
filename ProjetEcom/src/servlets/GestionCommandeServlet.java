@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import Tools.GestionCookies;
 import beans.GestionClient;
 import beans.GestionCommande;
 import beans.GestionLivre;
@@ -45,29 +47,36 @@ public class GestionCommandeServlet extends HttpServlet {
 	private GestionLivre		LivreBean;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		GsonBuilder gb = new GsonBuilder();
+		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
+		String str = null;
+		
 		if (request.getParameter("action").equals("post")) {
 
 			// Creer commande
+			Cookie[] cookies = request.getCookies();
+			GestionCookies g = new GestionCookies();
+			String idClient = g.getCookieByName(cookies, "idClient").getValue();
+			Client client = clientBean.getClient(Long.parseLong(idClient));
 
-			Client client = clientBean.getClient(Long.parseLong(request.getParameter("idClient")));
-
-			Commande c = commandeBean.creerCommande(new Date(), Float.parseFloat(request.getParameter("prixTotal")), client, paiementBean.getMoyenPaiement(client, request.getParameter("type")));
+			Commande c = commandeBean.creerCommande(new Date(), client, paiementBean.getMoyenPaiement(client, request.getParameter("type")));
 
 			// Creer ventes
 			Collection<Vente> lesVentes = new LinkedList<Vente>();
 			String[] livres = request.getParameter("livres").split(",");
+			System.out.println(livres.length);
 			for (int i = 0; i < livres.length; i++) {
-				lesVentes.add(venteBean.creerVente(LivreBean.getLivreAvecId(Long.parseLong(livres[i]))));
+				Vente v = venteBean.creerVente(LivreBean.getLivreAvecId(Long.parseLong(livres[i])), c);
+				lesVentes.add(v);
 			}
 			// Ajouter ventes
 			commandeBean.setVentesCommande(c.getId(), lesVentes);
+			
+			Commande cFinal = commandeBean.getCommande(c.getId());
+			str = js.toJson(cFinal);
 
 		} else {
-			GsonBuilder gb = new GsonBuilder();
-			Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
-
-			String str = null;
-
+			
 			if (request.getParameter("action").equals("commande")) {
 				Commande c = commandeBean.getCommande(Long.parseLong(request.getParameter("idCommande")));
 				str = js.toJson(c);
@@ -76,9 +85,10 @@ public class GestionCommandeServlet extends HttpServlet {
 				List<Commande> l = commandeBean.getCommandeClient(clientBean.getClient(Long.parseLong(request.getParameter("idClient"))));
 				str = js.toJson(l);
 			}
-			response.setContentType("application/json");
-			response.getWriter().println(str);
+			
 		}
+		response.setContentType("application/json");
+		response.getWriter().println(str);
 
 	}
 

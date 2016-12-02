@@ -1,91 +1,111 @@
-<script src="js/libs/star-rating.js" ></script>
-<div style="padding-top:5px;">
-    <div class="row col-lg-12 col-md-12">
-        <div class="col-lg-2 col-md-2">
-            <img class="img-responsive" ng-src="{{livre.nomCouverture}}" width="200" height="300"/>
-        </div>
-        <div class="col-lg-6 col-md-6">
-        	<h2>{{livre.titre}}</h2>
-        	<ul class="list-inline">
-        	   <li ng-repeat="auteur in livre.lesAuteurs" >{{auteur.prenom}} {{auteur.nom}}</li>
-        	</ul>
-            <h5>{{livre.editeur.nom}} | Publié le {{livre.dateDePublication}}</h5>
-            <h5>Résume</h5>
-            <h5>{{premierePartieResume}}</h5>
-             <a ng-if="deuxiemePartieResume" href="" data-toggle="collapse" data-target="#collapseResume">En lire plus <i class="glyphicon glyphicon-menu-down"></i></a>
-             <h5 ng-if="deuxiemePartieResume" id="collapseResume" class="collapse" aria-expanded="false" style="height: 0px;">{{deuxiemePartieResume}}</h5>
-        	
-        	
-        	<div ng-if="livre.promotion">
-				<span style="text-decoration:line-through; color: red;">{{livre.prix}} €</span>
-		        <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
-	        </div>
-	        <div ng-if="livre.promotion == undefined">
-				<span>{{livre.prix}} € </span>
-	        </div>
-	        <div>
-	        	<ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{calculPromo(livre.prix,livre.promotion.tauxReduc)}}" quantity="1">Ajouter au panier</ngcart-addtocart>
-	        </div>
-        </div>
-        <div class="col-lg-4 col-md-4">
-        	<div class="panel panel-default">
-		    <div class="panel-heading">
-		        <h3 class="panel-title">Fiche technique</h3>
-		    </div>
-		    <div class="panel-body">
-		    <table WIDTH=100% >
-		    	<tr><td>Nombre de pages </td><td > : </td><td ALIGN="right"> {{livre.nbPages}}</td></tr>
-		    	<tr><td>Genre </td><td>  : </td><td ALIGN="right">{{livre.genre.nom}}</td></tr>
-		    	<tr><td>Langue </td><td> : </td><td ALIGN="right"> {{livre.langue}}</td></tr>
-		    	<tr><td>Langue original </td><td> : </td><td ALIGN="right"> {{livre.langueOrigine}}</td></tr>
-		    	<tr><td>ISBN </td><td> : </td><td ALIGN="right"> {{livre.isbn}}</td></tr>
-		    </table>
-		    
-		    </div>
+<script src="js/libs/star-rating.js"></script>
+<div style="padding-top: 5px;">
+	<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+			<img class="img-responsive" ng-src="{{livre.nomCouverture}}" width="200" height="300" />
+		</div>
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<h2>{{livre.titre}}</h2>
+			<ul class="list-inline">
+				<li ng-repeat="auteur in livre.lesAuteurs">{{auteur.prenom}} {{auteur.nom}}</li>
+			</ul>
+			<h5>{{livre.editeur.nom}} | Publié le {{livre.dateDePublication}}</h5>
+			<h5>Résume</h5>
+			<h5>{{premierePartieResume}}</h5>
+			<a ng-if="deuxiemePartieResume" href="" data-toggle="collapse" data-target="#collapseResume">En lire plus <i class="glyphicon glyphicon-menu-down"></i></a>
+			<h5 ng-if="deuxiemePartieResume" id="collapseResume" class="collapse" aria-expanded="false" style="height: 0px;">{{deuxiemePartieResume}}</h5>
+
+			<div ng-if="estEnPromo(livre.promotion)">
+				<span style="text-decoration: line-through; color: red;">{{livre.prix}} €</span> <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
+				<ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{calculPromo(livre.prix,livre.promotion.tauxReduc)}}" quantity="1"></ngcart-addtocart>
 			</div>
-        </div>
-    </div>
-    
-    <h3>Avis client</h3>
-    <div class="panel panel-default row col-lg-4 col-md-4 col-sm-4 col-xs-4" style="margin-left: 0.2%; text-align: center;" >
+			<div ng-if="!estEnPromo(livre.promotion)">
+				<span>{{livre.prix}} €</span>
+				<ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{livre.prix}}" quantity="1"></ngcart-addtocart>
+			</div>
+		</div>
+		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Fiche technique</h3>
+				</div>
+				<div class="panel-body">
+					<table WIDTH=100%>
+						<tr>
+							<td>Nombre de pages</td>
+							<td>:</td>
+							<td ALIGN="right">{{livre.nbPages}}</td>
+						</tr>
+						<tr>
+							<td>Genre</td>
+							<td>:</td>
+							<td ALIGN="right">{{livre.genre.nom}}</td>
+						</tr>
+						<tr>
+							<td>Langue</td>
+							<td>:</td>
+							<td ALIGN="right">{{livre.langue}}</td>
+						</tr>
+						<tr>
+							<td>Langue original</td>
+							<td>:</td>
+							<td ALIGN="right">{{livre.langueOrigine}}</td>
+						</tr>
+						<tr>
+							<td>ISBN</td>
+							<td>:</td>
+							<td ALIGN="right">{{livre.isbn}}</td>
+						</tr>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+		<h3>Avis client</h3>
+		<div class="panel panel-default col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding" style=" text-align: center;">
 			<div class="panel-body">
 				<h4>Note moyenne :</h4>
 				<div ng-if="livre.lesAvis.length > 0" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<input id="input-moy" name="input-moy" class="rating-loading" ng-init="init(moyenne, 'moy')" >
-		        </div>
-			    <hr>
-		        <div ng-if="livre.lesAvis.length == 0">
-					<h4>Soyez le premier à laisser un avis !</h4>
-		        </div>
-		        <div ng-if="livre.lesAvis.length > 0">
-					<h4>{{nombreAvis(livre.lesAvis)}} avis</h4>
-		        </div>
-			</div>
-    </div>
-    <div>
-		<li id="lesAvis" class="list-unstyled row panel panel-default col-lg-12 col-md-12" ng-repeat="avi in livre.lesAvis" style="margin-left: 0.2%;">
-			<div class="col-lg-2 col-md-2">
-				<div class="rating-container rating-sm rating-animate">
-					<div class="rating">
-						<span class="empty-stars">
-							<span class="star" ng-repeat="i in range(1, 5)" >
-							<i class="glyphicon glyphicon-star-empty"></i>
-							</span>
-						</span>
-						<span class="filled-stars" style="width:{{avi.note*100/5}}%">
-							<span class="star" ng-repeat="i in range(1, 5)" >
-							<i class="glyphicon glyphicon-star"></i>
-							</span>
-						</span>
-					</div>
+					<!--<input id="input-moy" name="input-moy" class="rating-loading" ng-init="init(moyenne, 'moy')">-->
+					<span uib-rating ng-model="moyenne" max="5" read-only="true" titles="['one','two','three']" style="color: #fde16d; font-size: 3em;" aria-labelledby="default-rating"></span>
 				</div>
+				<hr>
+				<div ng-if="livre.lesAvis.length == 0">
+					<h4>Soyez le premier à laisser un avis !</h4>
+				</div>
+				<div ng-if="livre.lesAvis.length > 0">
+					<h4>{{nombreAvis(livre.lesAvis)}} avis</h4>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding" style=" text-align: center;">
+			<div class="panel-body">
+				<h4>Poster un commentaire :</h4>
+				<span id="erreurPosterUnCommentaire" style="display: none; color: red;">Vous devez remplir la note et le commentaire</span>
+				<span class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group" uib-rating ng-model="note" max="5" read-only="false" titles="['one','two','three']" style="color: #fde16d; font-size: 3em;" aria-labelledby="default-rating"></span>
+				<div class="form-group">
+				    <label for="commentaire">Commentaire</label>
+				    <textarea ng-model="commentaire" class="form-control" id="commentaire" rows="3"></textarea>
+				</div>
+				<input type="submit" class="btn btn-primary" ng-click="posterCommentaire(note, commentaire)" value="Envoyer un commentaire"></input>
+			</div>
+		</div>
+		<li id="lesAvis" class="list-unstyled row panel panel-default col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-repeat="avi in livre.lesAvis" style="margin-left: 0.2%;">
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				<span uib-rating ng-model="avi.note" max="5" read-only="true" titles="['one','two','three']" style="color: #fde16d; font-size: 2em;" aria-labelledby="default-rating"></span>
 				<h4>De {{avi.leClient.pseudo}}</h4>
 				<h5>{{formatDateDMY(avi.dateDePublication)}}</h5>
 			</div>
-			<div class="col-lg-10 col-md-10">
-				<h4><br>{{avi.commentaire}}</h4>
+			<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+				<h4>
+					<br>{{avi.commentaire}}
+				</h4>
 			</div>
 		</li>
-    </div>
+	</div>
 </div>
+
+
 

@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -30,8 +32,9 @@ public class Tools {
 	 * @param destHeight La taille en hauteur de l'image finale		
 	 * @param destPath	Le chemin sous lequel sera sauvegardé l'image
 	 * @throws IOException
+	 * @throws URISyntaxException 
 	 */
-	public static void sauvegarderImage(String urlImage,  int destWidth, int destHeight, String destPath) throws IOException {
+	public static void sauvegarderImage(String urlImage,  int destWidth, int destHeight, String destPath) throws IOException, URISyntaxException {
 		
 		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
 		System.setProperty("http.proxyPort", "3128");
@@ -52,6 +55,7 @@ public class Tools {
         graphics.drawImage(bImage, 0, 0, destWidth, destHeight, 0, 0, bImage.getWidth(), bImage.getHeight(), null);
         graphics.dispose();
  
+        
 		File outputfile = new File(destPath);
         if(!outputfile.exists())
         	outputfile.createNewFile();

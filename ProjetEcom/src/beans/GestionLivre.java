@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,9 +39,12 @@ public class GestionLivre {
 
 	@PersistenceContext(unitName = "Database-unit")
 	private EntityManager em;
+	
+	@EJB()
+	ConfigurationGenerale conf;
 
 	public Livre creerLivre(String nom, List<Auteur> a, Editeur e, Genre g, String isbn, int nbpage, double prix,
-			String langue, String langueOriginale, String couverture, Promotion promo, String resume, Date datePub) {
+			String langue, String langueOriginale, String couverture, Promotion promo, String resume, Date datePub) throws Exception {
 
 		Livre l = new Livre(nom, isbn, datePub, nbpage, (float) prix, langue, langueOriginale);
 		String name ="";
@@ -51,15 +56,16 @@ public class GestionLivre {
 			e2.printStackTrace();
 		}
 		
-		String couvertureUrl = "/home/s/soulierc/Images/"+name+".png";
-		//System.out.println(couvertureUrl);
-		/*try {
+		String couvertureUrl = conf.valeurParametre("PATH_SERVER")+"/images/"+name+".png";
+		System.out.println(couvertureUrl);
+		try {
 			Tools.sauvegarderImage(couverture, 400, 600, couvertureUrl);
-		} catch (IOException e1) {
+			couvertureUrl = "/images/"+name+".png";
+		} catch (IOException | URISyntaxException e1) {
 			e1.printStackTrace();
 			couvertureUrl = couverture;//"images/defaultCouv.png";
-		}*/
-		couvertureUrl = couverture;
+		}
+		
 		l.setNomCouverture(couvertureUrl);
 
 		l.setResume(resume);
@@ -84,6 +90,13 @@ public class GestionLivre {
 		}
 
 		em.persist(l);
+		
+		try {
+			ElasticSearchTools.enregistrerDansLIndexage(l);
+		} catch (Exception ex) {
+			System.err.println("Erreur durant l'indexage du livre dans elasticsearch : " + ex.getMessage());
+		}
+		
 		return l;
 	}
 
