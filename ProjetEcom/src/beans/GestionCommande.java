@@ -39,6 +39,7 @@ public class GestionCommande {
 		while(it.hasNext()){
 			Vente v = (Vente) it.next();
 			prix += v.getPrix();
+			System.out.println(v.getPrix() + " , " + prix);
 		}
 		c.setPrixTotal(prix);
 		em.merge(c);
@@ -47,9 +48,10 @@ public class GestionCommande {
 
 	public Commande getCommande(long id) {
 
-		Query q = em.createQuery("select OBJECT(b) from Commande b where b.id =" + id);
-		List<Commande> list = (List<Commande>) q.getResultList();
-		return (Commande) list.get(0);
+		//Query q = em.createQuery("select OBJECT(b) from Commande b where b.id =" + id);
+		return em.find(Commande.class, id);
+//		List<Commande> list = (List<Commande>) q.getResultList();
+//		return (Commande) list.get(0);
 	}
 
 	public List<Commande> getCommandeClient(Client leClient) {

@@ -26,9 +26,11 @@ public class Commande {
 	@Expose
 	private float				prixTotal;
 
+	@Expose
 	@OneToMany(mappedBy = "laCommande", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Vente>	lesVentes;
 
+	@Expose
 	@ManyToOne
 	@JoinColumn(name = "Client_id")
 	private Client				leClient;

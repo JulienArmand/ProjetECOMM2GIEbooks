@@ -19,26 +19,20 @@ public class GestionVente {
 	private EntityManager em;
 
 	public Vente creerVente(Livre l) {
-		Vente c = null;
-		if (l.getPromotion() != null)
-			c = new Vente(l.getPrix() * ((100 - l.getPromotion().getTauxReduc()) / 100));
-		else
-			c = new Vente(l.getPrix());
-		c.setLivre(l);
-		em.persist(c);
-		return c;
+		Vente v = null;
+		v = new Vente(l.getPrixAvecPromo());
+		v.setLivre(l);
+		em.persist(v);
+		return v;
 	}
 	
 	public Vente creerVente(Livre l, Commande cmd) {
-		Vente c = null;
-		if (l.getPromotion() != null)
-			c = new Vente(l.getPrix() * ((100 - l.getPromotion().getTauxReduc()) / 100));
-		else
-			c = new Vente(l.getPrix());
-		c.setLivre(l);
-		c.setLaCommande(cmd);
-		em.persist(c);
-		return c;
+		Vente v = null;
+		v = new Vente(l.getPrixAvecPromo());
+		v.setLivre(l);
+		v.setLaCommande(cmd);
+		em.persist(v);
+		return v;
 	}
 
 	public List<Vente> getVentes(Commande c) {

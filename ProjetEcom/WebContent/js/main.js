@@ -192,19 +192,25 @@ app.controller("paiementCtrl", function($scope, $http, ngCart){
 			idLivres.push((ngCart.getCart().items[i])._id);
 		};
 		$http.get("GestionCommande", {
-			params:{"action" :"post", 
-			"idClient" : "1701",
+			params:{"action" :"post",
 			"type" : $scope.moyenPaiement.moyen,
-			"livres" : idLivres }}).then(function(response) {
-				console.log(ngCart.getCart().items.length);
-				console.log(ngCart.getItems().length);
-				for(i = 0; i < ngCart.getItems().length; i++){
-					ngCart.removeItem(0);
+			"livres" : idLivres }}).then(function(response) {				
+				for(i = ngCart.getItems().length; i >= 0; i--){
+					ngCart.removeItem(i);
 				}
-					window.location.href="#/confirmation";
+				commande = response.data;
+				console.log(response.data);
+				$scope.prixCommande = commande.prixTotal;
+				console.log(commande.prixTotal + " , " + $scope.prixCommande);
+				$scope.numeroCommande = commande.id;
+				window.location.href="#/confirmation";
 		}, function(){
 					
 		});
+	}
+	
+	afficher = function(){
+		return $scope.prixCommande;
 	}
 });
 
