@@ -478,26 +478,21 @@ routeAppControllers.controller("connexionCtrl", function($scope, $http,$routePar
 });
 
 
-routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeParams,$rootScope){	
-	$scope.rez=true;
-	if($routeParams.identifiant==null && $routeParams.nom==null && $routeParams.prenom==null && $routeParams.motdepasse==null && $routeParams.motdepasseconfirm==null && $routeParams.email==null ){
-		// $scope.rez = "Inscription";
-	}else if($routeParams.identifiant==null || $routeParams.nom==null || $routeParams.prenom==null || $routeParams.motdepasse==null || $routeParams.motdepasseconfirm==null || $routeParams.email==null ){
-		$scope.rez = "Tous les champs doivent etre remplis";
-	}else{
-		$scope.IDSave = $routeParams.identifiant;
-		$scope.nomSave = $routeParams.nom;
-		$scope.prenomSave = $routeParams.prenom;
-		$scope.emailSave = $routeParams.email;
-		
-		$http.get("InscriptionClient",{params:{"identifiant":$routeParams.identifiant,"nom":$routeParams.nom,"prenom":$routeParams.prenom,"motdepasse":$routeParams.motdepasse,"motdepasseconfirm":$routeParams.motdepasseconfirm,"email":$routeParams.email}}).then(function(response) {
-				var data = response.data;
-				$scope.rez = data;
-				
-				
-		});
-	}
 
+routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeParams,$rootScope){	
+	$scope.rez= true;
+	$scope.emailSave = "hello";
+	$scope.submit = function() {
+		$http.get("InscriptionClient",{params:{"identifiant":this._id,"nom":this._nom,"prenom":this._prenom,"motdepasse":this._mdp,"motdepasseconfirm":this._mdpc,"email":this._email}}).then(function(response) {
+			var data = response.data;
+			$scope.rez = data;
+			
+		});
+		$scope._email=this._email;
+		this._mdp='';
+		this._mdpc='';
+      };
+	
 });
 
 routeAppControllers.controller("compteClient", function($scope, $http, $routeParams, $location, $rootScope){
@@ -548,18 +543,10 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/confirmation.html',
         	controller: 'paiementCtrl'
         })
-        .when('/inscription/:identifiant?/:nom?/:prenom?/:motdepasse?/:motdepasseconfirm?/:email?', {
+        .when('/inscription', {
         	templateUrl: 'partials/registerView.html',
         	controller: 'inscriptionCtrl'
         })
-// .when('/inscription', {
-// templateUrl: 'partials/registerView.html',
-// // controller: 'inscriptionCtrl'
-// })
-// .when('/inscriptionClient', {
-// templateUrl: 'partials/inscriptionClient.html',
-// controller: 'inscriptionClient'
-// })
         .when('/compteClient/:pseudo',{
         	templateUrl : 'partials/CompteClient.html',
         	controller: 'compteClient'

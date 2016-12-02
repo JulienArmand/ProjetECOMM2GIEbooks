@@ -1,71 +1,39 @@
-
-<script>
-	function afficheCookies() {
-		document.cookie = document.getElementById('infId').name + "="
-				+ document.getElementById('infId').value;
-		document.cookie = document.getElementById('infName').name + "="
-				+ document.getElementById('infName').value;
-		document.cookie = document.getElementById('infPre').name + "="
-				+ document.getElementById('infPre').value;
-		document.cookie = document.getElementById('infMDP').name + "="
-				+ document.getElementById('infMDP').value;
-		document.cookie = document.getElementById('infMDP2').name + "="
-				+ document.getElementById('infMDP2').value;
-		document.cookie = document.getElementById('infEmail').name + "="
-				+ document.getElementById('infEmail').value;
-		alert(document.cookie);
-	}
-
-	function redirectInscription() {
-		var nonVide = true;
-		nonVide = nonVide && document.getElementById('infId').value != '';
-		nonVide = nonVide && document.getElementById('infName').value != '';
-		nonVide = nonVide && document.getElementById('infPre').value != '';
-		nonVide = nonVide && document.getElementById('infMDP').value != '';
-		nonVide = nonVide && document.getElementById('infMDP2').value != '';
-		nonVide = nonVide && document.getElementById('infEmail').value != '';
-		var s = document.getElementById('infId').value;
-		s = s + "/" + document.getElementById('infName').value;
-		s = s + "/" + document.getElementById('infPre').value;
-		s = s + "/" + document.getElementById('infMDP').value;
-		s = s + "/" + document.getElementById('infMDP2').value;
-		s = s + "/" + document.getElementById('infEmail').value;
-
-		var url = "#/inscription/" + s;
-		if(nonVide){
-			if (window.location.hash != url) {
-				window.location.href = (url);
-			} else {
-				window.location.href = ("#/inscription/");
-				window.location.href = (url);
-			}
-		}else{
-// 			window.location.href = ("#/inscription");
-		}
-	}
-</script>
-
-
-	
 <div ng-if="rez===''">
-	<span style="color: green;font-weight:bold">Vous êtes maintenant inscrit</span><br>
-	<span style="color: green;font-weight:bold">Un email a été envoyé à {{emailSave}}</span><br>
+	<span style="color: green;font-weight:bold">Vous êtes maintenant inscrit</span><br><br>
+<!-- 	<span style="color: green;font-weight:bold">Un email a été envoyé à {{_email}}</span><br> -->
 	<span style="color: green;font-weight:bold">Vous pouvez dès a présent vous connecter</span><br>
-</div>
-
-<div ng-if="rez">
-	<span ng-if="rez!==true" style="color: red;font-weight:bold">{{rez}}</span>
-	<form id="informations"  >
-		<input id="infId" type="text" name="identifiant" placeholder="Identifiant" required value={{IDSave}}><br> 
-		<input id="infName" type="text" name="nom" placeholder="Nom" required value={{nomSave}}><br> 
-		<input id="infPre" type="text" name="prenom" placeholder="Prenom" required value={{prenomSave}}><br>
-		<input id="infMDP" type="password" name="motdepasse" placeholder="Mot de passe" required><br> 
-		<input id="infMDP2" type="password" name="motdepasseconfirm" placeholder="Confirmer mot de passe" required><br> 
-		<input id="infEmail" type="text" name="email" placeholder="Email" required value={{emailSave}}><br>
-		<input type="submit" onclick="redirectInscription()" value="Inscription">
+	
+	<br><br><br>
+	
+	<form action="../index.html" class="col-lg-3 col-md-3 col-sm-3 col-xs-3" >
+		<input class="col-lg-8 col-md-8 col-sm-8 col-xs-8 btn btn-primary" type="submit" value="Retour">
 	</form>
 </div>
-<br>
+
+<div ng-if="rez" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+	<span class="col-lg-10 col-md-10 col-sm-10 col-xs-10" ng-if="rez!==true" style="color: red;font-weight:bold">{{rez}}</span>
+	<form  ng-submit="submit()" >
+		<Label>Identifiant</Label><br>
+		<input class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-control" type="text"  placeholder="Identifiant" required ng-model="_id" ><br>
+		<Label>Nom</Label><br>
+		<input class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-control" type="text"  placeholder="Nom" required ng-model="_nom" ><br>
+		<Label>Prenom</Label><br>
+		<input class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-control" type="text" placeholder="Prenom" required ng-model="_prenom" ><br>
+		<Label>Mot de passe</Label><br>
+		<input class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-control" type="password"  placeholder="Mot de passe" required ng-model="_mdp" ><br> 
+		<Label>Confirmer mot de passe</Label><br>
+		<input class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-control" type="password"  placeholder="Confirmer mot de passe" required ng-model="_mdpc" ><br> 
+		<Label>Email</Label><br>
+		<input class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-control" type="text" placeholder="Email" required ng-model="_email" ><br><br><br>
+		<input class="col-lg-8 col-md-8 col-sm-8 col-xs-8 btn btn-primary" type="submit" id="submit" value="Inscription">
+	</form>
+	<br><br><br>
+	
+	<form action="../index.html" >
+		<input class="col-lg-8 col-md-8 col-sm-8 col-xs-8 btn btn-primary" type="submit" value="Retour">
+	</form>
+
+
 <div>
 	<form action="../InscriptionClient" method="POST">
 		<input type="text" name="action" value="visualiser" style="display: none;"> <input type="submit" value="Voir les clients">
@@ -74,8 +42,14 @@
 	<form action="../InscriptionClient" method="POST">
 		<input type="text" name="action" value="supprimer" style="display: none;"> <input type="submit" value="Supprimer les clients">
 	</form>
-
-	<form action="../index.html">
-		<input type="submit" value="Retour">
-	</form>
 </div>
+<!-- 	<a href="exemplesBD.csv"> telecharger le fichier lisezmoi.txt <a/>.  -->
+<!-- 	<span>email: {{_email}} </span><br> -->
+<!-- 	<span>email: {{emailSave}} </span><br> -->
+<!-- 	<span>nom: {{_nom}} </span><br> -->
+<!-- 	<span>Resultat: {{rez}} </span><br> -->
+<!-- 	<input class="btn btn-primary" type="submit" onclick="telecharger('Hello World!','dlTextTest.txt', 'text/plain')" value="Telecharger"> -->
+
+
+
+
