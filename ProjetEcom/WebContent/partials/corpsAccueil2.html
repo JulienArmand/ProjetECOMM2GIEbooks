@@ -6,7 +6,7 @@
 		</a>
 	</div>
 	<div>
-		<a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
+		<a ng-href="#/info/{{livre.id}}"><span ng-bind="livre.titre" style="overflow-x: hidden;"></span></a>
 		<h6 ng-repeat="auteur in livre.lesAuteurs">{{auteur.prenom}} {{auteur.nom}}</h6>
 		<div>
 			<span>{{calculeMoyenne(livre.lesAvis)}}</span> <i class="a-star-small-4-5"></i>
