@@ -2,7 +2,7 @@
 <section>	
 		<div>
 		<h1>Bienvenue sur l'écran de modification du mot de passe.</h1>
-			<form action="../ModificationMotDePasse" method="POST">
+			<form ng-submit="changeMotDePasse()">
 				<input type="password" name="ancienMotDePasse" placeholder= "Entrez votre mot de passe actuel"><br>
 				<input type="password" name="nouveauMotDePasse" placeholder="Entrez votre nouveau mot de passe"><br>
 				<input type="password" name="confirmationNouveauMotDePasse" placeholder="Confirmez votre nouveau mot de passe"><br>

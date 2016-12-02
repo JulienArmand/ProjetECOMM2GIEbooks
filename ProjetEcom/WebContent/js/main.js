@@ -306,6 +306,12 @@ routeAppControllers.controller("compteClient", function($scope, $http, $routePar
     }); 
 });
 
+routeAppControllers.controller('modificationMotDePasse', ['$scope',
+    $scope.changeMotDePasse = function(){
+	
+}
+]);
+
 
 app.config(['$routeProvider',
     function($routeProvider) { 

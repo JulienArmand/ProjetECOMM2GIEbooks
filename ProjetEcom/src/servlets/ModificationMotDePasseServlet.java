@@ -41,20 +41,16 @@ public class ModificationMotDePasseServlet extends HttpServlet {
 			if(nouveauMotDePasse.equals(confirmationNouveauMotDePasse)){
 				//Modification du mot de passe et redirection vers la page d'acceuil avec message de confirmation.
 				myBean.updateClientMotDePasse(c, nouveauMotDePasse);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("");
-				dispatcher.forward(request,response);
 				
 			}
 			else{
-				//Les deux nouveaux mots de passe ne sont pas identiques. Redirection vers la page de modification et message d'erreur.
-				RequestDispatcher dispatcher = request.getRequestDispatcher("");
-				dispatcher.forward(request,response);
+				//Les deux nouveaux mots de passe ne sont pas identiques. Redirection vers la page de modification et message d'erreur
+
 			}
 		}
 		else{
 			//Mot de passe actuel incorrect. Redirection vers la page de modification et message d'erreur.
-			RequestDispatcher dispatcher = request.getRequestDispatcher("");
-			dispatcher.forward(request,response);
+
 		}
 		
 	}
