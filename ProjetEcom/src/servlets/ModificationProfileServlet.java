@@ -40,19 +40,30 @@ public class ModificationProfileServlet extends HttpServlet {
 		String cookiePseudo = g.getCookieByName(cookies, "login").getValue();
 		System.out.println(cookiePseudo);
 		Client c = myBean.getClientFromPseudo(cookiePseudo);
+		System.out.println("Pseudo a changer: "+pseudo);
+		System.out.println("Pseudo du cookie: "+cookiePseudo);
+		
+		
 		if(!pseudo.equals(c.getPseudo())){
-			System.out.println("Pseudo modifié.");
-			myBean.updateClientPseudo(c, pseudo);
-			int nbCookies = cookies.length;
-			for(int i = 0; i < nbCookies; i++){
-				cookies[0].setMaxAge(0);
+			Client clientPseudo = myBean.getClientFromPseudo(pseudo);
+			if(clientPseudo==null){
+				System.out.println("L'identifiant n'existe pas");
+				System.out.println("Pseudo modifié.");
+				myBean.updateClientPseudo(c, pseudo);
+				int nbCookies = cookies.length;
+				for(int i = 0; i < nbCookies; i++){
+					cookies[0].setMaxAge(0);
+				}
+				//Réinitialisation des cookies login et idClient
+				Cookie login = new Cookie("login", request.getParameter("pseudo"));
+				response.addCookie(login);
+				Cookie idClient = new Cookie("idClient", String.valueOf(c.getId()));
+				response.addCookie(idClient);
+			}else{ // Le nouveau pseudo existe deja
+				System.out.println("L'identifiant existe deja");
 			}
-			//Réinitialisation des cookies login et idClient
-			Cookie login = new Cookie("login", request.getParameter("pseudo"));
-			response.addCookie(login);
-			Cookie idClient = new Cookie("idClient", String.valueOf(c.getId()));
-			response.addCookie(idClient);
 		}
+		
 		if(!nom.equals(c.getNom())){
 			System.out.println("Nom modifié.");
 			myBean.updateClientNom(c, nom);
@@ -61,12 +72,22 @@ public class ModificationProfileServlet extends HttpServlet {
 			System.out.println("Prénom modifié.");
 			myBean.updateClientPrenom(c, prenom);
 		}
+		
 		if(!email.equals(c.getEmail())){
-			System.out.println("Email modifié.");
-			myBean.updateClientEmail(c, email);
+		
+			
+			Client clientEmail = myBean.getClientFromEmail(email);
+			if(clientEmail==null){
+				System.out.println("L'email n'existe pas");
+				System.out.println("Email modifié.");
+				myBean.updateClientEmail(c, email);
+			}else{ // Le nouveau pseudo existe deja
+				System.out.println("L'email existe deja");
+			}
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("");
 		dispatcher.forward(request,response);
+		
 	}
 	
 }

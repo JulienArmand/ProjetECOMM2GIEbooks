@@ -56,7 +56,7 @@ public class GestionCommande {
 
 	public List<Commande> getCommandeClient(Client leClient) {
 
-		Query q = em.createQuery("select OBJECT(b) from Commande b where b.leClient.id =" + leClient);
+		Query q = em.createQuery("select OBJECT(b) from Commande b where b.leClient.id =" + leClient.getId());
 		List<Commande> list = (List<Commande>) q.getResultList();
 		return list;
 	}

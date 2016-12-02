@@ -1,5 +1,7 @@
 package beans;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -45,7 +47,28 @@ public class GestionClient {
 
 	public Client getClientFromPseudo(String pseudo) {
 		Query q = em.createQuery("select OBJECT(b) from Client b where b.pseudo = '" + pseudo+"'");
-		return (Client)q.getSingleResult();
+		List<Client> list = (List<Client>) q.getResultList(); 
+		if(list.size()>1){
+//			throw new Exception("Le pseudo: "+pseudo+" est utilise plusieurs fois");
+			return list.get(0);
+		}else if(list.size()==1){
+			return list.get(0);
+		}else{
+			return null;
+		}
+	}
+	
+	public Client getClientFromEmail(String email) {
+		Query q = em.createQuery("select OBJECT(b) from Client b where b.email = '" + email+"'");
+		List<Client> list = (List<Client>) q.getResultList(); 
+		if(list.size()>1){
+//			throw new Exception("L'email: "+email+" est utilise plusieurs fois");
+			return list.get(0);
+		}else if(list.size()==1){
+			return list.get(0);
+		}else{
+			return null;
+		}
 	}
 	
 	public void updateClientPseudo(Client c, String pseudo){
