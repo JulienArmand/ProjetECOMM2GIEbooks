@@ -6,7 +6,7 @@
 		<property name="openjpa.RuntimeUnenhancedClasses" value="unsupported"/> </properties> 
 		</persistence-unit>
 
-	<!--<persistence-unit name="Database-unit"
+	<!-- <persistence-unit name="Database-unit"
 		transaction-type="JTA">
 		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl
 		</provider>
@@ -17,7 +17,7 @@
 			<property name="openjpa.jdbc.DBDictionary" value="mysql" />
 			<property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO" />
 		</properties>
-	</persistence-unit>-->
-
+	</persistence-unit>
+-->
 
 </persistence>

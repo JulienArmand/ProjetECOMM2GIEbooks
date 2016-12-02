@@ -14,8 +14,9 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import model.Auteur;
 import model.Livre;
 
-public class ElasticSearchTools {
 
+public class ElasticSearchTools {
+	
 	public static InputStream doRequest(String urlS, String methode, String data) throws IOException {
 
 		URL url = new URL(urlS);
@@ -40,7 +41,6 @@ public class ElasticSearchTools {
 	public static void creerIndex() throws IOException {
 
 		String req = "{\"settings\":{\"analysis\":{\"filter\":{\"autocomplete_filter\":{\"type\":\"ngram\",\"min_gram\":1,\"max_gram\":20}},\"analyzer\":{\"autocomplete\":{\"type\":\"custom\",\"tokenizer\":\"standard\",\"filter\":[\"lowercase\",\"autocomplete_filter\"]}}}},\"mappings\":{\"type_rechercheTitreGenreAuteur\":{\"properties\":{\"titre\":{\"type\":\"text\",\"analyzer\":\"autocomplete\",\"search_analyzer\":\"simple\"},\"suggest_titre\":{\"type\": \"completion\",\"analyzer\": \"simple\", \"search_analyzer\": \"simple\"},\"suggest_auteurs\": {\"type\": \"completion\",\"analyzer\": \"simple\",\"search_analyzer\": \"simple\"}}}}}";
-
 		InputStream is = ElasticSearchTools.doRequest("http://localhost:9200/livres", "PUT", req);
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 		StringBuilder response = new StringBuilder(); // or StringBuffer if
@@ -56,6 +56,7 @@ public class ElasticSearchTools {
 	
 	public static String rechercheElasticSearch(String requeteBarre, int prixMin, int prixMax, String genre, int avisMin)
 			throws Exception {
+
 
 		String reqBarre = Tools.normalisationString(StringEscapeUtils.unescapeHtml4(requeteBarre));
 

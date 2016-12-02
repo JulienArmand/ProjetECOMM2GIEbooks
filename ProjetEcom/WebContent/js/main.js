@@ -103,7 +103,7 @@ app.controller("coDecoCtrl", function($scope){
 
 });
 
-app.controller("menuCtrl", function($scope, $rootScope){
+app.controller("menuCtrl", function($scope, $rootScope, $http){
 
 	$scope.range = function(min, max, step) {
         step = step || 1;
@@ -114,16 +114,11 @@ app.controller("menuCtrl", function($scope, $rootScope){
         return input;
     };
     
-	$scope.genres = [
-		{nom : "Science fiction"},
-		{nom : "Jeunesse"},
-		{nom : "Fantastique"},
-		{nom : "Policier"},
-		{nom : "Biographie"},
-		{nom : "Documentaires"}
-	];
-    
-    
+    $http.get("Genres").then(function(response) {
+    	$scope.genres = response.data;
+    });
+
+
 	$scope.rechercheMenu = function(){
 		
 		window.location.href = "#/recherche/"+$rootScope.req+"/"+$rootScope.genre+"/"+$rootScope.minPrix+"/"+$rootScope.maxPrix+"/"+$rootScope.avisMin;
