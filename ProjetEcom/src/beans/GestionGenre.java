@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import model.Genre;
+import model.Livre;
 
 @Stateless
 public class GestionGenre {
@@ -35,6 +36,12 @@ public class GestionGenre {
 		Query q2 = em.createNativeQuery("ALTER TABLE Genre {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
 		q2.executeUpdate();
+	}
+	
+	public List<Genre> getTousLesGenres(){
+		Query q = em.createQuery("select OBJECT(g) from Genre g");
+		List<Genre> list = (List<Genre>) q.getResultList();
+		return list;
 	}
 
 }

@@ -1,0 +1,81 @@
+
+<script>
+	function afficheCookies() {
+		document.cookie = document.getElementById('infId').name + "="
+				+ document.getElementById('infId').value;
+		document.cookie = document.getElementById('infName').name + "="
+				+ document.getElementById('infName').value;
+		document.cookie = document.getElementById('infPre').name + "="
+				+ document.getElementById('infPre').value;
+		document.cookie = document.getElementById('infMDP').name + "="
+				+ document.getElementById('infMDP').value;
+		document.cookie = document.getElementById('infMDP2').name + "="
+				+ document.getElementById('infMDP2').value;
+		document.cookie = document.getElementById('infEmail').name + "="
+				+ document.getElementById('infEmail').value;
+		alert(document.cookie);
+	}
+
+	function redirectInscription() {
+		var nonVide = true;
+		nonVide = nonVide && document.getElementById('infId').value != '';
+		nonVide = nonVide && document.getElementById('infName').value != '';
+		nonVide = nonVide && document.getElementById('infPre').value != '';
+		nonVide = nonVide && document.getElementById('infMDP').value != '';
+		nonVide = nonVide && document.getElementById('infMDP2').value != '';
+		nonVide = nonVide && document.getElementById('infEmail').value != '';
+		var s = document.getElementById('infId').value;
+		s = s + "/" + document.getElementById('infName').value;
+		s = s + "/" + document.getElementById('infPre').value;
+		s = s + "/" + document.getElementById('infMDP').value;
+		s = s + "/" + document.getElementById('infMDP2').value;
+		s = s + "/" + document.getElementById('infEmail').value;
+
+		var url = "#/inscription/" + s;
+		if(nonVide){
+			if (window.location.hash != url) {
+				window.location.href = (url);
+			} else {
+				window.location.href = ("#/inscription/");
+				window.location.href = (url);
+			}
+		}else{
+// 			window.location.href = ("#/inscription");
+		}
+	}
+</script>
+
+
+	
+<div ng-if="rez===''">
+	<span style="color: green;font-weight:bold">Vous êtes maintenant inscrit</span><br>
+	<span style="color: green;font-weight:bold">Un email a été envoyé à {{emailSave}}</span><br>
+	<span style="color: green;font-weight:bold">Vous pouvez dès a présent vous connecter</span><br>
+</div>
+
+<div ng-if="rez">
+	<span ng-if="rez!==true" style="color: red;font-weight:bold">{{rez}}</span>
+	<form id="informations"  >
+		<input id="infId" type="text" name="identifiant" placeholder="Identifiant" required value={{IDSave}}><br> 
+		<input id="infName" type="text" name="nom" placeholder="Nom" required value={{nomSave}}><br> 
+		<input id="infPre" type="text" name="prenom" placeholder="Prenom" required value={{prenomSave}}><br>
+		<input id="infMDP" type="password" name="motdepasse" placeholder="Mot de passe" required><br> 
+		<input id="infMDP2" type="password" name="motdepasseconfirm" placeholder="Confirmer mot de passe" required><br> 
+		<input id="infEmail" type="text" name="email" placeholder="Email" required value={{emailSave}}><br>
+		<input type="submit" onclick="redirectInscription()" value="Inscription">
+	</form>
+</div>
+<br>
+<div>
+	<form action="../InscriptionClient" method="POST">
+		<input type="text" name="action" value="visualiser" style="display: none;"> <input type="submit" value="Voir les clients">
+	</form>
+	<br>
+	<form action="../InscriptionClient" method="POST">
+		<input type="text" name="action" value="supprimer" style="display: none;"> <input type="submit" value="Supprimer les clients">
+	</form>
+
+	<form action="../index.html">
+		<input type="submit" value="Retour">
+	</form>
+</div>

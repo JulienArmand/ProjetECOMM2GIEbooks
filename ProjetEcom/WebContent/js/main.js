@@ -72,6 +72,45 @@ app.controller("footerCtrl", function($scope){
 });
 
 
+
+app.controller('ExampleController', ['$scope', function($scope) {
+	$scope.items = ['connecte', 'visiteur','autre'];
+	  $scope.selection = $scope.items[1];
+	  $scope.list = [];
+      $scope.text = 'hello';
+      $scope.submit = function() {
+        if ($scope.text) {
+          $scope.list.push(this.text);
+          $scope.text = '';
+        }
+      };
+}]);
+
+
+app.controller('CookiesCtrl', ['$cookies', function($cookies) {
+	  // Retrieving a cookie
+	  var favoriteCookie = $cookies.get('myFavorite');
+	  // Setting a cookie
+	  $cookies.put('myFavorite', 'oatmeal');
+}]);
+
+
+
+
+
+
+
+
+app.controller("coDecoCtrl", function($scope){
+
+	$scope.getInclude = function(){
+		return "'partials/loginView.html'";
+	  
+	}
+
+});
+
+
 app.controller("menuCtrl", function($scope, $rootScope){
 
 	$scope.range = function(min, max, step) {
@@ -165,17 +204,13 @@ app.controller("paiementCtrl", function($scope, $http, ngCart){
 		for (i = 0; i < ngCart.getCart().items.length;i++){
 			idLivres.push((ngCart.getCart().items[i])._id);
 		};
-		console.log(idLivres);
-		req = { method: 'POST', url: '/GestionCommande', headers: { 'Content-Type': undefined }, 
-				data: { 
-					idClient : "12",
-					prixTotal : ngCart.totalCost(),
-					type : "CB",
-					livres : idLivres }};
-		
-
-		$http(req).then(function(){
-					
+		$http.get("GestionCommande", {
+			params:{"action" :"post", 
+			"idClient" : "12",
+			"prixTotal" : ngCart.totalCost(),
+			"type" : "CB",
+			"livres" : idLivres }}).then(function(response) {
+					wiwdow.location.href="#/confirmation";
 		}, function(){
 					
 		});
@@ -252,6 +287,14 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
 	$rootScope.minPrix = -1;
 	$rootScope.maxPrix = -1;
 	$rootScope.avisMin = -1;
+			
+	
+	$rootScope.identifiant = "@";
+	$rootScope.nom = "@"; 
+	$rootScope.prenom = "@";
+	$rootScope.motdepasse = "@";
+	$rootScope.motdepasseconfirm = "@";
+	$rootScope.email = "@";
 	
 	$scope.breakpoints = [{
 	    breakpoint: 1290, // Pc portable
@@ -306,6 +349,12 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
     $scope.estEnPromo = estEnPromo;
     
 });
+
+
+
+
+
+
 
 routeAppControllers.controller("inscriptionClient", function($scope, $http,$rootScope){
 	
@@ -365,6 +414,36 @@ routeAppControllers.controller("recherche", function($scope, $http, $routeParams
     }
 });
 
+
+routeAppControllers.controller("connexionCtrl", function($scope, $http,$routeParams,$rootScope){
+
+	
+
+});
+
+
+routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeParams,$rootScope){	
+	$scope.rez=true;
+	if($routeParams.identifiant==null && $routeParams.nom==null && $routeParams.prenom==null && $routeParams.motdepasse==null && $routeParams.motdepasseconfirm==null && $routeParams.email==null ){
+		// $scope.rez = "Inscription";
+	}else if($routeParams.identifiant==null || $routeParams.nom==null || $routeParams.prenom==null || $routeParams.motdepasse==null || $routeParams.motdepasseconfirm==null || $routeParams.email==null ){
+		$scope.rez = "Tous les champs doivent etre remplis";
+	}else{
+		$scope.IDSave = $routeParams.identifiant;
+		$scope.nomSave = $routeParams.nom;
+		$scope.prenomSave = $routeParams.prenom;
+		$scope.emailSave = $routeParams.email;
+		
+		$http.get("InscriptionClient",{params:{"identifiant":$routeParams.identifiant,"nom":$routeParams.nom,"prenom":$routeParams.prenom,"motdepasse":$routeParams.motdepasse,"motdepasseconfirm":$routeParams.motdepasseconfirm,"email":$routeParams.email}}).then(function(response) {
+				var data = response.data;
+				$scope.rez = data;
+				
+				
+		});
+	}
+
+});
+
 app.config(['$routeProvider',
     function($routeProvider) { 
         
@@ -398,6 +477,14 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/confirmation.html',
         	controller: 'paiementCtrl'
         })
+        .when('/inscription/:identifiant?/:nom?/:prenom?/:motdepasse?/:motdepasseconfirm?/:email?', {
+        	templateUrl: 'partials/registerView.html',
+        	controller: 'inscriptionCtrl'
+        })
+// .when('/inscription', {
+// templateUrl: 'partials/registerView.html',
+// // controller: 'inscriptionCtrl'
+// })
 // .when('/inscriptionClient', {
 // templateUrl: 'partials/inscriptionClient.html',
 // controller: 'inscriptionClient'

@@ -1,8 +1,11 @@
 package beans;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,11 +19,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.apache.myfaces.util.FilenameUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import Tools.ElasticSearchTools;
+import Tools.Tools;
 import model.Auteur;
 import model.Editeur;
 import model.Genre;
@@ -37,7 +42,25 @@ public class GestionLivre {
 			String langue, String langueOriginale, String couverture, Promotion promo, String resume, Date datePub) throws Exception {
 
 		Livre l = new Livre(nom, isbn, datePub, nbpage, (float) prix, langue, langueOriginale);
-		l.setNomCouverture(couverture);
+		String name ="";
+		try {
+			URL url = new URL(couverture);
+			name = FilenameUtils.getName(url.getPath());
+		} catch (MalformedURLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		String couvertureUrl = "/home/s/soulierc/Images/"+name+".png";
+		//System.out.println(couvertureUrl);
+		/*try {
+			Tools.sauvegarderImage(couverture, 400, 600, couvertureUrl);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			couvertureUrl = couverture;//"images/defaultCouv.png";
+		}*/
+		couvertureUrl = couverture;
+		l.setNomCouverture(couvertureUrl);
 
 		l.setResume(resume);
 		l.setPromotion(promo);
