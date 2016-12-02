@@ -49,6 +49,8 @@
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
 	    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
 	    <meta name="viewport" content="initial-scale=1" />
+	    
+	    <script src="js/libs/rating.js" ></script>
         
         
 				
@@ -61,9 +63,9 @@
     		</div>
 	     	<div class="container-fluid ">
 	     		<div class="row">
-	     			<section id="menu" ng-controller="menuCtrl" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 " ng-include="'partials/menu.html'">
+	     			<section id="menu" ng-controller="menuCtrl" class="col-lg-2 col-md-4 col-sm-3 col-xs-12 " ng-include="'partials/menu.html'">
 			        </section>
-					<section id="vuePrincipale" class="col-lg-10 col-md-9 col-sm-9 col-xs-12"  ng-view>
+					<section id="vuePrincipale" class="col-lg-10 col-md-8 col-sm-9 col-xs-12"  ng-view>
 			        </section>
 			     </div>
 	        </div>

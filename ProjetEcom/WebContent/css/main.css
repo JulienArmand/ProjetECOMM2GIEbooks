@@ -90,6 +90,23 @@ slick {
 	visibility:hidden;
 }
 
+@media (max-width: 768px) {
+  [class*="col-"] {
+  	padding: 0px;
+  }
+}
+
+@media (max-width: 992px) {
+  [class*="col-"] {
+  }
+}
+
+@media (max-width: 1200px) {
+  [class*="col-"] {
+  	
+  }
+}
+
 .input-hidden{
 	display:none;
 }
