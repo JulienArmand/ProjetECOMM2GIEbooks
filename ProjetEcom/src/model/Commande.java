@@ -40,10 +40,10 @@ public class Commande {
 	public Commande() {
 	}
 
-	public Commande(Date dateDeVente, float prixTotal) {
+	public Commande(Date dateDeVente) {
 		super();
 		this.dateDeVente = dateDeVente;
-		this.prixTotal = prixTotal;
+		this.prixTotal = 0;
 	}
 
 	public long getId() {

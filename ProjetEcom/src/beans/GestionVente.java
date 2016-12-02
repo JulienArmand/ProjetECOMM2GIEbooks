@@ -28,6 +28,18 @@ public class GestionVente {
 		em.persist(c);
 		return c;
 	}
+	
+	public Vente creerVente(Livre l, Commande cmd) {
+		Vente c = null;
+		if (l.getPromotion() != null)
+			c = new Vente(l.getPrix() * ((100 - l.getPromotion().getTauxReduc()) / 100));
+		else
+			c = new Vente(l.getPrix());
+		c.setLivre(l);
+		c.setLaCommande(cmd);
+		em.persist(c);
+		return c;
+	}
 
 	public List<Vente> getVentes(Commande c) {
 		Query q = em.createQuery("select OBJECT(b) from Vente b where b.laCommande =" + c);

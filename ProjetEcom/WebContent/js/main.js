@@ -95,13 +95,6 @@ app.controller('CookiesCtrl', ['$cookies', function($cookies) {
 	  $cookies.put('myFavorite', 'oatmeal');
 }]);
 
-
-
-
-
-
-
-
 app.controller("coDecoCtrl", function($scope){
 
 	$scope.getInclude = function(){
@@ -111,8 +104,7 @@ app.controller("coDecoCtrl", function($scope){
 
 });
 
-
-app.controller("menuCtrl", function($scope, $rootScope){
+app.controller("menuCtrl", function($scope, $rootScope, $http){
 
 	$scope.range = function(min, max, step) {
         step = step || 1;
@@ -123,16 +115,11 @@ app.controller("menuCtrl", function($scope, $rootScope){
         return input;
     };
     
-	$scope.genres = [
-		{nom : "Science fiction"},
-		{nom : "Jeunesse"},
-		{nom : "Fantastique"},
-		{nom : "Policier"},
-		{nom : "Biographie"},
-		{nom : "Documentaires"}
-	];
-    
-    
+    $http.get("Genres").then(function(response) {
+    	$scope.genres = response.data;
+    });
+
+
 	$scope.rechercheMenu = function(){
 		
 		window.location.href = "#/recherche/"+$rootScope.req+"/"+$rootScope.genre+"/"+$rootScope.minPrix+"/"+$rootScope.maxPrix+"/"+$rootScope.avisMin;
@@ -207,11 +194,15 @@ app.controller("paiementCtrl", function($scope, $http, ngCart){
 		};
 		$http.get("GestionCommande", {
 			params:{"action" :"post", 
-			"idClient" : "12",
-			"prixTotal" : ngCart.totalCost(),
-			"type" : "CB",
+			"idClient" : "1701",
+			"type" : $scope.moyenPaiement.moyen,
 			"livres" : idLivres }}).then(function(response) {
-					wiwdow.location.href="#/confirmation";
+				console.log(ngCart.getCart().items.length);
+				console.log(ngCart.getItems().length);
+				for(i = 0; i < ngCart.getItems().length; i++){
+					ngCart.removeItem(0);
+				}
+					window.location.href="#/confirmation";
 		}, function(){
 					
 		});
@@ -493,6 +484,21 @@ routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeP
 
 });
 
+routeAppControllers.controller("compteClient", function($scope, $http, $routeParams, $location, $rootScope){
+	
+	$scope.redirectModificationMotDePasse = function() {
+		window.location.href=("#/modificationMotDePasse");
+    }
+	
+	$http.get("GetInfoClient", {params:{"pseudo": $routeParams.pseudo}}).then(function(response) {
+		var data = response.data;
+    	$scope.pseudo = data.pseudo;
+    	$scope.nom = data.nom;
+    	$scope.prenom = data.prenom;
+    	$scope.mail = data.email;
+    }); 
+});
+
 app.config(['$routeProvider',
     function($routeProvider) { 
         
@@ -538,6 +544,14 @@ app.config(['$routeProvider',
 // templateUrl: 'partials/inscriptionClient.html',
 // controller: 'inscriptionClient'
 // })
+        .when('/compteClient/:pseudo',{
+        	templateUrl : 'partials/CompteClient.html',
+        	controller: 'compteClient'
+        })
+        .when('/modificationMotDePasse',{
+        	templateUrl : 'partials/ModificationMotDePasse.html',
+        	controller: 'modificationMotDePasse'
+        })
     }
 ]);
 

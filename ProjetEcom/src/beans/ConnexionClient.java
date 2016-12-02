@@ -32,5 +32,11 @@ public class ConnexionClient {
 		}
 		return result;
 	}
+	
+	public long getIdClient(String pseudo){
+		Query q = em.createQuery("select OBJECT(b) from Client b where b.pseudo = '" + pseudo+"'");
+		Client c = (Client)q.getSingleResult();
+		return c.getId();
+	}
 
 }

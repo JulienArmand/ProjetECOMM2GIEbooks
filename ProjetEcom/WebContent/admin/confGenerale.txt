@@ -1,0 +1,10 @@
+#FICHIER DE CONFIGURATION DU PROJET
+#
+#IP du serveur elasticsearch
+IP_ELASTICSERACH=127.0.0.1
+#
+#Port du serveur elasticsearch
+PORT_ELASTICSEARCH=9200
+#
+#Dossier du serveur apache
+PATH_SERVER=/home/s/soulierc/workspace2/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/ProjetEcom
