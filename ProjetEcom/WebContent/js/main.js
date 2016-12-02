@@ -57,7 +57,8 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 		$rootScope.minPrix = -1;
 		$rootScope.maxPrix = -1;
 		$rootScope.avisMin = -1;
-
+		
+		
 		window.location.href = "#/recherche/"+$rootScope.req+"/"+$rootScope.genre+"/"+$rootScope.minPrix+"/"+$rootScope.maxPrix+"/"+$rootScope.avisMin;
 		
 	}
@@ -94,13 +95,6 @@ app.controller('CookiesCtrl', ['$cookies', function($cookies) {
 	  $cookies.put('myFavorite', 'oatmeal');
 }]);
 
-
-
-
-
-
-
-
 app.controller("coDecoCtrl", function($scope){
 
 	$scope.getInclude = function(){
@@ -109,7 +103,6 @@ app.controller("coDecoCtrl", function($scope){
 	}
 
 });
-
 
 app.controller("menuCtrl", function($scope, $rootScope, $http){
 
@@ -168,7 +161,19 @@ app.controller("searchCtrl", function($scope){
 
 });
 
-app.controller("paiementCtrl", function($scope, $http, ngCart){
+
+app.controller("commandeClientCtrl", function($scope, $http, $rootScope, ngCart){
+	$http.get("GestionCommande", {
+		params:{"action" :"commandeClient"}}).then(function(response) {				
+				$scope.commandes = response.data;
+		}, function(){
+					
+		});
+});
+
+
+
+app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart){
 	$scope.mois = [
 		{nom : "Janvier", valeur : "1"},
 		{nom : "Février", valeur : "2"},
@@ -200,15 +205,23 @@ app.controller("paiementCtrl", function($scope, $http, ngCart){
 			idLivres.push((ngCart.getCart().items[i])._id);
 		};
 		$http.get("GestionCommande", {
-			params:{"action" :"post", 
-			"idClient" : "1701",
-			"prixTotal" : ngCart.totalCost(),
-			"type" : "CB",
-			"livres" : idLivres }}).then(function(response) {
-					window.location.href="#/confirmation";
+			params:{"action" :"post",
+			"type" : $scope.moyenPaiement.moyen,
+			"livres" : idLivres }}).then(function(response) {				
+				for(i = ngCart.getItems().length; i >= 0; i--){
+					ngCart.removeItem(i);
+				}
+				$rootScope.commande = response.data;
+				
+				
+				window.location.href="#/confirmation";
 		}, function(){
 					
 		});
+	}
+	
+	afficher = function(){
+		return $scope.prixCommande;
 	}
 });
 
@@ -219,7 +232,7 @@ app.controller("pageChange", function($scope){
 	 */
 });
 
-routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,$document){
+routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http, $document, $uibModal){
     $http.get("LivreAvecId", {params:{"id": $routeParams.id}}).then(function(response) {
     	$scope.livre = response.data;
     	$scope.moyenne = $scope.calculeMoyenne($scope.livre.lesAvis);
@@ -265,12 +278,56 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     }
     
     $scope.posterCommentaire = function(note, commentaire) {
-    	alert("A faire, poster un commentaire : " + note +" "+commentaire);
+    	if(document.cookie != "" && note != undefined && commentaire != undefined) {
+    		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : 31001}}).then(function(response) {
+    			$scope.livre = response.data;
+    		});
+    	} else if ( note == undefined || commentaire == undefined ) {
+    		document.getElementById('erreurPosterUnCommentaire').style.display = "block";
+    	}
+    	else { // popup connection
+    		var modalInstance = $uibModal.open({
+    		      // animation: $ctrl.animationsEnabled,
+    		      ariaLabelledBy: 'modal-title',
+    		      ariaDescribedBy: 'modal-body',
+    		      templateUrl: '/template/modalConnection/modalConnection.html',
+    		      controller: 'modalConnexionCtrl'
+    		      // controllerAs: '$ctrl',
+    		      // size: size,
+    		      // appendTo: parentElem,
+    		      /*
+					 * resolve: { items: function () { return $ctrl.items; } }
+					 */
+    		    });
+    	}
     }
     
     
     $scope.nombreAvis = function(list) {
     	return list.length;
+    }
+});
+
+app.controller("modalConnexionCtrl", function($scope, $http, $uibModalInstance){
+	$scope.connexion = function(pseudo, mdp) {
+    	$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
+    		var cookieValue = document.cookie.replace(
+    				/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    		if (cookieValue != null && cookieValue != "") {
+    			document.getElementById('login').innerHTML = cookieValue;
+    			document.getElementById('connexion').style.display = "none";
+    			document.getElementById('profil').style.display = "";
+    		}
+    		var cookieValue = document.cookie.replace(
+    				/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    		if (cookieValue == "true") {
+    			document.getElementById('erreurIdentifiantModal').style.display = "block";
+    			document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    		} else {
+    			$uibModalInstance.close();
+    			document.getElementById('erreurIdentifiant').style.display = "none";
+    		}
+    	});
     }
 });
 
@@ -407,6 +464,10 @@ routeAppControllers.controller("recherche", function($scope, $http, $routeParams
     	return (moy / list.length).toFixed(1) + "/5 ("+list.length+")";
     	
     }
+    
+    $scope.calculPromo = calculPromo;
+    
+    $scope.estEnPromo = estEnPromo;
 });
 
 
@@ -417,29 +478,28 @@ routeAppControllers.controller("connexionCtrl", function($scope, $http,$routePar
 });
 
 
-routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeParams,$rootScope){	
-	$scope.rez=true;
-	if($routeParams.identifiant==null && $routeParams.nom==null && $routeParams.prenom==null && $routeParams.motdepasse==null && $routeParams.motdepasseconfirm==null && $routeParams.email==null ){
-		// $scope.rez = "Inscription";
-	}else if($routeParams.identifiant==null || $routeParams.nom==null || $routeParams.prenom==null || $routeParams.motdepasse==null || $routeParams.motdepasseconfirm==null || $routeParams.email==null ){
-		$scope.rez = "Tous les champs doivent etre remplis";
-	}else{
-		$scope.IDSave = $routeParams.identifiant;
-		$scope.nomSave = $routeParams.nom;
-		$scope.prenomSave = $routeParams.prenom;
-		$scope.emailSave = $routeParams.email;
-		
-		$http.get("InscriptionClient",{params:{"identifiant":$routeParams.identifiant,"nom":$routeParams.nom,"prenom":$routeParams.prenom,"motdepasse":$routeParams.motdepasse,"motdepasseconfirm":$routeParams.motdepasseconfirm,"email":$routeParams.email}}).then(function(response) {
-				var data = response.data;
-				$scope.rez = data;
-				
-				
-		});
-	}
 
+routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeParams,$rootScope){	
+	$scope.rez= true;
+	$scope.emailSave = "hello";
+	$scope.submit = function() {
+		$http.get("InscriptionClient",{params:{"identifiant":this._id,"nom":this._nom,"prenom":this._prenom,"motdepasse":this._mdp,"motdepasseconfirm":this._mdpc,"email":this._email}}).then(function(response) {
+			var data = response.data;
+			$scope.rez = data;
+			
+		});
+		$scope._email=this._email;
+		this._mdp='';
+		this._mdpc='';
+      };
+	
 });
 
-routeAppControllers.controller("compteClient", function($scope, $http, $routeParams,$rootScope){
+routeAppControllers.controller("compteClient", function($scope, $http, $routeParams, $location, $rootScope){
+	
+	$scope.redirectModificationMotDePasse = function() {
+		window.location.href=("#/modificationMotDePasse");
+    }
 	
 	$http.get("GetInfoClient", {params:{"pseudo": $routeParams.pseudo}}).then(function(response) {
 		var data = response.data;
@@ -447,11 +507,7 @@ routeAppControllers.controller("compteClient", function($scope, $http, $routePar
     	$scope.nom = data.nom;
     	$scope.prenom = data.prenom;
     	$scope.mail = data.email;
-    	$scope.redirectToModificationPseudo = function(){
-    		window.location.href=("#/ModificationPseudo/");
-    	}
-    });
-    
+    }); 
 });
 
 app.config(['$routeProvider',
@@ -487,21 +543,17 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/confirmation.html',
         	controller: 'paiementCtrl'
         })
-        .when('/inscription/:identifiant?/:nom?/:prenom?/:motdepasse?/:motdepasseconfirm?/:email?', {
+        .when('/inscription', {
         	templateUrl: 'partials/registerView.html',
         	controller: 'inscriptionCtrl'
         })
-// .when('/inscription', {
-// templateUrl: 'partials/registerView.html',
-// // controller: 'inscriptionCtrl'
-// })
-// .when('/inscriptionClient', {
-// templateUrl: 'partials/inscriptionClient.html',
-// controller: 'inscriptionClient'
-// })
         .when('/compteClient/:pseudo',{
         	templateUrl : 'partials/CompteClient.html',
         	controller: 'compteClient'
+        })
+        .when('/modificationMotDePasse',{
+        	templateUrl : 'partials/ModificationMotDePasse.html',
+        	controller: 'modificationMotDePasse'
         })
     }
 ]);

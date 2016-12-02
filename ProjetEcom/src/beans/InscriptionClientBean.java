@@ -20,9 +20,11 @@ public class InscriptionClientBean {
 	private EntityManager em; 
 	
 	public Client creerClient(String pseudo, String email, String motDePasse, String nom, String prenom){
-		
-		Client c = new Client(pseudo, email, motDePasse, nom, prenom);
-		em.persist(c);
+		Client c = null;
+		if(!pseudoDejaPris(pseudo) && !emailDejaPris(email) ){
+			c = new Client(pseudo, email, motDePasse, nom, prenom);
+			em.persist(c);
+		}
 		return c;
 	}
 	

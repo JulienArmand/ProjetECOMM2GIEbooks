@@ -18,6 +18,7 @@
     		document.getElementById('connexion').style.display = "";
         	document.getElementById('profil').style.display = "none";
         	document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        	document.cookie = "idClient=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
         	document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 
     	}
@@ -83,7 +84,7 @@
 				<input type="submit" onclick="afficheCookies()" value="affiche Cookies"></p>
 			</form>
 			</div>
-			<!--<form>
+			<!-- <form>
 				<input type="submit" onclick="afficheCookies()"
 					value="affiche Cookies">
 				</p>

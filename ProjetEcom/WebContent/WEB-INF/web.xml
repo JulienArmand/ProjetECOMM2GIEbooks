@@ -24,6 +24,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>AjouterCommentaire</servlet-name>
+		<servlet-class>servlets.AjouterCommentaireServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjouterCommentaire</servlet-name>
+		<url-pattern>/AjouterCommentaire</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>RechercheViaBarre</servlet-name>
 		<servlet-class>servlets.RechercheViaBarreServlet</servlet-class>
 	</servlet>
@@ -129,6 +138,15 @@
 	<servlet-mapping>
 		<servlet-name>ModificationProfile</servlet-name>
 		<url-pattern>/ModificationProfile</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ModificationMotDePasse</servlet-name>
+		<servlet-class>servlets.ModificationMotDePasseServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ModificationMotDePasse</servlet-name>
+		<url-pattern>/ModificationMotDePasse</url-pattern>
 	</servlet-mapping>
 
 </web-app>

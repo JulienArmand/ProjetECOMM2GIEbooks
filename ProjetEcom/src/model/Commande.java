@@ -26,9 +26,11 @@ public class Commande {
 	@Expose
 	private float				prixTotal;
 
+	@Expose
 	@OneToMany(mappedBy = "laCommande", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Vente>	lesVentes;
 
+	@Expose
 	@ManyToOne
 	@JoinColumn(name = "Client_id")
 	private Client				leClient;
@@ -40,10 +42,10 @@ public class Commande {
 	public Commande() {
 	}
 
-	public Commande(Date dateDeVente, float prixTotal) {
+	public Commande(Date dateDeVente) {
 		super();
 		this.dateDeVente = dateDeVente;
-		this.prixTotal = prixTotal;
+		this.prixTotal = 0;
 	}
 
 	public long getId() {
