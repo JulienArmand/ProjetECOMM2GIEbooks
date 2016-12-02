@@ -8,6 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import Tools.GestionCookies;
+
 import javax.servlet.http.Cookie;
 import beans.GestionClient;
 import model.Client;
@@ -33,7 +36,8 @@ public class ModificationProfileServlet extends HttpServlet {
 		String prenom = request.getParameter("prenom");
 		String email = request.getParameter("email");
 		Cookie[] cookies = request.getCookies();
-		String cookiePseudo = cookies[0].getValue();
+		GestionCookies g = new GestionCookies();
+		String cookiePseudo = g.getCookieByName(cookies, "login").getValue();
 		System.out.println(cookiePseudo);
 		Client c = myBean.getClientFromPseudo(cookiePseudo);
 		if(!pseudo.equals(c.getPseudo())){
