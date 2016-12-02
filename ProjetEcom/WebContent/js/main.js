@@ -94,13 +94,6 @@ app.controller('CookiesCtrl', ['$cookies', function($cookies) {
 	  $cookies.put('myFavorite', 'oatmeal');
 }]);
 
-
-
-
-
-
-
-
 app.controller("coDecoCtrl", function($scope){
 
 	$scope.getInclude = function(){
@@ -109,7 +102,6 @@ app.controller("coDecoCtrl", function($scope){
 	}
 
 });
-
 
 app.controller("menuCtrl", function($scope, $rootScope){
 
@@ -207,9 +199,13 @@ app.controller("paiementCtrl", function($scope, $http, ngCart){
 		$http.get("GestionCommande", {
 			params:{"action" :"post", 
 			"idClient" : "1701",
-			"prixTotal" : ngCart.totalCost(),
-			"type" : "CB",
+			"type" : $scope.moyenPaiement.moyen,
 			"livres" : idLivres }}).then(function(response) {
+				console.log(ngCart.getCart().items.length);
+				console.log(ngCart.getItems().length);
+				for(i = 0; i < ngCart.getItems().length; i++){
+					ngCart.removeItem(0);
+				}
 					window.location.href="#/confirmation";
 		}, function(){
 					
