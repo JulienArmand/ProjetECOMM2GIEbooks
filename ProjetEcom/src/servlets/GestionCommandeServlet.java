@@ -56,11 +56,16 @@ public class GestionCommandeServlet extends HttpServlet {
 			// Creer ventes
 			Collection<Vente> lesVentes = new LinkedList<Vente>();
 			String[] livres = request.getParameter("livres").split(",");
+			System.out.println(livres.length);
 			for (int i = 0; i < livres.length; i++) {
-				lesVentes.add(venteBean.creerVente(LivreBean.getLivreAvecId(Long.parseLong(livres[i]))));
+				Vente v = venteBean.creerVente(LivreBean.getLivreAvecId(Long.parseLong(livres[i])));
+				System.out.println("test");
+				lesVentes.add(v);
+				System.out.println("test2");
 			}
 			// Ajouter ventes
 			commandeBean.setVentesCommande(c.getId(), lesVentes);
+			System.out.println("test3");
 
 		} else {
 			GsonBuilder gb = new GsonBuilder();

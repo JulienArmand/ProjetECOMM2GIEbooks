@@ -206,11 +206,11 @@ app.controller("paiementCtrl", function($scope, $http, ngCart){
 		};
 		$http.get("GestionCommande", {
 			params:{"action" :"post", 
-			"idClient" : "12",
+			"idClient" : "1701",
 			"prixTotal" : ngCart.totalCost(),
 			"type" : "CB",
 			"livres" : idLivres }}).then(function(response) {
-					wiwdow.location.href="#/confirmation";
+					window.location.href="#/confirmation";
 		}, function(){
 					
 		});
