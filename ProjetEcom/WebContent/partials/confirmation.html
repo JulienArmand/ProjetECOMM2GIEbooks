@@ -17,9 +17,9 @@
 		<div style="clear: both;"></div>
 		<h3 style="margin : 1em 1em 1em 1em">Confirmation</h3>
 		<p ng-controller="paiementCtrl">
-		Le paiement de votre commande n°{{numeroCommande}} a bien été effectué, elle s'élève à {{prixCommande}}€.
+		Le paiement de votre commande n°{{commande.id}} a bien été effectué, elle s'élève à {{commande.prixTotal}}€.
 		<br>
-		Un mail de confirmation vous a été envoyé à l'adresse suivante : (@mailClient).
+		Un mail de confirmation vous a été envoyé à l'adresse suivante : {{commande.leClient.email}}.
 		</p>
 		<p>
 		Voici les liens de téléchargement des livres (ils seront toujours disponibles lors de vos prochaines connexions) :

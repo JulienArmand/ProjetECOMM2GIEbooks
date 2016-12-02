@@ -161,7 +161,7 @@ app.controller("searchCtrl", function($scope){
 
 });
 
-app.controller("paiementCtrl", function($scope, $http, ngCart){
+app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart){
 	$scope.mois = [
 		{nom : "Janvier", valeur : "1"},
 		{nom : "Février", valeur : "2"},
@@ -199,11 +199,9 @@ app.controller("paiementCtrl", function($scope, $http, ngCart){
 				for(i = ngCart.getItems().length; i >= 0; i--){
 					ngCart.removeItem(i);
 				}
-				commande = response.data;
-				console.log(response.data);
-				$scope.prixCommande = commande.prixTotal;
-				console.log(commande.prixTotal + " , " + $scope.prixCommande);
-				$scope.numeroCommande = commande.id;
+				$rootScope.commande = response.data;
+				
+				
 				window.location.href="#/confirmation";
 		}, function(){
 					
