@@ -39,7 +39,7 @@ public class GestionLivre {
 	private EntityManager em;
 
 	public Livre creerLivre(String nom, List<Auteur> a, Editeur e, Genre g, String isbn, int nbpage, double prix,
-			String langue, String langueOriginale, String couverture, Promotion promo, String resume, Date datePub) {
+			String langue, String langueOriginale, String couverture, Promotion promo, String resume, Date datePub) throws Exception {
 
 		Livre l = new Livre(nom, isbn, datePub, nbpage, (float) prix, langue, langueOriginale);
 		String name ="";
@@ -84,6 +84,13 @@ public class GestionLivre {
 		}
 
 		em.persist(l);
+		
+		try {
+			ElasticSearchTools.enregistrerDansLIndexage(l);
+		} catch (Exception ex) {
+			System.err.println("Erreur durant l'indexage du livre dans elasticsearch : " + ex.getMessage());
+		}
+		
 		return l;
 	}
 
