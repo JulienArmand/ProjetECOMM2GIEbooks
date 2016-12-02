@@ -15,7 +15,7 @@
 			
 			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.2/lib/commons-lang3-3.5.jar"/>
 			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.2/lib/servlet-api.jar"/>
-			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.2/lib/myfaces-impl-2.2.10.jar"/>
+			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.2/lib/myfaces-impl-2.2.11.jar"/>
 			</classpath>
 		</javac>
     	</target>
