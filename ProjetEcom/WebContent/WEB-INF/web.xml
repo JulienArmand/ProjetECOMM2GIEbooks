@@ -24,6 +24,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>AjouterCommentaire</servlet-name>
+		<servlet-class>servlets.AjouterCommentaireServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjouterCommentaire</servlet-name>
+		<url-pattern>/AjouterCommentaire</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>RechercheViaBarre</servlet-name>
 		<servlet-class>servlets.RechercheViaBarreServlet</servlet-class>
 	</servlet>

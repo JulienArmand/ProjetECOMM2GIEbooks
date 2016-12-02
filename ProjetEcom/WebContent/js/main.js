@@ -57,7 +57,8 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 		$rootScope.minPrix = -1;
 		$rootScope.maxPrix = -1;
 		$rootScope.avisMin = -1;
-
+		
+		
 		window.location.href = "#/recherche/"+$rootScope.req+"/"+$rootScope.genre+"/"+$rootScope.minPrix+"/"+$rootScope.maxPrix+"/"+$rootScope.avisMin;
 		
 	}
@@ -221,7 +222,7 @@ app.controller("pageChange", function($scope){
 	 */
 });
 
-routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,$document){
+routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http, $document, $uibModal){
     $http.get("LivreAvecId", {params:{"id": $routeParams.id}}).then(function(response) {
     	$scope.livre = response.data;
     	$scope.moyenne = $scope.calculeMoyenne($scope.livre.lesAvis);
@@ -267,12 +268,56 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     }
     
     $scope.posterCommentaire = function(note, commentaire) {
-    	alert("A faire, poster un commentaire : " + note +" "+commentaire);
+    	if(document.cookie != "" && note != undefined && commentaire != undefined) {
+    		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : 31001}}).then(function(response) {
+    			$scope.livre = response.data;
+    		});
+    	} else if ( note == undefined || commentaire == undefined ) {
+    		document.getElementById('erreurPosterUnCommentaire').style.display = "block";
+    	}
+    	else { // popup connection
+    		var modalInstance = $uibModal.open({
+    		      // animation: $ctrl.animationsEnabled,
+    		      ariaLabelledBy: 'modal-title',
+    		      ariaDescribedBy: 'modal-body',
+    		      templateUrl: '/template/modalConnection/modalConnection.html',
+    		      controller: 'modalConnexionCtrl'
+    		      // controllerAs: '$ctrl',
+    		      // size: size,
+    		      // appendTo: parentElem,
+    		      /*
+					 * resolve: { items: function () { return $ctrl.items; } }
+					 */
+    		    });
+    	}
     }
     
     
     $scope.nombreAvis = function(list) {
     	return list.length;
+    }
+});
+
+app.controller("modalConnexionCtrl", function($scope, $http, $uibModalInstance){
+	$scope.connexion = function(pseudo, mdp) {
+    	$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
+    		var cookieValue = document.cookie.replace(
+    				/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    		if (cookieValue != null && cookieValue != "") {
+    			document.getElementById('login').innerHTML = cookieValue;
+    			document.getElementById('connexion').style.display = "none";
+    			document.getElementById('profil').style.display = "";
+    		}
+    		var cookieValue = document.cookie.replace(
+    				/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    		if (cookieValue == "true") {
+    			document.getElementById('erreurIdentifiantModal').style.display = "block";
+    			document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    		} else {
+    			$uibModalInstance.close();
+    			document.getElementById('erreurIdentifiant').style.display = "none";
+    		}
+    	});
     }
 });
 
@@ -409,6 +454,10 @@ routeAppControllers.controller("recherche", function($scope, $http, $routeParams
     	return (moy / list.length).toFixed(1) + "/5 ("+list.length+")";
     	
     }
+    
+    $scope.calculPromo = calculPromo;
+    
+    $scope.estEnPromo = estEnPromo;
 });
 
 
