@@ -16,7 +16,34 @@
     src: url('./fonts/slick.eot?#iefix') format('embedded-opentype'), url('./fonts/slick.woff') format('woff'), url('./fonts/slick.ttf') format('truetype'), url('./fonts/slick.svg#slick') format('svg');
 }
 /* Arrows */
-.slick-prev,
+.slick-prev
+{
+    font-size: 0;
+    line-height: 0;
+
+    position: absolute;
+    top: 50%;
+
+    display: block;
+
+    width: 35px;
+    height: 70px;
+    padding: 0;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+
+    cursor: pointer;
+
+    color: black;
+    border: none;
+    outline: none;
+        background-color: rgba(255, 255, 255, 0.9);
+    
+    border-radius: 0 3px 3px 0;
+    box-shadow: 3px 0 2px 2px rgba(0, 0, 0, 0.3);
+}
+
 .slick-next
 {
     font-size: 0;
@@ -28,7 +55,7 @@
     display: block;
 
     width: 35px;
-    height: 35px;
+    height: 70px;
     padding: 0;
     -webkit-transform: translate(0, -50%);
     -ms-transform: translate(0, -50%);
@@ -39,8 +66,12 @@
     color: black;
     border: none;
     outline: none;
-    background: black;
+        background-color: rgba(255, 255, 255, 0.9);
+    
+    border-radius: 3px 0 0 3px;
+    box-shadow: -3px 0 2px 2px rgba(0, 0, 0, 0.3);
 }
+
 .slick-prev:hover,
 .slick-prev:focus,
 .slick-next:hover,
@@ -48,7 +79,6 @@
 {
     color: black;
     outline: none;
-    background: black;
 }
 .slick-prev:hover:before,
 .slick-prev:focus:before,
@@ -71,7 +101,7 @@
     line-height: 1;
 
     opacity: .75;
-    color: white;
+    color: black;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -88,11 +118,17 @@
 }
 .slick-prev:before
 {
-    content: '←';
+	font-size: 6;
+	font-weight: bold;
+	color: grey;
+    content: '<';
 }
 [dir='rtl'] .slick-prev:before
 {
-    content: '→';
+	font-size: 6;
+	font-weight: bold;
+	color: grey;
+    content: '>';
 }
 
 .slick-next
@@ -106,11 +142,17 @@
 }
 .slick-next:before
 {
-    content: '→';
+	font-size: 6;
+	font-weight: bold;
+	color: grey;
+    content: '>';
 }
 [dir='rtl'] .slick-next:before
 {
-    content: '←';
+	font-size: 6;
+	font-weight: bold;
+	color: grey;
+    content: '<';
 }
 
 /* Dots */

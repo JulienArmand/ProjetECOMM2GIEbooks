@@ -23,14 +23,9 @@ body {
 	padding-left: 50px;
 }
 
+
 .global {
-	background-color: #f2f2f2;
-	margin-top: 15px;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
-	margin-bottom: 15px;
-	border-bottom-left-radius: 5px;
+	background-color: white;
 }
 
 #trait {
@@ -38,15 +33,21 @@ body {
 	border-bottom : 2px solid rgba(0,0,0,0.25);
 }
 
+.image {
+	padding: 10px;
+	    border-bottom: none;
+	border: 1px solid #D9DADB;
+    box-shadow: inset 0 -1px 0 #cccccc, inset 0 -2px 0 #999999;
+	
+}
+
 #footer {	
 	border-top:2px solid #C0C0C0;
 }
 
 slick {
-	border:2px solid #d3d7cf;
-	border-radius: 5px;
 	padding: 10px;
-	background-color: white;
+	border-bottom: 1px solid #D9DADB;
 }
 
 .fondElement {

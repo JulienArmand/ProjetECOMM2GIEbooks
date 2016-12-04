@@ -51,7 +51,7 @@ public class ConnexionClientServlet extends HttpServlet {
 		}
 		//Redirect to main page
 
-		response.sendRedirect(request.getContextPath()+"/index.html");
+		//response.sendRedirect(request.getContextPath()+"/index.html");
 	}
 	
 	

@@ -3,7 +3,7 @@ var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'ngCart', 'routeAppC
 var routeAppControllers = angular.module('routeAppControllers', []);
 
 
-app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchSuggestion){
+app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchSuggestion, $http){
 	$scope.suggestion = function() {
 		var req = $("#schbox").val().replace(/[^\x00-\x7F]/g, "").replace("\"","").replace("'","");
 		elasticSearchSuggestion.suggest({
@@ -37,8 +37,29 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 		});
 	}
 	
+	var cookieValue = document.cookie.replace(
+			/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	if (cookieValue != null && cookieValue != "") {
+		$rootScope.cookieValue = cookieValue;
+		$rootScope.estConnecte = true;
+		
+	}
+	var cookieValue = document.cookie.replace(
+			/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	if (cookieValue == "true") {
+		$rootScope.estConnecte = false;
+	}
+	
+	
 	$scope.redirection = function(){
 		window.location.href = "index.html";
+	}
+	
+	$scope.deconnexion = function () {
+		$rootScope.estConnecte = false;
+		document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		document.cookie = "idClient=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 	}
 	
 	
@@ -47,8 +68,6 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 	$rootScope.minPrix = -1;
 	$rootScope.maxPrix = -1;
 	$rootScope.avisMin = -1;
-
-	
 	
 	$scope.rechercheBarre = function(){
 		
@@ -62,7 +81,6 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 		window.location.href = "#/recherche/"+$rootScope.req+"/"+$rootScope.genre+"/"+$rootScope.minPrix+"/"+$rootScope.maxPrix+"/"+$rootScope.avisMin;
 		
 	}
-
 });
 
 
@@ -308,27 +326,42 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     }
 });
 
-app.controller("modalConnexionCtrl", function($scope, $http, $uibModalInstance){
-	$scope.connexion = function(pseudo, mdp) {
-    	$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
-    		var cookieValue = document.cookie.replace(
-    				/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-    		if (cookieValue != null && cookieValue != "") {
-    			document.getElementById('login').innerHTML = cookieValue;
-    			document.getElementById('connexion').style.display = "none";
-    			document.getElementById('profil').style.display = "";
-    		}
-    		var cookieValue = document.cookie.replace(
-    				/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-    		if (cookieValue == "true") {
-    			document.getElementById('erreurIdentifiantModal').style.display = "block";
-    			document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    		} else {
-    			$uibModalInstance.close();
-    			document.getElementById('erreurIdentifiant').style.display = "none";
-    		}
-    	});
-    }
+app.controller("modalConnexionCtrl", function($scope, $http, $uibModalInstance, $rootScope){
+	$scope.connexion = function (pseudo, mdp) {
+		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
+			var cookieValue = document.cookie.replace(
+					/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+			if (cookieValue != null && cookieValue != "") {
+				$rootScope.cookieValue = cookieValue;
+				$rootScope.estConnecte = true;
+				$uibModalInstance.close();
+			}
+			var cookieValue = document.cookie.replace(
+					/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+			if (cookieValue == "true") {
+				$rootScope.estConnecte = false;
+			}
+		});
+	}
+});
+
+app.controller("popoverConnexionCtrl", function($scope, $http, $rootScope){	
+	$scope.connexion = function (pseudo, mdp) {
+		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
+			alert(document.cookie);
+			var cookieValue = document.cookie.replace(
+					/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+			if (cookieValue != null && cookieValue != "") {
+				$rootScope.cookieValue = cookieValue;
+				$rootScope.estConnecte = true;
+			}
+			var cookieValue = document.cookie.replace(
+					/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+			if (cookieValue == "true") {
+				$rootScope.estConnecte = false;
+			}
+		});
+	}
 });
 
 
@@ -607,3 +640,72 @@ app.service('elasticSearchSuggestion', function (esFactory) {
 	    host: 'localhost:9200'
 	  });
 });
+
+
+app.directive('hoverPopover', function ($compile, $templateCache, $timeout, $rootScope, $compile) {
+	var getTemplate = function (contentType) {
+	    return $templateCache.get('templatePopoverConnexion.html');
+	};
+	return {
+	    restrict: 'A',
+	    link: function (scope, element, attrs) {
+	    	
+	        var content = getTemplate();
+	        var compileContent = $compile(content)(scope);
+	        $rootScope.insidePopover = false;
+	        $(element).popover({
+	            content: compileContent,
+	            placement: 'bottom',
+	            html: true
+	        });
+	        $(element).bind('mouseenter', function (e) {
+	            $timeout(function () {
+	                if (!$rootScope.insidePopover) {
+	                    $(element).popover('show');
+	                    scope.attachEvents(element);
+	                }
+	            }, 200);
+	        });
+	        $(element).bind('mouseleave', function (e) {
+	            $timeout(function () {
+	                if (!$rootScope.insidePopover)
+	                    $(element).popover('hide');
+	            }, 600);
+	        });
+	    },
+	    controller: function ($scope, $element) {
+	        $scope.attachEvents = function (element) {
+	            $('.popover').on('mouseenter', function () {
+	                $rootScope.insidePopover = true;
+	            });
+	            $('.popover').on('mouseleave', function () {
+	                $rootScope.insidePopover = false;
+	                $(element).popover('hide');
+	            });
+	        }
+	    }
+	    
+	};
+});
+
+function connexion ($rootScope, $http, pseudo, mdp) {
+	$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
+		var cookieValue = document.cookie.replace(
+				/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+		if (cookieValue != null && cookieValue != "") {
+			$rootScope.cookieValue = cookieValue;
+			$rootScope.estConnecte = true;
+		}
+		var cookieValue = document.cookie.replace(
+				/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+		if (cookieValue == "true") {
+			$rootScope.estConnecte = false;
+		}
+	});
+}
+
+function deconnexion ($rootScope) {
+	$rootScope.estConnecte = false;
+	document.cookie = "";
+}
+
