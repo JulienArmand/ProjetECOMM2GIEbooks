@@ -1,12 +1,16 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
 	version="1.0">
 
-	<persistence-unit name="Database-unit"> <jta-data-source>Database</jta-data-source> 
+
+	<!-- CONFIG DE DEV -->
+	<!-- <persistence-unit name="Database-unit"> <jta-data-source>Database</jta-data-source> 
 		<properties> <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/> 
 		<property name="openjpa.RuntimeUnenhancedClasses" value="unsupported"/> </properties> 
 		</persistence-unit>
-
-	<!-- <persistence-unit name="Database-unit"
+	-->
+	
+	<!-- CONFIG DE PROD : -->
+	<persistence-unit name="Database-unit"
 		transaction-type="JTA">
 		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl
 		</provider>
@@ -18,6 +22,18 @@
 			<property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO" />
 		</properties>
 	</persistence-unit>
--->
+	<!-- POUR LA PROD : 
+		1/ AJOUTER LE FICHIER mysql-connector....jar de ProjetEcom/ressources dans apache/lib
+		2/ AJOUTER CE QUI SUIT DANS tomee.xml(dossier apache/conf) -->
+	<!--   
+	<Resource id="FuturaDB" type="DataSource">
+	    JdbcDriver  com.mysql.jdbc.Driver
+	    JdbcUrl jdbc:mysql://152.77.78.6/futura
+	    UserName    testClem
+	    Password    stlinux
+	    JtaManaged      false 
+	</Resource> 
+	-->
+
 
 </persistence>
