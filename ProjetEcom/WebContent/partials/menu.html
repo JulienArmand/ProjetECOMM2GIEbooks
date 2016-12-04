@@ -1,8 +1,8 @@
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-6 no-padding">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding fondTitre">
-		<h3>Genre</h3>
+		<h3 style="color:white;">Genre</h3>
 	</div>
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding lesGenres">
 		<div class="fondElement">
 			<ul class="list-unstyled">
 				<li ng-repeat="genre in genres"><input class="radioNoCircle tri" name="genre" id="{{genre.id}}" type="radio" ng-click="setGenre(genre.nom, genre.id); rechercheMenu()"><label size="2" for="{{genre.id}}">{{genre.nom}}</label></li>
@@ -12,15 +12,15 @@
 </div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-6 no-padding">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding fondTitre">
-		<h3>Affiner</h3>
+		<h3 style="color:white;">Affiner</h3>
 	</div>
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding fondElement">
-		<h4>Avis</h4>
+		<h4 class="titre">Avis</h4>
 		<ul class="col-lg-12 col-md-12 no-padding">
 			<li ng-repeat="i in range(1, 4)" class="list-unstyled no-padding "><label> <input class="radioNoCircle avis input-hidden" name="avis" id="avis{{i}}" type="radio" ng-click="setAvisMin(i, i); rechercheMenu()"><img class="img-responsive" for="avis{{i}}" src="images/etoiles/etoiles{{i}}.png"></img></label></li>
 		</ul>
-		<h4>Prix</h4>
-		<form action="" class="form-horizontal">
+		<h4 class="titre">Prix</h4>
+		<form action="" class="form-horizontal choixPrix">
 			<ul class="list-inline">
 				<li class="col-lg-2"><label>De</label></li>
 				<li class="col-lg-3"><input id="menuPrixMin" ng-model="prixMin" ng-change="setPrixMin(prixMin)" type="text" class="form-control"></li>

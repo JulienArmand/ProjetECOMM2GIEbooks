@@ -8,11 +8,11 @@
             <select name="quantity" id="quantity" ng-model="q"
                     ng-options=" v for v in qtyOpt"></select>
         </span>
-        <input class="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-primary " value="Ajouter au panier"
+        <input class="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-primary boutonAjoutPanier " value="Ajouter au panier"
            ng-click="ngCart.addItem(id, name, price, q, data)"
            ng-transclude></input>
     </div>
-    <mark  ng-show="inCart()">
+    <mark  ng-show="inCart()" class="supprPanier">
         Ce livre est dans le panier. <a ng-click="ngCart.removeItemById(id)" style="cursor: pointer;">Supprimer</a>
     </mark>
 </div>

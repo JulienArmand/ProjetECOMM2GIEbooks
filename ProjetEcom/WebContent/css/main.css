@@ -1,5 +1,5 @@
 body {
-	font-family: "Palatino Linotype", Serif;
+	font-family: "Arial", sans-serif;
 	height : 100%;
 }
 
@@ -88,6 +88,9 @@ slick {
 
 .radioNoCircle{
 	visibility:hidden;
+	height:0;
+	width:0;
+	position : absolute;
 }
 
 @media (max-width: 768px) {
@@ -144,4 +147,37 @@ input.affichage + label {
 
 input.affichage:checked + label {
 	color : black;
+}
+
+.boutonAjoutPanier{
+	
+	font-size : 100%;
+	padding-right : 0;
+	padding-left : 0;
+	
+}
+
+.titre{
+	
+	color : #f7a62d;
+	
+}
+
+.lesGenres, .choixPrix, .supprPanier{
+	
+	font-size : 12px;
+	
+}
+
+.choixPrix input{
+	
+	padding : 0;
+	height : unset;
+}
+
+.lesGenres li:hover{
+	
+	
+	color : #f7a62d;
+	
 }

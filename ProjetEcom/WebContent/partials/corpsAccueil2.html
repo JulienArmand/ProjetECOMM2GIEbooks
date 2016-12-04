@@ -1,15 +1,15 @@
-<h2>Promotions</h2>
+<h2 class="titre">Promotions</h2>
 <slick infinite="true" slides-to-show="7" responsive="breakpoints" dots="true" arrows="true" data="livresPromo" init-onload="true">
 
 
 
 <div ng-repeat="livre in livresPromo" class="mosaique-item">
 	<div>
-		<a ng-href="#/info/{{livre.id}}"> <img ng-src="{{livre.nomCouverture}}" class="img-responsive" />
+		<a ng-href="#/info/{{livre.id}}"> <img alt="{{livre.titre}}" title="{{livre.titre}}" ng-src="{{livre.nomCouverture}}" class="img-responsive" />
 		</a>
 	</div>
 	<div>
-		<a ng-href="#/info/{{livre.id}}"><span ng-bind="livre.titre" style="overflow-x: hidden;"></span></a>
+		<a ng-href="#/info/{{livre.id}}"  title="{{livre.titre}}"><span ng-bind="livre.titre" style="overflow-y: hidden;"></span></a>
 		<h6 ng-repeat="auteur in livre.lesAuteurs">{{auteur.prenom}} {{auteur.nom}}</h6>
 		<div>
 			<span>{{calculeMoyenne(livre.lesAvis)}}</span> <i class="a-star-small-4-5"></i>
@@ -21,7 +21,7 @@
 	</div>
 </div>
 </slick>
-<h2>Livres les plus vendus</h2>
+<h2 class="titre">Livres les plus vendus</h2>
 <slick infinite="true" slides-to-show="7" responsive="breakpoints" dots="true" arrows="true" data="livresPlusVendu" init-onload="true">
 
 
