@@ -1,8 +1,12 @@
 <project  name="ProjetEcom" default="build" basedir=".">
 	<property name="build" location="/home/im2ag/apache-tomee-webprofile-7.0.2/webapps/ROOT/WEB-INF/classes"/>
 	<property name="lib" location="/home/im2ag/apache-tomee-webprofile-7.0.2/webapps/ROOT/WEB-INF/lib"/>
+	<property name="server" location="/home/im2ag/apache-tomee-webprofile-7.0.2/webapps/ROOT/"/>
 	<target name="init">
 		<delete dir="WebContent/WEB-INF/classes"/>
+		<delete dir="${server}"/>
+		
+		<mkdir dir="${server}"/>
 		<mkdir dir="${build}"/>
 		<mkdir dir="${lib}"/>
 		<copy todir="${lib}">
