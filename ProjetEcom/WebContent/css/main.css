@@ -29,8 +29,8 @@ body {
 }
 
 #trait {
-	padding-top: 10px;
-	border-bottom : 2px solid rgba(0,0,0,0.25);
+	padding-top: 1px;
+	border-bottom : 1px solid #D9DADB;
 }
 
 .image {
@@ -60,7 +60,7 @@ slick {
 }
 
 .fondTitre {
-	background-color: #e8e8e8;
+	background-color: #3232b8;
 	color: #000080;
 	text-align: center;
 	border: 1px solid transparent;
@@ -69,10 +69,10 @@ slick {
 	border-top-right-radius: 4px;
 	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 	box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-	background-image: -webkit-linear-gradient(top, #00a0c8 0%, #00adcb 100%);
+	/*background-image: -webkit-linear-gradient(top, #00a0c8 0%, #00adcb 100%);
 	background-image: -o-linear-gradient(top, #00a0c8 0%, #00adcb 100%);
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#00a0c8), to(#00adcb));
-	background-image: linear-gradient(to bottom, #00a0c8 0%, #00adcb 100%);
+	background-image: linear-gradient(to bottom, #00a0c8 0%, #00adcb 100%);*/
 	margin-top: 10px;
 }
 
@@ -160,17 +160,17 @@ input.affichage:checked + label {
 
 .titre{
 	
-	color : #f7a62d;
+	color : #3232b8;
 	
 }
 
 .lesGenres, .choixPrix, .supprPanier{
 	
-	font-size : 12px;
+	font-size : 14px;
 	
 }
 
-.choixPrix input{
+.choixPrix input, .choixPrix a{
 	
 	padding : 0;
 	height : unset;
@@ -180,5 +180,27 @@ input.affichage:checked + label {
 	
 	
 	color : #f7a62d;
+	
+}
+
+.lesGenres label{
+	
+	font-size : 14px;
+}
+
+.titre2{
+	
+	color : white;
+	font-size : 22px;
+	font-weight : bold;
+	
+}
+
+.monCompteHeader{
+	
+	
+	color : #3232b8;
+	font-weight : bold;
+	font-size : 1.17 em;
 	
 }

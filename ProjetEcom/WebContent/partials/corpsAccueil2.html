@@ -1,5 +1,5 @@
 
-<h2 class="titre">Promotions</h2>
+<h2 class="titre">Les livres en promotion</h2>
 <slick infinite="true" slides-to-show="7" responsive="breakpoints" dots="false" arrows="true" data="livresPromo" init-onload="true">
 
 
@@ -9,10 +9,11 @@
 		</a>
 	</div>
 	<div>
-		<a ng-href="#/info/{{livre.id}}"  title="{{livre.titre}}"><span ng-bind="livre.titre" style="overflow-y: hidden;"></span></a>
+		<a ng-if="livre.titre.length>20" ng-href="#/info/{{livre.id}}"  title="{{livre.titre}}"><span ng-bind="livre.titre.substring(0,20)+'...'" style="overflow-y: hidden;"></span></a>
+		<a ng-if="livre.titre.length<=20" ng-href="#/info/{{livre.id}}"  title="{{livre.titre}}"><span ng-bind="livre.titre" style="overflow-y: hidden;"></span></a>
 		<h6 ng-repeat="auteur in livre.lesAuteurs">{{auteur.prenom}} {{auteur.nom}}</h6>
-		<div>
-			<span>{{calculeMoyenne(livre.lesAvis)}}</span> <i class="a-star-small-4-5"></i>
+		<div ng-init="moyAvis = calculeMoyenne(livre.lesAvis)" >
+			<span>{{moyAvis}}</span>
 		</div>
 		<div>
 			<span style="text-decoration: line-through; color: red;">{{livre.prix}} €</span> <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
@@ -21,7 +22,7 @@
 	</div>
 </div>
 </slick>
-<h2 class="titre">Livres les plus vendus</h2>
+<h2 class="titre">Les livres les plus vendus</h2>
 <slick infinite="true" slides-to-show="7" responsive="breakpoints" dots="false" arrows="true" data="livresPlusVendu" init-onload="true">
 
 <div ng-repeat="livre in livresPlusVendu" class="mosaique-item">
@@ -30,7 +31,9 @@
 		</a>
 	</div>
 	<div>
-		<a ng-href="#/info/{{livre.id}}"><h5 ng-bind="livre.titre"></h5></a>
+		<a ng-if="livre.titre.length>20" ng-href="#/info/{{livre.id}}"  title="{{livre.titre}}"><span ng-bind="livre.titre.substring(0,20)+'...'" style="overflow-y: hidden;"></span></a>
+		<a ng-if="livre.titre.length<=20" ng-href="#/info/{{livre.id}}"  title="{{livre.titre}}"><span ng-bind="livre.titre" style="overflow-y: hidden;"></span></a>
+		
 		<h6>{{livre.lesAuteurs[0].prenom}} {{livre.lesAuteurs[0].nom}}</h6>
 		<div>
 			<span>{{calculeMoyenne(livre.lesAvis)}}</span> <i class="a-star-small-4-5"></i>

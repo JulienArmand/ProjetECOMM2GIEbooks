@@ -59,7 +59,7 @@
 				<datalist id="barreRecherche">
 				</datalist>
 				<i class="icon icon-search"></i> <span class="input-group-btn">
-					<a ng-click="rechercheBarre()" href="" class="btn btn-info"
+					<a ng-click="rechercheBarre()" href="" class="btn btn-warning"
 					role="button"><i class="glyphicon glyphicon-search"></i></a>
 				</span>
 			</div>
@@ -84,11 +84,11 @@
 						<label for="mdp">Mot de passe</label>
 						<input ng-model="mdp" type="password" class="form-control" id="pseudo"></input>
 					</div>
-					<input type="submit" class="btn btn-primary" ng-click="connexion(pseudo, mdp)" value="Connexion"></input>
+					<input type="submit" class="btn btn-warning" ng-click="connexion(pseudo, mdp)" value="Connexion"></input>
 					<span>Pas encore inscrit? </span> <a ng-href="#/inscription"">Cliquez ici</a>
 				</div>
 	    		</script>
-				<a ng-controller="popoverConnexionCtrl" hover-popover>MON COMPTE v</a>
+				<a class="monCompteHeader" ng-controller="popoverConnexionCtrl" hover-popover>MON COMPTE<i class="glyphicon glyphicon-chevron-down"></i></a>
 				<!-- UTILISER DIRECTIVE ANGULAR ALERT -->
 				<!-- <form action="#/inscription" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" style="padding-top: 5px;">
 					<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-primary" type="submit" value="Inscription">
@@ -99,7 +99,7 @@
 				<a onclick="redirectCompteClient();"
 					class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Mon Compte
 				</a> <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="login">{{cookieValue}}</a>
-					<input class="btn btn-primary" type="submit"
+					<input class="btn btn-warning" type="submit"
 						ng-click="deconnexion()" value="Deconnexion">
 			</div>
 			<!-- <form>
