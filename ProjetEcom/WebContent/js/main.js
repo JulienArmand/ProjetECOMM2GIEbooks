@@ -184,7 +184,6 @@ app.controller("commandeClientCtrl", function($scope, $http, $rootScope, ngCart)
 	$http.get("GestionCommande", {
 		params:{"action" :"commandeClient"}}).then(function(response) {
 			$scope.commandes = response.data;
-			console.log($scope.commandes);
 		});
 });
 
@@ -227,7 +226,6 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart){
 			if(i != ngCart.getCart().items.length-1)
 				idLivres += ","
 		};
-		console.log(idLivres),
 		$http.get("GestionCommande", {
 			params:{"action" :"post",
 			"type" : $scope.moyenPaiement.moyen,
@@ -435,12 +433,6 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
     
 });
 
-
-
-
-
-
-
 routeAppControllers.controller("inscriptionClient", function($scope, $http,$rootScope){
 	
 
@@ -542,6 +534,15 @@ routeAppControllers.controller("compteClient", function($scope, $http, $routePar
     	$scope.mail = data.email;
     }); 
 	
+	modificationProfil = function (){
+		$http.get("ModificationProfile", {params:{
+			"pseudo" : $("#pseudo").val(),
+			"nom" : $("#nom").val(),
+			"prenom" : $("#prenom").val(),
+			"email" : $("#email").val()
+			}}).then(function(response) {
+	    });
+	}
 });
 
 app.config(['$routeProvider',

@@ -5,7 +5,7 @@
 		<h3 style="margin: 1em 1em 1em 1em">Paramètres du compte</h3>
 
 
-		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+		<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Modifier vos informations</h3>
@@ -13,38 +13,38 @@
 				<div class="panel-body">
 
 					<table WIDTH=100%>
-						<form action="/ModificationProfile" method="POST">
+						<!--  <form action="/ModificationProfile" method="POST"> -->
 						<tr>
 							<td>Pseudo</td>
 							<td>:</td>
-							<td ALIGN="right"><input type="text" name="pseudo" class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
+							<td ALIGN="right"><input type="text" id="pseudo" class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
 								value={{pseudo}}></td>
 						</tr>
 						<tr>
 							<td>Nom</td>
 							<td>:</td>
-							<td ALIGN="right"><input type="text" name="nom"  class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
+							<td ALIGN="right"><input type="text" id="nom"  class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
 								value={{nom}}></td>
 						</tr>
 						<tr>
 							<td>Prenom</td>
 							<td>:</td>
-							<td ALIGN="right"><input type="text" name="prenom" class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
+							<td ALIGN="right"><input type="text" id="prenom" class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
 								value={{prenom}}></td>
 						</tr>
 						<tr>
 							<td>Email</td>
 							<td>:</td>
-							<td ALIGN="right"><input type="text" name="email" class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
+							<td ALIGN="right"><input type="text" id="email" class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
 								value={{mail}}></td>
 						</tr>
 						<tr>
 							<td></td>
 							<td></td>
-							<td ALIGN="right"><input type="submit" value="Modifier"
+							<td ALIGN="right"><input type="submit" value="Modifier" onclick="modificationProfil()"
 								class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
 						</tr>
-						</form>
+						<!--  </form> -->
 						<tr>
 						<td></td>
 						<td></td>
