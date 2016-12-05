@@ -1,79 +1,116 @@
 <section>
-	<div>
+	<div style="padding: 2em 2em 2em 2em;" class="container-fluid">
+
 
 		<h3 style="margin: 1em 1em 1em 1em">Paramètres du compte</h3>
-		<form action="../ModificationProfile" method="POST">
 
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Modifier vos informations</h3>
-					</div>
-					<div class="panel-body">
-						<table WIDTH=100%>
-							<tr>
-								<td>Pseudo</td>
-								<td>:</td>
-								<td ALIGN="right"><input type="text" name="pseudo"
-									value={{pseudo}}></td>
-							</tr>
-							<tr>
-								<td>Nom</td>
-								<td>:</td>
-								<td ALIGN="right"><input type="text" name="nom"
-									value={{nom}}></td>
-							</tr>
-							<tr>
-								<td>Prenom</td>
-								<td>:</td>
-								<td ALIGN="right"><input type="text" name="prenom"
-									value={{prenom}}></td>
-							</tr>
-							<tr>
-								<td>Email</td>
-								<td>:</td>
-								<td ALIGN="right"><input type="text" name="email"
-									value={{mail}}></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-								<td ALIGN="right"><input type="submit" value="Modifier"></td>
-							</tr>
-						</table>
-					</div>
+
+		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Modifier vos informations</h3>
+				</div>
+				<div class="panel-body">
+
+					<table WIDTH=100%>
+						<form action="../ModificationProfile" method="POST">
+						<tr>
+							<td>Pseudo</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" name="pseudo" class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
+								value={{pseudo}}></td>
+						</tr>
+						<tr>
+							<td>Nom</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" name="nom"  class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
+								value={{nom}}></td>
+						</tr>
+						<tr>
+							<td>Prenom</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" name="prenom" class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
+								value={{prenom}}></td>
+						</tr>
+						<tr>
+							<td>Email</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" name="email" class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
+								value={{mail}}></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td ALIGN="right"><input type="submit" value="Modifier"
+								class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
+						</tr>
+						</form>
+						<tr>
+						<td></td>
+						<td></td>
+							<td ALIGN="right">
+								<form action="#/modificationMotDePasse">
+									<input type="submit" value="Modification du mot de passe"
+										class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning" />
+								</form>
+							</td>
+						</tr>
+					</table>
+
 				</div>
 			</div>
-		</form>
-		
-		
-		<form action="" method="POST">
 
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" ng-controller="commandeClientCtrl">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Vos commandes</h3>
-					</div>
-					<div class="panel-body">
-						<table WIDTH=100%>
-							<tr ng-repeat="cmd in commandes">
-								<td>Numéro de commande</td>
-								<td>:</td>
-								<td ALIGN="right">{{cmd.id}}</td>
-							</tr>
-						</table>
-					</div>
+		</div>
+
+
+		<!-- <div style="clear: both;"></div> -->
+
+
+
+		<div style="clear: both;"></div>
+
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+			ng-controller="commandeClientCtrl">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Vos commandes</h3>
+				</div>
+				<div class="panel-body">
+					<table WIDTH=100% ng-if="commandes != null">
+						<tr ng-repeat="cmd in commandes">
+							<td>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h3 class="panel-title">Numéro de commande : {{cmd.id}}</h3>
+										<h3 class="panel-title">Date d'achat :
+											{{cmd.dateDeVente}}</h3>
+										<h3 class="panel-title">Prix total : {{cmd.prixTotal}}€</h3>
+									</div>
+									<div class="panel-body">
+										<div ng-repeat="vente in cmd.lesVentes" class="mosaique-item">
+
+											<div>
+												<a ng-href="#/info/{{vente.livre.id}}"
+													title="{{vente.livre.titre}}"> <span
+													ng-bind="vente.livre.titre" style="overflow-y: hidden;"></span>
+												</a> <span style="color: green;">{{vente.prix}}€</span> <br>
+											</div>
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+
+					</table>
+					<p ng-if="commandes == null">Vous n'avez pas réaliser d'achat</p>
 				</div>
 			</div>
-		</form>
-		
-		
-		
-		
-		
+		</div>
+
+
+
+
+
 	</div>
-	<br>
-	<form action="#/modificationMotDePasse">
-		<input type="submit" value="Modification du mot de passe" />
-	</form>
+
 </section>

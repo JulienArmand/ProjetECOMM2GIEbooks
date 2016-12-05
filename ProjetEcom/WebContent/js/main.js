@@ -182,10 +182,9 @@ app.controller("searchCtrl", function($scope){
 
 app.controller("commandeClientCtrl", function($scope, $http, $rootScope, ngCart){
 	$http.get("GestionCommande", {
-		params:{"action" :"commandeClient"}}).then(function(response) {				
-				$scope.commandes = response.data;
-		}, function(){
-					
+		params:{"action" :"commandeClient"}}).then(function(response) {
+			$scope.commandes = response.data;
+			console.log($scope.commandes);
 		});
 });
 
@@ -217,11 +216,18 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart){
 		moyen : "CB"
 	}
 	
+	setMoyen = function(str){
+		$scope.moyenPaiement.moyen = str;
+	}
+	
 	creerCommande = function(){
-		idLivres = [];
+		idLivres = "";
 		for (i = 0; i < ngCart.getCart().items.length;i++){
-			idLivres.push((ngCart.getCart().items[i])._id);
+			idLivres += ((ngCart.getCart().items[i])._id);
+			if(i != ngCart.getCart().items.length-1)
+				idLivres += ","
 		};
+		console.log(idLivres),
 		$http.get("GestionCommande", {
 			params:{"action" :"post",
 			"type" : $scope.moyenPaiement.moyen,
@@ -233,13 +239,7 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart){
 				
 				
 				window.location.href="#/confirmation";
-		}, function(){
-					
 		});
-	}
-	
-	afficher = function(){
-		return $scope.prixCommande;
 	}
 });
 
@@ -658,20 +658,12 @@ app.directive('hoverPopover', function ($compile, $templateCache, $timeout, $roo
 	            placement: 'bottom',
 	            html: true
 	        });
-	        $(element).bind('mouseenter', function (e) {
-	            $timeout(function () {
-	                if (!$rootScope.insidePopover) {
-	                    $(element).popover('show');
-	                    scope.attachEvents(element);
-	                }
-	            }, 200);
+            
+	        $(element).hover(function(){
+	        	$(element).popover('show');
+                scope.attachEvents(element);
 	        });
-	        $(element).bind('mouseleave', function (e) {
-	            $timeout(function () {
-	                if (!$rootScope.insidePopover)
-	                    $(element).popover('hide');
-	            }, 600);
-	        });
+	        
 	    },
 	    controller: function ($scope, $element) {
 	        $scope.attachEvents = function (element) {

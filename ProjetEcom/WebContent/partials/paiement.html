@@ -1,4 +1,4 @@
-<div style="padding : 2em 2em 2em 2em;" class="container-fluid">
+<div style="padding: 2em 2em 2em 2em;" class="container-fluid">
 	<div class="row col-lg-12 col-md-12">
 		<a ng-href="#/panier"><div
 				class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bg-warning text-center btn">Panier</div></a>
@@ -17,44 +17,50 @@
 		<div
 			class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bg-primary text-center btn disabled">Confirmation</div>
 		<div style="clear: both;"></div>
-		<h3 style="margin : 1em 1em 1em 1em">Moyens de paiement</h3>
+		<h3 style="margin: 1em 1em 1em 1em">Moyens de paiement</h3>
 		<div ng-switch="moyenPaiement.moyen">
-		<div class="radio">
-			<div class="container-fluid">
-				
-				<div class="row">
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-					
-						<div class="form-group">
-						<input type="radio" name="inlineRadioOptions" id="optionsCB" value="CB" ng-model="moyenPaiement.moyen" checked>	
-							<label for="optionsCB">									 
-										<img src="images/masterCard.png" class="img-responsive col-lg-3 col-md-2 col-sm-2 col-xs-1" alt="MasterCard"> 
-										<img src="images/visa.png" class="img-responsive  col-lg-3 col-md-2 col-sm-2 col-xs-1" alt="Visa">
-							</label>
+			<div class="radio">
+				<div class="container-fluid">
+
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+							<div class="form-group">
+								<input type="radio" name="inlineRadioOptions" id="optionsCB"
+									value="CB" ng-model="moyenPaiement.moyen" checked> <label
+									for="optionsCB"> <img src="images/masterCard.png"
+									class="img-responsive col-lg-3 col-md-2 col-sm-2 col-xs-1"
+									alt="MasterCard"> <img src="images/visa.png"
+									class="img-responsive  col-lg-3 col-md-2 col-sm-2 col-xs-1"
+									alt="Visa">
+								</label>
+							</div>
 						</div>
 					</div>
-				</div>
-				
-				<div ng-switch-when="CB">
-					<form action="" role="form">
-						<div id="formulaireCB">
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Titulaire de la carte">
+
+					<div ng-switch-when="CB" ng-click='setMoyen("CB")'>
+						<form action="" role="form">
+							<div id="formulaireCB">
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+									<div class="form-group">
+										<input type="text" class="form-control"
+											placeholder="Titulaire de la carte">
+									</div>
 								</div>
-							</div>
-							<div style="clear: both;"></div>
-							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Numéro de carte">
+								<div style="clear: both;"></div>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									<div class="form-group">
+										<input type="text" class="form-control"
+											placeholder="Numéro de carte">
+									</div>
 								</div>
-							</div>
-							<div style="clear: both;"></div>
-							
+								<div style="clear: both;"></div>
+
 								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 									<div class="form-group">
 										<select class="form-control" ng-model="selectedMois">
-											<option ng-repeat="m in mois" value="{{m.valeur}}" ng-selected="{{m.selected}}" ng-disabled="{{m.disabled}}">{{m.nom}}</option>
+											<option ng-repeat="m in mois" value="{{m.valeur}}"
+												ng-selected="{{m.selected}}" ng-disabled="{{m.disabled}}">{{m.nom}}</option>
 										</select>
 									</div>
 								</div>
@@ -71,36 +77,40 @@
 										placeholder="Cryptogramme">
 								</div>
 							</div>
+					</div>
+					</form>
+				</div>
+
+			</div>
+
+
+
+			<div class="radio">
+				<label> <input type="radio" name="inlineRadioOptions"
+					id="optionsPaypal" value="Paypal" ng-model="moyenPaiement.moyen">
+					Paypal
+				</label>
+				<div ng-switch-when="Paypal" ng-click='setMoyen("Paypal")'>
+					<form action="" role="form">
+						<div id="formulairePaypal">
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+								<div class="form-group">
+									<input type="text" class="form-control"
+										placeholder="Adresse du compte">
+								</div>
+							</div>
 						</div>
 					</form>
 				</div>
-					
 			</div>
+
 		</div>
-		<div class="radio">
-			<label> <input type="radio" name="inlineRadioOptions" id="optionsPaypal" value="Paypal" ng-model="moyenPaiement.moyen"> Paypal</label>
-			<div ng-switch-when="Paypal">
-		
-			<div id="formulairePaypal">
-				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Adresse du compte">
-					</div>
-				</div>
-			</div>
-		
-		</div>
+
+		<div style="clear: both;"></div>
+		<div class="text-right">
+			<span class="">
+				<button class="btn btn-primary" onclick="creerCommande()">
+					Valider</button>
+			</span>
 		</div>
 	</div>
-		
-	</div>
-		
-	<div style="clear: both;"></div>
-	<div class="text-right">
-		<span class=""> 
-			<button class="btn btn-primary" onclick="creerCommande()">
-				Valider
-			</button>
-		</span>
-	</div>
-</div>

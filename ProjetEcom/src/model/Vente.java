@@ -19,6 +19,7 @@ public class Vente {
 	@Expose
 	private float		prix;
 
+	@Expose
 	@ManyToOne
 	@JoinColumn(name = "Livre_id")
 	private Livre		livre;

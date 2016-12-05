@@ -61,7 +61,7 @@ public class GestionLivre {
 		try {
 			Tools.sauvegarderImage(couverture, 400, 600, couvertureUrl);
 			couvertureUrl = "/images/"+name+".png";
-		} catch (IOException | URISyntaxException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 			couvertureUrl = couverture;//"images/defaultCouv.png";
 		}

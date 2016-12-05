@@ -18,6 +18,10 @@ body {
 #menu {
 }
 
+.marginExt {
+	margin : 0.25em 0.25em 0.25em 0.25em;
+}
+
 #header {
 	padding-top: 15px;
 	padding-left: 50px;
