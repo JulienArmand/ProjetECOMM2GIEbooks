@@ -43,7 +43,6 @@ public class ModificationProfileServlet extends HttpServlet {
 		System.out.println("Pseudo a changer: "+pseudo);
 		System.out.println("Pseudo du cookie: "+cookiePseudo);
 		
-		
 		if(!pseudo.equals(c.getPseudo())){
 			Client clientPseudo = myBean.getClientFromPseudo(pseudo);
 			if(clientPseudo==null){

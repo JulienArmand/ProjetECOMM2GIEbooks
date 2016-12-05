@@ -541,6 +541,7 @@ routeAppControllers.controller("compteClient", function($scope, $http, $routePar
     	$scope.prenom = data.prenom;
     	$scope.mail = data.email;
     }); 
+	
 });
 
 app.config(['$routeProvider',
