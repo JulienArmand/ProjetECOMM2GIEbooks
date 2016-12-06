@@ -122,7 +122,7 @@ public class InitBean {
 			String isbn = data[1];
 			String date = data[2];
 			int nbPages = Integer.parseInt(data[3]);
-			double prix = Double.parseDouble(data[4].replace(",", "."));
+			float prix = Float.parseFloat(data[4].replace(",", "."));
 			String langue = data[5];
 			String langueO = data[6];
 			String couv = data[7];
