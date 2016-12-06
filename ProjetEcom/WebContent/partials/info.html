@@ -10,9 +10,9 @@
 				<li ng-repeat="auteur in livre.lesAuteurs">{{auteur.prenom}} {{auteur.nom}}</li>
 			</ul>
 			<h5>{{livre.editeur.nom}} | Publié le {{livre.dateDePublication}} | 
-			<span uib-rating ng-model="moyenne" max="5" read-only="true" titles="['one','two','three']" style="color: #fde16d; " aria-labelledby="default-rating"></span>
+			<a href ng-click="allerAAvis()"><span uib-rating ng-model="moyenne" max="5" read-only="true" style="color: #fde16d;" aria-labelledby="default-rating"></span>
 			
-			({{nombreAvis(livre.lesAvis)}} avis)</h5>
+			({{nombreAvis(livre.lesAvis)}} avis)</a></h5>
 			
 			<h5>Résume</h5>
 			<h5>{{premierePartieResume}}</h5>
@@ -66,29 +66,14 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+	<div id="avisClient" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
 		<h3>Avis client</h3>
-		<!-- <div class="panel panel-default col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding" style=" text-align: center;">
-			<div class="panel-body">
-				<h4>Note moyenne :</h4>
-				<div ng-if="livre.lesAvis.length > 0" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<!--<input id="input-moy" name="input-moy" class="rating-loading" ng-init="init(moyenne, 'moy')">-->
-					<!-- <span uib-rating ng-model="moyenne" max="5" read-only="true" titles="['one','two','three']" style="color: #fde16d; font-size: 3em;" aria-labelledby="default-rating"></span>
-				</div>
-				<hr>
-				<div ng-if="livre.lesAvis.length == 0">
-					<h4>Soyez le premier à laisser un avis !</h4>
-				</div>
-				<div ng-if="livre.lesAvis.length > 0">
-					<h4>{{nombreAvis(livre.lesAvis)}} avis</h4>
-				</div>
-			</div>
-		</div> -->
 		<div class="panel panel-default col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" style=" text-align: center;">
 			<div class="panel-body">
 				<h4>Poster un commentaire :</h4>
 				<span id="erreurPosterUnCommentaire" style="display: none; color: red;">Vous devez remplir la note et le commentaire</span>
-				<span class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group" uib-rating ng-model="note" max="5" read-only="false" titles="['one','two','three']" style="color: #fde16d; font-size: 3em;" aria-labelledby="default-rating"></span>
+				<span id="erreurDejaCommente" style="display: none; color: red;">Vous avez déjà commenté se livre</span>
+				<span class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group" uib-rating ng-model="note" max="5" read-only="false" style="color: #fde16d; font-size: 3em;" aria-labelledby="default-rating"></span>
 				<div class="form-group">
 				    <label for="commentaire">Commentaire</label>
 				    <textarea ng-model="commentaire" class="form-control" id="commentaire" rows="3"></textarea>
