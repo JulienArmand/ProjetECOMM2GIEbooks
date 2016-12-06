@@ -75,7 +75,7 @@ public class GetTousServlet extends HttpServlet {
 		} else if (request.getParameter("action").equals("editeurs")) {
 			List<Editeur> l = beanEditeur.getLesEditeurs();
 			str = js.toJson(l);			
-		} else if (request.getParameter("action").equals("genre")) {
+		} else if (request.getParameter("action").equals("genres")) {
 			List<Genre> l = beanGenre.getLesGenres();
 			str = js.toJson(l);			
 		} else if (request.getParameter("action").equals("livres")) {

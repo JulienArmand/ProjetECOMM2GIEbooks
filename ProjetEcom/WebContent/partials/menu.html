@@ -5,7 +5,10 @@
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding lesGenres">
 		<div class="fondElement">
 			<ul class="list-unstyled">
-				<li ng-repeat="genre in genres"><input class="radioNoCircle tri" name="genre" id="{{genre.id}}" type="radio" ng-click="setGenre(genre.nom, genre.id); rechercheMenu()"><label size="2" for="{{genre.id}}">{{genre.nom}}</label></li>
+				<li ng-repeat="genre in genres">
+				<input class="radioNoCircle tri" name="genre" id="{{genre.id}}" type="radio" ng-click="setGenre(genre.nom, genre.id); rechercheMenu()">
+				<label size="2" for="{{genre.id}}">{{genre.nom}}</label>
+				</li>
 			</ul>
 		</div>
 	</div>
