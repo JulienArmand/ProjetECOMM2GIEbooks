@@ -1,19 +1,15 @@
 package beans;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import Tools.ElasticSearchTools;
 import model.Avis;
 import model.Client;
 import model.Livre;
@@ -24,7 +20,7 @@ public class GestionAvis {
 	@PersistenceContext(unitName = "Database-unit")
 	private EntityManager em;
 
-	public Avis creerAvis(Livre l, Client c, int note, String commentaire) throws Exception {
+	public Avis creerAvis(Livre l, Client c, int note, String commentaire) {
 
 		Date datePublication = Date.from(Instant.now());
 
@@ -35,40 +31,22 @@ public class GestionAvis {
 
 		a.setLeClient(c);
 		c.getLesAvis().add(a);
-
-		String req = "\n{\"doc\" : {\"avis\":" + l.calculMoyenneAvis() + "}}";
-
-		System.out.println("MAJ " + req + " id : " + l.getId());
-
-		URL url = new URL("http://localhost:9200/livres/type_rechercheTitreGenreAuteur/" + l.getId() + "/_update");
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		connection.setRequestMethod("POST");
-		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
-		connection.setRequestProperty("Content-Language", "en-US");
-		connection.setRequestProperty("Content-Length", Integer.toString(req.getBytes().length));
-
-		connection.setUseCaches(false);
-		connection.setDoOutput(true);
-
-		// Send request
-		DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-		wr.writeBytes(req);
-		wr.close();
-
-		InputStream is = connection.getInputStream();
-		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-		StringBuilder response = new StringBuilder(); // or StringBuffer if
-														// Java version 5+
-		String line;
-		while ((line = rd.readLine()) != null) {
-			response.append(line);
-			response.append('\r');
+		
+		try {
+			ElasticSearchTools.updateAvis(l);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		System.out.println(line);
-		rd.close();
 
 		em.persist(a);
 		return a;
+	}
+	
+	public List<Avis> getLesAvis() {
+		Query q = em.createQuery("select OBJECT(b) from Avis b");
+		List<Avis> list = (List<Avis>) q.getResultList();
+		return list;
 	}
 
 	public void supprimerTous() {
@@ -76,5 +54,12 @@ public class GestionAvis {
 		Query q2 = em.createNativeQuery("ALTER TABLE Avis {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
 		q2.executeUpdate();
+	}
+	
+	public boolean existe(long idClient, long idLivre) {
+		Query q = em.createQuery("select OBJECT(a) from Avis a, Client c, Livre l where a.leClient.id = " + idClient + " and a.leLivre.id = " + idLivre);
+		List<Livre> livre = (List<Livre>) q.getResultList();
+		System.out.println(livre.size());
+		return livre.size()>0;
 	}
 }

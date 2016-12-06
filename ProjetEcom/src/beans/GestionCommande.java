@@ -35,7 +35,7 @@ public class GestionCommande {
 		Commande c = getCommande(idCommande);
 		c.setLesVentes(lesVentes);
 		float prix =0;
-		Iterator it = (Iterator) lesVentes.iterator();
+		Iterator<Vente> it = (Iterator<Vente>) lesVentes.iterator();
 		while(it.hasNext()){
 			Vente v = (Vente) it.next();
 			prix += v.getPrix();
@@ -47,16 +47,19 @@ public class GestionCommande {
 	}
 
 	public Commande getCommande(long id) {
-
-		//Query q = em.createQuery("select OBJECT(b) from Commande b where b.id =" + id);
 		return em.find(Commande.class, id);
-//		List<Commande> list = (List<Commande>) q.getResultList();
-//		return (Commande) list.get(0);
 	}
 
 	public List<Commande> getCommandeClient(Client leClient) {
-
 		Query q = em.createQuery("select OBJECT(b) from Commande b where b.leClient.id =" + leClient.getId());
+		@SuppressWarnings("unchecked")
+		List<Commande> list = (List<Commande>) q.getResultList();
+		return list;
+	}
+	
+	public List<Commande> getLesCommandes() {
+		Query q = em.createQuery("select OBJECT(b) from Commande b");
+		@SuppressWarnings("unchecked")
 		List<Commande> list = (List<Commande>) q.getResultList();
 		return list;
 	}

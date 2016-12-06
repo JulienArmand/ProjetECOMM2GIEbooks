@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import model.Client;
 import model.Commande;
 import model.Livre;
 import model.Vente;
@@ -37,6 +36,12 @@ public class GestionVente {
 
 	public List<Vente> getVentes(Commande c) {
 		Query q = em.createQuery("select OBJECT(b) from Vente b where b.laCommande =" + c);
+		List<Vente> list = (List<Vente>) q.getResultList();
+		return list;
+	}
+	
+	public List<Vente> getLesVentes() {
+		Query q = em.createQuery("select OBJECT(b) from Vente b");
 		List<Vente> list = (List<Vente>) q.getResultList();
 		return list;
 	}

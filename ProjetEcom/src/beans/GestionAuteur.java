@@ -31,9 +31,12 @@ public class GestionAuteur {
 
 		return a;
 	}
+	
+	public Auteur getAuteur(long id){
+		return em.find(Auteur.class, id);
+	}
 
 	public List<Auteur> getLesAuteurs() {
-
 		Query q = em.createQuery("select OBJECT(b) from Auteur b");
 		List<Auteur> list = (List<Auteur>) q.getResultList();
 		return list;

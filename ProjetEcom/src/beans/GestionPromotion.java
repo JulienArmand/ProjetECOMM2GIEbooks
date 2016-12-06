@@ -3,13 +3,13 @@ package beans;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import model.Client;
 import model.Livre;
 import model.Promotion;
 
@@ -46,6 +46,16 @@ public class GestionPromotion {
 		return p;
 	}
 
+	public Promotion getPromotion(long id){
+		return em.find(Promotion.class, id);
+	}
+	
+	public List<Promotion> getLesPromotions() {
+		Query q = em.createQuery("select OBJECT(b) from Promotion b");
+		List<Promotion> list = (List<Promotion>) q.getResultList();
+		return list;
+	}
+	
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Promotion");
 		Query q2 = em.createNativeQuery("ALTER TABLE Promotion {ALTER id RESTART WITH 0} ");

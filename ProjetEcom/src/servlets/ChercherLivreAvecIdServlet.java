@@ -1,8 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,11 +11,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import beans.GestionLivre;
-import beans.InitBean;
 import model.Livre;
 
 public class ChercherLivreAvecIdServlet extends HttpServlet {
 
+	private static final long serialVersionUID = 8577531702230813988L;
+	
 	@EJB()  //ou @EJB si nom par défaut 
 	private GestionLivre myBean; 
 	

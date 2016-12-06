@@ -24,6 +24,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>AjouterLivre</servlet-name>
+		<servlet-class>servlets.AjouterLivreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjouterLivre</servlet-name>
+		<url-pattern>/AjouterLivre</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>AjouterCommentaire</servlet-name>
 		<servlet-class>servlets.AjouterCommentaireServlet</servlet-class>
 	</servlet>
@@ -111,6 +120,15 @@
 	<servlet-mapping>
 		<servlet-name>GetTousLesGenres</servlet-name>
 		<url-pattern>/Genres</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GetTous</servlet-name>
+		<servlet-class>servlets.GetTousServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetTous</servlet-name>
+		<url-pattern>/GetTous</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

@@ -1,11 +1,9 @@
 package beans;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,7 +25,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import Tools.ElasticSearchTools;
-import Tools.Tools;
 import model.Auteur;
 import model.Editeur;
 import model.Genre;
@@ -103,7 +100,6 @@ public class GestionLivre {
 	}
 
 	public List<Livre> getLesLivres() {
-
 		Query q = em.createQuery("select OBJECT(b) from Livre b");
 		List<Livre> list = (List<Livre>) q.getResultList();
 		return list;

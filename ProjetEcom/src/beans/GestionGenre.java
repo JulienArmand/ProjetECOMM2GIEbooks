@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import model.Genre;
-import model.Livre;
 
 @Stateless
 public class GestionGenre {
@@ -30,6 +29,10 @@ public class GestionGenre {
 
 		return g;
 	}
+	
+	public Genre getGenre(long id){
+		return em.find(Genre.class, id);
+	}
 
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Genre");
@@ -38,11 +41,13 @@ public class GestionGenre {
 		q2.executeUpdate();
 	}
 
-	public List<Genre> getTousLesGenres() {
-		Query q = em.createQuery("select OBJECT(g) from Genre g");
+	
+	public List<Genre> getLesGenres() {
+		Query q = em.createQuery("select OBJECT(b) from Genre b");
 		List<Genre> list = (List<Genre>) q.getResultList();
 		return list;
 	}
+	
 
 	public void modifierGenre(Long id, String nom) {
 		Genre g = em.find(Genre.class, id);

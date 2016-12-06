@@ -1,12 +1,12 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,12 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import beans.GestionAvis;
-import beans.GestionClient;
-import beans.GestionCommande;
+import beans.GestionAuteur;
+import beans.GestionEditeur;
+import beans.GestionGenre;
 import beans.GestionLivre;
-import beans.InscriptionClientBean;
-import model.Client;
+import model.Editeur;
+import model.Genre;
 import model.Livre;
 
 public class AjouterLivreServlet extends HttpServlet {
@@ -29,30 +29,54 @@ public class AjouterLivreServlet extends HttpServlet {
 	
 	@EJB()
 	private GestionLivre beanLivre;
+	@EJB()
+	private GestionAuteur beanAuteur;
+	@EJB()
+	private GestionEditeur beanEditeur;
+	@EJB()
+	private GestionGenre beanGenre;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
 		
 		/* Récupération des champs du formulaire. */
+		
 		String titre = request.getParameter("titre");
-		String auteurs = request.getParameter("auteurs");
-		String editeurs = request.getParameter("editeurs");
-		String genre = request.getParameter("genre");
+		System.out.println(request.getParameter("editeur"));
+		Editeur editeur = beanEditeur.getEditeur(Long.parseLong(request.getParameter("editeur")));
+		Genre genre = beanGenre.getGenre(Long.parseLong(request.getParameter("genre")));
 		String isbn = request.getParameter("isbn");
-		int nbpage = Integer.parseInt(request.getParameter("nbpage"));
+		int nbpage = Integer.parseInt(request.getParameter("nbPage"));
 		float prix = Float.parseFloat(request.getParameter("prix"));
-		String langue = request.getParameter("langue");
-		String langueOriginale = request.getParameter("langueOriginale");
+		String langue = request.getParameter("lang");
+		String langueOriginale = request.getParameter("langOrig");
 		String couverture = request.getParameter("couverture");
+		String resume = request.getParameter("resume");
+		
+		Date datePub = null;
+		String pattern = "dd/MM/yyyy";
+		SimpleDateFormat format = new SimpleDateFormat(pattern);
+
+		try {
+			datePub = (Date) format.parse(request.getParameter("datePub"));
+		} catch (ParseException e) {
+			System.err.println("Mauvais format de date : " + request.getParameter("datePub"));
+			datePub = (Date) Date.from(Instant.now());
+		}
 		
         
         /* Initialisation du résultat global de la validation. */
-//        Livre l =Livre beanLivre.creerLivre(titre, a, e, g, isbn, nbpage, prix, langue, langueOriginale, couverture, promo, resume, datePub)
-//        String str = js.toJson(l);
+        Livre l = null;
+		try {
+			l = beanLivre.creerLivre(titre, null, editeur, genre, isbn, nbpage, prix, langue, langueOriginale, couverture, null, resume, datePub);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        String str = js.toJson(l);
         
-//        response.setContentType("application/json");
-//        response.getWriter().write(str);
+        response.setContentType("application/json");
+        response.getWriter().write(str);
 	}
 
 }
