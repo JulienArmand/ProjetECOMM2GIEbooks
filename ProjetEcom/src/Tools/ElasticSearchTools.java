@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 
@@ -153,6 +154,37 @@ public class ElasticSearchTools {
 			response.append(line);
 			response.append('\r');
 		}
+		rd.close();
+	}
+	
+	public static void updateAvis(Livre l) throws Exception {
+		String req = "\n{\"doc\" : {\"avis\":" + l.calculMoyenneAvis() + "}}";
+
+		URL url = new URL("http://localhost:9200/livres/type_rechercheTitreGenreAuteur/" + l.getId() + "/_update");
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		connection.setRequestMethod("POST");
+		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+		connection.setRequestProperty("Content-Language", "en-US");
+		connection.setRequestProperty("Content-Length", Integer.toString(req.getBytes().length));
+
+		connection.setUseCaches(false);
+		connection.setDoOutput(true);
+
+		// Send request
+		DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
+		wr.writeBytes(req);
+		wr.close();
+
+		InputStream is = connection.getInputStream();
+		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		StringBuilder response = new StringBuilder(); // or StringBuffer if
+														// Java version 5+
+		String line;
+		while ((line = rd.readLine()) != null) {
+			response.append(line);
+			response.append('\r');
+		}
+		System.out.println(line);
 		rd.close();
 	}
 

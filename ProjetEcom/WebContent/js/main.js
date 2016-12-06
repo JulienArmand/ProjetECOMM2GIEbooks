@@ -37,16 +37,14 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 		});
 	}
 	
-	var cookieValue = document.cookie.replace(
-			/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-	if (cookieValue != null && cookieValue != "") {
-		$rootScope.cookieValue = cookieValue;
+	var login = getCookie('login');
+	if (login != null && login != "") {
+		$rootScope.login = login;
 		$rootScope.estConnecte = true;
 		
 	}
-	var cookieValue = document.cookie.replace(
-			/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-	if (cookieValue == "true") {
+	var erreur = getCookie('erreur');
+	if (erreur == "true") {
 		$rootScope.estConnecte = false;
 	}
 	
@@ -295,7 +293,7 @@ app.controller("pageChange", function($scope){
 	 */
 });
 
-routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http, $document, $uibModal){
+routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http, $document, $uibModal, $location, $anchorScroll){
     $http.get("LivreAvecId", {params:{"id": $routeParams.id}}).then(function(response) {
     	$scope.livre = response.data;
     	$scope.moyenne = $scope.calculeMoyenne($scope.livre.lesAvis);
@@ -312,6 +310,7 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     	$scope.deuxiemePartieResume = deuxiemePartieResume.substr(index, deuxiemePartieResume.length);
     });
     
+    
     $scope.init = function(moy, id){
     	var str = '#input-'+id;
     	$(str).rating({displayOnly: true, step: 0.1, size:'xl'});
@@ -326,6 +325,15 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
         }
         return input;
     };
+    
+    $scope.allerAAvis = function() {
+    	var newHash = 'avisClient';
+    	if ($location.hash() !== newHash) {
+        $location.hash('avisClient');
+      } else {
+        $anchorScroll();
+      }
+    }
     
     $scope.formatDateDMY = formatDateDMY;
     
@@ -342,29 +350,26 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     
     $scope.posterCommentaire = function(note, commentaire) {
     	if(document.cookie != "" && note != undefined && commentaire != undefined) {
-    		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : 31001}}).then(function(response) {
-    			$scope.livre = response.data;
+    		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : getCookie('idClient')}}).then(function(response) {
+    			if(response.data != 'dejaCommente') {
+    				$scope.livre = response.data;
+    			}
+    			else {
+    				document.getElementById('erreurDejaCommente').style.display = "block";
+    			}
     		});
     	} else if ( note == undefined || commentaire == undefined ) {
     		document.getElementById('erreurPosterUnCommentaire').style.display = "block";
     	}
     	else { // popup connection
     		var modalInstance = $uibModal.open({
-    		      // animation: $ctrl.animationsEnabled,
     		      ariaLabelledBy: 'modal-title',
     		      ariaDescribedBy: 'modal-body',
     		      templateUrl: '/template/modalConnection/modalConnection.html',
     		      controller: 'modalConnexionCtrl'
-    		      // controllerAs: '$ctrl',
-    		      // size: size,
-    		      // appendTo: parentElem,
-    		      /*
-					 * resolve: { items: function () { return $ctrl.items; } }
-					 */
     		    });
     	}
     }
-    
     
     $scope.nombreAvis = function(list) {
     	return list.length;
@@ -374,16 +379,22 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
 app.controller("modalConnexionCtrl", function($scope, $http, $uibModalInstance, $rootScope){
 	$scope.connexion = function (pseudo, mdp) {
 		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
-			var cookieValue = document.cookie.replace(
-					/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-			if (cookieValue != null && cookieValue != "") {
-				$rootScope.cookieValue = cookieValue;
+			var login = getCookie('login');
+			if (login != null && login != "") {
+				$rootScope.login = login;
 				$rootScope.estConnecte = true;
 				$uibModalInstance.close();
+				$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : getCookie('idClient')}}).then(function(response) {
+	    			if(response.data != 'dejaCommente') {
+	    				$scope.livre = response.data;
+	    			}
+	    			else {
+	    				document.getElementById('erreurDejaCommente').style.display = "block";
+	    			}
+	    		});
 			}
-			var cookieValue = document.cookie.replace(
-					/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-			if (cookieValue == "true") {
+			var erreur = getCookie('erreur');
+			if (erreur == "true") {
 				$rootScope.estConnecte = false;
 			}
 		});
@@ -393,16 +404,13 @@ app.controller("modalConnexionCtrl", function($scope, $http, $uibModalInstance, 
 app.controller("popoverConnexionCtrl", function($scope, $http, $rootScope){	
 	$scope.connexion = function (pseudo, mdp) {
 		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
-			alert(document.cookie);
-			var cookieValue = document.cookie.replace(
-					/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-			if (cookieValue != null && cookieValue != "") {
-				$rootScope.cookieValue = cookieValue;
+			var login = getCookie('login');
+			if (login != null && login != "") {
+				$rootScope.login = login;
 				$rootScope.estConnecte = true;
 			}
-			var cookieValue = document.cookie.replace(
-					/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-			if (cookieValue == "true") {
+			var erreur = getCookie('erreur');
+			if (erreur == "true") {
 				$rootScope.estConnecte = false;
 			}
 		});
@@ -575,13 +583,8 @@ routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeP
 	
 });
 
-routeAppControllers.controller("compteClient", function($scope, $http, $routeParams, $location, $rootScope){
-	
-	$scope.redirectModificationMotDePasse = function() {
-		window.location.href=("#/modificationMotDePasse");
-    }
-	
-	$http.get("GetInfoClient", {params:{"pseudo": $routeParams.pseudo}}).then(function(response) {
+routeAppControllers.controller("compteClient", function($scope, $http, $location, $rootScope){	
+	$http.get("GetInfoClient", {params:{"pseudo": getCookie('login')}}).then(function(response) {
 		var data = response.data;
     	$scope.pseudo = data.pseudo;
     	$scope.nom = data.nom;
@@ -637,7 +640,7 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/registerView.html',
         	controller: 'inscriptionCtrl'
         })
-        .when('/compteClient/:pseudo',{
+        .when('/compteClient',{
         	templateUrl : 'partials/CompteClient.html',
         	controller: 'compteClient'
         })
@@ -743,15 +746,13 @@ app.directive('hoverPopover', function ($compile, $templateCache, $timeout, $roo
 
 function connexion ($rootScope, $http, pseudo, mdp) {
 	$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
-		var cookieValue = document.cookie.replace(
-				/(?:(?:^|.*;\s*)login\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-		if (cookieValue != null && cookieValue != "") {
-			$rootScope.cookieValue = cookieValue;
+		var login = getCookie('login');
+		if (login != null && login != "") {
+			$rootScope.login = login;
 			$rootScope.estConnecte = true;
 		}
-		var cookieValue = document.cookie.replace(
-				/(?:(?:^|.*;\s*)erreur\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-		if (cookieValue == "true") {
+		var erreur = getCookie('erreur');
+		if (erreur == "true") {
 			$rootScope.estConnecte = false;
 		}
 	});
@@ -760,5 +761,14 @@ function connexion ($rootScope, $http, pseudo, mdp) {
 function deconnexion ($rootScope) {
 	$rootScope.estConnecte = false;
 	document.cookie = "";
+}
+
+function getCookie(sName) {
+    var oRegex = new RegExp("(?:; )?" + sName + "=([^;]*);?");
+    if (oRegex.test(document.cookie)) {
+    	return decodeURIComponent(RegExp["$1"]);
+    } else {
+    	return null;
+    }
 }
 
