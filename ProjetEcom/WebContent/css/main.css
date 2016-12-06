@@ -39,7 +39,7 @@ body {
 
 .image {
 	padding: 10px;
-	    border-bottom: none;
+	border-bottom: none;
 	border: 1px solid #D9DADB;
     box-shadow: inset 0 -1px 0 #cccccc, inset 0 -2px 0 #999999;
 	
@@ -85,8 +85,16 @@ slick {
 }
 
 .popover{
-    width:300px;
-    height:240px;    
+    width:350px;  
+}
+
+.iconeConnexion{
+    font-size : 3em;
+}
+
+.blockConnexion {
+	color : #3232b8;
+    text-align:center;
 }
 
 .alignement-text-header {
@@ -216,10 +224,26 @@ input.affichage:checked + label {
 }
 
 .monCompteHeader{
-	
-	
+	text-align: center;
 	color : #3232b8;
 	font-weight : bold;
 	font-size : 1.17 em;
-	
+}
+
+.bag {
+	fill: none;
+    stroke: #3232b8;
+	stroke-width: 6;
+	stroke-miterlimit: 10;
+}
+
+.svgPanier {
+	width:200px;
+    height:50px;
+}
+
+.lienPopoverConnexion {
+	padding-top : 5px;
+	padding-bottom : 5px;
+	border-bottom: 1px solid #D9DADB;
 }

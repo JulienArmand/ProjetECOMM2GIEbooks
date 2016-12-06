@@ -1,6 +1,6 @@
 <div style="font-size: 150%;">
-    <div class="text-center">
-        <svg version="1.1"  class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" xml:space="preserve">
+	<div class="text-center">
+		<!-- <svg version="1.1"  class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" xml:space="preserve">
 			<path d="M27.715,10.48l-2.938,6.312c-0.082,0.264-0.477,0.968-1.318,0.968H11.831
 				c-0.89,0-1.479-0.638-1.602-0.904l-2.048-6.524C7.629,8.514,8.715,7.933,9.462,7.933c0.748,0,14.915,0,16.805,0
 				C27.947,7.933,28.17,9.389,27.715,10.48L27.715,10.48z M9.736,9.619c0.01,0.061,0.026,0.137,0.056,0.226l1.742,6.208
@@ -12,10 +12,39 @@
 				c-0.455,0-0.82-0.364-0.82-0.818s0.365-0.82,0.82-0.82h2.841c1.827,0,2.4,1.103,2.715,2.181
 				c0.264,0.898,3.569,12.146,3.821,12.999c0.087,0.188,0.611,1.197,1.688,1.197h10.611c0.451,0,0.818,0.368,0.818,0.818
 				C25.395,21.21,25.027,21.575,24.576,21.575L24.576,21.575z"/>
-		</svg>
-    </div>
-    <div class="text-center">{{ ngCart.getTotalItems() }}
-        <ng-pluralize count="ngCart.getTotalItems()" when="{1: 'livre', 'other':'livres'}"></ng-pluralize>
-        <br />{{ ngCart.totalCost() | currency:"€" }}
-    </div>
+		</svg>-->
+		<?xml version="1.0" ?>
+		<svg class="svgPanier" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+			xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="Слой_1" style="enable-background: new 0 0 139 139;" version="1.1" viewBox="0 0 139 139" xml:space="preserve" inkscape:version="0.91 r13725" sodipodi:docname="bag.svg">
+			<metadata id="metadata11">
+			<rdf:RDF>
+				<cc:Work rdf:about="">
+					<dc:format>image/svg+xml</dc:format>
+					<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+				</cc:Work>
+			</rdf:RDF></metadata>
+			<defs id="defs9" />
+			<sodipodi:namedview  pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="1920" inkscape:window-height="971" id="namedview7" showgrid="false"
+				inkscape:zoom="1.6978417" inkscape:cx="70.677966" inkscape:cy="69.5" inkscape:window-x="0" inkscape:window-y="31" inkscape:window-maximized="1" inkscape:current-layer="Слой_1" />
+			<path class="bag" d="M111.9,128H27.1c-1.4,0-2.6-1.2-2.6-2.6V43.6c0-1.4,1.2-2.6,2.6-2.6h84.8c1.4,0,2.6,1.2,2.6,2.6  v81.8C114.5,126.8,113.3,128,111.9,128z" id="XMLID_1_" />
+			<path class="bag" d="M 43.95578,57.534915 C 43.95578,11.928293 69.5,11.928293 69.5,11.928293 c 0,0 25.54422,0 25.54422,45.606622" id="XMLID_7_" inkscape:connector-curvature="0" style="fill:none;stroke:#000000;stroke-width:7.3327055;stroke-miterlimit:10" />
+			
+			<rect style="fill:#ffffff;fill-opacity:1" id="rect4143" width="67.733055" height="55.953392" x="59.487286" y="78.923729" />
+			<text ng-if="ngCart.getTotalItems()<10" x="55" y="110" fill="#f0ad4e" font-size="50px">{{ngCart.getTotalItems()}}</text>
+			<text ng-if="ngCart.getTotalItems()>=10" x="45" y="110" fill="#f0ad4e" font-size="50px">{{ngCart.getTotalItems()}}</text>
+			<text ng-if="ngCart.getTotalItems()>1" x="107" y="130" fill="#3232b8" font-size="50px">Livres</text>
+			<text ng-if="ngCart.getTotalItems()<=1" x="107" y="130" fill="#3232b8" font-size="50px">Livre</text>
+			</svg>
+
+		<!-- <svg id="Слой_1" class="svgPanier" version="1.1" viewBox="0 0 139 139" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+			<path class="bag" d="M111.9,128H27.1c-1.4,0-2.6-1.2-2.6-2.6V43.6c0-1.4,1.2-2.6,2.6-2.6h84.8c1.4,0,2.6,1.2,2.6,2.6  v81.8C114.5,126.8,113.3,128,111.9,128z" id="XMLID_1_" />
+			<path class="bag" d="M43.5,41c0-30,26-30,26-30s26,0,26,30" id="XMLID_7_" />
+			<text ng-if="ngCart.getTotalItems()<10" x="55" y="100" color="#f0ad4e" font-size="50px">{{ngCart.getTotalItems()}}</text>
+			<text ng-if="ngCart.getTotalItems()>=10" x="45" y="100" color="#f0ad4e" font-size="50px">{{ngCart.getTotalItems()}}</text>
+		</svg>-->
+	</div>
+	<!-- <div class="text-center">
+		<ng-pluralize count="ngCart.getTotalItems()" when="{1: 'livre', 'other':'livres'}"></ng-pluralize>
+		<br />{{ ngCart.totalCost() | currency:"€" }}
+	</div>-->
 </div>

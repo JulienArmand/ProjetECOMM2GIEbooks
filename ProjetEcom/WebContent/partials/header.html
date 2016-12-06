@@ -1,7 +1,7 @@
 <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
 	<span class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding logo"> <a href="" ng-click="redirection()"> <img ng-src="images/logoEcom2.png" class="img-responsive" /></a>
 	</span>
-	<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7" style="margin-top: 2.5%; vertical-align: middle;">
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-top: 2.5%; vertical-align: middle;">
 		<form ng-submit="rechercheBarre()" role="form" name="form" action="" method="post" style="padding: 0px; vertical-align: middle;">
 
 			<div class="input-group input-gr1701oup-lg icon-addon addon-lg" style="vertical-align: middle;">
@@ -14,12 +14,12 @@
 			</div>
 		</form>
 	</div>
-	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding">
+	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding monCompteHeader alignement-text-header">
 		<div class="col-lg-6 col-md-6 col-xs-6 col-sm-6 no-padding">
 			<a ng-href="#/panier"> <!-- <img ng-src="../images/icon_panier.png" class=" img-responsive" style="height: 6em;width: 6em; margin:auto; padding:0px;"/>--> <ngcart-summary></ngcart-summary>
 			</a>
 		</div>
-		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 no-padding alignement-text-header">
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 no-padding">
 			<div ng-if="!estConnecte" id="connexion">
 				<!-- -->
 				<script type="text/ng-template" id="templatePopoverConnexion.html">
@@ -35,11 +35,22 @@
 					<span>Pas encore inscrit? </span><a ng-href="#/inscription"">Cliquez ici</a>
 				</div>
 	    		</script>
-				<a class="monCompteHeader" ng-controller="popoverConnexionCtrl" hover-popover>MON COMPTE <i class="glyphicon glyphicon-chevron-down"></i></a>
+	    		<span class="iconeConnexion glyphicon glyphicon-user"></span><br>
+				<a id="monCompteHeader" class="monCompteHeader" ng-controller="popoverConnexionCtrl" hover-popover>MON COMPTE <i class="glyphicon glyphicon-chevron-down"></i></a>
 				<!-- UTILISER DIRECTIVE ANGULAR ALERT -->
 			</div>
 			<div ng-if="estConnecte" id="profil" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
-				<a class="monCompteHeader" ng-href="#/compteClient" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Mon Compte </a> <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 monCompteHeader" id="login">{{login}}</a> <input class="btn btn-warning" type="submit" ng-click="deconnexion()" value="Deconnexion">
+				<script type="text/ng-template" id="templatePopoverMonCompte.html">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lienPopoverConnexion">
+					<a class="monCompteHeader lienPopoverConnexion" ng-href="#/compteClient" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Mon espace client</a>
+				</div>
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lienPopoverConnexion">
+					<a href class="monCompteHeader" ng-click="deconnexion()">Se deconnecter</a>
+				</div>
+	    		</script>
+	    		<span class="iconeConnexion glyphicon glyphicon-user"></span><br>
+	    		<a id="monCompteHeader" class="monCompteHeader" ng-controller="popoverConnexionCtrl" hover-popover2>Bienvenue {{login}} <i class="glyphicon glyphicon-chevron-down"></i></a>
+				
 			</div>
 			<!-- <form>
 				<input type="submit" onclick="afficheCookies()"
