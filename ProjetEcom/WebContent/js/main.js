@@ -649,7 +649,7 @@ app.config(['$routeProvider',
         	controller: 'modificationMotDePasse'
         })
         .when('/ajouterLivre',{
-        	templateUrl : 'partials/ajoutLivre.html',
+        	templateUrl : 'partialsAdmin/ajoutLivre.html',
         	controller: 'ajoutLivreCtrl'
         })
     }
