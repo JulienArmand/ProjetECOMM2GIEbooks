@@ -47,7 +47,7 @@ public class ConfigurationGenerale {
 	 * @param parameter Le parametre demandé
 	 * @return Une String contenant la valeur du parametre demandé
 	 */
-	public String valeurParametre(String parameter){
+	public String get(String parameter){
 		return this.params.get(parameter);
 	}
 	
