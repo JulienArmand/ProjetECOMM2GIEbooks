@@ -261,6 +261,20 @@ app.controller("ajoutLivreCtrl", function($scope, $http, $rootScope){
 		});
 	}
 	
+	$scope.changeRadio = function(idForm, bool){
+		$(idForm).hidden(bool);
+	}
+	
+	$scope.formulaires = {
+		genre : "creation"
+	}
+	
+	setMoyen = function(str){
+		$scope.moyenPaiement.moyen = str;
+	}
+	
+	$scope.selectedGenreToModify = null;
+	
 	creerGenre = function() {
 		
 	}
