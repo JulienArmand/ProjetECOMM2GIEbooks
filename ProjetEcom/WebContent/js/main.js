@@ -404,7 +404,15 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
 	$rootScope.motdepasseconfirm = "@";
 	$rootScope.email = "@";
 	
-	$scope.breakpoints = [{
+	$scope.breakpoints = [
+		{
+		    breakpoint: 1600, // Pc portable++
+		    settings: {
+		      slidesToShow: 6,
+		      slidesToScroll: 6
+		    }
+		  },
+		{
 	    breakpoint: 1290, // Pc portable
 	    settings: {
 	      slidesToShow: 5,

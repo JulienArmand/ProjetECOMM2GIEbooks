@@ -1,9 +1,13 @@
 package beans;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.text.DateFormat;
+import java.time.Instant;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
@@ -23,6 +27,9 @@ public class TraitementPeriodiqueElasticSearch {
 	@PersistenceContext(unitName = "Database-unit")
 	private EntityManager em;
 
+	@EJB()
+	private ConfigurationGenerale config;
+	
 	@Schedule(minute = "*/30", hour = "*")
 	public void traiterTrenteSecondes() {
 		Query q = em.createQuery("select l from Livre l");
@@ -31,13 +38,13 @@ public class TraitementPeriodiqueElasticSearch {
 		Iterator<Livre> it = list.iterator();
 		while(it.hasNext()){
 			try {
-				ElasticSearchTools.enregistrerDansLIndexage(it.next());
+				ElasticSearchTools.enregistrerDansLIndexage("http://"+config.get("IP_ELASTICSEARCH")+":"+config.get("PORT_ELASTICSEARCH"), it.next());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		System.out.println("-------------------------------------------Rechargement");
+		System.out.println("-------------------------------------------Rechargement" + Date.from(Instant.now()));
 	}
 	
 	//@Schedule(second = "*/40", minute = "*", hour = "*")

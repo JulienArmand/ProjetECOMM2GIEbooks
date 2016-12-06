@@ -41,7 +41,7 @@ public class GestionLivre {
 	private EntityManager em;
 	
 	@EJB()
-	ConfigurationGenerale conf;
+	private ConfigurationGenerale conf;
 
 	public Livre creerLivre(String nom, List<Auteur> a, Editeur e, Genre g, String isbn, int nbpage, float prix,
 			String langue, String langueOriginale, String couverture, Promotion promo, String resume, Date datePub) throws Exception {
@@ -56,16 +56,16 @@ public class GestionLivre {
 			e2.printStackTrace();
 		}
 		
-		String couvertureUrl = conf.valeurParametre("PATH_SERVER")+"/images/"+name+".png";
-		System.out.println(couvertureUrl);
+		String couvertureUrl = conf.get("PATH_SERVER")+"/images/"+name+".png";
+		/*System.out.println(couvertureUrl);
 		try {
 			Tools.sauvegarderImage(couverture, 400, 600, couvertureUrl);
 			couvertureUrl = "/images/"+name+".png";
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			couvertureUrl = couverture;//"images/defaultCouv.png";
-		}
-		
+		}*/
+		couvertureUrl = couverture;
 		l.setNomCouverture(couvertureUrl);
 
 		l.setResume(resume);
@@ -92,7 +92,7 @@ public class GestionLivre {
 		em.persist(l);
 		
 		try {
-			ElasticSearchTools.enregistrerDansLIndexage(l);
+			ElasticSearchTools.enregistrerDansLIndexage("http://"+conf.get("IP_ELASTICSEARCH")+":"+conf.get("PORT_ELASTICSEARCH"), l);
 		} catch (Exception ex) {
 			System.err.println("Erreur durant l'indexage du livre dans elasticsearch : " + ex.getMessage());
 		}
