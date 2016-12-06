@@ -260,6 +260,15 @@ app.controller("ajoutLivreCtrl", function($scope, $http, $rootScope){
 				console.log("Livre ajoutée");
 		});
 	}
+	
+	creerGenre = function() {
+		
+	}
+	
+	creerPromotion = function() {
+		
+	}
+	
 		
 	$http.get("GetTous", {params:{"action": "genres"}}).then(function(response) {				
 		$scope.genres = response.data;
