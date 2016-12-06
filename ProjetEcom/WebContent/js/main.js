@@ -241,6 +241,23 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart){
 	}
 });
 
+app.controller("ajoutLivreCtrl", function($scope, $http, $rootScope, ngCart){
+		
+	creerCommande = function(){
+		$http.get("GestionCommande", {
+			params:{"action" :"post",
+			"type" : $scope.moyenPaiement.moyen,
+			"livres" : idLivres }}).then(function(response) {				
+				for(i = ngCart.getItems().length; i >= 0; i--){
+					ngCart.removeItem(i);
+				}
+				$rootScope.commande = response.data;
+				
+				
+				window.location.href="#/confirmation";
+		});
+	}
+});
 
 app.controller("pageChange", function($scope){
 	/*

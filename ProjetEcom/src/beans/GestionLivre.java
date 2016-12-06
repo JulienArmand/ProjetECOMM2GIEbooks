@@ -43,7 +43,7 @@ public class GestionLivre {
 	@EJB()
 	ConfigurationGenerale conf;
 
-	public Livre creerLivre(String nom, List<Auteur> a, Editeur e, Genre g, String isbn, int nbpage, double prix,
+	public Livre creerLivre(String nom, List<Auteur> a, Editeur e, Genre g, String isbn, int nbpage, float prix,
 			String langue, String langueOriginale, String couverture, Promotion promo, String resume, Date datePub) throws Exception {
 
 		Livre l = new Livre(nom, isbn, datePub, nbpage, (float) prix, langue, langueOriginale);
