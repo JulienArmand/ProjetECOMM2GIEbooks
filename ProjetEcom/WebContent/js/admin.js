@@ -64,7 +64,7 @@ app.config(['$routeProvider',
             controller: 'corpsAcceuilCtrl'
         })
         .otherwise({
-            templateUrl: 'partialsAdmin/mainContent.html',
+            templateUrl: 'partialsAdmin/formulaires.html',
             controller: 'contentCtrl'
         })
         .when('/info/:id', {

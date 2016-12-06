@@ -1,10 +1,8 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -18,11 +16,11 @@ import com.google.gson.GsonBuilder;
 import Tools.Tools;
 import beans.CoupleLivreVente;
 import beans.GestionLivre;
-import beans.InitBean;
-import model.Livre;
 
 public class RechercheViaBarreServlet extends HttpServlet {
 
+	private static final long serialVersionUID = -3969291627640520522L;
+	
 	@EJB()  //ou @EJB si nom par défaut 
 	private GestionLivre myBean; 
 	

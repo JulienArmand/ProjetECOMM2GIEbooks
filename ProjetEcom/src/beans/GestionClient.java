@@ -27,8 +27,7 @@ public class GestionClient {
 	}
 	
 	public Client getClient(long id){
-		Query q = em.createQuery("select OBJECT(b) from Client b where b.id =" + id);
-		return (Client)q.getSingleResult();
+		return em.find(Client.class, id);
 	}
 	
 	public Client getClientByCookie(HttpServletRequest request){
@@ -36,6 +35,12 @@ public class GestionClient {
 		GestionCookies g = new GestionCookies();
 		String idClient = g.getCookieByName(cookies, "idClient").getValue();
 		return em.find(Client.class, idClient);
+	}
+	
+	public List<Client> getLesClients() {
+		Query q = em.createQuery("select OBJECT(b) from Client b");
+		List<Client> list = (List<Client>) q.getResultList();
+		return list;
 	}
 
 	public void supprimerTous() {

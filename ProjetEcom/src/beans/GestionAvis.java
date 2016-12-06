@@ -42,6 +42,12 @@ public class GestionAvis {
 		em.persist(a);
 		return a;
 	}
+	
+	public List<Avis> getLesAvis() {
+		Query q = em.createQuery("select OBJECT(b) from Avis b");
+		List<Avis> list = (List<Avis>) q.getResultList();
+		return list;
+	}
 
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Avis");

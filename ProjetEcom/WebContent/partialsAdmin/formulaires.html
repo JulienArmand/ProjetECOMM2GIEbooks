@@ -1,0 +1,74 @@
+<div>
+	<form method="post" action="CreerGenreServlet">
+	
+		<input type="hidden" id="action" name="action" value = "creer" required></input>
+		<label for="Nom">Nom du genre : </label><input type="text" id="Nom" name="Nom" required></input>
+		
+		<input type="submit" id="submit" name="submit" value = "Submit" required></input>
+	</form>
+	<br>
+	
+	<form method="post" action="CreerGenreServlet">
+		<input type="hidden" id="action" name = "action" value = "modif" required></input>
+		<select name = "id">
+			  <option value="-1"></option>
+			  <option ng-repeat="g in genres" value="{{g.id}}">{{g.nom}}</option>
+		</select> 
+		<label for="Nom">Nom du genre : </label><input type="text" id="Nom" name="Nom" required></input>
+		
+		<input type="submit" id="submit" name="submit" value = "Submit" required></input>
+	</form>
+	<br>
+	
+	
+	<form method="post" action="CreerAuteurServlet">
+	
+		<input type="hidden" id="action" name="action" value = "creer" required></input>
+		<label for="Prenom">Prenom : </label><input type="text" id="Prenom"  name="Prenom" required></input>
+		<label for="Nom">Nom : </label><input type="text" id="Nom" name="Nom" required></input>
+		<input type="submit" id="submit" name="submit" value = "Submit" required></input>
+	</form>
+	<br>
+	
+	<form method="post" action="CreerAuteurServlet">
+	
+		<input type="hidden" id="action" name="action" value = "modif" required></input>
+		<select name = "id">
+			  <option value="-1"></option>
+			  <option ng-repeat="a in auteurs" value="{{a.id}}">{{a.prenom}} {{a.nom}}</option>
+		</select>
+		<label for="Prenom">Prenom : </label><input type="text" id="Prenom" name="Prenom" required></input>
+		<label for="Nom">Nom : </label><input type="text" id="Nom" name="Nom" required></input>
+		<input type="submit" id="submit" name="submit" value = "Submit" required></input>
+	</form>
+	<br>
+	
+	<form method="post" action="CreerEditeurServlet">
+		<input type="hidden" id="action" name="action" value = "creer" required></input>
+		<label for="Nom">Nom : </label><input type="text" id="Nom" name="Nom" required></input>
+		<input type="submit" id="submit" name="submit" value = "Submit" required></input>
+	</form>
+	<br>
+	<form method="post" action="CreerEditeurServlet">
+		<input type="hidden" id="action" name="action" value = "creer" required></input>
+			<select name = "id">
+			  <option value="-1"></option>
+			  <option ng-repeat="e in editeurs" value="{{e.id}}">{{e.nom}}</option>
+		</select>
+		<label for="Nom">Nom : </label><input type="text" id="Nom" name="Nom" required></input>
+		<input type="submit" id="submit" name="submit" value = "Submit" required></input>
+	</form>
+	<br>
+	
+	<form method="post" action="AjoutPromoServlet">
+		 <select name = "id">
+			  <option value="-1"></option>
+			  <option ng-repeat="l in livres" value="{{l.id}}">{{l.titre}} / {{l.isbn}}</option>
+		</select> 
+		<label for="Taux">Taux de reduction (0-100) : </label><input type="text" id="Taux" name="Taux" required></input>
+		<label for="dateD">Date de début(jj/mm/aaaa) : </label><input type="text" id="dateD" name="dateD" required></input>
+		<label for="dateF">Date de fin(jj/mm/aaaa) : </label><input type="text" id="dateF" name="dateF" required></input>
+		<input type="submit" id="submit" name="submit" value = "Submit" required></input>
+	</form>
+
+</div>

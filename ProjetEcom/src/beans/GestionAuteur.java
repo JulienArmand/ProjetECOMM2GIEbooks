@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import model.Auteur;
+import model.Editeur;
 
 @Stateless
 public class GestionAuteur {
@@ -30,9 +31,12 @@ public class GestionAuteur {
 
 		return a;
 	}
+	
+	public Auteur getAuteur(long id){
+		return em.find(Auteur.class, id);
+	}
 
 	public List<Auteur> getLesAuteurs() {
-
 		Query q = em.createQuery("select OBJECT(b) from Auteur b");
 		List<Auteur> list = (List<Auteur>) q.getResultList();
 		return list;
@@ -43,6 +47,22 @@ public class GestionAuteur {
 		Query q2 = em.createNativeQuery("ALTER TABLE Auteur {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
 		q2.executeUpdate();
+	}
+
+	public void modifierAuteur(long id, String prenom, String nom) {
+		
+		Auteur g = em.find(Auteur.class, id);
+		if (g != null) {
+			System.out.println("Modif du Auteur d'id : " + g.getId());
+			g.setNom(nom);
+			g.setPrenom(prenom);
+			em.persist(g);
+
+		} else {
+			System.out.println("Modification d'un Auteur null !!!!!");
+			return;
+		}
+		
 	}
 
 }

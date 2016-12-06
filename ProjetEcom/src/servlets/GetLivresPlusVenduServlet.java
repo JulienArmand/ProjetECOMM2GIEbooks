@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 
 import javax.ejb.EJB;
@@ -14,18 +13,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import beans.GestionLivre;
-import beans.InitBean;
 import model.Livre;
 
 public class GetLivresPlusVenduServlet extends HttpServlet {
 
-	@EJB()  //ou @EJB si nom par défaut 
+	private static final long serialVersionUID = -7264551378039338453L;
+	
+	@EJB()
 	private GestionLivre myBean; 
-	
-	public GetLivresPlusVenduServlet() {
-		// TODO Auto-generated constructor stub
-	}
-	
+		
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();

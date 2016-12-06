@@ -1,11 +1,9 @@
 package beans;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,7 +25,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import Tools.ElasticSearchTools;
-import Tools.Tools;
 import model.Auteur;
 import model.Editeur;
 import model.Genre;
@@ -42,7 +39,9 @@ public class GestionLivre {
 	
 	@EJB()
 	private ConfigurationGenerale conf;
-
+	@EJB()
+	private GestionPromotion promoBean;
+	
 	public Livre creerLivre(String nom, List<Auteur> a, Editeur e, Genre g, String isbn, int nbpage, float prix,
 			String langue, String langueOriginale, String couverture, Promotion promo, String resume, Date datePub) throws Exception {
 
@@ -101,7 +100,6 @@ public class GestionLivre {
 	}
 
 	public List<Livre> getLesLivres() {
-
 		Query q = em.createQuery("select OBJECT(b) from Livre b");
 		List<Livre> list = (List<Livre>) q.getResultList();
 		return list;
@@ -241,6 +239,21 @@ public class GestionLivre {
 		Query q2 = em.createNativeQuery("ALTER TABLE Livre {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
 		q2.executeUpdate();
+	}
+
+	public void ajouterPromo(Long id, int taux, String dateD, String dateF) {
+		Livre l = em.find(Livre.class, id);
+		if(l != null){
+			
+			promoBean.creerPromotion(l, taux, dateD, dateF);
+			
+		}else{
+			
+			System.out.println("Ajout promo :  Livre null !!!!!");
+			return;
+			
+		}
+		
 	}
 
 }

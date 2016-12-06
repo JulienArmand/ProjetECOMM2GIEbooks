@@ -24,6 +24,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>AjouterLivre</servlet-name>
+		<servlet-class>servlets.AjouterLivreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjouterLivre</servlet-name>
+		<url-pattern>/AjouterLivre</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>AjouterCommentaire</servlet-name>
 		<servlet-class>servlets.AjouterCommentaireServlet</servlet-class>
 	</servlet>
@@ -114,6 +123,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>GetTous</servlet-name>
+		<servlet-class>servlets.GetTousServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetTous</servlet-name>
+		<url-pattern>/GetTous</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>GestionCommande</servlet-name>
 		<servlet-class>servlets.GestionCommandeServlet</servlet-class>
 	</servlet>
@@ -147,6 +165,43 @@
 	<servlet-mapping>
 		<servlet-name>ModificationMotDePasse</servlet-name>
 		<url-pattern>/ModificationMotDePasse</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>CreerGenreServlet</servlet-name>
+		<servlet-class>servlets.CreerGenreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreerGenreServlet</servlet-name>
+		<url-pattern>/CreerGenreServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CreerEditeurServlet</servlet-name>
+		<servlet-class>servlets.CreerEditeurServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreerEditeurServlet</servlet-name>
+		<url-pattern>/CreerEditeurServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CreerAuteurServlet</servlet-name>
+		<servlet-class>servlets.CreerAuteurServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreerAuteurServlet</servlet-name>
+		<url-pattern>/CreerAuteurServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AjoutPromoServlet</servlet-name>
+		<servlet-class>servlets.AjoutPromoServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjoutPromoServlet</servlet-name>
+		<url-pattern>/AjoutPromoServlet</url-pattern>
 	</servlet-mapping>
 
 </web-app>

@@ -22,8 +22,10 @@
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 no-padding">
 			<div ng-if="!estConnecte" id="connexion">
 				<!-- -->
-				<script type="text/ng-template" id="templatePopoverConnexion.html">
-				<div>
+
+				<script type="text/ng-template" id="templatePopoverConnexion.html" >
+				<div >
+					<form>
 					<div class="form-group">
 						<span id="erreurIdentifiant" style="display: none; color: red;">Identifiant ou mot de passe incorrect</span>
 						<label>Identifiant</label>
@@ -32,7 +34,8 @@
 						<input ng-model="mdp" type="password" class="form-control" id="pseudo"></input>
 					</div>
 					<input type="submit" class="btn btn-warning" ng-click="connexion(pseudo, mdp)" value="Connexion"></input><br>
-					<span>Pas encore inscrit? </span><a ng-href="#/inscription"">Cliquez ici</a>
+					</form>
+					<span>Pas encore inscrit? </span><br><a ng-href="#/inscription"">Cliquez ici</a>
 				</div>
 	    		</script>
 	    		<span class="iconeConnexion glyphicon glyphicon-user"></span><br>

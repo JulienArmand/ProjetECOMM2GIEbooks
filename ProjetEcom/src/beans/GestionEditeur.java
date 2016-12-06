@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import model.Editeur;
+import model.Genre;
 
 @Stateless
 public class GestionEditeur {
@@ -30,10 +31,34 @@ public class GestionEditeur {
 		return e;
 	}
 
+	public Editeur getEditeur(long id){
+		return em.find(Editeur.class, id);
+	}
+	
+	public List<Editeur> getLesEditeurs() {
+		Query q = em.createQuery("select OBJECT(b) from Editeur b");
+		List<Editeur> list = (List<Editeur>) q.getResultList();
+		return list;
+	}
+	
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Editeur");
 		Query q2 = em.createNativeQuery("ALTER TABLE Editeur {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
 		q2.executeUpdate();
+	}
+
+	public void modifierEditeur(Long id, String nom) {
+		Editeur g = em.find(Editeur.class, id);
+		if (g != null) {
+			System.out.println("Modif du Editeur d'id : " + g.getId());
+			g.setNom(nom);
+			em.persist(g);
+
+		} else {
+			System.out.println("Modification d'un Editeur null !!!!!");
+			return;
+		}
+
 	}
 }

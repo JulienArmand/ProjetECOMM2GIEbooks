@@ -13,11 +13,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import beans.GestionLivre;
-import beans.InitBean;
 import model.Livre;
 
 public class GetLivreEnPromoServlet extends HttpServlet {
 
+	private static final long serialVersionUID = -5204392351534805766L;
+	
 	@EJB()  //ou @EJB si nom par défaut 
 	private GestionLivre myBean; 
 	
