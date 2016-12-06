@@ -1,12 +1,9 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +14,6 @@ import com.google.gson.GsonBuilder;
 
 import beans.InscriptionClientBean;
 import model.Client;
-import model.Livre;
 
 public class InscriptionClientServlet extends HttpServlet {
 

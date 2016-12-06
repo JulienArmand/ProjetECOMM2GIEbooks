@@ -1,8 +1,6 @@
 package beans;
 
-
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

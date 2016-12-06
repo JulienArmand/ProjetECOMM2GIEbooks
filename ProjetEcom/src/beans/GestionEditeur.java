@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import model.Auteur;
 import model.Editeur;
 
 @Stateless
@@ -36,7 +35,6 @@ public class GestionEditeur {
 	}
 	
 	public List<Editeur> getLesEditeurs() {
-
 		Query q = em.createQuery("select OBJECT(b) from Editeur b");
 		List<Editeur> list = (List<Editeur>) q.getResultList();
 		return list;

@@ -14,17 +14,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import beans.GestionLivre;
-import beans.InitBean;
 import model.Livre;
 
 public class GetLivreRechercheServlet extends HttpServlet {
 
-	@EJB()  //ou @EJB si nom par défaut 
-	private GestionLivre myBean; 
+	private static final long serialVersionUID = 2550627334891956751L;
 	
-	public GetLivreRechercheServlet() {
-		// TODO Auto-generated constructor stub
-	}
+	@EJB()
+	private GestionLivre myBean; 
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();

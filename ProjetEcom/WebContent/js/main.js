@@ -131,9 +131,9 @@ app.controller("menuCtrl", function($scope, $rootScope, $http){
         return input;
     };
     
-    $http.get("Genres").then(function(response) {
-    	$scope.genres = response.data;
-    });
+    $http.get("GetTous", {params:{"action": "genres"}}).then(function(response) {				
+		$scope.genres = response.data;
+	});
 
 
 	$scope.rechercheMenu = function(){

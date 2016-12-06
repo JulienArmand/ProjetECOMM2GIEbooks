@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -20,11 +19,9 @@ import beans.GestionAuteur;
 import beans.GestionEditeur;
 import beans.GestionGenre;
 import beans.GestionLivre;
-import model.Auteur;
 import model.Editeur;
 import model.Genre;
 import model.Livre;
-import model.Promotion;
 
 public class AjouterLivreServlet extends HttpServlet {
 	
@@ -38,8 +35,6 @@ public class AjouterLivreServlet extends HttpServlet {
 	private GestionEditeur beanEditeur;
 	@EJB()
 	private GestionGenre beanGenre;
-
-	private List<Auteur> listA;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
@@ -76,7 +71,6 @@ public class AjouterLivreServlet extends HttpServlet {
 		try {
 			l = beanLivre.creerLivre(titre, null, editeur, genre, isbn, nbpage, prix, langue, langueOriginale, couverture, null, resume, datePub);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         String str = js.toJson(l);

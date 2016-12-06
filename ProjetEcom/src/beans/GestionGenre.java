@@ -7,9 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import model.Auteur;
 import model.Genre;
-import model.Livre;
 
 @Stateless
 public class GestionGenre {
@@ -41,6 +39,12 @@ public class GestionGenre {
 		Query q2 = em.createNativeQuery("ALTER TABLE Genre {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
 		q2.executeUpdate();
+	}
+	
+	public List<Genre> getLesGenres() {
+		Query q = em.createQuery("select OBJECT(b) from Genre b");
+		List<Genre> list = (List<Genre>) q.getResultList();
+		return list;
 	}
 	
 	public List<Genre> getTousLesGenres(){

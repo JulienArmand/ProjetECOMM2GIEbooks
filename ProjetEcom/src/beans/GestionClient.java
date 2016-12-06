@@ -36,6 +36,12 @@ public class GestionClient {
 		String idClient = g.getCookieByName(cookies, "idClient").getValue();
 		return em.find(Client.class, idClient);
 	}
+	
+	public List<Client> getLesClients() {
+		Query q = em.createQuery("select OBJECT(b) from Client b");
+		List<Client> list = (List<Client>) q.getResultList();
+		return list;
+	}
 
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Client");

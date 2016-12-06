@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -21,7 +20,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import Tools.ElasticSearchTools;
-import Tools.Tools;
 import model.Auteur;
 import model.Client;
 import model.Editeur;
@@ -100,7 +98,6 @@ public class InitBean {
 		try {
 			suppressionBD();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -170,7 +167,6 @@ public class InitBean {
 						langueO, couv, promo, resume, datePub);
 				livres.add(livre);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -211,7 +207,6 @@ public class InitBean {
 			gestionAvis.creerAvis(livres.get(1), s, 2, commentaire);
 			gestionAvis.creerAvis(livres.get(1), s, 2, commentaire);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

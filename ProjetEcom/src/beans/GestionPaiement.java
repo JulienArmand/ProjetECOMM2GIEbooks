@@ -37,7 +37,7 @@ public class GestionPaiement {
 		if (leClient.getLesMoyenDePaiement().isEmpty()) {
 			mp = creerMoyenPaiement(type);
 		} else {
-			Iterator it = leClient.getLesMoyenDePaiement().iterator();
+			Iterator<MoyenPaiement> it = leClient.getLesMoyenDePaiement().iterator();
 			while (it.hasNext()) {
 				mp = (MoyenPaiement) it.next();
 				if (type.equals("CB") && mp instanceof CarteBancaire)

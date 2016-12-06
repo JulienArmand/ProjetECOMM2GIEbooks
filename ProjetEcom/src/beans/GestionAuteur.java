@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import model.Auteur;
-import model.Client;
 
 @Stateless
 public class GestionAuteur {
@@ -37,7 +36,6 @@ public class GestionAuteur {
 	}
 
 	public List<Auteur> getLesAuteurs() {
-
 		Query q = em.createQuery("select OBJECT(b) from Auteur b");
 		List<Auteur> list = (List<Auteur>) q.getResultList();
 		return list;
