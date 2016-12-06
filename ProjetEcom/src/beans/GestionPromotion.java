@@ -1,5 +1,6 @@
 package beans;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 
@@ -50,6 +51,32 @@ public class GestionPromotion {
 		Query q2 = em.createNativeQuery("ALTER TABLE Promotion {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
 		q2.executeUpdate();
+	}
+
+	public void creerPromotion(Livre l, int taux, String dateD, String dateF) {
+		
+		String pattern = "dd/MM/yyyy";
+		SimpleDateFormat format = new SimpleDateFormat(pattern);
+
+		try {
+			Date dateDD = format.parse(dateD);
+			Date dateFF = format.parse(dateD);
+			Promotion p = new Promotion(taux, dateDD, dateFF);
+
+			p.setLivre(l);
+			l.setPromotion(p);
+			em.persist(p);
+			em.persist(l);
+			
+		}catch(Exception e){
+			
+		}
+		
+		
+		
+
+		
+		
 	}
 
 }

@@ -37,11 +37,25 @@ public class GestionGenre {
 		q.executeUpdate();
 		q2.executeUpdate();
 	}
-	
-	public List<Genre> getTousLesGenres(){
+
+	public List<Genre> getTousLesGenres() {
 		Query q = em.createQuery("select OBJECT(g) from Genre g");
 		List<Genre> list = (List<Genre>) q.getResultList();
 		return list;
+	}
+
+	public void modifierGenre(Long id, String nom) {
+		Genre g = em.find(Genre.class, id);
+		if (g != null) {
+			System.out.println("Modif du genre d'id : " + g.getId());
+			g.setNom(nom);
+			em.persist(g);
+
+		} else {
+			System.out.println("Modification d'n genre null !!!!!");
+			return;
+		}
+
 	}
 
 }

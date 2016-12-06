@@ -77,6 +77,7 @@
 				<!-- -->
 				<script type="text/ng-template" id="templatePopoverConnexion.html" >
 				<div >
+					<form>
 					<div class="form-group">
 						<span id="erreurIdentifiant" style="display: none; color: red;">Identifiant ou mot de passe incorrect</span>
 						<label for="commentaire">Identifiant</label>
@@ -85,6 +86,7 @@
 						<input ng-model="mdp" type="password" class="form-control" id="pseudo"></input>
 					</div>
 					<input type="submit" class="btn btn-warning" ng-click="connexion(pseudo, mdp)" value="Connexion"></input><br>
+					</form>
 					<span>Pas encore inscrit? </span><br><a ng-href="#/inscription"">Cliquez ici</a>
 				</div>
 	    		</script>

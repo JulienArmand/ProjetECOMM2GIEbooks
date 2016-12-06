@@ -42,7 +42,9 @@ public class GestionLivre {
 	
 	@EJB()
 	private ConfigurationGenerale conf;
-
+	@EJB()
+	private GestionPromotion promoBean;
+	
 	public Livre creerLivre(String nom, List<Auteur> a, Editeur e, Genre g, String isbn, int nbpage, float prix,
 			String langue, String langueOriginale, String couverture, Promotion promo, String resume, Date datePub) throws Exception {
 
@@ -241,6 +243,21 @@ public class GestionLivre {
 		Query q2 = em.createNativeQuery("ALTER TABLE Livre {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
 		q2.executeUpdate();
+	}
+
+	public void ajouterPromo(Long id, int taux, String dateD, String dateF) {
+		Livre l = em.find(Livre.class, id);
+		if(l != null){
+			
+			promoBean.creerPromotion(l, taux, dateD, dateF);
+			
+		}else{
+			
+			System.out.println("Ajout promo :  Livre null !!!!!");
+			return;
+			
+		}
+		
 	}
 
 }
