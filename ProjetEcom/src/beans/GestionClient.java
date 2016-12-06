@@ -27,8 +27,7 @@ public class GestionClient {
 	}
 	
 	public Client getClient(long id){
-		Query q = em.createQuery("select OBJECT(b) from Client b where b.id =" + id);
-		return (Client)q.getSingleResult();
+		return em.find(Client.class, id);
 	}
 	
 	public Client getClientByCookie(HttpServletRequest request){

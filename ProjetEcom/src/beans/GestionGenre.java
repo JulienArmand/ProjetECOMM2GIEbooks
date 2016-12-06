@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import model.Auteur;
 import model.Genre;
 import model.Livre;
 
@@ -29,6 +30,10 @@ public class GestionGenre {
 			g = lg.get(0);
 
 		return g;
+	}
+	
+	public Genre getGenre(long id){
+		return em.find(Genre.class, id);
 	}
 
 	public void supprimerTous() {

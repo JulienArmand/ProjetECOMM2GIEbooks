@@ -205,6 +205,7 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart){
 		{nom : "Décembre", valeur : "12"},
 		{nom : "Mois", valeur : "0", selected : "true", disabled : "true"}
 	];
+	
 	$scope.selectedMois = $scope.mois[0].value;
 	
 	$scope.changeRadio = function(idForm, bool){
@@ -241,22 +242,51 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart){
 	}
 });
 
-app.controller("ajoutLivreCtrl", function($scope, $http, $rootScope, ngCart){
+app.controller("ajoutLivreCtrl", function($scope, $http, $rootScope){
 		
-	creerCommande = function(){
-		$http.get("GestionCommande", {
-			params:{"action" :"post",
-			"type" : $scope.moyenPaiement.moyen,
-			"livres" : idLivres }}).then(function(response) {				
-				for(i = ngCart.getItems().length; i >= 0; i--){
-					ngCart.removeItem(i);
-				}
-				$rootScope.commande = response.data;
-				
-				
-				window.location.href="#/confirmation";
+	creerLivre = function(){
+		$http.get("AjouterLivre", {
+			params:{
+				"titre" : $("#titre").val(),
+				"editeur" : $scope.selectedEditeur,
+				"genre" : $scope.selectedGenre,
+				"isbn" : $("#isbn").val(),
+				"nbPage" : $("#nbPage").val(),
+				"prix" : $("#prix").val(),
+				"lang" : $("#langue").val(),
+				"langOrig" : $("#langOrig").val(),
+				"couverture" : $("#couverture").val(),
+				"resume" : $("#resume").val(),
+				"datePub" : $("#datePub").val()
+				}}).then(function(response) {				
+				console.log("Livre ajoutée");
 		});
 	}
+		
+	$http.get("GetTous", {params:{"action": "genres"}}).then(function(response) {				
+		$scope.genres = response.data;
+	});
+	
+	$scope.selectedGenre = null;
+	
+	$http.get("GetTous", {params:{"action": "auteurs"}}).then(function(response) {				
+			$scope.auteurs = response.data;
+	});
+	
+	$scope.selectedAuteur = null;
+	
+	$http.get("GetTous", {params:{"action": "editeurs"}}).then(function(response) {				
+		$scope.editeurs = response.data;
+	});
+	
+	$scope.selectedEditeur = null;
+	
+	$http.get("GetTous", {params:{"action": "promotions"}}).then(function(response) {				
+		$scope.promotions = response.data;
+	});
+	
+	$scope.selectedPromotion = null;
+	
 });
 
 app.controller("pageChange", function($scope){
@@ -614,6 +644,10 @@ app.config(['$routeProvider',
         .when('/modificationMotDePasse',{
         	templateUrl : 'partials/ModificationMotDePasse.html',
         	controller: 'modificationMotDePasse'
+        })
+        .when('/ajouterLivre',{
+        	templateUrl : 'partials/ajoutLivre.html',
+        	controller: 'ajoutLivreCtrl'
         })
     }
 ]);

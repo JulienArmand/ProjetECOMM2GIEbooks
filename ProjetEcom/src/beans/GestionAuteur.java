@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import model.Auteur;
+import model.Client;
 
 @Stateless
 public class GestionAuteur {
@@ -29,6 +30,10 @@ public class GestionAuteur {
 			a = la.get(0);
 
 		return a;
+	}
+	
+	public Auteur getAuteur(long id){
+		return em.find(Auteur.class, id);
 	}
 
 	public List<Auteur> getLesAuteurs() {

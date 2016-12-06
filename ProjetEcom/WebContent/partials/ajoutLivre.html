@@ -1,0 +1,110 @@
+<section>
+	<div style="padding: 2em 2em 2em 2em;" class="container-fluid">
+
+
+		<h3 style="margin: 1em 1em 1em 1em">Ajouter un livre</h3>
+
+
+		<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Informations du livre</h3>
+				</div>
+				<div class="panel-body form-group">
+
+					<table WIDTH=100%>
+						<tr>
+							<td>Titre</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" id="titre"
+								class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+						</tr>
+						<!-- <tr>
+							<td>Auteur</td>
+							<td>:</td>
+							<td ALIGN="right">
+								<select class="form-control" ng-model="selectedAuteur">
+									<option ng-repeat="a in auteurs" value="{{a.id}}">{{a.nom}} {{a.prenom}}</option>
+								</select></td>
+						</tr> -->
+						<tr>
+							<td>Editeur</td>
+							<td>:</td>
+							<td ALIGN="right">
+								<select class="form-control" ng-model="selectedEditeur">
+									<option ng-repeat="e in editeurs" value="{{e.id}}">{{e.nom}}</option>
+								</select></td>
+						</tr>
+						<tr>
+							<td>Genre</td>
+							<td>:</td>
+							<td ALIGN="right">
+								<select class="form-control" ng-model="selectedGenre">
+									<option ng-repeat="g in genres" value="{{g.id}}">{{g.nom}}</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>ISBN</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" id="isbn"
+								class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+						</tr>
+						<tr>
+							<td>Nombre de page</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" id="nbPage"
+								class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+						</tr>
+						<tr>
+							<td>Prix</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" id="prix"
+								class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+						</tr>
+						<tr>
+							<td>Langue</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" id="langue"
+								class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+						</tr>
+						<tr>
+							<td>Langue originale</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" id="langOrig"
+								class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+						</tr>
+						<tr>
+							<td>Couverture</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" id="couverture"
+								class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+						</tr>
+						<tr>
+							<td>Résumé</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" id="resume"
+								class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+						</tr>
+						<tr>
+							<td>Date de publication</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" id="datePub"
+								class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td ALIGN="right"><input type="submit" value="Modifier"
+								onclick="creerLivre()"
+								class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
+						</tr>
+					</table>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</section>

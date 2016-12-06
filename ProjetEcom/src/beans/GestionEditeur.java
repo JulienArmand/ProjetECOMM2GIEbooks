@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import model.Auteur;
 import model.Editeur;
 
 @Stateless
@@ -30,6 +31,17 @@ public class GestionEditeur {
 		return e;
 	}
 
+	public Editeur getEditeur(long id){
+		return em.find(Editeur.class, id);
+	}
+	
+	public List<Editeur> getLesEditeurs() {
+
+		Query q = em.createQuery("select OBJECT(b) from Editeur b");
+		List<Editeur> list = (List<Editeur>) q.getResultList();
+		return list;
+	}
+	
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Editeur");
 		Query q2 = em.createNativeQuery("ALTER TABLE Editeur {ALTER id RESTART WITH 0} ");
