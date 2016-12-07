@@ -188,6 +188,9 @@ app.controller("commandeClientCtrl", function($scope, $http, $rootScope, ngCart)
 
 
 app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart){
+	
+	$("#menu").hide();
+	
 	$scope.mois = [
 		{nom : "Janvier", valeur : "1"},
 		{nom : "Février", valeur : "2"},
@@ -241,6 +244,8 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart){
 });
 
 app.controller("ajoutLivreCtrl", function($scope, $http, $rootScope){
+	
+	$("#menu").hide();
 	
 	toggle_div = function (bouton, id) { // On déclare la fonction toggle_div qui prend en param le bouton et un id
 		  var div = document.getElementById(id); // On récupère le div ciblé grâce à l'id
@@ -611,6 +616,7 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
 
 routeAppControllers.controller("inscriptionClient", function($scope, $http,$rootScope){
 	
+	$("#menu").hide();	
 
     $http.get("InscriptionClient").then(function(response) {
         $scope.message = response.data;
@@ -681,6 +687,9 @@ routeAppControllers.controller("connexionCtrl", function($scope, $http,$routePar
 
 
 routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeParams,$rootScope){	
+	
+	$("#menu").hide();
+	
 	$scope.rez= true;
 	$scope.emailSave = "hello";
 	$scope.submit = function() {
@@ -697,6 +706,9 @@ routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeP
 });
 
 routeAppControllers.controller("compteClient", function($scope, $http, $location, $rootScope){	
+	
+	$("#menu").hide();
+	
 	$http.get("GetInfoClient", {params:{"pseudo": getCookie('login')}}).then(function(response) {
 		var data = response.data;
     	$scope.pseudo = data.pseudo;
@@ -735,7 +747,7 @@ app.config(['$routeProvider',
         })
         .when('/panier', {
         	templateUrl: 'partials/monPanier.html',
-        	controller: 'contentCtrl'
+        	controller: 'paiementCtrl'
         })
         .when('/paiement', {
         	templateUrl: 'partials/paiement.html',
