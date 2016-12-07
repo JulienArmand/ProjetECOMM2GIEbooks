@@ -269,14 +269,30 @@ app.controller("ajoutLivreCtrl", function($scope, $http, $rootScope){
 		genre : "creation"
 	}
 	
-	setMoyen = function(str){
-		$scope.moyenPaiement.moyen = str;
+	setGenre = function(str){
+		$scope.formulaires.genre = str;
 	}
 	
 	$scope.selectedGenreToModify = null;
 	
 	creerGenre = function() {
-		
+		$http.get("CreerGenreServlet", {
+			params:{
+				"action" : "creer",
+				"nom" : $("#newGenre").val()
+				}}).then(function(response) {				
+				console.log("Genre ajoutée");
+		});
+	}
+	
+	modifierGenre = function() {
+		$http.get("CreerGenreServlet", {
+			params:{
+				"action" : "modif",
+				"nom" : $("#modifyGenre").val()
+				}}).then(function(response) {				
+				console.log("Genre modifier");
+		});
 	}
 	
 	creerPromotion = function() {
