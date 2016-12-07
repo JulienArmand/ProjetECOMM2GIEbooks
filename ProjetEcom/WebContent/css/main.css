@@ -238,7 +238,7 @@ input.affichage:checked + label {
 }
 
 .svgPanier {
-	width:200px;
+	/*width:200px;*/
     height:50px;
 }
 
@@ -246,4 +246,10 @@ input.affichage:checked + label {
 	padding-top : 5px;
 	padding-bottom : 5px;
 	border-bottom: 1px solid #D9DADB;
+}
+
+.imageListeRechercheMosaique {
+    display: block;
+    height: 35em;
+    width: 22em;
 }

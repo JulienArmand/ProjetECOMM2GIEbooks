@@ -10,10 +10,9 @@
 				<li ng-repeat="auteur in livre.lesAuteurs">{{auteur.prenom}} {{auteur.nom}}</li>
 			</ul>
 			<h5>{{livre.editeur.nom}} | Publié le {{livre.dateDePublication}} | 
-			<a href ng-click="allerAAvis()"><span uib-rating ng-model="moyenne" max="5" read-only="true" style="color: #fde16d;" aria-labelledby="default-rating"></span>
-			
-			({{nombreAvis(livre.lesAvis)}} avis)</a></h5>
-			
+			<a ng-if="livre.lesAvis.length > 0" href ng-click="allerAAvis()"><span uib-rating ng-model="moyenne" max="5" read-only="true" style="color: #fde16d;" aria-labelledby="default-rating"></span>
+			({{nombreAvis(livre.lesAvis)}} avis)</a>
+			<a ng-if="livre.lesAvis.length == 0" href ng-click="allerAAvis()">Pas d'avis</a></h5>
 			<h5>Résume</h5>
 			<h5>{{premierePartieResume}}</h5>
 			<a ng-if="deuxiemePartieResume" href="" data-toggle="collapse" data-target="#collapseResume">En lire plus <i class="glyphicon glyphicon-menu-down"></i></a>
@@ -61,7 +60,6 @@
 							<td ALIGN="right">{{livre.isbn}}</td>
 						</tr>
 					</table>
-
 				</div>
 			</div>
 		</div>
@@ -83,7 +81,7 @@
 		</div>
 		<li id="lesAvis" class="list-unstyled row panel panel-default col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-repeat="avi in livre.lesAvis" style="margin-left: 0.2%;">
 			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-				<span uib-rating ng-model="avi.note" max="5" read-only="true" titles="['one','two','three']" style="color: #fde16d; font-size: 2em;" aria-labelledby="default-rating"></span>
+				<span uib-rating ng-model="avi.note" max="5" read-only="true" style="color: #fde16d; font-size: 2em;" aria-labelledby="default-rating"></span>
 				<h4>De {{avi.leClient.pseudo}}</h4>
 				<h5>{{formatDateDMY(avi.dateDePublication)}}</h5>
 			</div>

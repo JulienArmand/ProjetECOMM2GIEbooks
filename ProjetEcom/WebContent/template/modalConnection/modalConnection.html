@@ -5,12 +5,14 @@
 	<div class="modal-body" id="modal-body">
 		<div class="form-group">
 			<span id="erreurIdentifiantModal" style="display: none; color: red;">Identifiant ou mot de passe incorrect</span>
-			<label for="commentaire">Identifiant</label>
+			<label>Identifiant</label>
 			<input ng-model="pseudo" class="form-control" id="pseudo"></input>
-			<label for="mdp">Mot de passe</label>
+			<label>Mot de passe</label>
 			<input ng-model="mdp" type="password" class="form-control" id="pseudo"></input>
-		</div>
-		<input type="submit" class="btn btn-primary" ng-click="connexion(pseudo, mdp)" value="Connexion"></input>
+		</div>		
 	</div>
-	<div class="modal-footer"></div>
+	<div class="modal-footer">
+		<input type="submit" class="btn btn-warning" ng-click="connexion(pseudo, mdp)" value="Connexion"></input>
+		<button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
+	</div>
 </div>

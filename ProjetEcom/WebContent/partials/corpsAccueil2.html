@@ -12,9 +12,8 @@
 		<a ng-if="livre.titre.length>20" ng-href="#/info/{{livre.id}}"  title="{{livre.titre}}"><span ng-bind="livre.titre.substring(0,20)+'...'" style="overflow-y: hidden;"></span></a>
 		<a ng-if="livre.titre.length<=20" ng-href="#/info/{{livre.id}}"  title="{{livre.titre}}"><span ng-bind="livre.titre" style="overflow-y: hidden;"></span></a>
 		<h6 ng-if="livre.lesAuteurs" >{{livre.lesAuteurs[0].prenom}} {{livre.lesAuteurs[0].nom}}</h6>
-		<div ng-init="moyAvis = calculeMoyenne(livre.lesAvis)" >
-			<span>{{moyAvis}}</span>
-		</div>
+		<div ng-if="livre.lesAvis.length > 0"><span uib-rating ng-model="calculeMoyenne(livre.lesAvis)" max="5" read-only="true" style="color: #fde16d;" aria-labelledby="default-rating"></span>({{livre.lesAvis.length}} avis)</div>
+		<span ng-if="livre.lesAvis.length == 0">Pas d'avis</span>
 		<div>
 			<span style="text-decoration: line-through; color: red;">{{livre.prix}} €</span> <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
 			<ngcart-addtocart class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" id="{{livre.id}}" name="{{livre.titre}}" price="{{calculPromo(livre.prix,livre.promotion.tauxReduc)}}" quantity="1"></ngcart-addtocart>
@@ -26,7 +25,7 @@
 <slick infinite="true" slides-to-show="7" responsive="breakpoints" dots="false" arrows="true" data="livresPlusVendu" init-onload="true">
 
 <div ng-repeat="livre in livresPlusVendu" class="mosaique-item">
-	<div>
+	<div  class="image">
 		<a ng-href="#/info/{{livre.id}}"> <img ng-src="{{livre.nomCouverture}}" class="img-responsive" />
 		</a>
 	</div>
@@ -35,9 +34,8 @@
 		<a ng-if="livre.titre.length<=20" ng-href="#/info/{{livre.id}}"  title="{{livre.titre}}"><span ng-bind="livre.titre" style="overflow-y: hidden;"></span></a>
 		
 		<h6>{{livre.lesAuteurs[0].prenom}} {{livre.lesAuteurs[0].nom}}</h6>
-		<div>
-			<span>{{calculeMoyenne(livre.lesAvis)}}</span> <i class="a-star-small-4-5"></i>
-		</div>
+		<div ng-if="livre.lesAvis.length > 0"><span uib-rating ng-model="calculeMoyenne(livre.lesAvis)" max="5" read-only="true" style="color: #fde16d;" aria-labelledby="default-rating"></span>({{livre.lesAvis.length}} avis)</div>
+		<span ng-if="livre.lesAvis.length == 0">Pas d'avis</span>
 		<div ng-if="estEnPromo(livre.promotion)">
 			<span style="text-decoration: line-through; color: red;">{{livre.prix}} €</span> <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
 			<ngcart-addtocart id="{{livre.id}}" name="{{livre.titre}}" price="{{calculPromo(livre.prix,livre.promotion.tauxReduc)}}" quantity="1"></ngcart-addtocart>

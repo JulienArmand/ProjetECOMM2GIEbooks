@@ -187,7 +187,7 @@ app.controller("commandeClientCtrl", function($scope, $http, $rootScope, ngCart)
 
 
 
-app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart){
+app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart,$uibModal){
 	
 	$("#menu").hide();
 	
@@ -221,6 +221,19 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart){
 		$scope.moyenPaiement.moyen = str;
 	}
 	
+	$scope.passerPaiement = function() {
+			if(document.cookie != "") {			
+				window.location.href = "#/paiement";
+	    	} else { // popup connection
+	    		var modalInstance = $uibModal.open({
+	    		      ariaLabelledBy: 'modal-title',
+	    		      ariaDescribedBy: 'modal-body',
+	    		      templateUrl: '/template/modalConnection/modalConnection.html',
+	    		      controller: 'modalConnexionPaiementCtrl'
+	    		    });
+	    	}
+	}
+	
 	creerCommande = function(){
 		idLivres = "";
 		for (i = 0; i < ngCart.getCart().items.length;i++){
@@ -247,8 +260,11 @@ app.controller("ajoutLivreCtrl", function($scope, $http, $rootScope){
 	
 	$("#menu").hide();
 	
-	toggle_div = function (bouton, id) { // On déclare la fonction toggle_div qui prend en param le bouton et un id
-		  var div = document.getElementById(id); // On récupère le div ciblé grâce à l'id
+	toggle_div = function (bouton, id) { // On déclare la fonction toggle_div
+											// qui prend en param le bouton et
+											// un id
+		  var div = document.getElementById(id); // On récupère le div ciblé
+													// grâce à l'id
 		  if(div.style.display=="none") { // Si le div est masqué...
 		    div.style.display = "block"; // ... on l'affiche...
 		    bouton.innerHTML = "-"; // ... et on change le contenu du bouton.
@@ -484,7 +500,18 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     		      ariaLabelledBy: 'modal-title',
     		      ariaDescribedBy: 'modal-body',
     		      templateUrl: '/template/modalConnection/modalConnection.html',
-    		      controller: 'modalConnexionCtrl'
+    		      controller: 'modalConnexionCommentaireCtrl',
+    		      resolve : {
+    		          note: function() {
+    		              return note;
+    		          },
+    		          commentaire: function(){
+    		              return commentaire;
+    		          },
+    		          idLivre: function(){
+    		              return $scope.livre.id;
+    		          }
+    		      }
     		    });
     	}
     }
@@ -494,7 +521,15 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     }
 });
 
-app.controller("modalConnexionCtrl", function($scope, $http, $uibModalInstance, $rootScope){
+app.controller("modalConnexionCommentaireCtrl", function($scope, $http, $uibModalInstance, $rootScope, note, commentaire, idLivre){
+	$scope.cancel = function () {
+	    $uibModalInstance.dismiss('cancel');
+	};
+	
+	$scope.envoyerCommentaire = function () {
+	    $uibModalInstance.dismiss('cancel');
+	};
+	
 	$scope.connexion = function (pseudo, mdp) {
 		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
 			var login = getCookie('login');
@@ -502,24 +537,51 @@ app.controller("modalConnexionCtrl", function($scope, $http, $uibModalInstance, 
 				$rootScope.login = login;
 				$rootScope.estConnecte = true;
 				$uibModalInstance.close();
-				$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : getCookie('idClient')}}).then(function(response) {
-	    			if(response.data != 'dejaCommente') {
-	    				$scope.livre = response.data;
-	    			}
-	    			else {
-	    				document.getElementById('erreurDejaCommente').style.display = "block";
-	    			}
-	    		});
+				$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": idLivre, "idClient" : getCookie('idClient')}}).then(function(response) {
+				   if(response.data != 'dejaCommente') { 
+					   $scope.livre = response.data; 
+				   } else {
+					   document.getElementById('erreurDejaCommente').style.display = "block"; 
+				   } 
+				});
 			}
 			var erreur = getCookie('erreur');
 			if (erreur == "true") {
 				$rootScope.estConnecte = false;
+				document.getElementById('erreurIdentifiantModal').style.display = "block";
 			}
 		});
 	}
 });
 
-app.controller("popoverConnexionCtrl", function($scope, $http, $rootScope){	
+app.controller("modalConnexionPaiementCtrl", function($scope, $http, $uibModalInstance, $rootScope){
+	$scope.cancel = function () {
+	    $uibModalInstance.dismiss('cancel');
+	};
+	
+	$scope.envoyerCommentaire = function () {
+	    $uibModalInstance.dismiss('cancel');
+	};
+	
+	$scope.connexion = function (pseudo, mdp) {
+		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
+			var login = getCookie('login');
+			if (login != null && login != "") {
+				$rootScope.login = login;
+				$rootScope.estConnecte = true;
+				$uibModalInstance.close();
+				window.location.href = "#/paiement";
+			}
+			var erreur = getCookie('erreur');
+			if (erreur == "true") {
+				$rootScope.estConnecte = false;
+				document.getElementById('erreurIdentifiantModal').style.display = "block";
+			}
+		});
+	}
+});
+
+app.controller("popoverConnexionCtrl", function($scope, $http, $rootScope){
 	$scope.connexion = function (pseudo, mdp) {
 		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
 			var login = getCookie('login');
@@ -530,6 +592,7 @@ app.controller("popoverConnexionCtrl", function($scope, $http, $rootScope){
 			var erreur = getCookie('erreur');
 			if (erreur == "true") {
 				$rootScope.estConnecte = false;
+				document.getElementById('erreurIdentifiantPopoverConnexion').style.display = "block";
 			}
 		});
 	}
@@ -604,8 +667,7 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
     		return "Pas d'avis";
     	for(i=0; i < list.length; i++)
     		moy += list[i].note;
-    	return (moy / list.length).toFixed(1) + "/5 ("+list.length+")";
-    	
+    	return (moy / list.length).toFixed(1);
     }
     
     $scope.calculPromo = calculPromo;
@@ -668,7 +730,7 @@ routeAppControllers.controller("recherche", function($scope, $http, $routeParams
     		return "Pas d'avis";
     	for(i=0; i < list.length; i++)
     		moy += list[i].note;
-    	return (moy / list.length).toFixed(1) + "/5 ("+list.length+")";
+    	return (moy / list.length).toFixed(1);
     	
     }
     
@@ -906,25 +968,6 @@ app.directive('hoverPopover', function ($compile, $templateCache, $timeout, $roo
 	    
 	};
 });
-
-function connexion ($rootScope, $http, pseudo, mdp) {
-	$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
-		var login = getCookie('login');
-		if (login != null && login != "") {
-			$rootScope.login = login;
-			$rootScope.estConnecte = true;
-		}
-		var erreur = getCookie('erreur');
-		if (erreur == "true") {
-			$rootScope.estConnecte = false;
-		}
-	});
-}
-
-function deconnexion ($rootScope) {
-	$rootScope.estConnecte = false;
-	document.cookie = "";
-}
 
 function getCookie(sName) {
     var oRegex = new RegExp("(?:; )?" + sName + "=([^;]*);?");
