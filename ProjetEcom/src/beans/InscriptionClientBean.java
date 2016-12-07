@@ -32,7 +32,7 @@ public class InscriptionClientBean {
 		List<Client> list = (List<Client>) q.getResultList(); 
 		return list;
 	} 
-	
+		
 	public void suppressionClients(){
 		
 	    Query q1 = em.createNativeQuery("DELETE FROM Client");

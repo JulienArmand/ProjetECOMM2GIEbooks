@@ -24,6 +24,13 @@ public class CreerAuteurServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		System.out.println("GET");
+		
+		if (request.getParameter("action").equals("creer") && !request.getParameter("nom").equals("") && !request.getParameter("prenom").equals("")) {
+			myBean.creerAuteur(request.getParameter("prenom"), request.getParameter("nom"));
+		}
+		else if(request.getParameter("action").equals("modif")){
+			myBean.modifierAuteur(Long.parseLong(request.getParameter("id")),request.getParameter("prenom"), request.getParameter("nom") );
+		}
 
 		response.sendRedirect("admin.html");
 	}

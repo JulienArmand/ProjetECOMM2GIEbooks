@@ -23,6 +23,13 @@ public class CreerEditeurServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		System.out.println("GET");
+		
+		if (request.getParameter("action").equals("creer") && !request.getParameter("nom").equals("")) {
+			myBean.creerEditeur(request.getParameter("Nom"));
+		}
+		else if(request.getParameter("action").equals("modif") && !request.getParameter("nom").equals("") && !request.getParameter("id").equals("")){
+			myBean.modifierEditeur(Long.parseLong(request.getParameter("id")), request.getParameter("nom") );
+		}
 
 		response.sendRedirect("admin.html");
 	}

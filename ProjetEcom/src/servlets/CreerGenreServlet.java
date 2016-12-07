@@ -22,6 +22,13 @@ public class CreerGenreServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		System.out.println("GET");
+		
+		if (request.getParameter("action").equals("creer") && !request.getParameter("nom").equals("")) {
+			myBean.creerGenre(request.getParameter("nom"));
+		}
+		else if(request.getParameter("action").equals("modif") && !request.getParameter("nom").equals("") && !request.getParameter("id").equals("")){
+			myBean.modifierGenre(Long.parseLong(request.getParameter("id")), request.getParameter("nom") );
+		}
 
 		response.sendRedirect("admin.html");
 	}

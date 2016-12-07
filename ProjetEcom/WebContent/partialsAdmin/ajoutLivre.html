@@ -4,13 +4,280 @@
 
 		<h3 style="margin: 1em 1em 1em 1em">Gestion des livres</h3>
 
+		<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Création d'informations <button onclick="toggle_div(this,'formCreation');" >+</button>
+					</h3>
+				</div>
+				<div id="formCreation" class="panel-body form-group" style="display:none">
+
+					<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<tr>
+							<td>
+								<div>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h3 class="panel-title">Création d'un genre  <button type="button" onclick="toggle_div(this,'formCreerGenre');">+</button></h3>
+										</div>
+										<div id="formCreerGenre" class="panel-body form-group" style="display:none;">
+
+											<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												<tr>
+													<td>Nom</td>
+													<td>:</td>
+													<td ALIGN="right"><input type="text" id="newGenre"
+														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td ALIGN="right"><input type="submit"
+														value="Créer genre" onclick="creerGenre()"
+														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
+												</tr>
+
+											</table>
+										</div>
+									</div>
+								</div>
+
+
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<div class="">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h3 class="panel-title">Création d'un auteur  <button type="button" onclick="toggle_div(this,'formCreerAuteur');">+</button></h3>
+										</div>
+										<div id="formCreerAuteur" class="panel-body form-group" style="display:none;">
+
+											<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												<tr>
+													<td>Nom</td>
+													<td>:</td>
+													<td ALIGN="right"><input type="text" id="newNomAuteur"
+														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+												</tr>
+												<tr>
+													<td>Prénom</td>
+													<td>:</td>
+													<td ALIGN="right"><input type="text"
+														id="newPrenomAuteur"
+														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td ALIGN="right"><input type="submit"
+														value="Créer genre" onclick="creerAuteur()"
+														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
+												</tr>
+
+											</table>
+										</div>
+									</div>
+								</div>
+
+
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h3 class="panel-title">Création d'un editeur  <button type="button" onclick="toggle_div(this,'formCreerEditeur');">+</button></h3>
+										</div>
+										<div id="formCreerEditeur" class="panel-body form-group" style="display:none;">
+
+											<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												<tr>
+													<td>Nom</td>
+													<td>:</td>
+													<td ALIGN="right"><input type="text" id="newEditeur"
+														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td ALIGN="right"><input type="submit"
+														value="Créer genre" onclick="creerEditeur()"
+														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
+												</tr>
+
+											</table>
+										</div>
+									</div>
+								</div>
+
+
+							</td>
+						</tr>
+
+					</table>
+				</div>
+			</div>
+		</div>
 
 		<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Ajout d'un livre</h3>
+					<h3 class="panel-title">Modifications d'informations <button type="button" onclick="toggle_div(this,'formModification');">+</button></h3>
 				</div>
-				<div class="panel-body form-group">
+				<div id="formModification" class="panel-body form-group" style="display:none">
+
+					<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<tr>
+							<td>
+
+								<div class="">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h3 class="panel-title">Modifications d'un genre  <button type="button" onclick="toggle_div(this,'formModifGenre');">+</button></h3>
+										</div>
+										<div id="formModifGenre" class="panel-body form-group" style="display:none;">
+
+											<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												<tr>
+													<td>Modifier le genre</td>
+													<td>:</td>
+													<td ALIGN="right"><select class="form-control"
+														ng-model="selectedGenreToModify">
+															<option ng-repeat="g in genres" value="{{g.id}}">{{g.nom}}</option>
+													</select></td>
+												</tr>
+												<tr>
+													<td>En</td>
+													<td>:</td>
+													<td><input type="text" id="modifyGenre"
+														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													</td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													</td>
+													<td ALIGN="right"><input type="submit"
+														value="Modifier" onclick="modifierGenre()"
+														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</td>
+
+						</tr>
+						<tr>
+							<td>
+								<div class="">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h3 class="panel-title">Modification d'un auteur  <button type="button" onclick="toggle_div(this,'formModifAuteur');">+</button></h3>
+										</div>
+										<div id="formModifAuteur" class="panel-body form-group" style="display:none;">
+
+											<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												<tr>
+													<td>Modifier l'auteur</td>
+													<td>:</td>
+													<td ALIGN="right"><select class="form-control"
+														ng-model="selectedAuteurToModify">
+															<option ng-repeat="a in auteurs" value="{{a.id}}">{{a.prenom}}
+																{{a.nom}}</option>
+													</select>
+													<td></td>
+												</tr>
+												<tr>
+													<td>Nouveau nom</td>
+													<td>:</td>
+													<td><input type="text" id="modifyNomAuteur"
+														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													</td>
+												</tr>
+												<tr>
+													<td>Nouveau prénom</td>
+													<td>:</td>
+													<td><input type="text" id="modifyPrenomAuteur"
+														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													</td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td ALIGN="right"><input type="submit"
+														value="Modifier l'auteur" onclick="modifierAuteur())"
+														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+
+								<div class="">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h3 class="panel-title">Modifications d'un editeur <button type="button" onclick="toggle_div(this,'formModifEdit');">+</button></h3>
+										</div>
+										<div id="formModifEdit" class="panel-body form-group" style="display:none;">
+
+											<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												<tr>
+													<td>Modifier l'éditeur</td>
+													<td>:</td>
+													<td ALIGN="right"><select class="form-control"
+														ng-model="selectedEditeurToModify">
+															<option ng-repeat="e in editeurs" value="{{e.id}}">{{e.nom}}</option>
+													</select>
+													<td></td>
+												</tr>
+												<tr>
+													<td>En</td>
+													<td>:</td>
+													<td><input type="text" id="modifyEditeur"
+														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													</td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td ALIGN="right"><input type="submit"
+														value="Modifier" onclick="modifierEditeur()"
+														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</td>
+
+						</tr>
+
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Ajout d'un livre <button type="button" onclick="toggle_div(this,'formAjoutLivre');">+</button></h3>
+				</div>
+				<div id="formAjoutLivre" class="panel-body form-group" style="display:none">
 
 					<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<tr>
@@ -96,257 +363,55 @@
 			</div>
 		</div>
 
-		<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Création d'informations</h3>
-				</div>
-				<div class="panel-body form-group">
-
-					<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<tr>
-							<td>
-								<div>
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h3 class="panel-title">Création d'un genre</h3>
-										</div>
-										<div class="panel-body form-group">
-
-											<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												<tr>
-													<td>Nom</td>
-													<td>:</td>
-													<td ALIGN="right"><input type="text" id="newGenre"
-														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
-
-												</tr>
-												<tr>
-													<td></td>
-													<td></td>
-													<td ALIGN="right"><input type="submit"
-														value="Créer genre" onclick="creerGenre()"
-														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
-												</tr>
-
-											</table>
-										</div>
-									</div>
-								</div>
 
 
-							</td>
-						</tr>
 
-						<tr>
-							<td>
-								<div class="">
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h3 class="panel-title">Création d'un auteur</h3>
-										</div>
-										<div class="panel-body form-group">
-
-											<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												<tr>
-													<td>Nom</td>
-													<td>:</td>
-													<td ALIGN="right"><input type="text" id="newNomAuteur"
-														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
-												</tr>
-												<tr>
-													<td>Prénom</td>
-													<td>:</td>
-													<td ALIGN="right"><input type="text"
-														id="newPrenomAuteur"
-														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
-												</tr>
-												<tr>
-													<td></td>
-													<td></td>
-													<td ALIGN="right"><input type="submit"
-														value="Créer genre" onclick="creerAuteur()"
-														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
-												</tr>
-
-											</table>
-										</div>
-									</div>
-								</div>
-
-
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div>
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h3 class="panel-title">Création d'un editeur</h3>
-										</div>
-										<div class="panel-body form-group">
-
-											<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												<tr>
-													<td>Nom</td>
-													<td>:</td>
-													<td ALIGN="right"><input type="text" id="newEditeur"
-														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
-
-												</tr>
-												<tr>
-													<td></td>
-													<td></td>
-													<td ALIGN="right"><input type="submit"
-														value="Créer genre" onclick="creerEditeur()"
-														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
-												</tr>
-
-											</table>
-										</div>
-									</div>
-								</div>
-
-
-							</td>
-						</tr>
-
-					</table>
-				</div>
-			</div>
-		</div>
 
 		<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Modifications d'informations</h3>
+					<h3 class="panel-title">Ajout d'une promotion <button type="button" onclick="toggle_div(this,'formAjoutProm');">+</button></h3>
 				</div>
-				<div class="panel-body form-group">
+				<div id="formAjoutProm" class="panel-body form-group" style="display:none;">
 
 					<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<tr>
-							<td>
-
-								<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h3 class="panel-title">Modifications d'un genre</h3>
-										</div>
-										<div class="panel-body form-group">
-
-											<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												<tr>
-													<td>Modifier le genre</td>
-													<td>:</td>
-													<td ALIGN="right"><select class="form-control"
-														ng-model="selectedGenreToModify">
-															<option ng-repeat="g in genres" value="{{g.id}}">{{g.nom}}</option>
-													</select>
-													<td></td>
-												</tr>
-												<tr>
-													<td>En</td>
-													<td>:</td>
-													<td><input type="text" id="modifyGenre"
-														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													</td>
-													<td ALIGN="right"><input type="submit"
-														value="Modifier" onclick="modifierGenre()"
-														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
-												</tr>
-											</table>
-										</div>
-									</div>
-								</div>
-							</td>
+					<tr>
+							<td>Livre</td>
+							<td>:</td>
+							<td ALIGN="right"><select class="form-control"
+								ng-model="selectedLivre">
+									<option ng-repeat="l in livres" value="{{l.id}}">{{l.titre}} / {{l.isbn}}</option>
+							</select></td>
 
 						</tr>
 						<tr>
-							<td>
-								<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h3 class="panel-title">Modification d'un auteur</h3>
-										</div>
-										<div class="panel-body form-group">
+							<td>Taux de réduction (0-100)</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" id="newTaux"
+								class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
 
-											<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												<tr>
-													<td>Modifier l'auteur</td>
-													<td>:</td>
-													<td ALIGN="right"><select class="form-control"
-														ng-model="selectedAuteurToModify">
-															<option ng-repeat="a in auteurs" value="{{a.id}}">{{a.prenom}}
-																{{a.nom}}</option>
-													</select>
-													<td></td>
-												</tr>
-												<tr>
-													<td>Nouveau nom</td>
-													<td>:</td>
-													<td><input type="text" id="modifyNomAuteur"
-														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													</td>
-												</tr>
-												<tr>
-													<td>Nouveau prénom</td>
-													<td>:</td>
-													<td><input type="text" id="modifyPrenomAuteur"
-														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													</td>
-												</tr>
-												<tr>
-													<td></td>
-													<td></td>
-													<td ALIGN="right"><input type="submit"
-														value="Modifier l'auteur" onclick="modifierAuteur())"
-														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
-												</tr>
-											</table>
-										</div>
-									</div>
-								</div>
-							</td>
 						</tr>
-						
 						<tr>
-							<td>
-
-								<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h3 class="panel-title">Modifications d'un editeur</h3>
-										</div>
-										<div class="panel-body form-group">
-
-											<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												<tr>
-													<td>Modifier le genre</td>
-													<td>:</td>
-													<td ALIGN="right"><select class="form-control"
-														ng-model="selectedEditeurToModify">
-															<option ng-repeat="e in editeurs" value="{{e.id}}">{{e.nom}}</option>
-													</select>
-													<td></td>
-												</tr>
-												<tr>
-													<td>En</td>
-													<td>:</td>
-													<td><input type="text" id="modifyEditeur"
-														class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													</td>
-													<td ALIGN="right"><input type="submit"
-														value="Modifier" onclick="modifierEditeur()"
-														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
-												</tr>
-											</table>
-										</div>
-									</div>
-								</div>
-							</td>
+							<td>Date de début (jj/mm/aaaa)</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" id="newDateD"
+								class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
 
 						</tr>
-						
+						<tr>
+							<td>Date de fin (jj/mm/aaaa)</td>
+							<td>:</td>
+							<td ALIGN="right"><input type="text" id="newDateF"
+								class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"></td>
+
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td ALIGN="right"><input type="submit" value="Créer promotion"
+								onclick="creerPromotion()"
+								class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
+						</tr>
 					</table>
 				</div>
 			</div>

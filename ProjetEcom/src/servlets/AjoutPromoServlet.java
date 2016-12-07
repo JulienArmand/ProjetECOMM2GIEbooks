@@ -24,6 +24,12 @@ public class AjoutPromoServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		System.out.println("GET");
+		
+		Long id = Long.parseLong(request.getParameter("id"));
+		int taux = Integer.parseInt(request.getParameter("Taux"));
+		String dateD = request.getParameter("dateD");
+		String dateF = request.getParameter("dateF");
+		myBean.ajouterPromo(id, taux, dateD, dateF);
 
 		response.sendRedirect("admin.html");
 	}
