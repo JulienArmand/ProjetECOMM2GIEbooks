@@ -15,7 +15,7 @@ public class ConnexionClient {
 	
 	public boolean checkPseudoExiste(String pseudo){
 		boolean result = false;
-		Query q = em.createQuery("select OBJECT(b) from Client b WHERE b.pseudo LIKE :reqpseudo AND b.desincrit = 'false'").setParameter("reqpseudo", pseudo);
+		Query q = em.createQuery("select OBJECT(b) from Client b WHERE b.pseudo LIKE :reqpseudo AND b.desinscrit = false").setParameter("reqpseudo", pseudo);
 		List<Client> list = (List<Client>) q.getResultList();
 		if(list.size() != 0){
 			result = true;
@@ -25,7 +25,7 @@ public class ConnexionClient {
 	
 	public boolean checkMotDePasseCorrect(String pseudo, String motDePasse){
 		boolean result = false;
-		Query q = em.createQuery("select OBJECT(b) from Client b WHERE b.pseudo LIKE :reqpseudo AND b.motDePasse LIKE :reqmotDePasse AND b.desincrit = 'false'").setParameter("reqpseudo", pseudo).setParameter("reqmotDePasse", motDePasse); 
+		Query q = em.createQuery("select OBJECT(b) from Client b WHERE b.pseudo LIKE :reqpseudo AND b.motDePasse LIKE :reqmotDePasse AND b.desinscrit = false").setParameter("reqpseudo", pseudo).setParameter("reqmotDePasse", motDePasse); 
 		List<Client> list = (List<Client>) q.getResultList(); 
 		if(list.size() != 0){
 			result = true;
@@ -34,7 +34,7 @@ public class ConnexionClient {
 	}
 	
 	public long getIdClient(String pseudo){
-		Query q = em.createQuery("select OBJECT(b) from Client b where b.pseudo = '" + pseudo+"' AND b.desincrit = 'false'");
+		Query q = em.createQuery("select OBJECT(b) from Client b where b.pseudo = '" + pseudo+"' AND b.desinscrit = false");
 		Client c = (Client)q.getSingleResult();
 		return c.getId();
 	}

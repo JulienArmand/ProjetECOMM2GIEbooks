@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import model.Editeur;
-import model.Genre;
 
 @Stateless
 public class GestionEditeur {
