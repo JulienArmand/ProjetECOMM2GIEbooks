@@ -113,9 +113,7 @@ public class GestionLivre {
 	}
 
 	public Livre getLivreAvecId(long id) {
-		Query q = em.createQuery("select OBJECT(b) from Livre b where b.id = " + id);
-		Livre livre = (Livre) q.getSingleResult();
-		return livre;
+		return em.find(Livre.class, id);
 	}
 
 	public Set<Livre> getDixLivresLesPlusVendu() {

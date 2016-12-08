@@ -13,11 +13,14 @@
 				<div class="panel-body">
 
 					<table WIDTH=100%>
-						<!--  <form action="/ModificationProfile" method="POST"> -->
 						<tr>
 							<td>Pseudo</td>
 							<td>:</td>
 							<td ALIGN="right"><input type="text" id="pseudo" class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12" value={{pseudo}}></td>
+							<span id="erreurPseudoExiste" style="display: none; color: red;">Ce pseudonyme est déjà utilisé.</span>
+							<span id="erreurDoubleExiste" style="display: none; color: red;">Ce pseudonyme et cette adresse mail sont déjà utilisés.</span>
+							<span id="erreurEmailExiste" style="display: none; color: red;">Cette adresse mail est déjà utilisée.</span>
+							<span id="confirmationModificationProfil" style="display: none; color: green;">Votre profil a été mis à jour.</span>
 						</tr>
 						<tr>
 							<td>Nom</td>
@@ -66,8 +69,11 @@
 							<td>Vous souhaitez supprimer votre compte ?</td>
 						</tr>
 						<tr>
+							<td style="color:red;">Attention, cette action est immédiate et irréversible !</td>
+						</tr>
+						<tr>
 							<td ALIGN="right">
-								<a ng-href="#/modificationMotDePasse" type="submit" class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning">Cliquez içi</a>
+								<input type="submit" value="Supprimer compte" onclick="supprimerProfil()" class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning">
 							</td>
 						</tr>
 					</table>
@@ -90,7 +96,7 @@
 					<h3 class="panel-title">Vos commandes</h3>
 				</div>
 				<div class="panel-body">
-					<table WIDTH=100% ng-if="commandes != null">
+					<table ng-if="commandes != null">
 						<tr ng-repeat="cmd in commandes">
 							<td>
 								<div class="panel panel-default">

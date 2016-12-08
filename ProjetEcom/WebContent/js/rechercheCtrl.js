@@ -1,4 +1,6 @@
 routeAppControllers.controller("recherche", function($scope, $http, $routeParams,$rootScope){
+	
+//	$("#menu").show();
     
 	$scope.calculPromo = function(prix, promo) {
     	return roundPrix(prix-(prix*promo)/100);

@@ -1,5 +1,7 @@
 routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope){
 	
+	$("#menu").show();
+	
 	$rootScope.req = "@";
 	$rootScope.genre = "@"; 
 	$rootScope.minPrix = -1;
