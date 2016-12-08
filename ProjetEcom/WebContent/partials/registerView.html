@@ -1,3 +1,5 @@
+<h2 class="titre">Inscription</h2>
+
 <div ng-if="rez===''">
 	<span style="color: green;font-weight:bold">Vous êtes maintenant inscrit</span><br><br>
 <!-- 	<span style="color: green;font-weight:bold">Un email a été envoyé à {{_email}}</span><br> -->
@@ -5,32 +7,32 @@
 	
 	<br><br><br>
 	
-	<form action="../index.html" class="col-lg-3 col-md-3 col-sm-3 col-xs-3" >
-		<input class="col-lg-8 col-md-8 col-sm-8 col-xs-8 btn btn-primary" type="submit" value="Retour">
+	<form action="../index.html" class="col-lg-6 col-md-6 col-sm-8 col-xs-12" >
+		<input class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning" type="submit" value="Retour">
 	</form>
 </div>
 
-<div ng-if="rez" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+<div ng-if="rez" class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
 	<span class="col-lg-10 col-md-10 col-sm-10 col-xs-10" ng-if="rez!==true" style="color: red;font-weight:bold">{{rez}}</span>
 	<form  ng-submit="submit()" >
-		<Label>Identifiant</Label><br>
+		<Label style="padding: 1em 0em 0em 0em;">Identifiant</Label><br>
 		<input class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-control" type="text"  placeholder="Identifiant" required ng-model="_id" ><br>
-		<Label>Nom</Label><br>
+		<Label style="padding: 1em 0em 0em 0em;">Nom</Label><br>
 		<input class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-control" type="text"  placeholder="Nom" required ng-model="_nom" ><br>
-		<Label>Prenom</Label><br>
+		<Label style="padding: 1em 0em 0em 0em;">Prenom</Label><br>
 		<input class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-control" type="text" placeholder="Prenom" required ng-model="_prenom" ><br>
-		<Label>Mot de passe</Label><br>
+		<Label style="padding: 1em 0em 0em 0em;">Mot de passe</Label><br>
 		<input class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-control" type="password"  placeholder="Mot de passe" required ng-model="_mdp" ><br> 
-		<Label>Confirmer mot de passe</Label><br>
+		<Label style="padding: 1em 0em 0em 0em;">Confirmer mot de passe</Label><br>
 		<input class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-control" type="password"  placeholder="Confirmer mot de passe" required ng-model="_mdpc" ><br> 
-		<Label>Email</Label><br>
+		<Label style="padding: 1em 0em 0em 0em;">Email</Label><br>
 		<input class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-control" type="text" placeholder="Email" required ng-model="_email" ><br><br><br>
-		<input class="col-lg-8 col-md-8 col-sm-8 col-xs-8 btn btn-primary" type="submit" id="submit" value="Inscription">
+		<input class="marginExt btn col-lg-4 col-md-4 col-sm-6 col-xs-12 btn-warning" type="submit" id="submit" value="Inscription">
 	</form>
 	<br><br><br>
 	
 	<form action="../index.html" >
-		<input class="col-lg-8 col-md-8 col-sm-8 col-xs-8 btn btn-primary" type="submit" value="Retour">
+		<input class="marginExt btn col-lg-4 col-md-4 col-sm-6 col-xs-12 btn-warning" type="submit" value="Retour" >
 	</form>
 
 
@@ -43,13 +45,6 @@
 		<input type="text" name="action" value="supprimer" style="display: none;"> <input type="submit" value="Supprimer les clients">
 	</form>
 </div>
-<!-- 	<a href="exemplesBD.csv"> telecharger le fichier lisezmoi.txt <a/>.  -->
-<!-- 	<span>email: {{_email}} </span><br> -->
-<!-- 	<span>email: {{emailSave}} </span><br> -->
-<!-- 	<span>nom: {{_nom}} </span><br> -->
-<!-- 	<span>Resultat: {{rez}} </span><br> -->
-<!-- 	<input class="btn btn-primary" type="submit" onclick="telecharger('Hello World!','dlTextTest.txt', 'text/plain')" value="Telecharger"> -->
-
 
 
 

@@ -1,16 +1,3 @@
-routeAppControllers.controller("inscriptionClient", function($scope, $http,$rootScope){
-	
-	$("#menu").hide();	
-
-    $http.get("InscriptionClient").then(function(response) {
-        $scope.message = response.data;
-        
-        console.log($scope.message);
-        
-    });
-
-    
-});
 
 routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeParams,$rootScope){	
 	
