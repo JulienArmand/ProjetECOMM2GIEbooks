@@ -2,28 +2,6 @@ var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'ngCart', 'routeAppC
 
 var routeAppControllers = angular.module('routeAppControllers', []);
 
-app.controller("footerCtrl", function($scope){
-
-    // ...
-
-});
-
-
-
-app.controller('ExampleController', ['$scope', function($scope) {
-	$scope.items = ['connecte', 'visiteur','autre'];
-	  $scope.selection = $scope.items[1];
-	  $scope.list = [];
-      $scope.text = 'hello';
-      $scope.submit = function() {
-        if ($scope.text) {
-          $scope.list.push(this.text);
-          $scope.text = '';
-        }
-      };
-}]);
-
-
 app.controller('CookiesCtrl', ['$cookies', function($cookies) {
 	  // Retrieving a cookie
 	  var favoriteCookie = $cookies.get('myFavorite');
@@ -43,14 +21,10 @@ app.controller("coDecoCtrl", function($scope){
 
 app.controller("searchCtrl", function($scope){
 
-	  
-
 });
 
 app.controller("pageChange", function($scope){
-	/*
-	 * $scope.pageChangeHandler = function(num) { alert(num); };
-	 */
+	
 });
 
 app.config(['$routeProvider',
