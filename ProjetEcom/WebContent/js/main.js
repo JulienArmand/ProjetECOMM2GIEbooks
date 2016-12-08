@@ -53,7 +53,6 @@ app.controller("pageChange", function($scope){
 	 */
 });
 
-
 app.config(['$routeProvider',
     function($routeProvider) { 
         

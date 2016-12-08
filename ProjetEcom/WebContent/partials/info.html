@@ -65,7 +65,7 @@
 		</div>
 	</div>
 	<div id="avisClient" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
-		<h3>Avis client</h3>
+		<h3 class="titre">Avis client</h3>
 		<div class="panel panel-default col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" style=" text-align: center;">
 			<div class="panel-body">
 				<h4>Poster un commentaire :</h4>
@@ -80,15 +80,13 @@
 			</div>
 		</div>
 		<li id="lesAvis" class="list-unstyled row panel panel-default col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-repeat="avi in livre.lesAvis" style="margin-left: 0.2%;">
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-				<span uib-rating ng-model="avi.note" max="5" read-only="true" style="color: #fde16d; font-size: 2em;" aria-labelledby="default-rating"></span>
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="height :100%;padding-top:2%;padding-bottom:2px;">
+				<span uib-rating ng-model="avi.note" max="5" read-only="true" style="color: #fde16d; font-size: 16px;" aria-labelledby="default-rating"></span>
 				<h4>De {{avi.leClient.pseudo}}</h4>
 				<h5>{{formatDateDMY(avi.dateDePublication)}}</h5>
 			</div>
-			<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-				<h4>
-					<br>{{avi.commentaire}}
-				</h4>
+			<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12" style="padding-top:10px;">
+					<span style="text-align: justify; font-size:16px;">{{avi.commentaire}}</span>
 			</div>
 		</li>
 	</div>
