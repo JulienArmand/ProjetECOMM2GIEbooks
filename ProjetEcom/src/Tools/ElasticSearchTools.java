@@ -64,7 +64,7 @@ public class ElasticSearchTools {
 	}
 	
 	
-	public static String rechercheElasticSearch(String requeteBarre, int prixMin, int prixMax, String genre, int avisMin)
+	public static String rechercheElasticSearch(String requeteBarre, double d, double e, String genre, int avisMin)
 			throws Exception {
 
 
@@ -78,19 +78,19 @@ public class ElasticSearchTools {
 			prec = true;
 		}
 		String blocReqPrix = "";
-		if (prixMin != -1 || prixMax != -1) {
+		if (d != -1 || e != -1) {
 
 			if (prec)
 				blocReqPrix += ",";
-			if (prixMin != -1 && prixMax != -1) {
-				blocReqPrix += "{ \"range\" : { \"prix\" : {\"lte\" : " + prixMax + "  ,\"gte\" : " + prixMin + " }}}";
+			if (d != -1 && e != -1) {
+				blocReqPrix += "{ \"range\" : { \"prix\" : {\"lte\" : " + e + "  ,\"gte\" : " + d + " }}}";
 				
 			}
-			else if (prixMin != -1 && prixMax == -1) {
-				blocReqPrix += "{ \"range\" : { \"prix\" : {\"gte\" : " + prixMin + " }}}";
+			else if (d != -1 && e == -1) {
+				blocReqPrix += "{ \"range\" : { \"prix\" : {\"gte\" : " + d + " }}}";
 
 			} else { // prixMin == -1 || prixMax != -1
-				blocReqPrix += "{ \"range\" : { \"prix\" : {\"lte\" : " + prixMax + " }}}";
+				blocReqPrix += "{ \"range\" : { \"prix\" : {\"lte\" : " + e + " }}}";
 			}
 
 			prec = true;
@@ -202,4 +202,24 @@ public class ElasticSearchTools {
 		rd.close();
 	}
 
+	public static void supprimerIndex(String url) throws IOException{
+		
+		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("http.proxyPort", "3128");
+		System.setProperty("https.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("https.proxyPort", "3128");
+		
+		InputStream is = ElasticSearchTools.doRequest(url, "DELETE", "");
+		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		StringBuilder response = new StringBuilder(); // or StringBuffer if
+														// Java version 5+
+		String line;
+		while ((line = rd.readLine()) != null) {
+			response.append(line);
+			response.append('\r');
+		}
+		rd.close();
+		
+	}
+	
 }
