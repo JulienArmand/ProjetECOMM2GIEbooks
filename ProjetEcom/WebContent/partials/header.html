@@ -1,7 +1,7 @@
 <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
-	<span class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding logo"> <a href="" ng-click="redirection()"> <img ng-src="images/logoEcom2.png" class="img-responsive" /></a>
+	<span class="col-lg-2 col-md-3 col-sm-3 col-xs-12 no-padding logo"> <a href="" ng-click="redirection()"> <img ng-src="images/logoEcom2.png" class="img-responsive" /></a>
 	</span>
-	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-top: 0.8%;">
+	<div class="col-lg-8 col-md-6 col-sm-6 col-xs-12" style="margin-top: 0.8%;">
 		<form ng-submit="rechercheBarre()" role="form" name="form" action="" method="post">
 
 			<div class="input-group input-group-lg icon-addon addon-lg">
@@ -14,17 +14,14 @@
 			</div>
 		</form>
 	</div>
-	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding monCompteHeader alignement-text-header">
+	<div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 no-padding monCompteHeader">
 		<div class="col-lg-6 col-md-6 col-xs-6 col-sm-6 no-padding">
-			<a ng-href="#/panier"> <!-- <img ng-src="../images/icon_panier.png" class=" img-responsive" style="height: 6em;width: 6em; margin:auto; padding:0px;"/>--> <ngcart-summary></ngcart-summary>
-			</a>
+			<a ng-href="#/panier"><ngcart-summary></ngcart-summary></a>
 		</div>
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 no-padding">
-			<div ng-if="!estConnecte" id="connexion">
-				<!-- -->
-
+			<div ng-if="!estConnecte" id="connexion"  ng-controller="popoverConnexionCtrl" hover-popover>
 				<script type="text/ng-template" id="templatePopoverConnexion.html" >
-				<div >
+				<div>
 					<form>
 					<div class="form-group">
 						<span id="erreurIdentifiantPopoverConnexion" style="display: none; color: red;">Identifiant ou mot de passe incorrect</span>
@@ -35,11 +32,10 @@
 					</div>
 					<input type="submit" class="btn btn-warning" ng-click="connexion(pseudo, mdp)" value="Connexion"></input><br>
 					</form>
-					<span>Pas encore inscrit? </span><br><a ng-href="#/inscription"">Cliquez ici</a>
+					<span>Pas encore inscrit? </span> <a ng-href="#/inscription"">Cliquez ici</a>
 				</div>
 	    		</script>
-	    		<span class="iconeConnexion glyphicon glyphicon-user"></span><br>
-				<a id="monCompteHeader" class="monCompteHeader" ng-controller="popoverConnexionCtrl" hover-popover>MON COMPTE <i class="glyphicon glyphicon-chevron-down"></i></a>
+				<a style="padding-bottom:3px" id="monCompteHeader" class="monCompteHeader" ><span class="iconeConnexion glyphicon glyphicon-user"></span><br>MON COMPTE <i class="glyphicon glyphicon-chevron-down"></i></a>
 					<form>
 				<!-- -<input type="submit" onclick="getCookie('erreur')"
 					value="affiche Cookies">

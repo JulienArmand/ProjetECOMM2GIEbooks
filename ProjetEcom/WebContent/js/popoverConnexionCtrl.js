@@ -29,25 +29,9 @@ app.directive('hoverPopover2', function ($compile, $templateCache, $timeout, $ro
 	        $(element).popover({
 	            content: compileContent,
 	            placement: 'bottom',
-	            html: true
+	            html: true,
+	            trigger: 'click'
 	        });
-            
-	        $("#monCompteHeader").hover(function(){
-	        	$(element).popover('show');
-                scope.attachEvents(element);
-	        });
-	        
-	    },
-	    controller: function ($scope, $element) {
-	        $scope.attachEvents = function (element) {
-	            $('.popover').on('mouseenter', function () {
-	                $rootScope.insidePopover = true;
-	            });
-	            $('.popover').on('mouseleave', function () {
-	                $rootScope.insidePopover = false;
-	                $(element).popover('hide');
-	            });
-	        }
 	    }
 	    
 	};
@@ -67,26 +51,9 @@ app.directive('hoverPopover', function ($compile, $templateCache, $timeout, $roo
 	        $(element).popover({
 	            content: compileContent,
 	            placement: 'bottom',
-	            html: true
-	        });
-            
-	        $(element).hover(function(){
-	        	$(element).popover('show');
-                scope.attachEvents(element);
-	        });
-	        
-	    },
-	    controller: function ($scope, $element) {
-	        $scope.attachEvents = function (element) {
-	            $('.popover').on('mouseenter', function () {
-	                $rootScope.insidePopover = true;
-	            });
-	            $('.popover').on('mouseleave', function () {
-	                $rootScope.insidePopover = false;
-	                $(element).popover('hide');
-	            });
-	        }
+	            html: true,
+	            trigger: 'click'
+	        }); 
 	    }
-	    
 	};
 });
