@@ -617,7 +617,7 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
 	
 	$scope.breakpoints = [
 		{
-		    breakpoint: 1600, // Pc portable++
+		    breakpoint: 1650, // Pc portable++
 		    settings: {
 		      slidesToShow: 6,
 		      slidesToScroll: 6
