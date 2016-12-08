@@ -13,7 +13,6 @@
 				<div class="panel-body">
 
 					<table WIDTH=100%>
-						<!--  <form action="/ModificationProfile" method="POST"> -->
 						<tr>
 							<td>Pseudo</td>
 							<td>:</td>
@@ -70,8 +69,11 @@
 							<td>Vous souhaitez supprimer votre compte ?</td>
 						</tr>
 						<tr>
+							<td style="color:red;">Attention, cette action est immédiate et irréversible !</td>
+						</tr>
+						<tr>
 							<td ALIGN="right">
-								<a ng-href="#/modificationMotDePasse" type="submit" class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning">Cliquez içi</a>
+								<input type="submit" value="Supprimer compte" onclick="supprimerProfil()" class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning">
 							</td>
 						</tr>
 					</table>
@@ -94,7 +96,7 @@
 					<h3 class="panel-title">Vos commandes</h3>
 				</div>
 				<div class="panel-body">
-					<table WIDTH=100% ng-if="commandes != null">
+					<table ng-if="commandes != null">
 						<tr ng-repeat="cmd in commandes">
 							<td>
 								<div class="panel panel-default">

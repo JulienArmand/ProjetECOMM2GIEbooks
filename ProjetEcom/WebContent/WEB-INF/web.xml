@@ -96,6 +96,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>SupprimerClient</servlet-name>
+		<servlet-class>servlets.SupprimerClientServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SupprimerClient</servlet-name>
+		<url-pattern>/SupprimerClient</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>GetAuteurs</servlet-name>
 		<servlet-class>servlets.AuteursLivreServlet</servlet-class>
 	</servlet>

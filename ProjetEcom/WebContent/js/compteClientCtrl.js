@@ -49,4 +49,12 @@ routeAppControllers.controller("compteClient", function($scope, $http, $location
 				}	
 	    });
 	}
+	
+	supprimerProfil = function (){
+		$http.get("SupprimerClient", {params:{
+			"idClient" : getCookie('idClient')
+			}}).then(function(response) {
+				window.location.href = "#";
+	    });
+	}
 });
