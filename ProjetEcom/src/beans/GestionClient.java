@@ -102,7 +102,7 @@ public class GestionClient {
 	}
 	
 	public void desinscriptionClient(Client c){
-		c.setDesinscrit(false);;
+		c.setDesinscrit(true);;
 		em.merge(c);
 	}
 }

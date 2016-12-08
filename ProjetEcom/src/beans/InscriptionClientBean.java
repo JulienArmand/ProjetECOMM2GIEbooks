@@ -44,7 +44,7 @@ public class InscriptionClientBean {
 	public boolean pseudoDejaPris(String pseudo){
 		List<Client> list = getLesClients();
 		for(Client c : list){
-			if( c.getPseudo().equals(pseudo)){
+			if( c.getPseudo().equals(pseudo) && !c.getDesinscrit()){
 				return true;
 			}
 		}
@@ -54,7 +54,7 @@ public class InscriptionClientBean {
 	public boolean emailDejaPris(String email){
 		List<Client> list = getLesClients();
 		for(Client c : list){
-			if( c.getEmail().equals(email)){
+			if( c.getEmail().equals(email) && !c.getDesinscrit()){
 				return true;
 			}
 		}
