@@ -88,9 +88,7 @@ public class InitBean {
 		q11.executeUpdate();
 		q12.executeUpdate();
 		try {
-
-			ElasticSearchTools.supprimerIndex("http://"+config.get("IP_ELASTICSEARCH")+":"+config.get("PORT_ELASTICSEARCH"));
-			ElasticSearchTools.creerIndex("http://"+config.get("IP_ELASTICSEARCH")+":"+config.get("PORT_ELASTICSEARCH"));
+			ElasticSearchTools.creerIndex("http://"+config.get("IP_ELASTICSEARCH")+":"+config.get("PORT_ELASTICSEARCH")+"/livres");
 		} catch (Exception e) {
 			System.err.println("Erreur durant la céation de l'index : " + e.getMessage());
 		}
