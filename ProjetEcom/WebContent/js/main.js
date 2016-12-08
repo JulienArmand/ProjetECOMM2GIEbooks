@@ -33,7 +33,7 @@ app.config(['$routeProvider',
         // Système de routage
         $routeProvider
         .otherwise({
-            templateUrl: 'partials/corpsAccueil2.html',
+            templateUrl: 'partials/corpsAccueil.html',
             controller: 'contentCtrl'
         })
         .when('/info/:id', {
