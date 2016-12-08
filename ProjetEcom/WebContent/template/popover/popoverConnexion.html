@@ -1,19 +1,20 @@
 <div id="popoverConnexion">
 	<a href ng-click="connexion()">Connexion</a> <span>Pas encore inscrit, <a ng-href="#/inscription"">cliquez ici</a>
+	</span>
 </div>
 
-  				<div>
-					<span id="erreurIdentifiant" style="display: none; color: red;">Identifiant
-					ou mot de passe incorrect</span>
-					<form action="ConnexionClient" method="POST" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
-						<fieldset>
-							<span id="erreurIdentifiant" style="display: none; color: red;">Identifiant ou mot de passe incorrect</span>
-							<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" type="text" name="pseudo" placeholder="Identifiant" >
-							<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" type="password" name="motDePasse" placeholder="Mot de passe">
-							<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-primary" type="submit" value="Connexion">
-						</fieldset>
-					</form>
-					<span>Pas encore inscrit? <a ng-href="#/inscription"">Cliquez ici</a>
-				</div>
-				
-			<!-- 			-->
+<div>
+	<span id="erreurIdentifiant" style="display: none; color: red;">Identifiant ou mot de passe incorrect</span>
+	<form action="ConnexionClient" method="POST"
+		class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+		<fieldset>
+			<span id="erreurIdentifiant" style="display: none; color: red;">Identifiant ou mot de passe incorrect</span> 
+			<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" type="text" name="pseudo" placeholder="Identifiant"> 
+			<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" type="password" name="motDePasse" placeholder="Mot de passe">
+			<input class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-primary" type="submit" value="Connexion">
+		</fieldset>
+	</form>
+	<span>Pas encore inscrit? <a ng-href="#/inscription"">Cliquez ici</a></span>
+</div>
+
+<!-- 			-->

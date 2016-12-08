@@ -1,22 +1,27 @@
 <div style="padding : 2em 2em 2em 2em;" class="container-fluid">
 	<div class="row col-lg-12 col-md-12">
 		<a ng-href="#/panier"><div
-				class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bg-warning text-center btn">Panier</div></a>
+				class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bg-warning text-center btn disabled">Panier</div></a>
 		<div class="col-lg-1 col-md-2 col-sm-1 col-xs-1 text-center">
 			<h5>
 				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 			</h5>
 		</div>
-		<a ng-href="#/paiement"><div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bg-warning text-center btn">Paiement</div></a>
+		<a ng-href="#/paiement"><div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bg-warning text-center btn disabled">Paiement</div></a>
 		<div class="col-lg-1 col-md-2 col-sm-1 col-xs-1 text-center">
 			<h5>
 				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 			</h5>
 		</div>
-		<a ng-href="#/confirmation"><div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bg-warning text-center btn disabled">Confirmation</div></a>
+		<a ng-href="#/confirmation"><div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bg-warning text-center btn">Confirmation</div></a>
 		<div style="clear: both;"></div>
-		<h3 style="margin : 1em 1em 1em 1em">Confirmation</h3>
+		<h2 class="titre">Confirmation</h2>
 		<p ng-controller="paiementCtrl">
+		
+		<div class="alert alert-success" role="alert"> Votre commande a été effectuée !</div>
+		
+		
+		
 		Le paiement de votre commande n°{{commande.id}} a bien été effectué, elle s'élève à {{commande.prixTotal}}€.
 		<br>
 		Un mail de confirmation vous a été envoyé à l'adresse suivante : {{commande.leClient.email}}.
@@ -24,9 +29,11 @@
 		<p>
 		Voici les liens de téléchargement des livres (ils seront toujours disponibles lors de vos prochaines connexions) :
 		<br>
-		 Lien1
-		 Lien2
-		 LienX
+		<div class="alert alert-success" role="alert"> 
+		<div ng-repeat="v in commande.lesVentes">
+		<a href="#/info/{{v.livre.id}}" class="alert-link">{{v.livre.titre}}</a><br>
+		</div>
+		</div>
 		</p>
 		<p> 
 		Merci pour votre confiance.
