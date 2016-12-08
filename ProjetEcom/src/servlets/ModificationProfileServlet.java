@@ -45,10 +45,6 @@ public class ModificationProfileServlet extends HttpServlet {
 //				System.out.println("L'identifiant n'existe pas");
 //				System.out.println("Pseudo modifié.");
 				myBean.updateClientPseudo(c, pseudo);
-				int nbCookies = cookies.length;
-				for(int i = 0; i < nbCookies; i++){
-					cookies[0].setMaxAge(0);
-				}
 				//Réinitialisation des cookies login et idClient
 				Cookie login = new Cookie("login", request.getParameter("pseudo"));
 				response.addCookie(login);
