@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import Tools.GestionCookies;
 
 import javax.servlet.http.Cookie;
@@ -31,6 +34,9 @@ public class ModificationProfileServlet extends HttpServlet {
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
 		String email = request.getParameter("email");
+		GsonBuilder gb = new GsonBuilder();
+		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
+		String erreur = "InitError";
 		Cookie[] cookies = request.getCookies();
 		GestionCookies g = new GestionCookies();
 		String cookiePseudo = g.getCookieByName(cookies, "login").getValue();
@@ -52,6 +58,10 @@ public class ModificationProfileServlet extends HttpServlet {
 				response.addCookie(idClient);
 			}else{ // Le nouveau pseudo existe deja
 				System.out.println("L'identifiant existe deja");
+				erreur = "pseudoExiste";
+				String str = js.toJson(erreur);
+				response.setContentType("application/json");
+				response.getWriter().write(str);
 			}
 		}
 		
@@ -74,10 +84,14 @@ public class ModificationProfileServlet extends HttpServlet {
 				myBean.updateClientEmail(c, email);
 			}else{ // Le nouveau pseudo existe deja
 				System.out.println("L'email existe deja");
+				erreur = "emailExiste";
+				String str = js.toJson(erreur);
+				response.setContentType("application/json");
+				response.getWriter().write(str);
 			}
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("");
-		dispatcher.forward(request,response);
+		//RequestDispatcher dispatcher = request.getRequestDispatcher("");
+		//dispatcher.forward(request,response);
 	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

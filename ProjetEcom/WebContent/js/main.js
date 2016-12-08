@@ -786,6 +786,18 @@ routeAppControllers.controller("compteClient", function($scope, $http, $location
 			"prenom" : $("#prenom").val(),
 			"email" : $("#email").val()
 			}}).then(function(response) {
+				if(response.data != 'pseudoExiste') {
+					document.getElementById('erreurPseudoExiste').style.display = "none";
+					if(response.data != 'emailExiste') {
+						document.getElementById('erreurEmailExiste').style.display = "none";
+    				}
+					else{
+    					document.getElementById('erreurEmailExiste').style.display = "block";
+					}
+    			}
+    			else {
+    					document.getElementById('erreurPseudoExiste').style.display = "block";
+    			}
 	    });
 	}
 });
@@ -972,7 +984,9 @@ app.directive('hoverPopover', function ($compile, $templateCache, $timeout, $roo
 function getCookie(sName) {
     var oRegex = new RegExp("(?:; )?" + sName + "=([^;]*);?");
     if (oRegex.test(document.cookie)) {
+    	//alert(decodeURIComponent(RegExp["$1"]));
     	return decodeURIComponent(RegExp["$1"]);
+
     } else {
     	return null;
     }
