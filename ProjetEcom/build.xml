@@ -17,6 +17,8 @@
 		<copy todir="/home/im2ag/apache-tomee-webprofile-7.0.2/webapps/ROOT/">
 			<fileset dir="WebContent"/>
 		</copy>
+		<copy file="WebContent/META-INF/persistencePROD.xml" tofile="/home/im2ag/apache-tomee-webprofile-7.0.2/webapps/ROOT/META-INF/persistence.xml"/>
+		<copy file="WebContent/admin/confGeneralePROD.txt" tofile="/home/im2ag/apache-tomee-webprofile-7.0.2/webapps/ROOT/admin/confGenerale.txt"/>
 	</target>
 	<target name="compile" depends="init">
         	<javac srcdir="src" destdir="${build}">
