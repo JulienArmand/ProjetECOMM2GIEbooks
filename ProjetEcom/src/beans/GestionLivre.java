@@ -136,7 +136,7 @@ public class GestionLivre {
 		String req = ElasticSearchTools.rechercheElasticSearch(requeteBarre, prixMin, prixMax, genre, avisMin);
 		System.out.println(req);
 
-		InputStream is = ElasticSearchTools.doRequest("http://localhost:9200/livres/_search", "GET", req);
+		InputStream is = ElasticSearchTools.doRequest("http://"+conf.get("IP_ELASTICSEARCH")+":"+conf.get("PORT_ELASTICSEARCH")+"/livres/_search", "GET", req);
 
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 
