@@ -3,16 +3,18 @@
 
 </div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" ng-show="attrs.id">
-    <div>
+    <div >
         <span ng-show="quantityMax">
             <select name="quantity" id="quantity" ng-model="q"
                     ng-options=" v for v in qtyOpt"></select>
         </span>
-        <input class="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning boutonAjoutPanier " value="Ajouter au panier"
+        <input ng-show="!inCart()" class="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning boutonAjoutPanier " value="Ajouter au panier"
            ng-click="ngCart.addItem(id, name, price, q, data)"
            ng-transclude></input>
     </div>
-    <mark  ng-show="inCart()" class="supprPanier">
-        Ce livre est dans le panier. <a ng-click="ngCart.removeItemById(id)" style="cursor: pointer;">Supprimer</a>
-    </mark>
+    <div ng-show="inCart()" class="supprPanier">
+        <input class="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-danger boutonAjoutPanier " value="Supprimer du panier"
+           ng-click="ngCart.removeItemById(id)"
+           ng-transclude></input>
+    </div>
 </div>
