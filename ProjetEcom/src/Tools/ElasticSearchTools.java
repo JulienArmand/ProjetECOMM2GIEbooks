@@ -19,6 +19,11 @@ public class ElasticSearchTools {
 	
 	public static InputStream doRequest(String urlS, String methode, String data) throws IOException {
 
+		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("http.proxyPort", "3128");
+		System.setProperty("https.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("https.proxyPort", "3128");
+		
 		URL url = new URL(urlS);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod(methode);
@@ -40,6 +45,11 @@ public class ElasticSearchTools {
 
 	public static void creerIndex(String url) throws IOException {
 
+		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("http.proxyPort", "3128");
+		System.setProperty("https.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("https.proxyPort", "3128");
+		
 		String req = "{\"settings\":{\"analysis\":{\"filter\":{\"autocomplete_filter\":{\"type\":\"ngram\",\"min_gram\":1,\"max_gram\":20}},\"analyzer\":{\"autocomplete\":{\"type\":\"custom\",\"tokenizer\":\"standard\",\"filter\":[\"lowercase\",\"autocomplete_filter\"]}}}},\"mappings\":{\"type_rechercheTitreGenreAuteur\":{\"properties\":{\"titre\":{\"type\":\"text\",\"analyzer\":\"autocomplete\",\"search_analyzer\":\"simple\"},\"suggest_titre\":{\"type\": \"completion\",\"analyzer\": \"simple\", \"search_analyzer\": \"simple\"},\"suggest_auteurs\": {\"type\": \"completion\",\"analyzer\": \"simple\",\"search_analyzer\": \"simple\"}}}}}";
 		InputStream is = ElasticSearchTools.doRequest(url, "PUT", req);
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -159,6 +169,11 @@ public class ElasticSearchTools {
 	public static void updateAvis(Livre l) throws Exception {
 		String req = "\n{\"doc\" : {\"avis\":" + l.calculMoyenneAvis() + "}}";
 
+		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("http.proxyPort", "3128");
+		System.setProperty("https.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("https.proxyPort", "3128");
+		
 		URL url = new URL("http://localhost:9200/livres/type_rechercheTitreGenreAuteur/" + l.getId() + "/_update");
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("POST");
