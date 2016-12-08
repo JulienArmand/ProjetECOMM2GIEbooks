@@ -17,6 +17,11 @@
 		<div style="clear: both;"></div>
 		<h2 class="titre">Confirmation</h2>
 		<p ng-controller="paiementCtrl">
+		
+		<div class="alert alert-success" role="alert"> Votre commande a été effectuée !</div>
+		
+		
+		
 		Le paiement de votre commande n°{{commande.id}} a bien été effectué, elle s'élève à {{commande.prixTotal}}€.
 		<br>
 		Un mail de confirmation vous a été envoyé à l'adresse suivante : {{commande.leClient.email}}.
@@ -24,10 +29,11 @@
 		<p>
 		Voici les liens de téléchargement des livres (ils seront toujours disponibles lors de vos prochaines connexions) :
 		<br>
+		<div class="alert alert-success" role="alert"> 
 		<div ng-repeat="v in commande.lesVentes">
-		<a href="#/info/{{v.livre.id}}">{{v.livre.titre}}</a><br>
+		<a href="#/info/{{v.livre.id}}" class="alert-link">{{v.livre.titre}}</a><br>
 		</div>
-		
+		</div>
 		</p>
 		<p> 
 		Merci pour votre confiance.
