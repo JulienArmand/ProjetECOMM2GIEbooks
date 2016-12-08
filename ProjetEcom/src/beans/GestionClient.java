@@ -51,7 +51,7 @@ public class GestionClient {
 	}
 
 	public Client getClientFromPseudo(String pseudo) {
-		Query q = em.createQuery("select OBJECT(b) from Client b where b.pseudo = '" + pseudo+"'");
+		Query q = em.createQuery("select OBJECT(b) from Client b where b.pseudo = '" + pseudo+"' AND b.desincrit = 'false'");
 		List<Client> list = (List<Client>) q.getResultList(); 
 		if(list.size()>1){
 //			throw new Exception("Le pseudo: "+pseudo+" est utilise plusieurs fois");
@@ -64,7 +64,7 @@ public class GestionClient {
 	}
 	
 	public Client getClientFromEmail(String email) {
-		Query q = em.createQuery("select OBJECT(b) from Client b where b.email = '" + email+"'");
+		Query q = em.createQuery("select OBJECT(b) from Client b where b.email = '" + email+"' AND b.desincrit = 'false'");
 		List<Client> list = (List<Client>) q.getResultList(); 
 		if(list.size()>1){
 //			throw new Exception("L'email: "+email+" est utilise plusieurs fois");
