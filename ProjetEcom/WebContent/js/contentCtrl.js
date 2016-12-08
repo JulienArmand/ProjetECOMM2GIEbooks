@@ -34,8 +34,8 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
 	  {
 	    breakpoint: 768, // Smartphone
 	    settings: {
-	      slidesToShow: 3,
-	      slidesToScroll: 3
+	      slidesToShow: 2,
+	      slidesToScroll: 2
 	    }
 	  },
 	  {
