@@ -19,6 +19,11 @@ public class ElasticSearchTools {
 	
 	public static InputStream doRequest(String urlS, String methode, String data) throws IOException {
 
+		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("http.proxyPort", "3128");
+		System.setProperty("https.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("https.proxyPort", "3128");
+		
 		URL url = new URL(urlS);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod(methode);
@@ -40,6 +45,11 @@ public class ElasticSearchTools {
 
 	public static void creerIndex(String url) throws IOException {
 
+		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("http.proxyPort", "3128");
+		System.setProperty("https.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("https.proxyPort", "3128");
+		
 		String req = "{\"settings\":{\"analysis\":{\"filter\":{\"autocomplete_filter\":{\"type\":\"ngram\",\"min_gram\":1,\"max_gram\":20}},\"analyzer\":{\"autocomplete\":{\"type\":\"custom\",\"tokenizer\":\"standard\",\"filter\":[\"lowercase\",\"autocomplete_filter\"]}}}},\"mappings\":{\"type_rechercheTitreGenreAuteur\":{\"properties\":{\"titre\":{\"type\":\"text\",\"analyzer\":\"autocomplete\",\"search_analyzer\":\"simple\"},\"suggest_titre\":{\"type\": \"completion\",\"analyzer\": \"simple\", \"search_analyzer\": \"simple\"},\"suggest_auteurs\": {\"type\": \"completion\",\"analyzer\": \"simple\",\"search_analyzer\": \"simple\"}}}}}";
 		InputStream is = ElasticSearchTools.doRequest(url, "PUT", req);
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -54,7 +64,7 @@ public class ElasticSearchTools {
 	}
 	
 	
-	public static String rechercheElasticSearch(String requeteBarre, int prixMin, int prixMax, String genre, int avisMin)
+	public static String rechercheElasticSearch(String requeteBarre, double d, double e, String genre, int avisMin)
 			throws Exception {
 
 
@@ -68,19 +78,19 @@ public class ElasticSearchTools {
 			prec = true;
 		}
 		String blocReqPrix = "";
-		if (prixMin != -1 || prixMax != -1) {
+		if (d != -1 || e != -1) {
 
 			if (prec)
 				blocReqPrix += ",";
-			if (prixMin != -1 && prixMax != -1) {
-				blocReqPrix += "{ \"range\" : { \"prix\" : {\"lte\" : " + prixMax + "  ,\"gte\" : " + prixMin + " }}}";
+			if (d != -1 && e != -1) {
+				blocReqPrix += "{ \"range\" : { \"prix\" : {\"lte\" : " + e + "  ,\"gte\" : " + d + " }}}";
 				
 			}
-			else if (prixMin != -1 && prixMax == -1) {
-				blocReqPrix += "{ \"range\" : { \"prix\" : {\"gte\" : " + prixMin + " }}}";
+			else if (d != -1 && e == -1) {
+				blocReqPrix += "{ \"range\" : { \"prix\" : {\"gte\" : " + d + " }}}";
 
 			} else { // prixMin == -1 || prixMax != -1
-				blocReqPrix += "{ \"range\" : { \"prix\" : {\"lte\" : " + prixMax + " }}}";
+				blocReqPrix += "{ \"range\" : { \"prix\" : {\"lte\" : " + e + " }}}";
 			}
 
 			prec = true;
@@ -159,6 +169,11 @@ public class ElasticSearchTools {
 	public static void updateAvis(Livre l) throws Exception {
 		String req = "\n{\"doc\" : {\"avis\":" + l.calculMoyenneAvis() + "}}";
 
+		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("http.proxyPort", "3128");
+		System.setProperty("https.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("https.proxyPort", "3128");
+		
 		URL url = new URL("http://localhost:9200/livres/type_rechercheTitreGenreAuteur/" + l.getId() + "/_update");
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("POST");
@@ -187,4 +202,24 @@ public class ElasticSearchTools {
 		rd.close();
 	}
 
+	public static void supprimerIndex(String url) throws IOException{
+		
+		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("http.proxyPort", "3128");
+		System.setProperty("https.proxyHost", "www-cache.ujf-grenoble.fr");
+		System.setProperty("https.proxyPort", "3128");
+		
+		InputStream is = ElasticSearchTools.doRequest(url, "DELETE", "");
+		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		StringBuilder response = new StringBuilder(); // or StringBuffer if
+														// Java version 5+
+		String line;
+		while ((line = rd.readLine()) != null) {
+			response.append(line);
+			response.append('\r');
+		}
+		rd.close();
+		
+	}
+	
 }

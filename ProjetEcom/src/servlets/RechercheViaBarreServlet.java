@@ -29,22 +29,19 @@ public class RechercheViaBarreServlet extends HttpServlet {
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("RECHERCHEVIABARRE");
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
 
 		
 		List<CoupleLivreVente> res  = new LinkedList<>();
 		try {
-			//res = myBean.recherche(request.getParameter("req"), 0, 500, "Fantastique", 0);
-			System.out.println("avis : " + request.getParameter("avisMin"));
-			res = myBean.recherche(request.getParameter("req"), Integer.parseInt(request.getParameter("pmin")), Integer.parseInt(request.getParameter("pmax")), Tools.normalisationString(request.getParameter("genre")), Integer.parseInt(request.getParameter("avisMin")));
+			res = myBean.recherche(request.getParameter("req"), Double.parseDouble(request.getParameter("pmin").replaceAll(",", ".")), Double.parseDouble(request.getParameter("pmax").replaceAll(",", ".")), Tools.normalisationString(request.getParameter("genre")), Integer.parseInt(request.getParameter("avisMin")));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String str = js.toJson(res);
-		
+		System.out.println(str);
 		response.setContentType("application/json");
 		response.getWriter().println(str);
 	}

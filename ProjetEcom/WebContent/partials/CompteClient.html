@@ -1,8 +1,7 @@
 <section>
 	<div style="padding: 2em 2em 2em 2em;" class="container-fluid">
 
-
-		<h3 style="margin: 1em 1em 1em 1em">Paramètres du compte</h3>
+		<h2 class="titre">Paramètres du compte</h2>
 
 
 		<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
@@ -40,14 +39,14 @@
 						<tr>
 							<td></td>
 							<td></td>
-							<td ALIGN="right"><input type="submit" value="Modifier" onclick="modificationProfil()" class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
+							<td ALIGN="right" class="text-right"><input type="submit" value="Modifier" onclick="modificationProfil()" class="marginExt btn btn-warning"></td>
 						</tr>
 						<!--  </form> -->
 						<tr>
 							<td></td>
 							<td></td>
-							<td ALIGN="right">
-								<a ng-href="#/modificationMotDePasse" type="submit" class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning">Modification du mot de passe</a>
+							<td ALIGN="right" class="text-right">
+								<a ng-href="#/modificationMotDePasse" type="submit" class="marginExt btn btn-warning">Modification du mot de passe</a>
 							</td>
 						</tr>
 					</table>
@@ -69,11 +68,14 @@
 							<td>Vous souhaitez supprimer votre compte ?</td>
 						</tr>
 						<tr>
-							<td style="color:red;">Attention, cette action est immédiate et irréversible !</td>
+							<td><div class="alert alert-danger">
+							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> 
+							Attention, cette action est immédiate et irréversible !</div>
+							</td>
 						</tr>
 						<tr>
 							<td ALIGN="right">
-								<input type="submit" value="Supprimer compte" onclick="supprimerProfil()" class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning">
+								<input type="submit" value="Supprimer compte" onclick="supprimerProfil()" class="marginExt btn col-lg-6 col-md-6 col-sm-8 col-xs-12 btn-warning">
 							</td>
 						</tr>
 					</table>
