@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import Tools.GestionCookies;
 
 import javax.servlet.http.Cookie;
@@ -31,53 +34,59 @@ public class ModificationProfileServlet extends HttpServlet {
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
 		String email = request.getParameter("email");
+		boolean pseudoExiste = false;
+		GsonBuilder gb = new GsonBuilder();
+		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
+		String erreur = "InitError";
 		Cookie[] cookies = request.getCookies();
 		GestionCookies g = new GestionCookies();
 		String cookiePseudo = g.getCookieByName(cookies, "login").getValue();
-//		System.out.println(cookiePseudo);
 		Client c = myBean.getClientFromPseudo(cookiePseudo);
-//		System.out.println("Pseudo a changer: "+pseudo);
-//		System.out.println("Pseudo du cookie: "+cookiePseudo);
-		
+
+		//Mise à jour du pseudo
 		if(!pseudo.equals(c.getPseudo())){
 			Client clientPseudo = myBean.getClientFromPseudo(pseudo);
 			if(clientPseudo==null){
-//				System.out.println("L'identifiant n'existe pas");
-//				System.out.println("Pseudo modifié.");
 				myBean.updateClientPseudo(c, pseudo);
-				//Réinitialisation des cookies login et idClient
 				Cookie login = new Cookie("login", request.getParameter("pseudo"));
 				response.addCookie(login);
 				Cookie idClient = new Cookie("idClient", String.valueOf(c.getId()));
 				response.addCookie(idClient);
-			}else{ // Le nouveau pseudo existe deja
+			}else{
 				System.out.println("L'identifiant existe deja");
+				erreur = "pseudoExiste";
+				pseudoExiste = true;
 			}
 		}
 		
+		//Mise à jour du nom
 		if(!nom.equals(c.getNom())){
-//			System.out.println("Nom modifié.");
 			myBean.updateClientNom(c, nom);
 		}
+		
+		//Mise à jour du prénom
 		if(!prenom.equals(c.getPrenom())){
-//			System.out.println("Prénom modifié.");
 			myBean.updateClientPrenom(c, prenom);
 		}
 		
+		//Mise à jour de l'adresse mail
 		if(!email.equals(c.getEmail())){
-		
-			
 			Client clientEmail = myBean.getClientFromEmail(email);
 			if(clientEmail==null){
-//				System.out.println("L'email n'existe pas");
-//				System.out.println("Email modifié.");
 				myBean.updateClientEmail(c, email);
-			}else{ // Le nouveau pseudo existe deja
+			}else{
 				System.out.println("L'email existe deja");
+				if(!pseudoExiste){
+					erreur = "emailExiste";
+				}
+				else{
+					erreur = "doubleExiste";
+				}		
 			}
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("");
-		dispatcher.forward(request,response);
+		String str = js.toJson(erreur);
+		response.setContentType("application/json");
+		response.getWriter().write(str);
 	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

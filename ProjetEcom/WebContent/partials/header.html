@@ -40,6 +40,12 @@
 	    		</script>
 	    		<span class="iconeConnexion glyphicon glyphicon-user"></span><br>
 				<a id="monCompteHeader" class="monCompteHeader" ng-controller="popoverConnexionCtrl" hover-popover>MON COMPTE <i class="glyphicon glyphicon-chevron-down"></i></a>
+					<form>
+				<!-- -<input type="submit" onclick="getCookie('erreur')"
+					value="affiche Cookies">
+				</p>
+			</form> -->
+				
 				<!-- UTILISER DIRECTIVE ANGULAR ALERT -->
 			</div>
 			<div ng-if="estConnecte" id="profil" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
@@ -52,14 +58,10 @@
 				</div>
 	    		</script>
 	    		<span class="iconeConnexion glyphicon glyphicon-user"></span><br>
-	    		<a id="monCompteHeader" class="monCompteHeader" ng-controller="popoverConnexionCtrl" hover-popover2>Bienvenue {{login}} <i class="glyphicon glyphicon-chevron-down"></i></a>
+	    		<a id="monCompteHeader" class="monCompteHeader" ng-controller="popoverConnexionCtrl" hover-popover2>Bienvenue {{login}}</a> <a><i class="glyphicon glyphicon-chevron-down"></i> </a>
 				
 			</div>
-			<!-- <form>
-				<input type="submit" onclick="afficheCookies()"
-					value="affiche Cookies">
-				</p>
-			</form>-->
+		
 		</div>
 	</div>
 </div>

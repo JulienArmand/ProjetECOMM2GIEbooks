@@ -17,6 +17,36 @@ routeAppControllers.controller("compteClient", function($scope, $http, $location
 			"prenom" : $("#prenom").val(),
 			"email" : $("#email").val()
 			}}).then(function(response) {
+				if(response.data === ('doubleExiste')){
+					document.getElementById('erreurDoubleExiste').style.display = "block";
+					document.getElementById('erreurEmailExiste').style.display = "none";
+					document.getElementById('erreurPseudoExiste').style.display = "none";
+					document.getElementById('confirmationModificationProfil').style.display = "none";
+				}
+				else{
+					if(response.data === ('pseudoExiste')){
+						document.getElementById('erreurPseudoExiste').style.display = "block";
+						document.getElementById('erreurEmailExiste').style.display = "none";
+						document.getElementById('erreurDoubleExiste').style.display = "none";
+						document.getElementById('confirmationModificationProfil').style.display = "none";
+					}
+					else{
+						if(response.data ===('emailExiste')){
+							document.getElementById('monCompteHeader').textContent="Bienvenue ".concat($("#pseudo").val());
+							document.getElementById('erreurEmailExiste').style.display = "block";
+							document.getElementById('erreurPseudoExiste').style.display = "none";
+							document.getElementById('erreurDoubleExiste').style.display = "none";
+							document.getElementById('confirmationModificationProfil').style.display = "none";
+						}
+						else{
+							document.getElementById('monCompteHeader').textContent="Bienvenue ".concat($("#pseudo").val());
+							document.getElementById('confirmationModificationProfil').style.display = "block";
+							document.getElementById('erreurPseudoExiste').style.display = "none";
+							document.getElementById('erreurEmailExiste').style.display = "none";
+							document.getElementById('erreurDoubleExiste').style.display = "none";
+						}
+					}	
+				}	
 	    });
 	}
 	
