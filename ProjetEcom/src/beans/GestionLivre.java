@@ -51,19 +51,11 @@ public class GestionLivre {
 			URL url = new URL(couverture);
 			name = FilenameUtils.getName(url.getPath());
 		} catch (MalformedURLException e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		
 		String couvertureUrl = conf.get("PATH_SERVER")+"/images/"+name+".png";
-		/*System.out.println(couvertureUrl);
-		try {
-			Tools.sauvegarderImage(couverture, 400, 600, couvertureUrl);
-			couvertureUrl = "/images/"+name+".png";
-		} catch (Exception e1) {
-			e1.printStackTrace();
-			couvertureUrl = couverture;//"images/defaultCouv.png";
-		}*/
+		
 		couvertureUrl = couverture;
 		l.setNomCouverture(couvertureUrl);
 
@@ -169,67 +161,6 @@ public class GestionLivre {
 		} else {
 			return new LinkedList<>();
 		}
-	}
-
-	/**
-	 * Recherche les livres qui possedent -tous les mots du champ texte -un des
-	 * genres
-	 */
-	public List<Livre> getLivreRecherche(String texte, List<String> genre) {
-
-		String[] s = texte.split(" "); // recupÃ©ration de la liste des mots
-		String requete = "SELECT OBJECT(l) FROM Livre l ";
-		if (s.length > 0 || !genre.isEmpty()) {
-			requete = requete + "WHERE ";
-			boolean b = false; // ajout d'un AND / OR ?
-			int compteur = 0;
-			// recherche a partir de l'entree de la barre de recherche
-
-			if (s.length > 0) {
-				// Les livres possedent dans leur titre tous les mots prÃ©sents
-				// dans texte
-				requete = requete + "( ";
-				compteur = 0;
-				while (compteur < s.length - 1) {
-					requete = requete + "UPPER(l.titre) LIKE '%" + s[compteur].toUpperCase() + "%' AND ";
-					compteur++;
-				}
-				requete = requete + "UPPER(l.titre) LIKE '%" + s[compteur].toUpperCase() + "%' ";
-				b = true;
-
-				requete = requete + "OR ";
-				// PARTIE AUTEUR A MODIF
-				compteur = 0;
-				while (compteur < s.length - 1) {
-					requete = requete + "UPPER(l.titre) LIKE '%" + s[compteur].toUpperCase() + "%' AND ";
-					compteur++;
-				}
-				requete = requete + "UPPER(l.titre) LIKE '%" + s[compteur].toUpperCase() + "%' ";
-				requete = requete + ") ";
-
-			}
-
-			// Recherche a partir de la liste de genre
-			// Les livres font parties d'un des genres de la liste :genre
-			if (!genre.isEmpty()) {
-				if (b)
-					requete = requete + "AND ( ";
-				compteur = 0;
-				while (compteur < genre.size() - 1) {
-					requete = requete + "l.genre.nom = \"" + genre.get(compteur) + "\" OR ";
-					compteur++;
-				}
-				requete = requete + "l.genre.nom = \"" + genre.get(compteur) + "\" ";
-				if (b)
-					requete = requete + ") ";
-				b = true;
-			}
-		}
-		// requete="SELECT OBJECT(l) FROM Livre l Where l.titre LIKE '%et%' AND
-		// l.titre LIKE '%Walking%' OR l.genre.nom=\"Manga\"";
-		Query q = em.createQuery(requete);
-		List<Livre> list = (List<Livre>) q.getResultList();
-		return list;
 	}
 
 	public void supprimerTous() {

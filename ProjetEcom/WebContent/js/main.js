@@ -2,13 +2,6 @@ var app = angular.module("app", ['ui.bootstrap', 'ngRoute', 'ngCart', 'routeAppC
 
 var routeAppControllers = angular.module('routeAppControllers', []);
 
-app.controller('CookiesCtrl', ['$cookies', function($cookies) {
-	  // Retrieving a cookie
-	  var favoriteCookie = $cookies.get('myFavorite');
-	  // Setting a cookie
-	  $cookies.put('myFavorite', 'oatmeal');
-}]);
-
 app.controller("coDecoCtrl", function($scope){
 
 	$scope.getInclude = function(){
@@ -16,15 +9,6 @@ app.controller("coDecoCtrl", function($scope){
 	  
 	}
 
-});
-
-
-app.controller("searchCtrl", function($scope){
-
-});
-
-app.controller("pageChange", function($scope){
-	
 });
 
 app.config(['$routeProvider',
@@ -72,10 +56,7 @@ app.config(['$routeProvider',
         	templateUrl : 'partials/ModificationMotDePasse.html',
         	controller: 'modificationMotDePasse'
         })
-        .when('/ajouterLivre',{
-        	templateUrl : 'partialsAdmin/ajoutLivre.html',
-        	controller: 'ajoutLivreCtrl'
-        })
+       
     }
 ]);
 

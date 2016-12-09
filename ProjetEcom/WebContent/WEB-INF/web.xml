@@ -60,15 +60,6 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>getLivresRecherche</servlet-name>
-		<servlet-class>servlets.GetLivreRechercheServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>getLivresRecherche</servlet-name>
-		<url-pattern>/Recherche</url-pattern>
-	</servlet-mapping>
-	
-		<servlet>
 		<servlet-name>getLivresPlusVendu</servlet-name>
 		<servlet-class>servlets.GetLivresPlusVenduServlet</servlet-class>
 	</servlet>
@@ -121,16 +112,7 @@
 		<servlet-name>ConnexionClient</servlet-name>
 		<url-pattern>/ConnexionClient</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>GetTousLesGenres</servlet-name>
-		<servlet-class>servlets.GetTousLesGenres</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>GetTousLesGenres</servlet-name>
-		<url-pattern>/Genres</url-pattern>
-	</servlet-mapping>
-	
+		
 	<servlet>
 		<servlet-name>GetTous</servlet-name>
 		<servlet-class>servlets.GetTousServlet</servlet-class>

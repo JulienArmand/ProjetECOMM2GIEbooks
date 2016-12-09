@@ -8,22 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import beans.GestionAuteur;
-import beans.GestionEditeur;
-import beans.GestionGenre;
 
 public class CreerAuteurServlet extends HttpServlet {
 
 	private static final long	serialVersionUID	= 268367471001606128L;
 	@EJB()
-	GestionAuteur myBean;
+	private GestionAuteur myBean;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		System.out.println("GET");
 		
 		if (request.getParameter("action").equals("creer") && !request.getParameter("nom").equals("") && !request.getParameter("prenom").equals("")) {
 			myBean.creerAuteur(request.getParameter("prenom"), request.getParameter("nom"));
@@ -36,8 +29,6 @@ public class CreerAuteurServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		System.out.println("POST");
 		
 		if (request.getParameter("action").equals("creer") && !request.getParameter("Nom").equals("") && !request.getParameter("Prenom").equals("")) {
 			myBean.creerAuteur(request.getParameter("Prenom"), request.getParameter("Nom"));

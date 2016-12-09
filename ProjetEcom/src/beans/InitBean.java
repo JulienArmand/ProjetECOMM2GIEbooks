@@ -33,28 +33,28 @@ public class InitBean {
 	@PersistenceContext(unitName = "Database-unit")
 	private EntityManager em;
 
-	@EJB // ou @EJB si nom par défaut
+	@EJB 
 	private GestionLivre gestionLivre;
 
-	@EJB // ou @EJB si nom par défaut
+	@EJB
 	private GestionAvis gestionAvis;
 	
-	@EJB // ou @EJB si nom par défaut
+	@EJB
 	private GestionAuteur gestionAuteur;
 	
-	@EJB // ou @EJB si nom par défaut
+	@EJB
 	private GestionClient gestionClient;
 
-	@EJB // ou @EJB si nom par défaut
+	@EJB 
 	private GestionGenre gestionGenre;
 
-	@EJB // ou @EJB si nom par défaut
+	@EJB
 	private GestionPromotion gestionPromotion;
 
-	@EJB // ou @EJB si nom par défaut
+	@EJB 
 	private GestionVente gestionVente;
 
-	@EJB // ou @EJB si nom par défaut
+	@EJB
 	private GestionEditeur gestionEditeur;
 	
 	@EJB()
@@ -105,16 +105,12 @@ public class InitBean {
 		InputStream is = url.openStream();
 
 		ArrayList<Livre> livres = new ArrayList<Livre>();
-		// File f = new File(new URI("file:///localhost:8080/exemplesBD.csv"));
 		BufferedReader r = new BufferedReader(new InputStreamReader(is));
 		r.readLine();
 		String line = r.readLine();
 		while (line != null && !line.equals("")) {
 			System.out.println(line);
-			// String data[] = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)",
-			// -1);
 			String data[] = line.split(";", -1);
-			// System.out.println(line);
 			String titre = data[0];
 			if (titre.equals(""))
 				break;
@@ -169,13 +165,6 @@ public class InitBean {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			//try {
-			//	ElasticSearchTools.enregistrerDansLIndexage(livre);
-			//} catch (Exception e) {
-			//	System.err.println("Erreur durant l'indexage du livre dans elasticsearch : " + e.getMessage());
-			//}
-
 			line = r.readLine();
 		}
 
@@ -194,7 +183,7 @@ public class InitBean {
 
 		String commentaire = "Je referme \"le premier miracle\" de Gilles Legardinier. \nHabitué aux comédies loufoques qui m'ont valu des fous rires mémorables, l'auteur revient un peu à ses premières amours, le thriller. Ce nouveau roman, savant mélange d'aventure et d'humour, nous prouve que Gilles a plus d'une corde à son arc. L'impression d'être dans un Indiana Jones, parcourant le monde avec les personnages, découvrant des pans entiers de l'histoire de l'humanité, tentant de percer le secret du premier miracle. Un vrai régal. Le tout bourré d'humour. Les personnages sont touchants, attachants, à la personnalité riche, que l'on découvre au fil des pages. Avec une jolie histoire d'amour à la clé. Un bon moment de lecture.";
 		try {
-			Client s = gestionClient.creerClient("sevaeb", "seb@alcoholiquesAnonymes.com", "prout", "Sebastien", "O.");
+			Client s = gestionClient.creerClient("sevaeb", "seb@seb.fr", "prout", "Ochier", "Sébastien");
 			gestionAvis.creerAvis(livres.get(2), s, 0, commentaire);
 			gestionAvis.creerAvis(livres.get(2), s, 1, commentaire);
 			gestionAvis.creerAvis(livres.get(2), s, 1, commentaire);

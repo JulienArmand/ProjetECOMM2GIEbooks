@@ -21,12 +21,8 @@ public class RechercheViaBarreServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -3969291627640520522L;
 	
-	@EJB()  //ou @EJB si nom par défaut 
+	@EJB() 
 	private GestionLivre myBean; 
-	
-	public RechercheViaBarreServlet() {
-		// TODO Auto-generated constructor stub
-	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
@@ -37,11 +33,10 @@ public class RechercheViaBarreServlet extends HttpServlet {
 		try {
 			res = myBean.recherche(request.getParameter("req"), Double.parseDouble(request.getParameter("pmin").replaceAll(",", ".")), Double.parseDouble(request.getParameter("pmax").replaceAll(",", ".")), Tools.normalisationString(request.getParameter("genre")), Integer.parseInt(request.getParameter("avisMin")));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String str = js.toJson(res);
-		System.out.println(str);
+		
 		response.setContentType("application/json");
 		response.getWriter().println(str);
 	}

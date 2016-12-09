@@ -32,19 +32,19 @@ public class GestionCommandeServlet extends HttpServlet {
 
 	private static final long	serialVersionUID	= 268367471001606128L;
 
-	@EJB() // ou @EJB si nom par défaut
+	@EJB() 
 	private GestionCommande		commandeBean;
 
-	@EJB() // ou @EJB si nom par défaut
+	@EJB() 
 	private GestionClient		clientBean;
 
-	@EJB() // ou @EJB si nom par défaut
+	@EJB() 
 	private GestionPaiement		paiementBean;
 
-	@EJB() // ou @EJB si nom par défaut
+	@EJB() 
 	private GestionVente		venteBean;
 
-	@EJB() // ou @EJB si nom par défaut
+	@EJB() 
 	private GestionLivre		LivreBean;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -107,7 +107,4 @@ public class GestionCommandeServlet extends HttpServlet {
 
 	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
 }

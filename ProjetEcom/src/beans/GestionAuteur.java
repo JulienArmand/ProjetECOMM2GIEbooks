@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import model.Auteur;
-import model.Editeur;
 
 @Stateless
 public class GestionAuteur {

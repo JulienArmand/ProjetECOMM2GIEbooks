@@ -42,9 +42,6 @@ public class Avis {
 	@JoinColumn(name="LIVRE_ID") 
 	private Client leClient;
 
-	public Avis() {
-	}
-
 	public Avis(int note, String commentaire, Date dateDePublication) {
 		super();
 		this.note = note;

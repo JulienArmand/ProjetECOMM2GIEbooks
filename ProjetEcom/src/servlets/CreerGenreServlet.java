@@ -8,21 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import beans.GestionGenre;
 
 public class CreerGenreServlet extends HttpServlet {
 
 	private static final long	serialVersionUID	= 268367471001606128L;
+	
 	@EJB()
-	GestionGenre myBean;
+	private GestionGenre myBean;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		System.out.println("GET");
-		
+				
 		if (request.getParameter("action").equals("creer") && !request.getParameter("nom").equals("")) {
 			myBean.creerGenre(request.getParameter("nom"));
 		}
@@ -34,8 +30,6 @@ public class CreerGenreServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		System.out.println("POST");
 		
 		if (request.getParameter("action").equals("creer") && !request.getParameter("Nom").equals("")) {
 			myBean.creerGenre(request.getParameter("Nom"));

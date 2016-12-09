@@ -17,11 +17,7 @@ public class ConnexionClientServlet extends HttpServlet {
 	
 	@EJB()
 	private ConnexionClient myBean;
-	
-	public ConnexionClientServlet() {
-		// TODO Auto-generated constructor stub
-	}
-	
+		
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
@@ -57,9 +53,6 @@ public class ConnexionClientServlet extends HttpServlet {
 			Cookie erreur = new Cookie("erreur", "true");
 			response.addCookie(erreur);
 		}
-		//Redirect to main page
-
-		//response.sendRedirect(request.getContextPath()+"/index.html");
 	}
 	
 	

@@ -20,14 +20,6 @@ public class ModificationMotDePasseServlet extends HttpServlet {
 	private static final long serialVersionUID = -6094862300127773927L;
 	@EJB()
 	private GestionClient myBean;
-
-	public ModificationMotDePasseServlet(){
-		
-	}
-	
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String motDePasseActuel = request.getParameter("ancienMotDePasse");

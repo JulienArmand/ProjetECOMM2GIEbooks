@@ -43,7 +43,6 @@ public class AjouterLivreServlet extends HttpServlet {
 		/* Récupération des champs du formulaire. */
 		
 		String titre = request.getParameter("titre");
-		System.out.println(request.getParameter("editeur"));
 		Editeur editeur = beanEditeur.getEditeur(Long.parseLong(request.getParameter("editeur")));
 		Genre genre = beanGenre.getGenre(Long.parseLong(request.getParameter("genre")));
 		String isbn = request.getParameter("isbn");

@@ -35,7 +35,6 @@ public class GestionAvis {
 		try {
 			ElasticSearchTools.updateAvis(l);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

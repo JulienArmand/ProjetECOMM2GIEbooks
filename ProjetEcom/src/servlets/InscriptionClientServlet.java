@@ -19,7 +19,7 @@ public class InscriptionClientServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 268367471001606128L;
 	
-	@EJB()  //ou @EJB si nom par défaut 
+	@EJB() 
 	private InscriptionClientBean myBean; 
 	
 	public static final String VUE          = "/partials/registerView.html";
@@ -47,21 +47,9 @@ public class InscriptionClientServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().println(str);
 		}
-
-		
-//		String resultat="okay";
-//		System.out.println("TEST2");
-//
-//		String json = new Gson().toJson(resultat);
-//        response.setContentType("application/json");
-//        response.getWriter().write(json);
-
-
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("TEST GET");
-		String resultat;
 		String erreurs="";
         /* Récupération des champs du formulaire. */
         String email = request.getParameter( CHAMP_EMAIL );
@@ -70,12 +58,6 @@ public class InscriptionClientServlet extends HttpServlet {
         String nom = request.getParameter( CHAMP_NOM );
         String prenom = request.getParameter( CHAMP_PRENOM );
         String identifiant = request.getParameter( CHAMP_IDENTIFIANT );
-        System.out.println("info: "+identifiant);
-        System.out.println("info: "+nom);
-        System.out.println("info: "+prenom);
-        System.out.println("info: "+motDePasse);
-        System.out.println("info: "+confirmation);
-        System.out.println("info: "+email);
         
         /* Validation du champ email. */
         try {
@@ -103,14 +85,9 @@ public class InscriptionClientServlet extends HttpServlet {
 
         /* Initialisation du résultat global de la validation. */
         if ( erreurs.isEmpty() ) {
-            resultat = "Succès de l'inscription.";
             inscriptionClient(identifiant, email, motDePasse, nom, prenom);
-        } else {
-            resultat = "Échec de l'inscription.";
         }
 
-        System.out.println("RESULTAT "+ resultat);
-        
         String json = new Gson().toJson(erreurs);
         response.setContentType("application/json");
         response.getWriter().write(json);
@@ -118,21 +95,14 @@ public class InscriptionClientServlet extends HttpServlet {
 	}
 
 	private void inscriptionClient(String pseudo, String email, String motDePasse, String nom, String prenom) {
-//		myBean.suppressionClients();
 		myBean.creerClient(pseudo, email, motDePasse, nom, prenom);
-		
 	}
 	
 	/**
 	 * Valide l'adresse mail saisie.
 	 */
 	private void validationEmail( String email ) throws Exception {
-	    if ( email != null && email.trim().length() != 0 ) {
-	        
-//	    	if ( !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
-//	            throw new Exception( "Merci de saisir une adresse mail valide." );
-//	        }
-	    } else {
+	    if (!( email != null && email.trim().length() != 0 )) {
 	        throw new Exception( "Merci de saisir une adresse mail." );
 	    }
 	    if(myBean.emailDejaPris(email)){
@@ -148,9 +118,6 @@ public class InscriptionClientServlet extends HttpServlet {
 	        if (!motDePasse.equals(confirmation)) {
 	            throw new Exception("Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
 	        } 
-//	        else if (motDePasse.trim().length() < 3) {
-//	            throw new Exception("Les mots de passe doivent contenir au moins 3 caractères.");
-//	        }
 	    } else {
 	        throw new Exception("Merci de saisir et confirmer votre mot de passe.");
 	    }
@@ -160,9 +127,7 @@ public class InscriptionClientServlet extends HttpServlet {
 	 * Valide le nom d'utilisateur saisi.
 	 */
 	private void validationIdentifiant( String identifiant ) throws Exception {
-	    if ( identifiant != null && identifiant.trim().length() < 3 ) {
-//	        throw new Exception( "Le nom d'utilisateur doit contenir au moins 3 caractères." );
-	    }
+
 	    if (identifiant.trim().length() > 16 ) {
 	        throw new Exception( "Le nom d'utilisateur doit contenir entre 3 et 16 caractères." );
 	    }

@@ -81,12 +81,6 @@ public class GestionPromotion {
 		}catch(Exception e){
 			
 		}
-		
-		
-		
-
-		
-		
 	}
 
 }

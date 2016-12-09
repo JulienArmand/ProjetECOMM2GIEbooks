@@ -25,18 +25,18 @@ public class GestionClient {
 		em.persist(c);
 		return c;
 	}
-	
-	public Client getClient(long id){
+
+	public Client getClient(long id) {
 		return em.find(Client.class, id);
 	}
-	
-	public Client getClientByCookie(HttpServletRequest request){
+
+	public Client getClientByCookie(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 		GestionCookies g = new GestionCookies();
 		String idClient = g.getCookieByName(cookies, "idClient").getValue();
 		return em.find(Client.class, idClient);
 	}
-	
+
 	public List<Client> getLesClients() {
 		Query q = em.createQuery("select OBJECT(b) from Client b");
 		List<Client> list = (List<Client>) q.getResultList();
@@ -51,58 +51,53 @@ public class GestionClient {
 	}
 
 	public Client getClientFromPseudo(String pseudo) {
-		Query q = em.createQuery("select OBJECT(b) from Client b where b.pseudo = '" + pseudo +"' AND b.desinscrit = false");
-		List<Client> list = (List<Client>) q.getResultList(); 
-		if(list.size()>1){
-//			throw new Exception("Le pseudo: "+pseudo+" est utilise plusieurs fois");
+		Query q = em.createQuery("select OBJECT(b) from Client b where b.pseudo = '" + pseudo + "' AND b.desinscrit = false");
+		List<Client> list = (List<Client>) q.getResultList();
+		if (list.size() >= 1) {
 			return list.get(0);
-		}else if(list.size()==1){
-			return list.get(0);
-		}else{
+		} else {
 			return null;
 		}
 	}
-	
+
 	public Client getClientFromEmail(String email) {
-		Query q = em.createQuery("select OBJECT(b) from Client b where b.email = '" + email+"' AND b.desinscrit = false");
-		List<Client> list = (List<Client>) q.getResultList(); 
-		if(list.size()>1){
-//			throw new Exception("L'email: "+email+" est utilise plusieurs fois");
+		Query q = em.createQuery("select OBJECT(b) from Client b where b.email = '" + email + "' AND b.desinscrit = false");
+		List<Client> list = (List<Client>) q.getResultList();
+		if (list.size() >= 1) {
 			return list.get(0);
-		}else if(list.size()==1){
-			return list.get(0);
-		}else{
+		} else {
 			return null;
 		}
 	}
-	
-	public void updateClientPseudo(Client c, String pseudo){
+
+	public void updateClientPseudo(Client c, String pseudo) {
 		c.setPseudo(pseudo);
 		em.merge(c);
 	}
-	
-	public void updateClientNom(Client c, String nom){
+
+	public void updateClientNom(Client c, String nom) {
 		c.setNom(nom);
 		em.merge(c);
 	}
-	
-	public void updateClientPrenom(Client c, String prenom){
+
+	public void updateClientPrenom(Client c, String prenom) {
 		c.setPrenom(prenom);
 		em.merge(c);
 	}
-	
-	public void updateClientEmail(Client c, String email){
+
+	public void updateClientEmail(Client c, String email) {
 		c.setEmail(email);
 		em.merge(c);
 	}
-	
-	public void updateClientMotDePasse(Client c, String motDePasse){
+
+	public void updateClientMotDePasse(Client c, String motDePasse) {
 		c.setMotDePasse(motDePasse);
 		em.merge(c);
 	}
-	
-	public void desinscriptionClient(Client c){
-		c.setDesinscrit(true);;
+
+	public void desinscriptionClient(Client c) {
+		c.setDesinscrit(true);
+		;
 		em.merge(c);
 	}
 }
