@@ -5,6 +5,10 @@ app.controller("popoverConnexionCtrl", function($scope, $http, $rootScope){
 			if (login != null && login != "") {
 				$rootScope.login = login;
 				$rootScope.estConnecte = true;
+				$http.get("GestionCommande", {
+					params:{"action" :"commandeClient"}}).then(function(response) {
+						$rootScope.commandes = response.data;
+					});	
 			}
 			var erreur = getCookie('erreur');
 			if (erreur == "true") {

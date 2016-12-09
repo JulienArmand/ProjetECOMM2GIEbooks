@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,8 +51,27 @@ public class GestionCommandeServlet extends HttpServlet {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
 		String str = null;
-		
-		if (request.getParameter("action").equals("post")) {
+
+		if (request.getParameter("action").equals("verifAchete")) {
+			Long id = Long.parseLong(request.getParameter("id"));
+			Client client = clientBean.getClientByCookie(request);
+			List<Commande> l = commandeBean.getCommandeClient(client);
+			Iterator<Commande> it= l.iterator();
+			boolean b = false;
+			while(it.hasNext()) {
+				Commande c = it.next();
+				Collection<Vente> ventes = c.getLesVentes();
+				Iterator<Vente> vIt = ventes.iterator();
+				while (vIt.hasNext()){
+					Vente v = vIt.next();
+					if(id.equals(v.getLivre().getId())){
+						b = true;
+						break;
+					}
+				}
+			}
+			str = js.toJson(b);
+		} else if (request.getParameter("action").equals("post")) {
 
 			// Creer commande
 			Cookie[] cookies = request.getCookies();
@@ -70,21 +90,17 @@ public class GestionCommandeServlet extends HttpServlet {
 			}
 			// Ajouter ventes
 			commandeBean.setVentesCommande(c.getId(), lesVentes);
-			
+
 			Commande cFinal = commandeBean.getCommande(c.getId());
 			str = js.toJson(cFinal);
 
-		} else {
-			
-			if (request.getParameter("action").equals("commande")) {
-				Commande c = commandeBean.getCommande(Long.parseLong(request.getParameter("idCommande")));
-				str = js.toJson(c);
-			} else if (request.getParameter("action").equals("commandeClient")) {
-				Client client = clientBean.getClientByCookie(request);
-				List<Commande> l = commandeBean.getCommandeClient(client);
-				str = js.toJson(l);
-			}
-			
+		} else if (request.getParameter("action").equals("commande")) {
+			Commande c = commandeBean.getCommande(Long.parseLong(request.getParameter("idCommande")));
+			str = js.toJson(c);
+		} else if (request.getParameter("action").equals("commandeClient")) {
+			Client client = clientBean.getClientByCookie(request);
+			List<Commande> l = commandeBean.getCommandeClient(client);
+			str = js.toJson(l);
 		}
 		response.setContentType("application/json");
 		response.getWriter().println(str);
