@@ -120,10 +120,8 @@ public class InscriptionClientServlet extends HttpServlet {
 	private void inscriptionClient(String pseudo, String email, String motDePasse, String nom, String prenom) {
 //		myBean.suppressionClients();
 		myBean.creerClient(pseudo, email, motDePasse, nom, prenom);
-		System.out.println("test");
 		
 	}
-	//IP changer .46
 	
 	/**
 	 * Valide l'adresse mail saisie.
@@ -164,6 +162,9 @@ public class InscriptionClientServlet extends HttpServlet {
 	private void validationIdentifiant( String identifiant ) throws Exception {
 	    if ( identifiant != null && identifiant.trim().length() < 3 ) {
 //	        throw new Exception( "Le nom d'utilisateur doit contenir au moins 3 caractères." );
+	    }
+	    if (identifiant.trim().length() > 16 ) {
+	        throw new Exception( "Le nom d'utilisateur doit contenir entre 3 et 16 caractères." );
 	    }
 	    if(myBean.pseudoDejaPris(identifiant)){
 	    	throw new Exception( "identifiant déja utilisé." );
