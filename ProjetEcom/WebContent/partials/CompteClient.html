@@ -106,7 +106,10 @@
 									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 panel-heading">
 										<h3 class="panel-title"><strong>Numéro de commande :</strong> {{cmd.id}}</h3>
 										<h3 class="panel-title"><strong>Date d'achat :</strong> {{cmd.dateDeVente}}</h3>
+										<h3 class="panel-title"><strong>Nombre d'articles :</strong> {{cmd.lesVentes.length}}</h3>
+										<h3 class="panel-title"><strong>Moyen de paiement :</strong> {{cmd.leMoyenDePaiement}}</h3>
 										<h3 class="panel-title"><strong>Prix total :</strong> <span style="color:red;">{{cmd.prixTotal}}€</span></h3>
+										
 									</div>
 									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 panel-body mosaique-item">
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 mosaique-item" ng-repeat="vente in cmd.lesVentes" >

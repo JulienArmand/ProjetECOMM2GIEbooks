@@ -259,5 +259,5 @@ input.affichage:checked + label {
 {
     display: block;
     height: 14em;
-    width: 12em;
+    width: 10em;
 }
