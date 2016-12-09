@@ -13,6 +13,10 @@ app.controller("modalConnexionCommentaireCtrl", function($scope, $http, $uibModa
 			if (login != null && login != "") {
 				$rootScope.login = login;
 				$rootScope.estConnecte = true;
+				$http.get("GestionCommande", {
+					params:{"action" :"commandeClient"}}).then(function(response) {
+						$rootScope.commandes = response.data;
+					});	
 				$uibModalInstance.close();
 				$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": idLivre, "idClient" : getCookie('idClient')}}).then(function(response) {
 				   if(response.data != 'dejaCommente') { 
@@ -25,6 +29,7 @@ app.controller("modalConnexionCommentaireCtrl", function($scope, $http, $uibModa
 			var erreur = getCookie('erreur');
 			if (erreur == "true") {
 				$rootScope.estConnecte = false;
+				$rootScope.commandes = null;
 				document.getElementById('erreurIdentifiantModal').style.display = "block";
 			}
 		});

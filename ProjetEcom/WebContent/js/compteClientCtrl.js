@@ -59,11 +59,14 @@ routeAppControllers.controller("compteClient", function($scope, $http, $location
 	    });
 	}
 	
+	
+	
 	supprimerProfil = function (){
 		$http.get("SupprimerClient", {params:{
 			"idClient" : getCookie('idClient')
 			}}).then(function(response) {
 				$rootScope.estConnecte = false;
+				$rootScope.commandes = null;
 				document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 				document.cookie = "idClient=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 				document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
