@@ -253,3 +253,11 @@ input.affichage:checked + label {
     height: 35em;
     width: 22em;
 }
+
+
+.imageConforme img
+{
+    display: block;
+    height: 14em;
+    width: 12em;
+}
