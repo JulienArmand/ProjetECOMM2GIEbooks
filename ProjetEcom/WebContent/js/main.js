@@ -54,7 +54,7 @@ app.config(['$routeProvider',
         })
         .when('/modificationMotDePasse',{
         	templateUrl : 'partials/ModificationMotDePasse.html',
-        	controller: 'modificationMotDePasse'
+        	controller: 'modificationMotDePasseCtrl'
         })
        
     }

@@ -32,15 +32,20 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart, $uibM
 	}
 
 	$scope.passerPaiement = function() {
-		if (document.cookie != "") {
-			window.location.href = "#/paiement";
-		} else { // popup connection
-			var modalInstance = $uibModal.open({
-				ariaLabelledBy : 'modal-title',
-				ariaDescribedBy : 'modal-body',
-				templateUrl : '/template/modalConnection/modalConnection.html',
-				controller : 'modalConnexionPaiementCtrl'
-			});
+		if(ngCart.getItems().length == 0){
+			alert("Votre panier est vide.");
+		}
+		else{
+			if(document.cookie != "") {			
+				window.location.href = "#/paiement";
+	    	} else { // popup connection
+	    		var modalInstance = $uibModal.open({
+	    		      ariaLabelledBy: 'modal-title',
+	    		      ariaDescribedBy: 'modal-body',
+	    		      templateUrl: '/template/modalConnection/modalConnection.html',
+	    		      controller: 'modalConnexionPaiementCtrl'
+	    		    });
+	    	}
 		}
 	}
 

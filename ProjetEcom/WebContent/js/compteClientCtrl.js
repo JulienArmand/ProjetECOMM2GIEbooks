@@ -1,7 +1,7 @@
 routeAppControllers.controller("compteClient", function($scope, $http, $location, $rootScope){	
 	
 	$("#menu").hide();
-	
+		
 	$http.get("GetInfoClient", {params:{"pseudo": getCookie('login')}}).then(function(response) {
 		var data = response.data;
     	$scope.pseudo = data.pseudo;
