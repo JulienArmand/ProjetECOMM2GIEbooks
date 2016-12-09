@@ -10,7 +10,7 @@
 				<li ng-repeat="auteur in livre.lesAuteurs">{{auteur.prenom}} {{auteur.nom}}</li>
 			</ul>
 			<h5>{{livre.editeur.nom}} | Publié le {{livre.dateDePublication}} | 
-			<a ng-if="livre.lesAvis.length > 0" href ng-click="allerAAvis()"><span uib-rating ng-model="moyenne" max="5" read-only="true" style="color: #fde16d;" aria-labelledby="default-rating"></span>
+			<a ng-if="livre.lesAvis.length > 0" href ng-click="allerAAvis()"><span uib-rating ng-init="moy = calculeMoyenne(livre.lesAvis)" ng-model="moy" max="5" read-only="true" style="color: #fde16d;" aria-labelledby="default-rating"></span>
 			({{nombreAvis(livre.lesAvis)}} avis)</a>
 			<a ng-if="livre.lesAvis.length == 0" href ng-click="allerAAvis()">Pas d'avis</a></h5>
 			<h5>Résume</h5>

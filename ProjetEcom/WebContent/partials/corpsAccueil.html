@@ -12,7 +12,7 @@
 		<a ng-if="livre.titre.length>20" ng-href="#/info/{{livre.id}}"  title="{{livre.titre}}"><span ng-bind="livre.titre.substring(0,20)+'...'" style="overflow-y: hidden;"></span></a>
 		<a ng-if="livre.titre.length<=20" ng-href="#/info/{{livre.id}}"  title="{{livre.titre}}"><span ng-bind="livre.titre" style="overflow-y: hidden;"></span></a>
 		<h6 ng-if="livre.lesAuteurs" >{{livre.lesAuteurs[0].prenom}} {{livre.lesAuteurs[0].nom}}</h6>
-		<div ng-if="livre.lesAvis.length > 0"><span uib-rating ng-model="calculeMoyenne(livre.lesAvis)" max="5" read-only="true" style="color: #fde16d;" aria-labelledby="default-rating"></span>({{livre.lesAvis.length}} avis)</div>
+		<div ng-if="livre.lesAvis.length > 0"><span uib-rating ng-init="moy = calculeMoyenne(livre.lesAvis)" ng-model="moy" max="5" read-only="true" style="color: #fde16d;" aria-labelledby="default-rating"></span>({{livre.lesAvis.length}} avis)</div>
 		<span ng-if="livre.lesAvis.length == 0">Pas d'avis</span>
 		<div>
 			<span style="text-decoration: line-through; color: red;">{{livre.prix}} €</span> <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>
@@ -34,7 +34,7 @@
 		<a ng-if="livre.titre.length<=20" ng-href="#/info/{{livre.id}}"  title="{{livre.titre}}"><span ng-bind="livre.titre" style="overflow-y: hidden;"></span></a>
 		
 		<h6>{{livre.lesAuteurs[0].prenom}} {{livre.lesAuteurs[0].nom}}</h6>
-		<div ng-if="livre.lesAvis.length > 0"><span uib-rating ng-model="calculeMoyenne(livre.lesAvis)" max="5" read-only="true" style="color: #fde16d;" aria-labelledby="default-rating"></span>({{livre.lesAvis.length}} avis)</div>
+		<div ng-if="livre.lesAvis.length > 0"><span uib-rating ng-init="moy = calculeMoyenne(livre.lesAvis)" ng-model="moy" max="5" read-only="true" style="color: #fde16d;" aria-labelledby="default-rating"></span>({{livre.lesAvis.length}} avis)</div>
 		<span ng-if="livre.lesAvis.length == 0">Pas d'avis</span>
 		<div ng-if="estEnPromo(livre.promotion)">
 			<span style="text-decoration: line-through; color: red;">{{livre.prix}} €</span> <span style="color: green;">{{calculPromo(livre.prix,livre.promotion.tauxReduc)}} €</span>

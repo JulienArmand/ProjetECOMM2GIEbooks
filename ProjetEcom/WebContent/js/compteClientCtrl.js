@@ -8,7 +8,7 @@ routeAppControllers.controller("compteClient", function($scope, $http, $location
     	$scope.nom = data.nom;
     	$scope.prenom = data.prenom;
     	$scope.mail = data.email;
-    }); 
+    });
 	
 	modificationProfil = function (){
 		$http.get("ModificationProfile", {params:{
