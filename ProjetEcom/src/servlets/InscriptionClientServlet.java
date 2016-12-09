@@ -2,6 +2,8 @@ package servlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -34,8 +36,8 @@ public class InscriptionClientServlet extends HttpServlet {
 	
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if (request.getParameter("action").equals("supprimer"))
+		String supp = "supprimer";
+		if (request.getParameter("action").equals(supp))
 			myBean.suppressionClients();
 		else {
 			GsonBuilder gb = new GsonBuilder();
@@ -51,6 +53,8 @@ public class InscriptionClientServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String erreurs="";
+		
+		Logger logger = Logger.getAnonymousLogger();
         /* Récupération des champs du formulaire. */
         String email = request.getParameter( CHAMP_EMAIL );
         String motDePasse = request.getParameter( CHAMP_PASS );
@@ -64,7 +68,7 @@ public class InscriptionClientServlet extends HttpServlet {
             validationEmail( email );
         } catch ( Exception e ) {
             erreurs=e.getMessage();
-            System.out.println("ERREUR "+e);
+            logger.log(Level.FINE, "an exception was thrown", e);
         }
 
         /* Validation des champs mot de passe et confirmation. */
@@ -72,7 +76,7 @@ public class InscriptionClientServlet extends HttpServlet {
             validationMotsDePasse( motDePasse, confirmation );
         } catch ( Exception e ) {
         	erreurs=e.getMessage();
-        	System.out.println("ERREUR "+e);
+        	logger.log(Level.FINE, "an exception was thrown", e);
         }
 
         /* Validation du champ nom. */
@@ -80,7 +84,7 @@ public class InscriptionClientServlet extends HttpServlet {
             validationIdentifiant( identifiant );
         } catch ( Exception e ) {
             erreurs=e.getMessage();
-            System.out.println("ERREUR "+e);
+            logger.log(Level.FINE, "an exception was thrown", e);
         }
 
         /* Initialisation du résultat global de la validation. */

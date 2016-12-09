@@ -12,6 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -45,19 +47,20 @@ public class GestionLivre {
 	public Livre creerLivre(String nom, List<Auteur> a, Editeur e, Genre g, String isbn, int nbpage, float prix,
 			String langue, String langueOriginale, String couverture, Promotion promo, String resume, Date datePub) throws Exception {
 
+		Logger logger = Logger.getAnonymousLogger();
 		Livre l = new Livre(nom, isbn, datePub, nbpage, (float) prix, langue, langueOriginale);
 		String name ="";
 		try {
 			URL url = new URL(couverture);
 			name = FilenameUtils.getName(url.getPath());
 		} catch (MalformedURLException e2) {
-			e2.printStackTrace();
+			logger.log(Level.FINE, "an exception was thrown", e);
 		}
 		
-		String couvertureUrl = conf.get("PATH_SERVER")+"/images/"+name+".png";
+//		String couvertureUrl = conf.get("PATH_SERVER")+"/images/"+name+".png";
 		
-		couvertureUrl = couverture;
-		l.setNomCouverture(couvertureUrl);
+//		couvertureUrl = couverture;
+		l.setNomCouverture(couverture);
 
 		l.setResume(resume);
 		l.setPromotion(promo);
@@ -85,7 +88,7 @@ public class GestionLivre {
 		try {
 			ElasticSearchTools.enregistrerDansLIndexage("http://"+conf.get("IP_ELASTICSEARCH")+":"+conf.get("PORT_ELASTICSEARCH"), l);
 		} catch (Exception ex) {
-			System.err.println("Erreur durant l'indexage du livre dans elasticsearch : " + ex.getMessage());
+			logger.log(Level.FINE, "an exception was thrown : Erreur durant l'indexage du livre dans elasticsearch :", ex);
 		}
 		
 		return l;
@@ -93,15 +96,13 @@ public class GestionLivre {
 
 	public List<Livre> getLesLivres() {
 		Query q = em.createQuery("select OBJECT(b) from Livre b");
-		List<Livre> list = (List<Livre>) q.getResultList();
-		return list;
+		return (List<Livre>) q.getResultList();
 	}
 
 	public List<Livre> getLesLivresEnPromotion() {
 
 		Query q = em.createQuery("select p.livre from Promotion p where p.dateFin > CURRENT_DATE");
-		List<Livre> list = (List<Livre>) q.getResultList();
-		return list;
+		return (List<Livre>) q.getResultList();
 	}
 
 	public Livre getLivreAvecId(long id) {
@@ -126,21 +127,17 @@ public class GestionLivre {
 			throws Exception {
 
 		String req = ElasticSearchTools.rechercheElasticSearch(requeteBarre, d, e, genre, avisMin);
-		System.out.println(req);
 
 		InputStream is = ElasticSearchTools.doRequest("http://"+conf.get("IP_ELASTICSEARCH")+":"+conf.get("PORT_ELASTICSEARCH")+"/livres/_search", "GET", req);
 
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 
 		JSONObject json = (JSONObject) new JSONParser().parse(rd);
-		System.out.println(json);
 		rd.close();
 		String str = "select OBJECT(b) from Livre b where b.id=";
 
 		JSONObject hits1 = (JSONObject) json.get("hits");
-		System.out.println(hits1.size());
 		JSONArray hits2 = (JSONArray) hits1.get("hits");
-		System.out.println(hits2.size());
 		if (hits2.size() != 0) {
 			for (int i = 0; i < hits2.size(); i++) {
 				JSONObject tmp = (JSONObject) hits2.get(i);
@@ -156,7 +153,6 @@ public class GestionLivre {
 			for (int i = 0; i < list.size(); i++) {
 				res.add(new CoupleLivreVente(list.get(i), list.get(i).getLesVentes().size()));
 			}
-			System.out.println(res.size());
 			return res;
 		} else {
 			return new LinkedList<>();
@@ -177,10 +173,7 @@ public class GestionLivre {
 			promoBean.creerPromotion(l, taux, dateD, dateF);
 			
 		}else{
-			
-			System.out.println("Ajout promo :  Livre null !!!!!");
 			return;
-			
 		}
 		
 	}

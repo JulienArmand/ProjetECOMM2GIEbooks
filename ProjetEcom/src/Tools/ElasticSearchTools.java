@@ -68,7 +68,8 @@ public class ElasticSearchTools {
 
 		boolean prec = false;
 		String blocReqBarre = "";
-		if (!reqBarre.equals("@")) {
+		String at = "@";
+		if (!reqBarre.equals(at)) {
 			blocReqBarre = "{ \"multi_match\":{ \"query\":\"" + reqBarre + "\",\"fuzziness\":\"AUTO\",\"operator\":\"and\", \"fields\": [ \"titre\", \"auteurs\" ]}}";
 			prec = true;
 		}
@@ -90,7 +91,7 @@ public class ElasticSearchTools {
 			prec = true;
 		}
 		String blocReqGenre = "";
-		if (!genre.equals("@")) {
+		if (!genre.equals(at)) {
 
 			if (prec)
 				blocReqGenre += ",";
@@ -103,45 +104,48 @@ public class ElasticSearchTools {
 			if (prec)
 				blocReqAvis += ",";
 			blocReqAvis += "{ \"range\" : { \"avis\" : {\"gte\" : " + avisMin + " }}}";
-			prec = true;
 		}
 
-		String req = "{\"from\" : 0, \"size\" : 10000,\"query\":{\"bool\": { \"must\": [" + blocReqBarre + "" + blocReqPrix + "" + blocReqGenre + "" + blocReqAvis + "]}}}";
+		return "{\"from\" : 0, \"size\" : 10000,\"query\":{\"bool\": { \"must\": [" + blocReqBarre + "" + blocReqPrix + "" + blocReqGenre + "" + blocReqAvis + "]}}}";
 
-		return req;
 	}
 
 	public static void enregistrerDansLIndexage(String url, Livre l) throws IOException {
-		String auteurs = "";
+		StringBuilder auteursBuild = new StringBuilder();
 
 		Iterator<Auteur> it = l.getLesAuteurs().iterator();
 		while (it.hasNext()) {
 			Auteur a = it.next();
-			auteurs += a.getPrenom() + " " + a.getNom() + " ";
+			auteursBuild.append(a.getPrenom() + " " + a.getNom() + " ");
 		}
+		String auteurs = auteursBuild.toString();
 
 		auteurs = Tools.normalisationString(auteurs);
-
-		String tabTitre = "";
-		String tabAuteurs = "";
+		 
+		StringBuilder tabTitreBuild = new StringBuilder();
+		StringBuilder tabAuteursBuild = new StringBuilder();
 
 		String[] tmpTitre = Tools.normalisationString(l.getTitre()).split(" ");
 		for (int i = 0; i < tmpTitre.length; i++) {
 			if (i == tmpTitre.length - 1)
-				tabTitre += "\"" + tmpTitre[i] + "\"";
+				tabTitreBuild.append("\"" + tmpTitre[i] + "\"");
 			else
-				tabTitre += "\"" + tmpTitre[i] + "\"" + ", ";
+				tabTitreBuild.append("\"" + tmpTitre[i] + "\"" + ", ");
 		}
 
 		String[] tmpAuteurs = auteurs.split(" ");
+		String empty = "";
 		for (int i = 0; i < tmpAuteurs.length; i++) {
-			if (!tmpAuteurs[i].equals("")) {
+			if (!tmpAuteurs[i].equals(empty)) {
 				if (i == tmpAuteurs.length - 1)
-					tabAuteurs += "\"" + tmpAuteurs[i] + "\"";
+					tabAuteursBuild.append("\"" + tmpAuteurs[i] + "\"");
 				else
-					tabAuteurs += "\"" + tmpAuteurs[i] + "\"" + ", ";
+					tabAuteursBuild.append("\"" + tmpAuteurs[i] + "\"" + ", ");
 			}
 		}
+		
+		String tabTitre = tabTitreBuild.toString();
+		String tabAuteurs = tabAuteursBuild.toString();
 
 		String req = "\n{\"titre\":\"" + Tools.normalisationString(l.getTitre()) + "\", \"prix\":" + l.getPrixAvecPromo() + ", \"genre\":\"" + Tools.normalisationString(l.getGenre().getNom()) + "\", \"avis\":" + l.calculMoyenneAvis() + ", \"auteurs\":\"" + auteurs
 				+ "\", \"suggest_titre\": { \"input\": [" + tabTitre + "] }, \"suggest_auteurs\": { \"input\": [" + tabAuteurs + "]}}";

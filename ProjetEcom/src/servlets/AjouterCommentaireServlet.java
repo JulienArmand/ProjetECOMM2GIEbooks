@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -53,22 +55,22 @@ public class AjouterCommentaireServlet extends HttpServlet {
 	private Livre ajoutCommentaire(int idclient, int idLivre, int note, String commentaire) {
 		Client c = beanClient.getClient(idclient);
 		Livre l = beanLivre.getLivreAvecId(idLivre);
-
+		Logger logger = Logger.getAnonymousLogger();
 		try {
 			beanAvis.creerAvis(l, c, note, commentaire);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.FINE, "an exception was thrown", e);
 		}
 		return l;
 	}
 
 	private boolean checkDejaCommente(int idClient, int idLivre) {
-
+		Logger logger = Logger.getAnonymousLogger();
 		boolean existe = false;
 		try {
 			existe = beanAvis.existe(idClient, idLivre);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.FINE, "an exception was thrown", e);
 		}
 		return existe;
 	}

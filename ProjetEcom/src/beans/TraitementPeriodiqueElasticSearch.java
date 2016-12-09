@@ -6,6 +6,8 @@ import java.text.DateFormat;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -34,16 +36,16 @@ public class TraitementPeriodiqueElasticSearch {
 	public void traiterTrenteSecondes() {
 		Query q = em.createQuery("select l from Livre l");
 		List<Livre> list = (List<Livre>) q.getResultList();
-		
+		Logger logger = Logger.getAnonymousLogger();
 		Iterator<Livre> it = list.iterator();
 		while(it.hasNext()){
 			try {
 				ElasticSearchTools.enregistrerDansLIndexage("http://"+config.get("IP_ELASTICSEARCH")+":"+config.get("PORT_ELASTICSEARCH"), it.next());
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.log(Level.FINE, "an exception was thrown", e);
 			}
 		}
-		System.out.println("-------------------------------------------Rechargement" + Date.from(Instant.now()));
+//		System.out.println("-------------------------------------------Rechargement" + Date.from(Instant.now()));
 	}
 	
 }

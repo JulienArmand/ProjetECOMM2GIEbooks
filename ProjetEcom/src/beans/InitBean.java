@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -87,18 +90,22 @@ public class InitBean {
 		q10.executeUpdate();
 		q11.executeUpdate();
 		q12.executeUpdate();
+		
+		Logger logger = Logger.getAnonymousLogger();
+		
 		try {
 			ElasticSearchTools.creerIndex("http://"+config.get("IP_ELASTICSEARCH")+":"+config.get("PORT_ELASTICSEARCH")+"/livres");
 		} catch (Exception e) {
-			System.err.println("Erreur durant la céation de l'index : " + e.getMessage());
+			logger.log(Level.SEVERE, "an exception was thrown : Erreur durant la céation de l'index : ", e);
 		}
 	}
 
 	public void InitBDFromCSV() throws IOException, URISyntaxException {
+		Logger logger = Logger.getAnonymousLogger();
 		try {
 			suppressionBD();
 		} catch (Exception e1) {
-			e1.printStackTrace();
+			logger.log(Level.SEVERE, "an exception was thrown ", e1);
 		}
 
 		URL url = new URL("http://localhost:8080/exemplesBD.csv");
@@ -106,13 +113,13 @@ public class InitBean {
 
 		ArrayList<Livre> livres = new ArrayList<Livre>();
 		BufferedReader r = new BufferedReader(new InputStreamReader(is));
-		r.readLine();
 		String line = r.readLine();
-		while (line != null && !line.equals("")) {
+		String empty = "";
+		while ((line = r.readLine()) != null && !line.equals(empty)) {
 			System.out.println(line);
 			String data[] = line.split(";", -1);
 			String titre = data[0];
-			if (titre.equals(""))
+			if (titre.equals(empty))
 				break;
 
 			String isbn = data[1];
@@ -126,7 +133,7 @@ public class InitBean {
 			Genre genre = gestionGenre.creerGenre(data[9]);
 			Editeur editeur = gestionEditeur.creerEditeur(data[11]);
 			Promotion promo = null;
-			if (!data[12].equals(""))
+			if (!data[12].equals(empty))
 				promo = gestionPromotion.creerPromotion(Integer.parseInt(data[12]));
 
 			String collection = data[13];
@@ -137,7 +144,7 @@ public class InitBean {
 			try {
 				datePub = format.parse(date);
 			} catch (ParseException e) {
-				System.err.println("Mauvais format de date : " + date);
+				logger.log(Level.WARNING, "an exception was thrown : Mauvais format de date : ", e);
 				datePub = Date.from(Instant.now());
 			}
 
@@ -163,9 +170,9 @@ public class InitBean {
 						langueO, couv, promo, resume, datePub);
 				livres.add(livre);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE, "an exception was thrown ", e);
+				
 			}
-			line = r.readLine();
 		}
 
 		r.close();
@@ -196,7 +203,7 @@ public class InitBean {
 			gestionAvis.creerAvis(livres.get(1), s, 2, commentaire);
 			gestionAvis.creerAvis(livres.get(1), s, 2, commentaire);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "an exception was thrown ", e);
 		}
 	}
 
