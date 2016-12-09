@@ -1,7 +1,6 @@
 
 <section>
 	<div style="padding: 2em 2em 2em 2em;" class="container-fluid">
-		<form action="../ModificationMotDePasse" method="POST">
 			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -10,10 +9,14 @@
 					<div class="panel-body">
 						<table WIDTH=100%>
 							<tr>
+							<span id="erreurChampVide" style="display: none; color: red;">Veuillez remplore tous les champs.</span>
+							<span id="erreurMotDePasseActuel" style="display: none; color: red;">Vous avez saisi le mauvais mot de passe.</span>
+							<span id="erreurMotDePasseDifferents" style="display: none; color: red;">Les deux mots de passes saisis sont différents.</span>
+							<span id="confirmationModificationMotDePasse" style="display: none; color: green;">Votre mot de passe a été modifié.</span>
 								<td>Ancien mot de passe</td>
 								<td>:</td>
 								<td ALIGN="right"><input type="password"
-									name="ancienMotDePasse"
+									id="ancienMotDePasse"
 									class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
 									placeholder="Entrez votre mot de passe actuel"></td>
 							</tr>
@@ -21,7 +24,7 @@
 								<td>Nouveau mot de passe</td>
 								<td>:</td>
 								<td ALIGN="right"><input type="password"
-									name="nouveauMotDePasse"
+									id="nouveauMotDePasse"
 									class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
 									placeholder="Entrez votre nouveau mot de passe"></td>
 							</tr>
@@ -29,14 +32,14 @@
 								<td>Confirmer mot de passe</td>
 								<td>:</td>
 								<td ALIGN="right"><input type="password"
-									name="confirmationNouveauMotDePasse"
+									id="confirmationNouveauMotDePasse"
 									class="marginExt col-lg-12 col-md-12 col-sm-12 col-xs-12"
 									placeholder="Confirmez votre nouveau mot de passe"></td>
 							</tr>
 							<tr>
 								<td></td>
 								<td></td>
-								<td ALIGN="right"><input type="submit" value="Modifier"
+								<td ALIGN="right"><input type="submit" onclick="modificationMotDePasse()" value="Modifier"
 									class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning ">
 								</td>
 							</tr>
@@ -44,6 +47,5 @@
 					</div>
 				</div>
 			</div>
-		</form>
 	</div>
 </section>

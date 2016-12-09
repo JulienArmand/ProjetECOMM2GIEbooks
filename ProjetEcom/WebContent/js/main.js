@@ -70,7 +70,7 @@ app.config(['$routeProvider',
         })
         .when('/modificationMotDePasse',{
         	templateUrl : 'partials/ModificationMotDePasse.html',
-        	controller: 'modificationMotDePasse'
+        	controller: 'modificationMotDePasseCtrl'
         })
         .when('/ajouterLivre',{
         	templateUrl : 'partialsAdmin/ajoutLivre.html',
