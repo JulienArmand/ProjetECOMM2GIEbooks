@@ -69,7 +69,6 @@ public class InitBean {
 		Query q2 = em.createNativeQuery("DELETE FROM Vente");
 		Query q3 = em.createNativeQuery("DELETE FROM Editeur");
 		Query q4 = em.createNativeQuery("DELETE FROM Livre");
-		Query q5 = em.createNativeQuery("DELETE FROM Serie");
 		Query q6 = em.createNativeQuery("DELETE FROM Avis");
 		Query q7 = em.createNativeQuery("DELETE FROM Promotion");
 		Query q8 = em.createNativeQuery("DELETE FROM LIVRE_AUTEUR_LIEN");
@@ -82,7 +81,6 @@ public class InitBean {
 		q2.executeUpdate();
 		q3.executeUpdate();
 		q4.executeUpdate();
-		q5.executeUpdate();
 		q6.executeUpdate();
 		q7.executeUpdate();
 		q8.executeUpdate();

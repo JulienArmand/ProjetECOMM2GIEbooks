@@ -22,7 +22,6 @@ public class Genre {
 	private long id;
 	@Expose
 	private String nom;
-	
 	@OneToMany(mappedBy="genre",cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
 	private Collection<Livre> lesLivres;
 
@@ -50,23 +49,17 @@ public class Genre {
 	public Collection<Livre> getLesLivres() {
 		return lesLivres;
 	}
-	
 
 	public void setLesLivres(Collection<Livre> lesLivres) {
 		this.lesLivres = lesLivres;
 	}
 	
 	public void addLivre(Livre l) {
-
 		if (l != null) {
-
 			if (this.lesLivres == null)
-
 				this.lesLivres = new LinkedList<>();
 
 			this.lesLivres.add(l);
 		}
-
 	}
-
 }

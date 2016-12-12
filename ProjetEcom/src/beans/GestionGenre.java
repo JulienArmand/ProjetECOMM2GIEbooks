@@ -20,7 +20,7 @@ public class GestionGenre {
 		Query q = em.createQuery("select OBJECT(g) from Genre g where g.nom = \"" + nom + "\"");
 		List<Genre> lg = q.getResultList();
 		Genre g;
-		if (lg == null || lg.size() == 0) {
+		if (lg == null || lg.isEmpty()) {
 			g = new Genre(nom);
 			em.persist(g);
 		} else

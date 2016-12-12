@@ -20,7 +20,7 @@ public class GestionEditeur {
 		Query q = em.createQuery("select OBJECT(e) from Editeur e where e.nom = \"" + nom + "\"");
 		List<Editeur> le = q.getResultList();
 		Editeur e;
-		if (le == null || le.size() == 0) {
+		if (le == null || le.isEmpty()) {
 			e = new Editeur(nom);
 			em.persist(e);
 		} else

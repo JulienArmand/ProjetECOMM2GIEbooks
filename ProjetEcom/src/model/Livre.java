@@ -80,10 +80,6 @@ public class Livre {
 	@JoinColumn(name = "Editeur_id")
 	private Editeur				editeur;
 
-	@ManyToOne
-	@JoinColumn(name = "Serie_id")
-	private Serie				laSerie;
-
 	public Livre() {
 		super();
 		this.lesAuteurs = new LinkedList<>();
@@ -204,14 +200,6 @@ public class Livre {
 
 	public void setEditeur(Editeur editeur) {
 		this.editeur = editeur;
-	}
-
-	public Serie getLaSerie() {
-		return laSerie;
-	}
-
-	public void setLaSerie(Serie laSerie) {
-		this.laSerie = laSerie;
 	}
 
 	public Collection<Vente> getLesVentes() {

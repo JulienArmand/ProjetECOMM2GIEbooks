@@ -46,7 +46,7 @@ public class GestionCommandeServlet extends HttpServlet {
 	private GestionVente		venteBean;
 
 	@EJB() 
-	private GestionLivre		LivreBean;
+	private GestionLivre		livreBean;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
@@ -92,7 +92,7 @@ public class GestionCommandeServlet extends HttpServlet {
 			Collection<Vente> lesVentes = new LinkedList<>();
 			String[] livres = request.getParameter("livres").split(",");
 			for (int i = 0; i < livres.length; i++) {
-				Vente v = venteBean.creerVente(LivreBean.getLivreAvecId(Long.parseLong(livres[i])), c);
+				Vente v = venteBean.creerVente(livreBean.getLivreAvecId(Long.parseLong(livres[i])), c);
 				lesVentes.add(v);
 			}
 			// Ajouter ventes
