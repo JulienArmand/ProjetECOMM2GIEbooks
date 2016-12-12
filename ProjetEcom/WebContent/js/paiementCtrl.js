@@ -56,7 +56,6 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart, $uibM
 			if (i != ngCart.getCart().items.length - 1)
 				idLivres += ","
 		}
-		;
 		$http.get("GestionCommande", {
 			params : {
 				"action" : "post",
@@ -68,6 +67,10 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart, $uibM
 				ngCart.removeItem(i);
 			}
 			$rootScope.commande = response.data;
+			$http.get("GestionCommande", {
+				params:{"action" :"commandeClient"}}).then(function(response) {
+					$rootScope.commandes = response.data;
+				});	
 
 			window.location.href = "#/confirmation";
 		});
