@@ -45,7 +45,6 @@ public class TraitementPeriodiqueElasticSearch {
 				logger.log(Level.FINE, "an exception was thrown", e);
 			}
 		}
-//		System.out.println("-------------------------------------------Rechargement" + Date.from(Instant.now()));
 	}
 	
 }

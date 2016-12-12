@@ -53,7 +53,12 @@ public class GestionCommandeServlet extends HttpServlet {
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
 		String str = null;
 
-		if (request.getParameter("action").equals("verifAchete")) {
+		String verifAchete = "verifAchete";
+		String post = "post";
+		String action = request.getParameter("action");
+		String commande = "commande";
+		String commandeClient = "commandeClient";
+		if (action.equals(verifAchete)) {
 			String idRequest = ChiffrageCookies.dechiffreString(request.getParameter("id"));
 			Long id = Long.parseLong(idRequest);
 			Client client = clientBean.getClientByCookie(request);
@@ -73,7 +78,7 @@ public class GestionCommandeServlet extends HttpServlet {
 				}
 			}
 			str = js.toJson(b);
-		} else if (request.getParameter("action").equals("post")) {
+		} else if (action.equals(post)) {
 
 			// Creer commande
 			Cookie[] cookies = request.getCookies();
@@ -84,7 +89,7 @@ public class GestionCommandeServlet extends HttpServlet {
 			Commande c = commandeBean.creerCommande(new Date(), client, paiementBean.getMoyenPaiement(client, request.getParameter("type")));
 
 			// Creer ventes
-			Collection<Vente> lesVentes = new LinkedList<Vente>();
+			Collection<Vente> lesVentes = new LinkedList<>();
 			String[] livres = request.getParameter("livres").split(",");
 			for (int i = 0; i < livres.length; i++) {
 				Vente v = venteBean.creerVente(LivreBean.getLivreAvecId(Long.parseLong(livres[i])), c);
@@ -96,10 +101,10 @@ public class GestionCommandeServlet extends HttpServlet {
 			Commande cFinal = commandeBean.getCommande(c.getId());
 			str = js.toJson(cFinal);
 
-		} else if (request.getParameter("action").equals("commande")) {
+		} else if (action.equals(commande)) {
 			Commande c = commandeBean.getCommande(Long.parseLong(request.getParameter("idCommande")));
 			str = js.toJson(c);
-		} else if (request.getParameter("action").equals("commandeClient")) {
+		} else if (action.equals(commandeClient)) {
 			Client client = clientBean.getClientByCookie(request);
 			List<Commande> l = commandeBean.getCommandeClient(client);
 			str = js.toJson(l);

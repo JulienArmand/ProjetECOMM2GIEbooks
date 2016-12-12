@@ -20,7 +20,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.apache.commons.lang.NullArgumentException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -129,9 +128,8 @@ public class GestionLivre {
 		String str = "select OBJECT(b) from Livre b where b.id=";
 		StringBuilder requete = new StringBuilder();
 		requete.append(str);
-		JSONObject hits1 = null;
 		if (json != null && json.get("hits") != null) {
-			hits1 = (JSONObject) json.get("hits");
+			JSONObject hits1 = (JSONObject) json.get("hits");
 			JSONArray hits2 = (JSONArray) hits1.get("hits");
 
 			if (hits2.size() != 0) {

@@ -38,7 +38,7 @@ public class ConnexionClientServlet extends HttpServlet {
 				}
 
 				Cookie login = new Cookie("login", ChiffrageCookies.chiffreString(pseudo));
-				Cookie idClient = new Cookie("idClient", ChiffrageCookies.chiffreString(String.valueOf(myBean.getIdClient(request.getParameter("pseudo")))));
+				Cookie idClient = new Cookie("idClient", ChiffrageCookies.chiffreString(String.valueOf(myBean.getIdClient(pseudo))));
 				response.addCookie(login);
 				response.addCookie(idClient);
 		} else{

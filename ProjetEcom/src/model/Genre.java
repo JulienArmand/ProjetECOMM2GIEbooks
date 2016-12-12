@@ -27,11 +27,9 @@ public class Genre {
 	private Collection<Livre> lesLivres;
 
 	public Genre(String nom) {
-		super();
 		this.lesLivres = new LinkedList<>();
 		this.nom = nom;
 	}
-
 
 	public long getId() {
 		return id;

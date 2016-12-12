@@ -17,11 +17,14 @@ public class GestionPaiement {
 
 	@PersistenceContext(unitName = "Database-unit")
 	private EntityManager em;
+	
+	private static final String PAYPAL = "Paypal";
+	private static final String CB = "CB";
 
 	public MoyenPaiement creerMoyenPaiement(String type) {
-		MoyenPaiement mp = null;
-
-		if (type.equals("Paypal")) {
+		MoyenPaiement mp;
+		
+		if (type.equals(PAYPAL)) {
 			mp = new Paypal();
 		} else {
 			mp = new CarteBancaire();
@@ -33,16 +36,14 @@ public class GestionPaiement {
 
 	public MoyenPaiement getMoyenPaiement(Client leClient, String type) {
 		MoyenPaiement mp = null;
-
+		
 		if (leClient.getLesMoyenDePaiement().isEmpty()) {
 			mp = creerMoyenPaiement(type);
 		} else {
 			Iterator<MoyenPaiement> it = leClient.getLesMoyenDePaiement().iterator();
 			while (it.hasNext()) {
 				mp = (MoyenPaiement) it.next();
-				if (type.equals("CB") && mp instanceof CarteBancaire)
-					break;
-				else if (type.equals("Paypal") && mp instanceof Paypal)
+				if ((type.equals(CB) && mp instanceof CarteBancaire) || (type.equals(PAYPAL) && mp instanceof Paypal))
 					break;
 			}
 		}

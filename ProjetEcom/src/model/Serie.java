@@ -20,12 +20,8 @@ public class Serie {
 	
 	@OneToMany(mappedBy="laSerie",cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
 	private Collection<Livre> lesLivres;
-	
-	public Serie() {
-	}
 
 	public Serie(String nom) {
-		super();
 		this.nom = nom;
 	}
 
