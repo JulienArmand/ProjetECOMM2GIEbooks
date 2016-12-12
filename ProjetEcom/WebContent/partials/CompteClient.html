@@ -93,37 +93,80 @@
 
 		<div style="clear: both;"></div>
 
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-controller="commandeClientCtrl">
-			<div class="panel panel-default">
+		<div  ng-controller="commandeClientCtrl">
+			<div class="col-lg-24 col-md-24 col-sm-24 col-xs-24 panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Vos commandes</h3>
 				</div>
-				<div class="panel-body">
-					<table ng-if="commandes != null">
-						<tr ng-repeat="cmd in commandes">
-							<td>
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h3 class="panel-title">Numéro de commande : {{cmd.id}}</h3>
-										<h3 class="panel-title">Date d'achat : {{cmd.dateDeVente}}</h3>
-										<h3 class="panel-title">Prix total : {{cmd.prixTotal}}€</h3>
+				<div class="panel-body imageConforme">
+					<div ng-if="commandes != null">
+						<div ng-repeat="cmd in commandes">
+							<div>
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 panel panel-default" >
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 panel-heading">
+										<h3 class="panel-title"><strong>Numéro de commande :</strong> {{cmd.id}}</h3>
+										<h3 class="panel-title"><strong>Date d'achat :</strong> {{cmd.dateDeVente}}</h3>
+										<h3 class="panel-title"><strong>Nombre d'articles :</strong> {{cmd.lesVentes.length}}</h3>
+										<h3 class="panel-title"><strong>Moyen de paiement :</strong> {{cmd.leMoyenDePaiement}}</h3>
+										<h3 class="panel-title"><strong>Prix total :</strong> <span style="color:red;">{{cmd.prixTotal}}€</span></h3>
+										
 									</div>
-									<div class="panel-body">
-										<div ng-repeat="vente in cmd.lesVentes" class="mosaique-item">
+									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 panel-body mosaique-item">
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 mosaique-item" ng-repeat="vente in cmd.lesVentes" >
+											<div >
+												<a ng-href="#/info/{{vente.livre.id}}"> <img alt="{{vente.livre.titre}}" title="{{vente.livre.titre}}" ng-src="{{vente.livre.nomCouverture}}" class="img-responsive"/>
+												</a>
+											</div>
 											<div>
-												<a ng-href="#/info/{{vente.livre.id}}" title="{{vente.livre.titre}}"> <span ng-bind="vente.livre.titre" style="overflow-y: hidden;"></span>
-												</a> <span style="color: green;">{{vente.prix}}€</span> <br>
+												<a ng-if="vente.livre.titre.length>15" ng-href="#/info/{{vente.livre.id}}"  title="{{vente.livre.titre}}"><span ng-bind="vente.livre.titre.substring(0,15)+'...'" style="overflow-y: hidden;"></span></a>
+												<a ng-if="vente.livre.titre.length<=15" ng-href="#/info/{{vente.livre.id}}"  title="{{vente.livre.titre}}"><span ng-bind="vente.livre.titre" style="overflow-y: hidden;"></span></a>
+												<br></a> <span style="color: red;">{{vente.prix}}€</span> <br>
 											</div>
 										</div>
 									</div>
+									
 								</div>
-							</td>
-						</tr>
+							</div>
+						</div>
 
-					</table>
+					</div>
 					<p ng-if="commandes == null">Vous n'avez pas réaliser d'achat</p>
 				</div>
 			</div>
 		</div>
+		
+		
+		<div ng-controller="commandeClientCtrl">
+			<div class="col-lg-24 col-md-24 col-sm-24 col-xs-24 panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Liste des livres</h3>
+				</div>
+				<div class="panel-body imageConforme">
+					<div ng-if="commandes != null">
+						<div  ng-repeat="cmd in commandes" >
+							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  panel-heading panel panel-default mosaique-item" ng-repeat="vente in cmd.lesVentes">
+								<div class=" col-lg-6 col-md-6 col-sm-6 col-xs6 ">
+									<a ng-href="#/info/{{vente.livre.id}}"> <img alt="{{vente.livre.titre}}" title="{{vente.livre.titre}}" ng-src="{{vente.livre.nomCouverture}}"  class="img-responsive"/>
+									</a>
+								</div>
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+								<a  ng-href="#/info/{{vente.livre.id}}"  title="{{vente.livre.titre}}"><span ng-bind="vente.livre.titre" style="overflow-y: hidden;"></span></a>
+								<br>
+								<input type="submit" value="Telecharger" class="marginExt btn btn-warning" disabled>
+								</div>
+								
+								
+							</div>
+						</div>
+
+					</div>
+					<p ng-if="commandes == null">Vous n'avez aucun livres</p>
+				</div>
+			</div>
+		</div>			
+		
+		
+		
+					
 	</div>
 </section>

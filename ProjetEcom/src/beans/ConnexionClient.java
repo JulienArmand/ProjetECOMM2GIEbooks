@@ -17,7 +17,7 @@ public class ConnexionClient {
 		boolean result = false;
 		Query q = em.createQuery("select OBJECT(b) from Client b WHERE b.pseudo LIKE :reqpseudo AND b.desinscrit = false").setParameter("reqpseudo", pseudo);
 		List<Client> list = (List<Client>) q.getResultList();
-		if(list.size() != 0){
+		if(!list.isEmpty()){
 			result = true;
 		}
 		return result;
@@ -27,7 +27,7 @@ public class ConnexionClient {
 		boolean result = false;
 		Query q = em.createQuery("select OBJECT(b) from Client b WHERE b.pseudo LIKE :reqpseudo AND b.motDePasse LIKE :reqmotDePasse AND b.desinscrit = false").setParameter("reqpseudo", pseudo).setParameter("reqmotDePasse", motDePasse); 
 		List<Client> list = (List<Client>) q.getResultList(); 
-		if(list.size() != 0){
+		if(!list.isEmpty()){
 			result = true;
 		}
 		return result;

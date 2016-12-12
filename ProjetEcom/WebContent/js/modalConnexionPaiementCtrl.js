@@ -13,12 +13,17 @@ app.controller("modalConnexionPaiementCtrl", function($scope, $http, $uibModalIn
 			if (login != null && login != "") {
 				$rootScope.login = login;
 				$rootScope.estConnecte = true;
+				$http.get("GestionCommande", {
+					params:{"action" :"commandeClient"}}).then(function(response) {
+						$rootScope.commandes = response.data;
+					});	
 				$uibModalInstance.close();
 				window.location.href = "#/paiement";
 			}
 			var erreur = getCookie('erreur');
 			if (erreur == "true") {
 				$rootScope.estConnecte = false;
+				$rootScope.commandes = null;
 				document.getElementById('erreurIdentifiantModal').style.display = "block";
 			}
 		});

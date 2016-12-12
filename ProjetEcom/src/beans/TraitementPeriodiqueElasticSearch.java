@@ -6,6 +6,8 @@ import java.text.DateFormat;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -15,8 +17,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import Tools.ElasticSearchTools;
 import model.Livre;
+import tools.ElasticSearchTools;
 
 @Stateless
 @LocalBean
@@ -34,49 +36,16 @@ public class TraitementPeriodiqueElasticSearch {
 	public void traiterTrenteSecondes() {
 		Query q = em.createQuery("select l from Livre l");
 		List<Livre> list = (List<Livre>) q.getResultList();
-		
+		Logger logger = Logger.getAnonymousLogger();
 		Iterator<Livre> it = list.iterator();
 		while(it.hasNext()){
 			try {
 				ElasticSearchTools.enregistrerDansLIndexage("http://"+config.get("IP_ELASTICSEARCH")+":"+config.get("PORT_ELASTICSEARCH"), it.next());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.log(Level.FINE, "an exception was thrown", e);
 			}
 		}
-		System.out.println("-------------------------------------------Rechargement" + Date.from(Instant.now()));
+//		System.out.println("-------------------------------------------Rechargement" + Date.from(Instant.now()));
 	}
 	
-	//@Schedule(second = "*/40", minute = "*", hour = "*")
-	/*public void traiterTrenteSecondesSuppressionPromo() throws IOException {
-		Query q = em.createQuery("select l from Livre l");
-		List<Livre> list = (List<Livre>) q.getResultList();
-		
-		Iterator<Livre> it = list.iterator();
-		Livre tmpLibre;
-		while(it.hasNext()){
-			tmpLibre = it.next();
-			if(tmpLibre.getPromotion() != null)
-				tmpLibre.getPromotion().setDateFin(Date.from(Instant.now()));;
-		}
-		System.out.println("-------------------------------------------SuppressionPromo");
-	}*/
-	
-	//@Schedule(second = "*/55", minute = "*/1", hour = "*")
-	/*public void traiterTrenteSecondesCreationPromo() throws IOException {
-		Query q = em.createQuery("select l from Livre l");
-		List<Livre> list = (List<Livre>) q.getResultList();
-		
-		Iterator<Livre> it = list.iterator();
-		Livre tmpLibre;
-		while(it.hasNext()){
-			tmpLibre = it.next();
-			if(tmpLibre.getPromotion() != null) {
-				Date dateFin = tmpLibre.getPromotion().getDateFin();
-				dateFin.setYear(2017);
-				tmpLibre.getPromotion().setDateFin(dateFin);
-			}
-		}
-		System.out.println("-------------------------------------------CreationPromo");
-	}*/
 }

@@ -1,4 +1,7 @@
 routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http, $document, $uibModal, $location, $anchorScroll){
+	
+	$("#menu").show();
+	
     $http.get("LivreAvecId", {params:{"id": $routeParams.id}}).then(function(response) {
     	$scope.livre = response.data;
     	$scope.moyenne = $scope.calculeMoyenne($scope.livre.lesAvis);
@@ -54,7 +57,7 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     }
     
     $scope.posterCommentaire = function(note, commentaire) {
-    	if(document.cookie != "" && note != undefined && commentaire != undefined) {
+    	if(getCookie("login") != "" && note != undefined && commentaire != undefined) {
     		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : getCookie('idClient')}}).then(function(response) {
     			if(response.data != 'dejaCommente') {
     				$scope.livre = response.data;

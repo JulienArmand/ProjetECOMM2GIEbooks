@@ -14,11 +14,9 @@ public class AjoutPromoServlet extends HttpServlet {
 
 	private static final long	serialVersionUID	= 268367471001606128L;
 	@EJB()
-	GestionLivre myBean;
+	private GestionLivre myBean;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		System.out.println("GET");
 		
 		Long id = Long.parseLong(request.getParameter("id"));
 		int taux = Integer.parseInt(request.getParameter("Taux"));
@@ -31,7 +29,6 @@ public class AjoutPromoServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		System.out.println("POST");
 		Long id = Long.parseLong(request.getParameter("id"));
 		int taux = Integer.parseInt(request.getParameter("Taux"));
 		String dateD = request.getParameter("dateD");

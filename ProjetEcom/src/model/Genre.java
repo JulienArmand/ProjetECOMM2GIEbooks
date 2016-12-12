@@ -25,14 +25,10 @@ public class Genre {
 	
 	@OneToMany(mappedBy="genre",cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
 	private Collection<Livre> lesLivres;
-	
-	public Genre() {
-		super();
-		this.lesLivres = new LinkedList<>();
-	}
 
 	public Genre(String nom) {
-		this();
+		super();
+		this.lesLivres = new LinkedList<>();
 		this.nom = nom;
 	}
 

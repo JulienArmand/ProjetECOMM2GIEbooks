@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import Tools.GestionCookies;
 import beans.GestionClient;
 import beans.GestionCommande;
 import beans.GestionLivre;
@@ -26,37 +26,59 @@ import beans.GestionVente;
 import model.Client;
 import model.Commande;
 import model.Vente;
+import tools.ChiffrageCookies;
+import tools.GestionCookies;
 
 public class GestionCommandeServlet extends HttpServlet {
 
 	private static final long	serialVersionUID	= 268367471001606128L;
 
-	@EJB() // ou @EJB si nom par défaut
+	@EJB() 
 	private GestionCommande		commandeBean;
 
-	@EJB() // ou @EJB si nom par défaut
+	@EJB() 
 	private GestionClient		clientBean;
 
-	@EJB() // ou @EJB si nom par défaut
+	@EJB() 
 	private GestionPaiement		paiementBean;
 
-	@EJB() // ou @EJB si nom par défaut
+	@EJB() 
 	private GestionVente		venteBean;
 
-	@EJB() // ou @EJB si nom par défaut
+	@EJB() 
 	private GestionLivre		LivreBean;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
 		String str = null;
-		
-		if (request.getParameter("action").equals("post")) {
+
+		if (request.getParameter("action").equals("verifAchete")) {
+			String idRequest = ChiffrageCookies.dechiffreString(request.getParameter("id"));
+			Long id = Long.parseLong(idRequest);
+			Client client = clientBean.getClientByCookie(request);
+			List<Commande> l = commandeBean.getCommandeClient(client);
+			Iterator<Commande> it= l.iterator();
+			boolean b = false;
+			while(it.hasNext()) {
+				Commande c = it.next();
+				Collection<Vente> ventes = c.getLesVentes();
+				Iterator<Vente> vIt = ventes.iterator();
+				while (vIt.hasNext()){
+					Vente v = vIt.next();
+					if(id.equals(v.getLivre().getId())){
+						b = true;
+						break;
+					}
+				}
+			}
+			str = js.toJson(b);
+		} else if (request.getParameter("action").equals("post")) {
 
 			// Creer commande
 			Cookie[] cookies = request.getCookies();
 			GestionCookies g = new GestionCookies();
-			String idClient = g.getCookieByName(cookies, "idClient").getValue();
+			String idClient = ChiffrageCookies.dechiffreString(g.getCookieByName(cookies, "idClient").getValue());
 			Client client = clientBean.getClient(Long.parseLong(idClient));
 
 			Commande c = commandeBean.creerCommande(new Date(), client, paiementBean.getMoyenPaiement(client, request.getParameter("type")));
@@ -70,28 +92,20 @@ public class GestionCommandeServlet extends HttpServlet {
 			}
 			// Ajouter ventes
 			commandeBean.setVentesCommande(c.getId(), lesVentes);
-			
+
 			Commande cFinal = commandeBean.getCommande(c.getId());
 			str = js.toJson(cFinal);
 
-		} else {
-			
-			if (request.getParameter("action").equals("commande")) {
-				Commande c = commandeBean.getCommande(Long.parseLong(request.getParameter("idCommande")));
-				str = js.toJson(c);
-			} else if (request.getParameter("action").equals("commandeClient")) {
-				Client client = clientBean.getClientByCookie(request);
-				List<Commande> l = commandeBean.getCommandeClient(client);
-				str = js.toJson(l);
-			}
-			
+		} else if (request.getParameter("action").equals("commande")) {
+			Commande c = commandeBean.getCommande(Long.parseLong(request.getParameter("idCommande")));
+			str = js.toJson(c);
+		} else if (request.getParameter("action").equals("commandeClient")) {
+			Client client = clientBean.getClientByCookie(request);
+			List<Commande> l = commandeBean.getCommandeClient(client);
+			str = js.toJson(l);
 		}
 		response.setContentType("application/json");
 		response.getWriter().println(str);
-
 	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
 }

@@ -17,19 +17,14 @@ public class ChercherLivreAvecIdServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 8577531702230813988L;
 	
-	@EJB()  //ou @EJB si nom par défaut 
+	@EJB()
 	private GestionLivre myBean; 
-	
-	public ChercherLivreAvecIdServlet() {
-		// TODO Auto-generated constructor stub
-	}
-	
+		
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
 
 		Livre l = myBean.getLivreAvecId(Integer.parseInt(request.getParameter("id")));
-		System.out.println(l.getLesAuteurs());
 		String str = js.toJson(l);
 		
 		response.setContentType("application/json");

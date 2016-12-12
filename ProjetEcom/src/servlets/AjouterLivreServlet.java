@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -43,7 +45,6 @@ public class AjouterLivreServlet extends HttpServlet {
 		/* Récupération des champs du formulaire. */
 		
 		String titre = request.getParameter("titre");
-		System.out.println(request.getParameter("editeur"));
 		Editeur editeur = beanEditeur.getEditeur(Long.parseLong(request.getParameter("editeur")));
 		Genre genre = beanGenre.getGenre(Long.parseLong(request.getParameter("genre")));
 		String isbn = request.getParameter("isbn");
@@ -57,12 +58,12 @@ public class AjouterLivreServlet extends HttpServlet {
 		Date datePub = null;
 		String pattern = "dd/MM/yyyy";
 		SimpleDateFormat format = new SimpleDateFormat(pattern);
-
+		Logger logger = Logger.getAnonymousLogger();
 		try {
 			datePub = (Date) format.parse(request.getParameter("datePub"));
 		} catch (ParseException e) {
-			System.err.println("Mauvais format de date : " + request.getParameter("datePub"));
-			datePub = (Date) Date.from(Instant.now());
+			logger.log(Level.FINE, "an exception was thrown : Mauvais format de date :", e);
+			datePub = Date.from(Instant.now());
 		}
 		
         
@@ -71,7 +72,7 @@ public class AjouterLivreServlet extends HttpServlet {
 		try {
 			l = beanLivre.creerLivre(titre, null, editeur, genre, isbn, nbpage, prix, langue, langueOriginale, couverture, null, resume, datePub);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.FINE, "an exception was thrown", e);
 		}
         String str = js.toJson(l);
         

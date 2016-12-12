@@ -19,12 +19,8 @@ public class GetLivreEnPromoServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -5204392351534805766L;
 	
-	@EJB()  //ou @EJB si nom par défaut 
+	@EJB()  
 	private GestionLivre myBean; 
-	
-	public GetLivreEnPromoServlet() {
-		// TODO Auto-generated constructor stub
-	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();

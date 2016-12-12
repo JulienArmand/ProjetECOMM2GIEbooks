@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -67,10 +69,10 @@ public class GestionPromotion {
 		
 		String pattern = "dd/MM/yyyy";
 		SimpleDateFormat format = new SimpleDateFormat(pattern);
-
+		Logger logger = Logger.getAnonymousLogger();
 		try {
 			Date dateDD = format.parse(dateD);
-			Date dateFF = format.parse(dateD);
+			Date dateFF = format.parse(dateF);
 			Promotion p = new Promotion(taux, dateDD, dateFF);
 
 			p.setLivre(l);
@@ -79,14 +81,8 @@ public class GestionPromotion {
 			em.persist(l);
 			
 		}catch(Exception e){
-			
+			logger.log(Level.FINE, "an exception was thrown", e);
 		}
-		
-		
-		
-
-		
-		
 	}
 
 }

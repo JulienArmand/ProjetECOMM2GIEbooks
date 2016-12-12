@@ -35,11 +35,10 @@ public class GestionCommande {
 		Commande c = getCommande(idCommande);
 		c.setLesVentes(lesVentes);
 		float prix =0;
-		Iterator<Vente> it = (Iterator<Vente>) lesVentes.iterator();
+		Iterator<Vente> it = lesVentes.iterator();
 		while(it.hasNext()){
 			Vente v = (Vente) it.next();
 			prix += v.getPrix();
-			System.out.println(v.getPrix() + " , " + prix);
 		}
 		c.setPrixTotal(prix);
 		em.merge(c);
@@ -52,16 +51,12 @@ public class GestionCommande {
 
 	public List<Commande> getCommandeClient(Client leClient) {
 		Query q = em.createQuery("select OBJECT(b) from Commande b where b.leClient.id =" + leClient.getId());
-		@SuppressWarnings("unchecked")
-		List<Commande> list = (List<Commande>) q.getResultList();
-		return list;
+		return (List<Commande>) q.getResultList();
 	}
 	
 	public List<Commande> getLesCommandes() {
 		Query q = em.createQuery("select OBJECT(b) from Commande b");
-		@SuppressWarnings("unchecked")
-		List<Commande> list = (List<Commande>) q.getResultList();
-		return list;
+		return (List<Commande>) q.getResultList();
 	}
 
 	public void supprimerTous() {

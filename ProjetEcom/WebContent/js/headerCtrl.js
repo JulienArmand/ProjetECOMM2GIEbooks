@@ -36,11 +36,15 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 	if (login != null && login != "") {
 		$rootScope.login = login;
 		$rootScope.estConnecte = true;
-		
+		$http.get("GestionCommande", {
+			params:{"action" :"commandeClient"}}).then(function(response) {
+				$rootScope.commandes = response.data;
+			});	
 	}
 	var erreur = getCookie('erreur');
 	if (erreur == "true") {
 		$rootScope.estConnecte = false;
+		$rootScope.commandes = null;
 	}
 	
 	
@@ -50,6 +54,7 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 	
 	$scope.deconnexion = function () {
 		$rootScope.estConnecte = false;
+		$rootScope.commandes = null;
 		document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 		document.cookie = "idClient=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 		document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
