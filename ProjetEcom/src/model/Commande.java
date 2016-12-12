@@ -39,9 +39,6 @@ public class Commande {
 	@JoinColumn(name = "MoyenPaiement_id")
 	private MoyenPaiement		leMoyenDePaiement;
 
-	public Commande() {
-	}
-
 	public Commande(Date dateDeVente) {
 		super();
 		this.dateDeVente = dateDeVente;

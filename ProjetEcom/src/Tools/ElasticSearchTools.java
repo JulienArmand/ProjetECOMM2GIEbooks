@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 
@@ -62,7 +63,7 @@ public class ElasticSearchTools {
 		rd.close();
 	}
 
-	public static String rechercheElasticSearch(String requeteBarre, double d, double e, String genre, int avisMin) throws Exception {
+	public static String rechercheElasticSearch(String requeteBarre, Double d, Double e, String genre, int avisMin){
 
 		String reqBarre = Tools.normalisationString(StringEscapeUtils.unescapeHtml4(requeteBarre));
 
@@ -74,6 +75,7 @@ public class ElasticSearchTools {
 			prec = true;
 		}
 		String blocReqPrix = "";
+		
 		if (d != -1 || e != -1) {
 
 			if (prec)
@@ -161,7 +163,7 @@ public class ElasticSearchTools {
 		rd.close();
 	}
 
-	public static void updateAvis(Livre l) throws Exception {
+	public static void updateAvis(Livre l) throws IOException {
 		String req = "\n{\"doc\" : {\"avis\":" + l.calculMoyenneAvis() + "}}";
 
 		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");

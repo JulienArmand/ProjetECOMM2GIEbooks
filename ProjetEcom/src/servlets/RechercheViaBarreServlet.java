@@ -3,6 +3,8 @@ package servlets;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -28,12 +30,12 @@ public class RechercheViaBarreServlet extends HttpServlet {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
 
-		
+		Logger logger = Logger.getAnonymousLogger();
 		List<CoupleLivreVente> res  = new LinkedList<>();
 		try {
 			res = myBean.recherche(request.getParameter("req"), Double.parseDouble(request.getParameter("pmin").replaceAll(",", ".")), Double.parseDouble(request.getParameter("pmax").replaceAll(",", ".")), Tools.normalisationString(request.getParameter("genre")), Integer.parseInt(request.getParameter("avisMin")));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.FINE, "an exception was thrown", e);
 		}
 		String str = js.toJson(res);
 		

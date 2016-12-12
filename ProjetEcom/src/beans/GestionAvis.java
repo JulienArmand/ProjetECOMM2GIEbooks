@@ -3,6 +3,8 @@ package beans;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -32,10 +34,12 @@ public class GestionAvis {
 		a.setLeClient(c);
 		c.getLesAvis().add(a);
 		
+		Logger logger = Logger.getAnonymousLogger();
+		
 		try {
 			ElasticSearchTools.updateAvis(l);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.FINE, "an exception was thrown", e);
 		}
 
 		em.persist(a);
@@ -44,8 +48,7 @@ public class GestionAvis {
 	
 	public List<Avis> getLesAvis() {
 		Query q = em.createQuery("select OBJECT(b) from Avis b");
-		List<Avis> list = (List<Avis>) q.getResultList();
-		return list;
+		return q.getResultList();
 	}
 
 	public void supprimerTous() {
@@ -58,7 +61,6 @@ public class GestionAvis {
 	public boolean existe(long idClient, long idLivre) {
 		Query q = em.createQuery("select OBJECT(a) from Avis a, Client c, Livre l where a.leClient.id = " + idClient + " and a.leLivre.id = " + idLivre);
 		List<Livre> livre = (List<Livre>) q.getResultList();
-		System.out.println(livre.size());
-		return livre.size()>0;
+		return livre.isEmpty();
 	}
 }

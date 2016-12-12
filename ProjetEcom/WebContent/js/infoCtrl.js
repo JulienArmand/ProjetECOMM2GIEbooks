@@ -1,4 +1,7 @@
 routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http, $document, $uibModal, $location, $anchorScroll){
+	
+	$("#menu").show();
+	
     $http.get("LivreAvecId", {params:{"id": $routeParams.id}}).then(function(response) {
     	$scope.livre = response.data;
     	$scope.moyenne = $scope.calculeMoyenne($scope.livre.lesAvis);

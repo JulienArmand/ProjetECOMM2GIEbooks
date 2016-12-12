@@ -63,7 +63,7 @@ public class InitBean {
 	@EJB()
 	private ConfigurationGenerale config;
 
-	public void suppressionBD() throws Exception {
+	public void suppressionBD() {
 
 		Query q1 = em.createNativeQuery("DELETE FROM Genre");
 		Query q2 = em.createNativeQuery("DELETE FROM Vente");
@@ -111,12 +111,11 @@ public class InitBean {
 		URL url = new URL("http://localhost:8080/exemplesBD.csv");
 		InputStream is = url.openStream();
 
-		ArrayList<Livre> livres = new ArrayList<Livre>();
+		ArrayList<Livre> livres = new ArrayList<>();
 		BufferedReader r = new BufferedReader(new InputStreamReader(is));
 		String line = r.readLine();
 		String empty = "";
 		while ((line = r.readLine()) != null && !line.equals(empty)) {
-			System.out.println(line);
 			String data[] = line.split(";", -1);
 			String titre = data[0];
 			if (titre.equals(empty))
@@ -136,7 +135,6 @@ public class InitBean {
 			if (!data[12].equals(empty))
 				promo = gestionPromotion.creerPromotion(Integer.parseInt(data[12]));
 
-			String collection = data[13];
 			Date datePub = null;
 			String pattern = "dd/MM/yyyy";
 			SimpleDateFormat format = new SimpleDateFormat(pattern);
@@ -149,7 +147,7 @@ public class InitBean {
 			}
 
 			String auteurs = data[10];
-			String a[] = auteurs.split(",");
+			String[] a = auteurs.split(",");
 			List<Auteur> lesAuteurs = new LinkedList<>();
 
 			for (int i = 0; i < a.length; i++) {

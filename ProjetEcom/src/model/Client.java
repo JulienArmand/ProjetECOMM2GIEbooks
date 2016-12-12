@@ -43,9 +43,7 @@ public class Client {
 
 	@OneToMany(mappedBy="leClient",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<MoyenPaiement> lesMoyenDePaiement;
-	
-	public Client(){}
-	
+		
 	public Client(String pseudo, String email, String motDePasse, String nom, String prenom) {
 		super();
 		this.pseudo = pseudo;
@@ -54,7 +52,7 @@ public class Client {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.desinscrit = false;
-		this.lesAvis = new LinkedList<Avis>();
+		this.lesAvis = new LinkedList<>();
 	}
 
 	public long getId() {

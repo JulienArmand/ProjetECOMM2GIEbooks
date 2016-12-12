@@ -2,6 +2,8 @@ package servlets;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -34,10 +36,12 @@ public class InitBDServlet extends HttpServlet {
 
 	private void initBD() {
 
+		Logger logger = Logger.getAnonymousLogger();
+		
 		try {
 			myBean.InitBDFromCSV();
 		} catch (IOException | URISyntaxException e) {
-			e.printStackTrace();
+			logger.log(Level.FINE, "an exception was thrown", e);
 		}		
 	}
 }
