@@ -6,7 +6,7 @@
 
 			<div class="input-group input-group-lg icon-addon addon-lg">
 
-				<input list="barreRecherche" type="text" ng-model="recherche" placeholder="Ecrivez ici pour chercher un livre ..." ng-change="suggestion()" name="inputSearchQuerry" id="schbox" class="form-control input-lg">
+				<input list="barreRecherche" type="text" ng-model="recherche" autocomplete="off" placeholder="Ecrivez ici pour chercher un livre ..." ng-change="suggestion()" name="inputSearchQuerry" id="schbox" class="form-control input-lg">
 				<datalist id="barreRecherche">
 				</datalist>
 				<i class="icon icon-search"></i> <span class="input-group-btn"> <a ng-click="rechercheBarre()" href="" class="btn btn-warning" role="button"><i class="glyphicon glyphicon-search"></i></a>

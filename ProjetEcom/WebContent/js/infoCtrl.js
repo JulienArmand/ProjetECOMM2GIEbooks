@@ -51,29 +51,29 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     
     $scope.calculeMoyenne = function(list) {
     	var moy = 0;
-    	for(i=0; i < list.length; i++)
+    	for(var i = 0; i < list.length; i++)
     		moy += list[i].note;
     	return (moy / list.length).toFixed(1);
     }
     
     $scope.posterCommentaire = function(note, commentaire) {
     	var login = getCookie('login');
-    	if(login != null && login != "" && note != undefined && commentaire != undefined) {
+    	if(login !== null && login !== "" && note !== undefined && commentaire !== undefined) {
     		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : getCookie('idClient')}}).then(function(response) {
-    			if(response.data == 'dejaCommente') {
+    			if(response.data === 'dejaCommente') {
     				document.getElementById('erreurDejaCommente').style.display = "block";
-    			} else if (response.data == 'pasAchete') {
+    			} else if (response.data === 'pasAchete') {
     				document.getElementById('erreurLivrePasAchete').style.display = "block";
     			}
     			else {
     				$scope.livre = response.data;
     			}
     		});
-    	} else if ( note == undefined || commentaire == undefined ) {
+    	} else if ( note === undefined || commentaire === undefined ) {
     		document.getElementById('erreurPosterUnCommentaire').style.display = "block";
     	}
     	else { // popup connection
-    		var modalInstance = $uibModal.open({
+    		modalInstance = $uibModal.open({
     		      ariaLabelledBy: 'modal-title',
     		      ariaDescribedBy: 'modal-body',
     		      templateUrl: '/template/modalConnection/modalConnection.html',

@@ -19,7 +19,7 @@ app.controller("menuCtrl", function($scope, $rootScope, $http){
 	}
 	
 	$scope.setGenre = function(genre, id){
-		if(genre == $rootScope.genre) {
+		if(genre === $rootScope.genre) {
 			$("#"+id).prop('checked', false);
 			$rootScope.genre = "@";
 		}
@@ -28,7 +28,7 @@ app.controller("menuCtrl", function($scope, $rootScope, $http){
 	
 	$scope.setAvisMin = function(avisMin, id){
 		
-		if(avisMin == $rootScope.avisMin) {
+		if(avisMin === $rootScope.avisMin) {
 			$("#avis"+id).prop('checked', false);
 			$rootScope.avisMin = -1;
 		}

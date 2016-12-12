@@ -1,4 +1,3 @@
-
 function checkCaracteresInterdits(value){
 	result = false;
 	if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
@@ -14,8 +13,8 @@ function validationEmail(mail){
     return (true);
 }  
 
-routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeParams,$rootScope){	
-	$("#menu").hide();	
+routeAppControllers.controller("inscriptionCtrl", function($scope, $http){	
+	$("#menu").hide();
 	$scope.rez= true;
 	$scope.emailSave = "hello";
 	$scope.submit = function() {

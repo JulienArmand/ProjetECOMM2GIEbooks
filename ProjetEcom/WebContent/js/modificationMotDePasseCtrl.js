@@ -1,7 +1,7 @@
-routeAppControllers.controller("modificationMotDePasseCtrl", function($scope, $http, $location, $rootScope){	
+routeAppControllers.controller("modificationMotDePasseCtrl", function($scope, $http){	
 	$("#menu").hide();
 	
-	modificationMotDePasse = function (){
+	$scope.modificationMotDePasse = function (){
 		$http.get("ModificationMotDePasse", {params:{
 			"pseudo": getCookie('login'),
 			"ancienMotDePasse" : $("#ancienMotDePasse").val(),
