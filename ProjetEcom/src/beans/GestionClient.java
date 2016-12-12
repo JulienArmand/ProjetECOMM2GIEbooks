@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import Tools.GestionCookies;
+import Tools.ChiffrageCookies;
 import model.Client;
 
 @Stateless
@@ -33,7 +34,7 @@ public class GestionClient {
 	public Client getClientByCookie(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 		GestionCookies g = new GestionCookies();
-		String idClient = g.getCookieByName(cookies, "idClient").getValue();
+		String idClient = ChiffrageCookies.dechiffreString(g.getCookieByName(cookies, "idClient").getValue());
 		return em.find(Client.class, idClient);
 	}
 

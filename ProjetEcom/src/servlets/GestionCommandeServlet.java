@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import Tools.GestionCookies;
+import Tools.ChiffrageCookies;
 import beans.GestionClient;
 import beans.GestionCommande;
 import beans.GestionLivre;
@@ -53,7 +54,8 @@ public class GestionCommandeServlet extends HttpServlet {
 		String str = null;
 
 		if (request.getParameter("action").equals("verifAchete")) {
-			Long id = Long.parseLong(request.getParameter("id"));
+			String idRequest = ChiffrageCookies.dechiffreString(request.getParameter("id"));
+			Long id = Long.parseLong(idRequest);
 			Client client = clientBean.getClientByCookie(request);
 			List<Commande> l = commandeBean.getCommandeClient(client);
 			Iterator<Commande> it= l.iterator();
@@ -76,7 +78,7 @@ public class GestionCommandeServlet extends HttpServlet {
 			// Creer commande
 			Cookie[] cookies = request.getCookies();
 			GestionCookies g = new GestionCookies();
-			String idClient = g.getCookieByName(cookies, "idClient").getValue();
+			String idClient = ChiffrageCookies.dechiffreString(g.getCookieByName(cookies, "idClient").getValue());
 			Client client = clientBean.getClient(Long.parseLong(idClient));
 
 			Commande c = commandeBean.creerCommande(new Date(), client, paiementBean.getMoyenPaiement(client, request.getParameter("type")));
@@ -104,7 +106,6 @@ public class GestionCommandeServlet extends HttpServlet {
 		}
 		response.setContentType("application/json");
 		response.getWriter().println(str);
-
 	}
 
 }

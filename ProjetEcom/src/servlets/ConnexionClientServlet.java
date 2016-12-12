@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import beans.ConnexionClient;
+import Tools.ChiffrageCookies;
 
 public class ConnexionClientServlet extends HttpServlet {
 	
@@ -37,8 +38,9 @@ public class ConnexionClientServlet extends HttpServlet {
 						response.addCookie(deadCookie);
 					}	
 				}
-				Cookie login = new Cookie("login", pseudo);
-				Cookie idClient = new Cookie("idClient", String.valueOf(myBean.getIdClient(pseudo)));
+
+				Cookie login = new Cookie("login", ChiffrageCookies.chiffreString(pseudo));
+				Cookie idClient = new Cookie("idClient", ChiffrageCookies.chiffreString(String.valueOf(myBean.getIdClient(request.getParameter("pseudo")))));
 				response.addCookie(login);
 				response.addCookie(idClient);
 			}
