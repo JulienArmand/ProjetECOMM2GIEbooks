@@ -10,7 +10,7 @@ routeAppControllers.controller("compteClient", function($scope, $http, $location
     	$scope.mail = data.email;
     });
 	
-	var modificationProfil = function (){
+	$scope.modificationProfil = function (){
 		$http.get("ModificationProfile", {params:{
 			"pseudo" : $("#pseudo").val(),
 			"nom" : $("#nom").val(),
@@ -59,7 +59,7 @@ routeAppControllers.controller("compteClient", function($scope, $http, $location
 	    });
 	}
 	
-	var supprimerProfil = function (){
+	$scope.supprimerProfil = function (){
 		$http.get("SupprimerClient", {params:{
 			"idClient" : getCookie('idClient')
 			}}).then(function() {

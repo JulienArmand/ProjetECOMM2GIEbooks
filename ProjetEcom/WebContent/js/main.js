@@ -108,10 +108,7 @@ function estEnPromo(promo) {
 		var dateDebutPromo = new Date(promo.dateDebut).getTime();
 		var dateFinPromo = new Date(promo.dateFin).getTime();
 		var dateActuelle = new Date().getTime();
-		if (dateDebutPromo <= dateActuelle && dateFinPromo >= dateActuelle) {
-			return true;
-		} else
-			return false;
+		return (dateDebutPromo <= dateActuelle && dateFinPromo >= dateActuelle)
 	} else
 		return false;
 }

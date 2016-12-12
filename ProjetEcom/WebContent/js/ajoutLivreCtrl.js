@@ -2,7 +2,7 @@ app.controller("ajoutLivreCtrl", function($scope, $http) {
 
 	$("#menu").hide();
 
-	var toggle_div = function(bouton, id) { // On déclare la fonction toggle_div
+	$scope.toggle_div = function(bouton, id) { // On déclare la fonction toggle_div
 		// qui prend en param le bouton et
 		// un id
 		var div = document.getElementById(id); // On récupère le div ciblé
@@ -16,7 +16,7 @@ app.controller("ajoutLivreCtrl", function($scope, $http) {
 		}
 	}
 
-	var creerLivre = function() {
+	$scope.creerLivre = function() {
 		$http.get("AjouterLivre", {
 			params : {
 				"titre" : $("#titre").val(),
@@ -43,13 +43,13 @@ app.controller("ajoutLivreCtrl", function($scope, $http) {
 		genre : "creation"
 	}
 
-	var setGenre = function(str) {
+	$scope.setGenre = function(str) {
 		$scope.formulaires.genre = str;
 	}
 
 	$scope.selectedGenreToModify = null;
 
-	var creerGenre = function() {
+	$scope.creerGenre = function() {
 		$http.get("CreerGenreServlet", {
 			params : {
 				"action" : "creer",
@@ -59,7 +59,7 @@ app.controller("ajoutLivreCtrl", function($scope, $http) {
 		});
 	}
 
-	var modifierGenre = function() {
+	$scope.modifierGenre = function() {
 		$http.get("CreerGenreServlet", {
 			params : {
 				"action" : "modif",
@@ -70,7 +70,7 @@ app.controller("ajoutLivreCtrl", function($scope, $http) {
 		});
 	}
 
-	var creerAuteur = function() {
+	$scope.creerAuteur = function() {
 		$http.get("CreerAuteurServlet", {
 			params : {
 				"action" : "creer",
@@ -81,7 +81,7 @@ app.controller("ajoutLivreCtrl", function($scope, $http) {
 		});
 	}
 
-	var modifierAuteur = function() {
+	$scope.modifierAuteur = function() {
 		$http.get("CreerAuteurServlet", {
 			params : {
 				"action" : "modif",
@@ -93,7 +93,7 @@ app.controller("ajoutLivreCtrl", function($scope, $http) {
 		});
 	}
 
-	var creerEditeur = function() {
+	$scope.creerEditeur = function() {
 		$http.get("CreerEditeurServlet", {
 			params : {
 				"action" : "creer",
@@ -103,7 +103,7 @@ app.controller("ajoutLivreCtrl", function($scope, $http) {
 		});
 	}
 
-	var modifierEditeur = function() {
+	$scope.modifierEditeur = function() {
 		$http.get("CreerEditeurServlet", {
 			params : {
 				"action" : "modif",
@@ -114,7 +114,7 @@ app.controller("ajoutLivreCtrl", function($scope, $http) {
 		});
 	}
 
-	var creerPromotion = function() {
+	$scope.creerPromotion = function() {
 		$http.get("AjoutPromoServlet", {
 			params : {
 				"id" : $scope.selectedLivre,

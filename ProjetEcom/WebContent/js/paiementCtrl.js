@@ -56,7 +56,7 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart,
 		moyen : "CB"
 	}
 
-	var setMoyen = function(str) {
+	$scope.setMoyen = function(str) {
 		$scope.moyenPaiement.moyen = str;
 	}
 
@@ -64,7 +64,7 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart,
 		if (document.cookie !== "") {
 			window.location.href = "#/paiement";
 		} else { // popup connection
-			var modalInstance = $uibModal.open({
+			modalInstance = $uibModal.open({
 				ariaLabelledBy : 'modal-title',
 				ariaDescribedBy : 'modal-body',
 				templateUrl : '/template/modalConnection/modalConnection.html',
@@ -73,9 +73,9 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart,
 		}
 	}
 
-	var creerCommande = function() {
+	$scope.creerCommande = function() {
 		var idLivres = "";
-		for (i = 0; i < ngCart.getCart().items.length; i++) {
+		for (var i = 0; i < ngCart.getCart().items.length; i++) {
 			idLivres += ((ngCart.getCart().items[i])._id);
 			if (i !== (ngCart.getCart().items.length - 1))
 				idLivres += ","

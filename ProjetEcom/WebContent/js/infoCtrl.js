@@ -73,7 +73,7 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     		document.getElementById('erreurPosterUnCommentaire').style.display = "block";
     	}
     	else { // popup connection
-    		var modalInstance = $uibModal.open({
+    		modalInstance = $uibModal.open({
     		      ariaLabelledBy: 'modal-title',
     		      ariaDescribedBy: 'modal-body',
     		      templateUrl: '/template/modalConnection/modalConnection.html',

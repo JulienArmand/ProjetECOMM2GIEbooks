@@ -25,21 +25,21 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 	    	for(var i = 0; i < titres.length; i++)
 	    		total.push(titres[i]._source.titre.trim());
 	    	
-	    	for(var i = 0; i < auteurs.length; i++)
-	    		total.push(auteurs[i]._source.auteurs.trim());
+	    	for(var j = 0; j < auteurs.length; j++)
+	    		total.push(auteurs[j]._source.auteurs.trim());
 	    	
 	    	total = total.sort();
-	    	for(var i = 0; i < total.length-1; i++){
-	    		if(total[i] != undefined){
-	    			for(var j=i+1; j < total.length && total[i] == total[j];j++)
-	    				total[j] = undefined;
+	    	for(var k = 0; k < total.length-1; k++){
+	    		if(total[k] !== undefined){
+	    			for(var l=k+1; k < total.length && total[k] === total[l];l++)
+	    				total[l] = undefined;
 	    		}
 	    	}
 	    	$("#barreRecherche").empty();
 	    	
-	    	for(var i = 0; i < total.length; i++)
-	    		if(total[i] != undefined)
-	    			$("#barreRecherche").append("<option ng-selected=\"rechercheBarre()\"  value='" + total[i]+ "'>");
+	    	for(var m = 0; m < total.length; m++)
+	    		if(total[m] !== undefined)
+	    			$("#barreRecherche").append("<option ng-selected=\"rechercheBarre()\"  value='" + total[m]+ "'>");
 		});
 	}
 	
