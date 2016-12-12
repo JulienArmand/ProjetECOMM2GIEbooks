@@ -17,13 +17,11 @@ public class GestionAuteur {
 
 	public Auteur creerAuteur(String nom, String prenom) {
 
-		Query q = em.createQuery(
-				"select OBJECT(a) from Auteur a where a.nom = \"" + nom + "\" AND a.prenom = \"" + prenom + "\"");
+		Query q = em.createQuery("select OBJECT(a) from Auteur a where a.nom = \"" + nom + "\" AND a.prenom = \"" + prenom + "\"");
 		List<Auteur> la = q.getResultList();
 		Auteur a = null;
-		if (la == null || la.size() == 0) {
+		if (la == null || la.isEmpty()) {
 			a = new Auteur(nom, prenom);
-			System.out.println("Auteur " + a.getNom() + " " + a.getPrenom() + " créé");
 			em.persist(a);
 		} else
 			a = la.get(0);
@@ -37,8 +35,7 @@ public class GestionAuteur {
 
 	public List<Auteur> getLesAuteurs() {
 		Query q = em.createQuery("select OBJECT(b) from Auteur b");
-		List<Auteur> list = (List<Auteur>) q.getResultList();
-		return list;
+		return (List<Auteur>) q.getResultList();
 	}
 
 	public void supprimerTous() {
@@ -52,16 +49,10 @@ public class GestionAuteur {
 		
 		Auteur g = em.find(Auteur.class, id);
 		if (g != null) {
-			System.out.println("Modif du Auteur d'id : " + g.getId());
 			g.setNom(nom);
 			g.setPrenom(prenom);
 			em.persist(g);
-
-		} else {
-			System.out.println("Modification d'un Auteur null !!!!!");
-			return;
 		}
-		
 	}
 
 }

@@ -40,8 +40,7 @@ public class GestionClient {
 
 	public List<Client> getLesClients() {
 		Query q = em.createQuery("select OBJECT(b) from Client b");
-		List<Client> list = (List<Client>) q.getResultList();
-		return list;
+		return (List<Client>) q.getResultList();
 	}
 
 	public void supprimerTous() {
@@ -54,7 +53,7 @@ public class GestionClient {
 	public Client getClientFromPseudo(String pseudo) {
 		Query q = em.createQuery("select OBJECT(b) from Client b where b.pseudo = '" + pseudo + "' AND b.desinscrit = false");
 		List<Client> list = (List<Client>) q.getResultList();
-		if (list.size() >= 1) {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		} else {
 			return null;
@@ -64,7 +63,7 @@ public class GestionClient {
 	public Client getClientFromEmail(String email) {
 		Query q = em.createQuery("select OBJECT(b) from Client b where b.email = '" + email + "' AND b.desinscrit = false");
 		List<Client> list = (List<Client>) q.getResultList();
-		if (list.size() >= 1) {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		} else {
 			return null;
@@ -98,7 +97,6 @@ public class GestionClient {
 
 	public void desinscriptionClient(Client c) {
 		c.setDesinscrit(true);
-		;
 		em.merge(c);
 	}
 }

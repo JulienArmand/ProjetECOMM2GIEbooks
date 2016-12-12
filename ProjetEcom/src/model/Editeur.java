@@ -26,14 +26,9 @@ public class Editeur {
 	@OneToMany(mappedBy="editeur",cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
     private Collection<Livre> lesLivres; 
 	
-	
-	public Editeur() {
+	public Editeur(String nom) {
 		super();
 		this.lesLivres = new LinkedList<>();
-	}
-
-	public Editeur(String nom) {
-		this();
 		this.nom = nom;
 	}
 

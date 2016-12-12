@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 
@@ -16,13 +15,21 @@ import model.Auteur;
 import model.Livre;
 
 public class ElasticSearchTools {
+	
+	private static final String HTTP_PROXY_HOST = "http.proxyHost";
+	private static final String HTTP_PROXY_PORT = "http.proxyPort";
+	private static final String HTTPS_PROXY_HOST = "https.proxyHost";
+	private static final String HTTPS_PROXY_PORT = "https.proxyPort";
+	
+	private static final String PROXY_HOST = "www-cache.ujf-grenoble.fr";
+	private static final String PROXY_PORT = "3128";
 
 	public static InputStream doRequest(String urlS, String methode, String data) throws IOException {
 
-		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
-		System.setProperty("http.proxyPort", "3128");
-		System.setProperty("https.proxyHost", "www-cache.ujf-grenoble.fr");
-		System.setProperty("https.proxyPort", "3128");
+		System.setProperty(HTTP_PROXY_HOST, PROXY_HOST);
+		System.setProperty(HTTP_PROXY_PORT, PROXY_PORT);
+		System.setProperty(HTTPS_PROXY_HOST, PROXY_HOST);
+		System.setProperty(HTTPS_PROXY_PORT, PROXY_PORT);
 
 		URL url = new URL(urlS);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -45,10 +52,10 @@ public class ElasticSearchTools {
 
 	public static void creerIndex(String url) throws IOException {
 
-		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
-		System.setProperty("http.proxyPort", "3128");
-		System.setProperty("https.proxyHost", "www-cache.ujf-grenoble.fr");
-		System.setProperty("https.proxyPort", "3128");
+		System.setProperty(HTTP_PROXY_HOST, PROXY_HOST);
+		System.setProperty(HTTP_PROXY_PORT, PROXY_PORT);
+		System.setProperty(HTTPS_PROXY_HOST, PROXY_HOST);
+		System.setProperty(HTTPS_PROXY_PORT, PROXY_PORT);
 
 		String req = "{\"settings\":{\"analysis\":{\"filter\":{\"autocomplete_filter\":{\"type\":\"ngram\",\"min_gram\":1,\"max_gram\":20}},\"analyzer\":{\"autocomplete\":{\"type\":\"custom\",\"tokenizer\":\"standard\",\"filter\":[\"lowercase\",\"autocomplete_filter\"]}}}},\"mappings\":{\"type_rechercheTitreGenreAuteur\":{\"properties\":{\"titre\":{\"type\":\"text\",\"analyzer\":\"autocomplete\",\"search_analyzer\":\"simple\"},\"suggest_titre\":{\"type\": \"completion\",\"analyzer\": \"simple\", \"search_analyzer\": \"simple\"},\"suggest_auteurs\": {\"type\": \"completion\",\"analyzer\": \"simple\",\"search_analyzer\": \"simple\"}}}}}";
 		InputStream is = ElasticSearchTools.doRequest(url, "PUT", req);
@@ -166,10 +173,10 @@ public class ElasticSearchTools {
 	public static void updateAvis(Livre l) throws IOException {
 		String req = "\n{\"doc\" : {\"avis\":" + l.calculMoyenneAvis() + "}}";
 
-		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
-		System.setProperty("http.proxyPort", "3128");
-		System.setProperty("https.proxyHost", "www-cache.ujf-grenoble.fr");
-		System.setProperty("https.proxyPort", "3128");
+		System.setProperty(HTTP_PROXY_HOST, PROXY_HOST);
+		System.setProperty(HTTP_PROXY_PORT, PROXY_PORT);
+		System.setProperty(HTTPS_PROXY_HOST, PROXY_HOST);
+		System.setProperty(HTTPS_PROXY_PORT, PROXY_PORT);
 
 		URL url = new URL("http://localhost:9200/livres/type_rechercheTitreGenreAuteur/" + l.getId() + "/_update");
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -200,10 +207,10 @@ public class ElasticSearchTools {
 
 	public static void supprimerIndex(String url) throws IOException {
 
-		System.setProperty("http.proxyHost", "www-cache.ujf-grenoble.fr");
-		System.setProperty("http.proxyPort", "3128");
-		System.setProperty("https.proxyHost", "www-cache.ujf-grenoble.fr");
-		System.setProperty("https.proxyPort", "3128");
+		System.setProperty(HTTP_PROXY_HOST, PROXY_HOST);
+		System.setProperty(HTTP_PROXY_PORT, PROXY_PORT);
+		System.setProperty(HTTPS_PROXY_HOST, PROXY_HOST);
+		System.setProperty(HTTPS_PROXY_PORT, PROXY_PORT);
 
 		InputStream is = ElasticSearchTools.doRequest(url, "DELETE", "");
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is));

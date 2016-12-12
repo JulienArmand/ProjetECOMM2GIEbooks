@@ -25,8 +25,7 @@ public class ConnexionClientServlet extends HttpServlet {
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pseudo = request.getParameter("pseudo");
-		if(checkPseudoClientExiste(pseudo)){
-			if(checkMotDePasseCorrect(pseudo, request.getParameter("motDePasse"))){
+		if(checkPseudoClientExiste(pseudo) && checkMotDePasseCorrect(pseudo, request.getParameter("motDePasse"))){
 				//Pseudo existe et mot de passe correct -> valider la connexion
 				Cookie[] cookies = request.getCookies();
 				//Supression des anciens cookies d'erreurs
@@ -42,21 +41,11 @@ public class ConnexionClientServlet extends HttpServlet {
 				Cookie idClient = new Cookie("idClient", ChiffrageCookies.chiffreString(String.valueOf(myBean.getIdClient(request.getParameter("pseudo")))));
 				response.addCookie(login);
 				response.addCookie(idClient);
-			}
-			
-			else{
-				//Mot de passe non correct
-				Cookie erreur = new Cookie("erreur", ChiffrageCookies.chiffreString("true"));
-				response.addCookie(erreur);
-			}
-		}
-		else{
-			//Pseudo n'existe pas
+		} else{
 			Cookie erreur = new Cookie("erreur", ChiffrageCookies.chiffreString("true"));
 			response.addCookie(erreur);
 		}
 	}
-	
 	
 	private boolean checkPseudoClientExiste(String pseudo){
 		return myBean.checkPseudoExiste(pseudo);
