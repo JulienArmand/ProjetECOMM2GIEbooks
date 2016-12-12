@@ -39,7 +39,7 @@ public class InitBDServlet extends HttpServlet {
 		Logger logger = Logger.getAnonymousLogger();
 		
 		try {
-			myBean.InitBDFromCSV();
+			myBean.initBDFromCSV();
 		} catch (IOException | URISyntaxException e) {
 			logger.log(Level.FINE, "an exception was thrown", e);
 		}		

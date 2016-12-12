@@ -29,8 +29,7 @@ public class InscriptionClientBean {
 	public List<Client> getLesClients(){
 		
 		Query q = em.createQuery("select OBJECT(b) from Client b"); 
-		List<Client> list = (List<Client>) q.getResultList(); 
-		return list;
+		return(List<Client>) q.getResultList(); 
 	} 
 		
 	public void suppressionClients(){

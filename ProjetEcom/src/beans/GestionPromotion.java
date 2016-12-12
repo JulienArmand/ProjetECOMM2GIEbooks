@@ -54,8 +54,7 @@ public class GestionPromotion {
 	
 	public List<Promotion> getLesPromotions() {
 		Query q = em.createQuery("select OBJECT(b) from Promotion b");
-		List<Promotion> list = (List<Promotion>) q.getResultList();
-		return list;
+		return (List<Promotion>) q.getResultList();
 	}
 	
 	public void supprimerTous() {

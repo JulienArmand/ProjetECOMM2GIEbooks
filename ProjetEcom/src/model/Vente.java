@@ -28,9 +28,6 @@ public class Vente {
 	@JoinColumn(name = "Commande_id")
 	private Commande	laCommande;
 
-	public Vente() {
-	}
-
 	public Vente(float prix) {
 		super();
 		this.prix = prix;

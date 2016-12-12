@@ -69,7 +69,6 @@ public class InitBean {
 		Query q2 = em.createNativeQuery("DELETE FROM Vente");
 		Query q3 = em.createNativeQuery("DELETE FROM Editeur");
 		Query q4 = em.createNativeQuery("DELETE FROM Livre");
-		Query q5 = em.createNativeQuery("DELETE FROM Serie");
 		Query q6 = em.createNativeQuery("DELETE FROM Avis");
 		Query q7 = em.createNativeQuery("DELETE FROM Promotion");
 		Query q8 = em.createNativeQuery("DELETE FROM LIVRE_AUTEUR_LIEN");
@@ -82,7 +81,6 @@ public class InitBean {
 		q2.executeUpdate();
 		q3.executeUpdate();
 		q4.executeUpdate();
-		q5.executeUpdate();
 		q6.executeUpdate();
 		q7.executeUpdate();
 		q8.executeUpdate();
@@ -100,7 +98,7 @@ public class InitBean {
 		}
 	}
 
-	public void InitBDFromCSV() throws IOException, URISyntaxException {
+	public void initBDFromCSV() throws IOException, URISyntaxException {
 		Logger logger = Logger.getAnonymousLogger();
 		try {
 			suppressionBD();
@@ -116,7 +114,7 @@ public class InitBean {
 		String line = r.readLine();
 		String empty = "";
 		while ((line = r.readLine()) != null && !line.equals(empty)) {
-			String data[] = line.split(";", -1);
+			String[] data = line.split(";", -1);
 			String titre = data[0];
 			if (titre.equals(empty))
 				break;
@@ -151,7 +149,7 @@ public class InitBean {
 			List<Auteur> lesAuteurs = new LinkedList<>();
 
 			for (int i = 0; i < a.length; i++) {
-				String str[] = a[i].split("/s");
+				String[] str = a[i].split("/s");
 				Auteur x;
 				if (str.length > 1)
 					x = gestionAuteur.creerAuteur(str[1].replace("/s", ""), str[0].replace("/s", ""));

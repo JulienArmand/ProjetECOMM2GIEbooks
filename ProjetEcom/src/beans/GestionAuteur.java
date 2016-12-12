@@ -19,7 +19,7 @@ public class GestionAuteur {
 
 		Query q = em.createQuery("select OBJECT(a) from Auteur a where a.nom = \"" + nom + "\" AND a.prenom = \"" + prenom + "\"");
 		List<Auteur> la = q.getResultList();
-		Auteur a = null;
+		Auteur a;
 		if (la == null || la.isEmpty()) {
 			a = new Auteur(nom, prenom);
 			em.persist(a);

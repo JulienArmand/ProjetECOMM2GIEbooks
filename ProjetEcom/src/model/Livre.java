@@ -80,15 +80,11 @@ public class Livre {
 	@JoinColumn(name = "Editeur_id")
 	private Editeur				editeur;
 
-	@ManyToOne
-	@JoinColumn(name = "Serie_id")
-	private Serie				laSerie;
-
 	public Livre() {
 		super();
-		this.lesAuteurs = new LinkedList<Auteur>();
-		this.lesAvis = new LinkedList<Avis>();
-		this.lesVentes = new LinkedList<Vente>();
+		this.lesAuteurs = new LinkedList<>();
+		this.lesAvis = new LinkedList<>();
+		this.lesVentes = new LinkedList<>();
 	}
 
 	public Livre(String title, String isbn, Date dateDePublication, int nbPages, float prix, String langue, String langueOrigine) {
@@ -148,7 +144,6 @@ public class Livre {
 	
 	public float getPrixAvecPromo() {
 		Promotion p = this.getPromotion();
-		System.out.println(p);
 		if(p != null && p.getDateDebut().before(Date.from(Instant.now())) &&  p.getDateFin().after(Date.from(Instant.now())))
 			return prix-(prix*p.getTauxReduc())/100;
 		else
@@ -207,14 +202,6 @@ public class Livre {
 		this.editeur = editeur;
 	}
 
-	public Serie getLaSerie() {
-		return laSerie;
-	}
-
-	public void setLaSerie(Serie laSerie) {
-		this.laSerie = laSerie;
-	}
-
 	public Collection<Vente> getLesVentes() {
 		return lesVentes;
 	}
@@ -249,7 +236,7 @@ public class Livre {
 
 	public int calculMoyenneAvis() {
 
-		if (this.lesAvis.size() == 0)
+		if (this.lesAvis.isEmpty())
 			return 0;
 
 		int x = 0;
@@ -264,9 +251,7 @@ public class Livre {
 	public void addAuteur(Auteur a) {
 
 		if (a != null) {
-
 			if (this.lesAuteurs == null)
-
 				this.lesAuteurs = new LinkedList<>();
 
 			this.lesAuteurs.add(a);

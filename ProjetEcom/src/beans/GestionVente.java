@@ -18,7 +18,7 @@ public class GestionVente {
 	private EntityManager em;
 
 	public Vente creerVente(Livre l) {
-		Vente v = null;
+		Vente v;
 		v = new Vente(l.getPrixAvecPromo());
 		v.setLivre(l);
 		em.persist(v);
@@ -26,9 +26,8 @@ public class GestionVente {
 	}
 	
 	public Vente creerVente(Livre l, Commande cmd) {
-		Vente v = null;
+		Vente v;
 		v = new Vente(l.getPrixAvecPromo());
-		System.out.println("GESTION VENTE : " + v.getPrix());
 		v.setLivre(l);
 		v.setLaCommande(cmd);
 		em.persist(v);
@@ -37,14 +36,12 @@ public class GestionVente {
 
 	public List<Vente> getVentes(Commande c) {
 		Query q = em.createQuery("select OBJECT(b) from Vente b where b.laCommande =" + c);
-		List<Vente> list = (List<Vente>) q.getResultList();
-		return list;
+		return (List<Vente>) q.getResultList();
 	}
 	
 	public List<Vente> getLesVentes() {
 		Query q = em.createQuery("select OBJECT(b) from Vente b");
-		List<Vente> list = (List<Vente>) q.getResultList();
-		return list;
+		return (List<Vente>) q.getResultList();
 	}
 
 	public void supprimerTous() {

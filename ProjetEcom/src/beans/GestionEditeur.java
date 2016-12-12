@@ -19,10 +19,9 @@ public class GestionEditeur {
 
 		Query q = em.createQuery("select OBJECT(e) from Editeur e where e.nom = \"" + nom + "\"");
 		List<Editeur> le = q.getResultList();
-		Editeur e = null;
-		if (le == null || le.size() == 0) {
+		Editeur e;
+		if (le == null || le.isEmpty()) {
 			e = new Editeur(nom);
-			System.out.println("Editeur " + e.getNom() + " crï¿½ï¿½");
 			em.persist(e);
 		} else
 			e = le.get(0);
@@ -36,8 +35,7 @@ public class GestionEditeur {
 	
 	public List<Editeur> getLesEditeurs() {
 		Query q = em.createQuery("select OBJECT(b) from Editeur b");
-		List<Editeur> list = (List<Editeur>) q.getResultList();
-		return list;
+		return (List<Editeur>) q.getResultList();
 	}
 	
 	public void supprimerTous() {
@@ -50,12 +48,10 @@ public class GestionEditeur {
 	public void modifierEditeur(Long id, String nom) {
 		Editeur g = em.find(Editeur.class, id);
 		if (g != null) {
-			System.out.println("Modif du Editeur d'id : " + g.getId());
 			g.setNom(nom);
 			em.persist(g);
 
 		} else {
-			System.out.println("Modification d'un Editeur null !!!!!");
 			return;
 		}
 

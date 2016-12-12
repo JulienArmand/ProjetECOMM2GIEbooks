@@ -19,10 +19,9 @@ public class GestionGenre {
 
 		Query q = em.createQuery("select OBJECT(g) from Genre g where g.nom = \"" + nom + "\"");
 		List<Genre> lg = q.getResultList();
-		Genre g = null;
-		if (lg == null || lg.size() == 0) {
+		Genre g;
+		if (lg == null || lg.isEmpty()) {
 			g = new Genre(nom);
-			System.out.println("Genre " + g.getNom() + " créé");
 			em.persist(g);
 		} else
 			g = lg.get(0);
@@ -44,20 +43,17 @@ public class GestionGenre {
 	
 	public List<Genre> getLesGenres() {
 		Query q = em.createQuery("select OBJECT(b) from Genre b");
-		List<Genre> list = (List<Genre>) q.getResultList();
-		return list;
+		return (List<Genre>) q.getResultList();
 	}
 	
 
 	public void modifierGenre(Long id, String nom) {
 		Genre g = em.find(Genre.class, id);
 		if (g != null) {
-			System.out.println("Modif du genre d'id : " + g.getId());
 			g.setNom(nom);
 			em.persist(g);
 
 		} else {
-			System.out.println("Modification d'n genre null !!!!!");
 			return;
 		}
 
