@@ -1,6 +1,6 @@
 function checkCaracteresInterdits(value){
 	result = false;
-	if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
+	if(/^[a-zA-Z0-9- ]*$/.test(value) === false) {
 		result = true;
 	}
 	return result;
