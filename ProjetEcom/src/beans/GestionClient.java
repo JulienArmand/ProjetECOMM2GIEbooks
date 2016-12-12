@@ -9,9 +9,9 @@ import javax.persistence.Query;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import Tools.GestionCookies;
-import Tools.ChiffrageCookies;
 import model.Client;
+import tools.ChiffrageCookies;
+import tools.GestionCookies;
 
 @Stateless
 public class GestionClient {

@@ -11,10 +11,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import Tools.ElasticSearchTools;
 import model.Avis;
 import model.Client;
 import model.Livre;
+import tools.ElasticSearchTools;
 
 @Stateless
 public class GestionAvis {

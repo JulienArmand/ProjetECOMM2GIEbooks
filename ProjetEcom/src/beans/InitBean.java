@@ -22,13 +22,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import Tools.ElasticSearchTools;
 import model.Auteur;
 import model.Client;
 import model.Editeur;
 import model.Genre;
 import model.Livre;
 import model.Promotion;
+import tools.ElasticSearchTools;
 
 @Stateless
 public class InitBean {
