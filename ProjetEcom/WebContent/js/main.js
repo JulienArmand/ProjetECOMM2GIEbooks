@@ -106,7 +106,7 @@ function calculPromo (prix, promo) {
 
 app.service('elasticSearchSuggestion', function (esFactory) {
 	  return esFactory({
-	    host: window.location.hostname+':9200'
+	    host: '152.77.78.20:9200'
 	  });
 });
 

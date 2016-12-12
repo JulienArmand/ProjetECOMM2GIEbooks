@@ -37,6 +37,12 @@ body {
 	border-bottom : 1px solid #D9DADB;
 }
 
+#trait2 {
+	margin-top: 4px;
+	margin-bottom: 4px;
+	border-bottom : 1px solid #D9DADB;
+}
+
 .image {
 	padding: 10px;
 	border-bottom: none;
@@ -146,6 +152,26 @@ label {
 	font-weight : normal;
     cursor: pointer;
 	font-size : 1.3em;
+}
+
+.liTri{
+	
+	background-color: white;
+	padding-left : 10px;
+	padding-right : 10px;
+	padding-top : 3px;
+	padding-bottom : 2px;
+	margin-bottom : 2px;
+	margin-right : 10px;
+	border : 1px solid #D9DADB;
+	border-radius : 5px;
+	
+}
+
+.liTri2{
+
+	margin-right : 5px;
+	
 }
 
 input.tri:checked + label {
