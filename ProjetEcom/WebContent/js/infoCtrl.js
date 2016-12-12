@@ -57,13 +57,16 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     }
     
     $scope.posterCommentaire = function(note, commentaire) {
-    	if(getCookie("login") != "" && note != undefined && commentaire != undefined) {
+    	var login = getCookie('login');
+    	if(login != null && login != "" && note != undefined && commentaire != undefined) {
     		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : getCookie('idClient')}}).then(function(response) {
-    			if(response.data != 'dejaCommente') {
-    				$scope.livre = response.data;
+    			if(response.data == 'dejaCommente') {
+    				document.getElementById('erreurDejaCommente').style.display = "block";
+    			} else if (response.data == 'pasAchete') {
+    				document.getElementById('erreurLivrePasAchete').style.display = "block";
     			}
     			else {
-    				document.getElementById('erreurDejaCommente').style.display = "block";
+    				$scope.livre = response.data;
     			}
     		});
     	} else if ( note == undefined || commentaire == undefined ) {

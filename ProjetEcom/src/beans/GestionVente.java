@@ -53,5 +53,11 @@ public class GestionVente {
 		q.executeUpdate();
 		q2.executeUpdate();
 	}
+	
+	public boolean aAchete(long idClient, long idLivre) {
+		Query q = em.createQuery("select OBJECT(v) from Vente v, Client c, Livre l, Commande co where v.livre.id = " + idLivre + " and v.laCommande.leClient.id = " + idClient);
+		List<Livre> livre = (List<Livre>) q.getResultList();
+		return !livre.isEmpty();
+	}
 
 }

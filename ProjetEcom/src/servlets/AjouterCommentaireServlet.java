@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder;
 import beans.GestionAvis;
 import beans.GestionClient;
 import beans.GestionLivre;
+import beans.GestionVente;
 import model.Client;
 import model.Livre;
 
@@ -29,6 +30,8 @@ public class AjouterCommentaireServlet extends HttpServlet {
 	private GestionClient		beanClient;
 	@EJB()
 	private GestionLivre		beanLivre;
+	@EJB()
+	private GestionVente		beanVente;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
@@ -39,11 +42,12 @@ public class AjouterCommentaireServlet extends HttpServlet {
 		String commentaire = request.getParameter("commentaire");
 		int idLivre = Integer.parseInt(request.getParameter("idLivre"));
 		int idClient = Integer.parseInt(request.getParameter("idClient"));
-
-		String erreur = "dejaCommente";
+		
 		String str;
 		if (checkDejaCommente(idClient, idLivre)) {
-			str = js.toJson(erreur);
+			str = js.toJson("dejaCommente");
+		} else if (!checkLivreAchete(idClient, idLivre)) {
+			str = js.toJson("pasAchete");
 		} else {
 			Livre l = ajoutCommentaire(idClient, idLivre, note, commentaire);
 			str = js.toJson(l);
@@ -73,5 +77,16 @@ public class AjouterCommentaireServlet extends HttpServlet {
 			logger.log(Level.FINE, "an exception was thrown", e);
 		}
 		return existe;
+	}
+	
+	private boolean checkLivreAchete(int idClient, int idLivre) {
+		Logger logger = Logger.getAnonymousLogger();
+		boolean achete = false;
+		try {
+			achete = beanVente.aAchete(idClient, idLivre);
+		} catch (Exception e) {
+			logger.log(Level.FINE, "an exception was thrown", e);
+		}
+		return achete;
 	}
 }
