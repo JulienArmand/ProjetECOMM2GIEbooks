@@ -47,13 +47,13 @@ public class ConnexionClientServlet extends HttpServlet {
 			
 			else{
 				//Mot de passe non correct
-				Cookie erreur = new Cookie("erreur", "true");
+				Cookie erreur = new Cookie("erreur", ChiffrageCookies.chiffreString("true"));
 				response.addCookie(erreur);
 			}
 		}
 		else{
 			//Pseudo n'existe pas
-			Cookie erreur = new Cookie("erreur", "true");
+			Cookie erreur = new Cookie("erreur", ChiffrageCookies.chiffreString("true"));
 			response.addCookie(erreur);
 		}
 	}
