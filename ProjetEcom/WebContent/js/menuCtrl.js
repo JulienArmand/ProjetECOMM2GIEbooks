@@ -9,7 +9,7 @@ app.controller("menuCtrl", function($scope, $rootScope, $http){
         return input;
     };
     
-    $http.get("GetTous", {params:{"action": "genres"}}).then(function(response) {				
+    $http.get("GetTous", {params:{"action": "genres"}}).then(function(response) {
 		$scope.genres = response.data;
 	});
 
