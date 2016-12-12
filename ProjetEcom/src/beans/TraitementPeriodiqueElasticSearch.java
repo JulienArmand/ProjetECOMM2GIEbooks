@@ -18,10 +18,19 @@ import javax.persistence.Query;
 import model.Livre;
 import tools.ElasticSearchTools;
 
+/**
+ * Bean servant a verifier et mettre a jour periodiquement les prix des livres dans l'indexage d'elastisearch
+ *  etant donné que les promotions sont bornées temporellement.
+ * @author Clement
+ *
+ */
 @Stateless
 @LocalBean
 public class TraitementPeriodiqueElasticSearch {
 
+	/**
+	 * 
+	 */
 	DateFormat mediumDateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
 	
 	@PersistenceContext(unitName = "Database-unit")
@@ -30,8 +39,11 @@ public class TraitementPeriodiqueElasticSearch {
 	@EJB()
 	private ConfigurationGenerale config;
 	
+	/**
+	 * Traitement toutes les trentes minutes (tous les jours suffirai en réalité)
+	 */
 	@Schedule(minute = "*/30", hour = "*")
-	public void traiterTrenteSecondes() {
+	public void traiterTrenteMinutes() {
 		Query q = em.createQuery("select l from Livre l");
 		List<Livre> list = (List<Livre>) q.getResultList();
 		Logger logger = Logger.getAnonymousLogger();
