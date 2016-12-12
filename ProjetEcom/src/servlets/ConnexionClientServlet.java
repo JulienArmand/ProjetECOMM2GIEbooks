@@ -31,8 +31,7 @@ public class ConnexionClientServlet extends HttpServlet {
 				Cookie[] cookies = request.getCookies();
 				//Supression des anciens cookies d'erreurs
 				if(cookies != null){
-					int nbCookies = cookies.length;
-					for(int j = 0; j < nbCookies; j++){
+					for(int j = 0; j < cookies.length; j++){
 						Cookie deadCookie = new Cookie(cookies[0].getName(), null);
 						deadCookie.setMaxAge(0);
 						response.addCookie(deadCookie);
@@ -60,8 +59,7 @@ public class ConnexionClientServlet extends HttpServlet {
 	
 	
 	private boolean checkPseudoClientExiste(String pseudo){
-		boolean result = myBean.checkPseudoExiste(pseudo);
-		return result;
+		return myBean.checkPseudoExiste(pseudo);
 	}
 	
 	private boolean checkMotDePasseCorrect(String pseudo, String motDePasse){
