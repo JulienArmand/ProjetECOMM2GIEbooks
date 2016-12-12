@@ -17,25 +17,20 @@ public class CreerEditeurServlet extends HttpServlet {
 	private GestionEditeur myBean;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String creer = "creer";
+		String modif = "modif";
+		String empty = "";
+		String action = request.getParameter("action");
+		String nom = request.getParameter("nom");
 		
-		if (request.getParameter("action").equals("creer") && !request.getParameter("nom").equals("")) {
+		if (action.equals(creer) && !nom.equals(empty)) {
 			myBean.creerEditeur(request.getParameter("Nom"));
 		}
-		else if(request.getParameter("action").equals("modif") && !request.getParameter("nom").equals("") && !request.getParameter("id").equals("")){
-			myBean.modifierEditeur(Long.parseLong(request.getParameter("id")), request.getParameter("nom") );
+		else if(action.equals(modif) && !nom.equals(empty) && !request.getParameter("id").equals(empty)){
+			myBean.modifierEditeur(Long.parseLong(request.getParameter("id")), nom );
 		}
 
 		response.sendRedirect("admin.html");
 	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if (request.getParameter("action").equals("creer") && !request.getParameter("Nom").equals("")) {
-			myBean.creerEditeur(request.getParameter("Nom"));
-		}
-		else if(request.getParameter("action").equals("modif") && !request.getParameter("Nom").equals("") && !request.getParameter("id").equals("")){
-			myBean.modifierEditeur(Long.parseLong(request.getParameter("id")), request.getParameter("Nom") );
-		}
-		response.sendRedirect("admin.html");
-	}
 }
