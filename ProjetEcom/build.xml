@@ -26,8 +26,9 @@
 			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.2/webapps/ROOT/WEB-INF/lib/gson-2.3.1.jar"/>
 			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.2/webapps/ROOT/WEB-INF/lib/json_simple.jar"/>
 			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.2/lib/javaee-api-7.0-1.jar"/>
-			
+
 			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.2/lib/commons-lang3-3.5.jar"/>
+			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.2/lib/commons-lang-2.6.jar"/>
 			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.2/lib/servlet-api.jar"/>
 			<pathelement location="/home/im2ag/apache-tomee-webprofile-7.0.2/lib/myfaces-impl-2.2.11.jar"/>
 			</classpath>

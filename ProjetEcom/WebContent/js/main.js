@@ -120,10 +120,10 @@ function calculPromo(prix, promo) {
 	return roundPrix(prix - (prix * promo) / 100);
 }
 
-app.service('elasticSearchSuggestion', function(esFactory) {
-	return esFactory({
-		host : window.location.hostname + ':9200'
-	});
+app.service('elasticSearchSuggestion', function (esFactory) {
+	  return esFactory({
+	    host: '152.77.78.20:9200'
+	  });
 });
 
 function dechiffrageString(value) {

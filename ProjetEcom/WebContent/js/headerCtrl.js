@@ -18,16 +18,28 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 		        }
 	        }
 	    }).then(function (resp) {
-	    	var auteurs = resp.suggest_auteur[0].options;
-	    	var titres = resp.suggest_titre[0].options;
-	    	$("#barreRecherche").empty();
+	    	var auteurs = resp.suggest_auteur[0].options.sort();
+	    	var titres = resp.suggest_titre[0].options.sort();
 	    	
+	    	var total = [];
 	    	for(var i = 0; i < titres.length; i++)
-	    		$("#barreRecherche").append("<option ng-selected=\"rechercheBarre()\"  value='" + titres[i]._source.titre.trim() + "'>");
+	    		total.push(titres[i]._source.titre.trim());
 	    	
 	    	for(var i = 0; i < auteurs.length; i++)
-	    		$("#barreRecherche").append("<option ng-selected=\"rechercheBarre()\" value='" + auteurs[i]._source.auteurs.trim() + "'>");
+	    		total.push(auteurs[i]._source.auteurs.trim());
 	    	
+	    	total = total.sort();
+	    	for(var i = 0; i < total.length-1; i++){
+	    		if(total[i] != undefined){
+	    			for(var j=i+1; j < total.length && total[i] == total[j];j++)
+	    				total[j] = undefined;
+	    		}
+	    	}
+	    	$("#barreRecherche").empty();
+	    	
+	    	for(var i = 0; i < total.length; i++)
+	    		if(total[i] != undefined)
+	    			$("#barreRecherche").append("<option ng-selected=\"rechercheBarre()\"  value='" + total[i]+ "'>");
 		});
 	}
 	
