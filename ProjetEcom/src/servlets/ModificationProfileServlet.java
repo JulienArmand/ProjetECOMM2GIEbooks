@@ -11,12 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import Tools.GestionCookies;
-
 import javax.servlet.http.Cookie;
 import beans.GestionClient;
 import model.Client;
-import Tools.ChiffrageCookies;
+import tools.ChiffrageCookies;
+import tools.GestionCookies;
 
 public class ModificationProfileServlet extends HttpServlet {
 

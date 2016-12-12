@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import beans.ConnexionClient;
-import Tools.ChiffrageCookies;
+import tools.ChiffrageCookies;
 
 public class ConnexionClientServlet extends HttpServlet {
 	

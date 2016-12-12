@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import Tools.GestionCookies;
-import Tools.ChiffrageCookies;
 import beans.GestionClient;
 import beans.GestionCommande;
 import beans.GestionLivre;
@@ -28,6 +26,8 @@ import beans.GestionVente;
 import model.Client;
 import model.Commande;
 import model.Vente;
+import tools.ChiffrageCookies;
+import tools.GestionCookies;
 
 public class GestionCommandeServlet extends HttpServlet {
 
