@@ -1,5 +1,5 @@
 
-routeAppControllers.controller("inscriptionCtrl", function($scope, $http,$routeParams,$rootScope){	
+routeAppControllers.controller("inscriptionCtrl", function($scope, $http){	
 	
 	$("#menu").hide();
 	

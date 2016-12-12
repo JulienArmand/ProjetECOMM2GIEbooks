@@ -18,7 +18,6 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 		        }
 	        }
 	    }).then(function (resp) {
-	    	console.log(resp);
 	    	var auteurs = resp.suggest_auteur[0].options;
 	    	var titres = resp.suggest_titre[0].options;
 	    	$("#barreRecherche").empty();
@@ -33,7 +32,7 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 	}
 	
 	var login = getCookie('login');
-	if (login != null && login != "") {
+	if (login !== null && login !== "") {
 		$rootScope.login = login;
 		$rootScope.estConnecte = true;
 		$http.get("GestionCommande", {
@@ -42,7 +41,7 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 			});	
 	}
 	var erreur = getCookie('erreur');
-	if (erreur == "true") {
+	if (erreur === "true") {
 		$rootScope.estConnecte = false;
 		$rootScope.commandes = null;
 	}

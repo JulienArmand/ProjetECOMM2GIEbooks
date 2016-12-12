@@ -1,11 +1,11 @@
-app.controller("verifAcheteCtrl", function($scope, $http, $rootScope, ngCart){
+app.controller("verifAcheteCtrl", function($scope, $http, $rootScope){
 		
 	$scope.estAchete = function(id){
-		b = false;
+		var b = false;
 		if($rootScope.estConnecte){
-			angular.forEach($rootScope.commandes, function(value, key){
-				angular.forEach(value.lesVentes, function(valueVente, keyVente){
-				      if(valueVente.livre.id == id){
+			angular.forEach($rootScope.commandes, function(value){
+				angular.forEach(value.lesVentes, function(valueVente){
+				      if(valueVente.livre.id === id){
 				      	b = true;
 				      } 
 				   });
