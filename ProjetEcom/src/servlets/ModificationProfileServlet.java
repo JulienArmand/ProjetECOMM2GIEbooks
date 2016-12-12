@@ -16,6 +16,7 @@ import Tools.GestionCookies;
 import javax.servlet.http.Cookie;
 import beans.GestionClient;
 import model.Client;
+import Tools.ChiffrageCookies;
 
 public class ModificationProfileServlet extends HttpServlet {
 
@@ -41,7 +42,7 @@ public class ModificationProfileServlet extends HttpServlet {
 			boolean pseudoExiste = false;
 			Cookie[] cookies = request.getCookies();
 			GestionCookies g = new GestionCookies();
-			String cookiePseudo = g.getCookieByName(cookies, "login").getValue();
+			String cookiePseudo = ChiffrageCookies.dechiffreString(g.getCookieByName(cookies, "login").getValue());
 			Client c = myBean.getClientFromPseudo(cookiePseudo);
 
 			//Mise à jour du pseudo
@@ -49,7 +50,7 @@ public class ModificationProfileServlet extends HttpServlet {
 				Client clientPseudo = myBean.getClientFromPseudo(pseudo);
 				if(clientPseudo==null){
 					myBean.updateClientPseudo(c, pseudo);
-					Cookie login = new Cookie("login", request.getParameter("pseudo"));
+					Cookie login = new Cookie("login", ChiffrageCookies.chiffreString(request.getParameter("pseudo")));
 					response.addCookie(login);
 					Cookie idClient = new Cookie("idClient", String.valueOf(c.getId()));
 					response.addCookie(idClient);

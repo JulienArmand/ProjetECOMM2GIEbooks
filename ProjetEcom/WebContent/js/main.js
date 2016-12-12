@@ -110,10 +110,14 @@ app.service('elasticSearchSuggestion', function (esFactory) {
 	  });
 });
 
+function dechiffrageString(value){
+	return value.split('').reverse().join('');
+}
+
 function getCookie(sName) {
     var oRegex = new RegExp("(?:; )?" + sName + "=([^;]*);?");
     if (oRegex.test(document.cookie)) {
-    	return decodeURIComponent(RegExp["$1"]);
+    	return dechiffrageString(decodeURIComponent(RegExp["$1"]));
     } else {
     	return null;
     }
