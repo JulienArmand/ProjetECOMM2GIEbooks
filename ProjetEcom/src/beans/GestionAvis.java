@@ -61,6 +61,6 @@ public class GestionAvis {
 	public boolean existe(long idClient, long idLivre) {
 		Query q = em.createQuery("select OBJECT(a) from Avis a, Client c, Livre l where a.leClient.id = " + idClient + " and a.leLivre.id = " + idLivre);
 		List<Livre> livre = (List<Livre>) q.getResultList();
-		return livre.isEmpty();
+		return !livre.isEmpty();
 	}
 }
