@@ -232,5 +232,14 @@
 		<url-pattern>/EnvoiMailServlet</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>EnvoiMailBeans</servlet-name>
+		<servlet-class>restBeans.EnvoiMailBeans</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EnvoiMailBeans</servlet-name>
+		<url-pattern>/EnvoiMailBeans</url-pattern>
+	</servlet-mapping>
+	
 
 </web-app>

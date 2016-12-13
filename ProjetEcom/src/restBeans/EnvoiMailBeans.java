@@ -1,26 +1,31 @@
-package servlets;
+package restBeans;
 
-import java.io.IOException;
 import java.util.Properties;
+import java.util.Iterator;
 
+import javax.ejb.Stateless;
+import javax.inject.Named;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
-public class EnvoiMailServlet extends HttpServlet {
+import model.Client;
+import model.Commande;
+import model.Vente;
 
-	private static final long	serialVersionUID	= 6907236103034815181L;
+@Stateless
+@Named
+@Path("/EnvoiMailBeans")
+public class EnvoiMailBeans {
 
 	public static final String	address				= "futurabooksnoreply@gmail.com";
 
@@ -32,14 +37,30 @@ public class EnvoiMailServlet extends HttpServlet {
 	private static final String	PROXY_HOST			= "www-cache.ujf-grenoble.fr";
 	private static final String	PROXY_PORT			= "3128";
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter( "email" );
-        String sujet = request.getParameter( "sujet");
-        String message = request.getParameter( "message" );
-		envoyer_email(email,sujet,message);
+	@GET
+	@Path("/confirmation")
+	@Produces(MediaType.APPLICATION_XML)
+	public void envoyerMailConfirmationCommande(@PathParam("cmd") Commande cmd) {
+
+		Client c = cmd.getLeClient();
+
+		StringBuilder strBuild = new StringBuilder();
+		strBuild.append("Confirmation de votre commande\n");
+		strBuild.append("Bonjour, " + c.getPseudo() + "\n");
+		strBuild.append("Vous avez effectué une commande sur notre site le " + cmd.getDateDeVente() + " et nous vous en remercions.\n");
+		strBuild.append("Dont voici le détail : \n");
+		Iterator<Vente> it = (cmd.getLesVentes()).iterator();
+		while (it.hasNext()) {
+			Vente v = (Vente) it.next();
+			strBuild.append(v.getLivre().getTitre() + " au prix de " + v.getPrix() + "\n");
+		}
+		strBuild.append("\nNous vous remercions de votre confiance et bonne lecture.\nA très bientot sur notre site ! \n L'équipe FuturaBooks.");
+
+		envoyer_email(c.getEmail(), "Confirmation commande", strBuild.toString());
+
 	}
 
-	public void envoyer_email(String to,String sujet,String text) {
+	public void envoyer_email(String email, String sujet, String msg) {
 
 		final String username = address;
 		final String password = "aqwzsx123";
@@ -65,11 +86,10 @@ public class EnvoiMailServlet extends HttpServlet {
 
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(address));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
 
 			message.setSubject(sujet);
-			message.setText(text);
-
+			message.setText(msg);
 
 			Transport.send(message);
 
