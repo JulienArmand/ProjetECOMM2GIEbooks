@@ -7,7 +7,7 @@
 		<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Création d'informations <button onclick="toggle_div(this,'formCreation');" >+</button>
+					<h3 class="panel-title">Création d'informations <button ng-click="toggle_div(this,'formCreation');" >+</button>
 					</h3>
 				</div>
 				<div id="formCreation" class="panel-body form-group" style="display:none">
@@ -18,7 +18,7 @@
 								<div>
 									<div class="panel panel-default">
 										<div class="panel-heading">
-											<h3 class="panel-title">Création d'un genre  <button type="button" onclick="toggle_div(this,'formCreerGenre');">+</button></h3>
+											<h3 class="panel-title">Création d'un genre  <button type="button" ng-click="toggle_div(this,'formCreerGenre');">+</button></h3>
 										</div>
 										<div id="formCreerGenre" class="panel-body form-group" style="display:none;">
 
@@ -34,7 +34,7 @@
 													<td></td>
 													<td></td>
 													<td ALIGN="right" class="text-right"><input type="submit"
-														value="Créer genre" onclick="creerGenre()"
+														value="Créer genre" ng-click="creerGenre()"
 														class="marginExt btn btn-warning"></td>
 												</tr>
 
@@ -52,7 +52,7 @@
 								<div class="">
 									<div class="panel panel-default">
 										<div class="panel-heading">
-											<h3 class="panel-title">Création d'un auteur  <button type="button" onclick="toggle_div(this,'formCreerAuteur');">+</button></h3>
+											<h3 class="panel-title">Création d'un auteur  <button type="button" ng-click="toggle_div(this,'formCreerAuteur');">+</button></h3>
 										</div>
 										<div id="formCreerAuteur" class="panel-body form-group" style="display:none;">
 
@@ -74,7 +74,7 @@
 													<td></td>
 													<td></td>
 													<td ALIGN="right" class="text-right"><input type="submit"
-														value="Créer auteur" onclick="creerAuteur()"
+														value="Créer auteur" ng-click="creerAuteur()"
 														class="marginExt btn btn-warning"></td>
 												</tr>
 
@@ -91,7 +91,7 @@
 								<div>
 									<div class="panel panel-default">
 										<div class="panel-heading">
-											<h3 class="panel-title">Création d'un editeur  <button type="button" onclick="toggle_div(this,'formCreerEditeur');">+</button></h3>
+											<h3 class="panel-title">Création d'un editeur  <button type="button" ng-click="toggle_div(this,'formCreerEditeur');">+</button></h3>
 										</div>
 										<div id="formCreerEditeur" class="panel-body form-group" style="display:none;">
 
@@ -107,7 +107,7 @@
 													<td></td>
 													<td></td>
 													<td ALIGN="right" class="text-right"><input type="submit"
-														value="Créer editeur" onclick="creerEditeur()"
+														value="Créer editeur" ng-click="creerEditeur()"
 														class="marginExt btn btn-warning"></td>
 												</tr>
 
@@ -128,7 +128,7 @@
 		<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Modifications d'informations <button type="button" onclick="toggle_div(this,'formModification');">+</button></h3>
+					<h3 class="panel-title">Modifications d'informations <button type="button" ng-click="toggle_div(this,'formModification');">+</button></h3>
 				</div>
 				<div id="formModification" class="panel-body form-group" style="display:none">
 
@@ -139,7 +139,7 @@
 								<div class="">
 									<div class="panel panel-default">
 										<div class="panel-heading">
-											<h3 class="panel-title">Modifications d'un genre  <button type="button" onclick="toggle_div(this,'formModifGenre');">+</button></h3>
+											<h3 class="panel-title">Modifications d'un genre  <button type="button" ng-click="toggle_div(this,'formModifGenre');">+</button></h3>
 										</div>
 										<div id="formModifGenre" class="panel-body form-group" style="display:none;">
 
@@ -164,7 +164,7 @@
 													<td></td>
 													</td>
 													<td ALIGN="right"><input type="submit"
-														value="Modifier le genre" onclick="modifierGenre()"
+														value="Modifier le genre" ng-click="modifierGenre()"
 														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
 												</tr>
 											</table>
@@ -179,7 +179,7 @@
 								<div class="">
 									<div class="panel panel-default">
 										<div class="panel-heading">
-											<h3 class="panel-title">Modification d'un auteur  <button type="button" onclick="toggle_div(this,'formModifAuteur');">+</button></h3>
+											<h3 class="panel-title">Modification d'un auteur  <button type="button" ng-click="toggle_div(this,'formModifAuteur');">+</button></h3>
 										</div>
 										<div id="formModifAuteur" class="panel-body form-group" style="display:none;">
 
@@ -212,7 +212,7 @@
 													<td></td>
 													<td></td>
 													<td ALIGN="right"><input type="submit"
-														value="Modifier l'auteur" onclick="modifierAuteur())"
+														value="Modifier l'auteur" ng-click="modifierAuteur()"
 														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
 												</tr>
 											</table>
@@ -228,7 +228,7 @@
 								<div class="">
 									<div class="panel panel-default">
 										<div class="panel-heading">
-											<h3 class="panel-title">Modifications d'un editeur <button type="button" onclick="toggle_div(this,'formModifEdit');">+</button></h3>
+											<h3 class="panel-title">Modifications d'un editeur <button type="button" ng-click="toggle_div(this,'formModifEdit');">+</button></h3>
 										</div>
 										<div id="formModifEdit" class="panel-body form-group" style="display:none;">
 
@@ -253,7 +253,7 @@
 													<td></td>
 													<td></td>
 													<td ALIGN="right"><input type="submit"
-														value="Modifier l'éditeur" onclick="modifierEditeur()"
+														value="Modifier l'éditeur" ng-click="modifierEditeur()"
 														class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
 												</tr>
 											</table>
@@ -275,7 +275,7 @@
 		<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Ajout d'un livre <button type="button" onclick="toggle_div(this,'formAjoutLivre');">+</button></h3>
+					<h3 class="panel-title">Ajout d'un livre <button type="button" ng-click="toggle_div(this,'formAjoutLivre');">+</button></h3>
 				</div>
 				<div id="formAjoutLivre" class="panel-body form-group" style="display:none">
 
@@ -354,7 +354,7 @@
 							<td></td>
 							<td></td>
 							<td ALIGN="right"><input type="submit" value="Modifier"
-								onclick="creerLivre()"
+								ng-click="creerLivre()"
 								class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
 						</tr>
 					</table>
@@ -370,7 +370,7 @@
 		<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Ajout d'une promotion <button type="button" onclick="toggle_div(this,'formAjoutProm');">+</button></h3>
+					<h3 class="panel-title">Ajout d'une promotion <button type="button" ng-click="toggle_div(this,'formAjoutProm');">+</button></h3>
 				</div>
 				<div id="formAjoutProm" class="panel-body form-group" style="display:none;">
 
@@ -409,7 +409,7 @@
 							<td></td>
 							<td></td>
 							<td ALIGN="right"><input type="submit" value="Créer promotion"
-								onclick="creerPromotion()"
+								ng-click="creerPromotion()"
 								class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning"></td>
 						</tr>
 					</table>
@@ -418,7 +418,7 @@
 		</div>
 
 
-
+		<input type="submit" value="Envoyer mail" ng-click="envoiMail()" class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning">
 
 
 	</div>

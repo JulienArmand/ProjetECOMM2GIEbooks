@@ -1,7 +1,5 @@
-routeAppControllers.controller("recherche", function($scope, $http, $routeParams,$rootScope){
-	
-//	$("#menu").show();
-    
+routeAppControllers.controller("recherche", function($scope, $http, $routeParams){
+	    
 	$scope.calculPromo = function(prix, promo) {
     	return roundPrix(prix-(prix*promo)/100);
     }
@@ -24,17 +22,12 @@ routeAppControllers.controller("recherche", function($scope, $http, $routeParams
     $scope.pageSizeList = 8;
     $scope.ordonneur = "titre";
     $scope.modeAffichage = "mosaique";
-
-
-    /*
-	 * $scope.pageChangeHandler = function(num) { alert(num); };
-	 */
     
     $scope.calculeMoyenne = function(list) {
     	var moy = 0;
-    	if(list.length == 0)
+    	if(list.length === 0)
     		return "Pas d'avis";
-    	for(i=0; i < list.length; i++)
+    	for(var i = 0; i < list.length; i++)
     		moy += list[i].note;
     	return (moy / list.length).toFixed(1);
     	

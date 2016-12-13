@@ -56,17 +56,12 @@ routeAppControllers.controller("contentCtrl", function($scope, $http,$rootScope)
         $scope.livresPlusVendu = response.data;
         
     });
-    
-    $http.get("Recherche").then(function(response) {
-        $scope.livresRecherche = response.data;
         
-    });
-    
     $scope.calculeMoyenne = function(list) {
     	var moy = 0;
-    	if(list.length == 0)
+    	if(list.length === 0)
     		return "Pas d'avis";
-    	for(i=0; i < list.length; i++)
+    	for(var i = 0; i < list.length; i++)
     		moy += list[i].note;
     	return (moy / list.length).toFixed(1);
     }

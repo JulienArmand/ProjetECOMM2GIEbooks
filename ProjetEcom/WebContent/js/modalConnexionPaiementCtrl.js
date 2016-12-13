@@ -8,9 +8,9 @@ app.controller("modalConnexionPaiementCtrl", function($scope, $http, $uibModalIn
 	};
 	
 	$scope.connexion = function (pseudo, mdp) {
-		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
+		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function() {
 			var login = getCookie('login');
-			if (login != null && login != "") {
+			if (login !== null && login !== "") {
 				$rootScope.login = login;
 				$rootScope.estConnecte = true;
 				$http.get("GestionCommande", {
@@ -21,7 +21,7 @@ app.controller("modalConnexionPaiementCtrl", function($scope, $http, $uibModalIn
 				window.location.href = "#/paiement";
 			}
 			var erreur = getCookie('erreur');
-			if (erreur == "true") {
+			if (erreur === "true") {
 				$rootScope.estConnecte = false;
 				$rootScope.commandes = null;
 				document.getElementById('erreurIdentifiantModal').style.display = "block";

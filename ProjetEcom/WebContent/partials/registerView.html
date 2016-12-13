@@ -13,6 +13,11 @@
 </div>
 
 <div ng-if="rez" class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+	<span id="erreurCaracteresInterdits" style="display: none; color: red;">Veuillez ne pas utiliser de caractères interdits (%, ", *, $,¤, etc).</span>
+	<span id="erreurMotDePasseTropCourt" style="display: none; color: red;">Veuillez saisir un mot de passe de 8 caractères ou plus.</span>
+	<span id="erreurMailNonValide" style="display: none; color: red;">Veuillez saisir une adresse mail valide.</span>
+	<span id="erreurPseudoExiste" style="display: none; color: red;">Ce pseudonyme est déjà utilisé.</span>
+	<span id="erreurMotDePasseDifferents" style="display: none; color: red;">Les deux mots de passes saisis sont différents.</span>
 	<span class="col-lg-10 col-md-10 col-sm-10 col-xs-10" ng-if="rez!==true" style="color: red;font-weight:bold">{{rez}}</span>
 	<form  ng-submit="submit()" >
 		<Label style="padding: 1em 0em 0em 0em;">Identifiant</Label><br>

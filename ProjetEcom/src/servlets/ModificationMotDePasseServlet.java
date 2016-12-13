@@ -19,10 +19,6 @@ public class ModificationMotDePasseServlet extends HttpServlet {
 	private static final long serialVersionUID = -6094862300127773927L;
 	@EJB()
 	private GestionClient myBean;
-
-	public ModificationMotDePasseServlet(){
-		
-	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String motDePasseActuel = request.getParameter("ancienMotDePasse");
@@ -58,36 +54,4 @@ public class ModificationMotDePasseServlet extends HttpServlet {
 		response.getWriter().write(str);
 	}
 	
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		String motDePasseActuel = request.getParameter("ancienMotDePasse");
-		Cookie[] cookies = request.getCookies();
-		GestionCookies g = new GestionCookies();
-		String cookiePseudo = g.getCookieByName(cookies, "login").getValue();
-		Client c = myBean.getClientFromPseudo(cookiePseudo);
-		if(c.getMotDePasse().equals(motDePasseActuel)){
-			String nouveauMotDePasse = request.getParameter("nouveauMotDePasse");
-			String confirmationNouveauMotDePasse = request.getParameter("confirmationNouveauMotDePasse");
-			if(nouveauMotDePasse.equals(confirmationNouveauMotDePasse)){
-				//Modification du mot de passe et redirection vers la page d'acceuil avec message de confirmation.
-				myBean.updateClientMotDePasse(c, nouveauMotDePasse);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("");
-				dispatcher.forward(request,response);
-				
-			}
-			else{
-				//Les deux nouveaux mots de passe ne sont pas identiques. Redirection vers la page de modification et message d'erreur.
-				RequestDispatcher dispatcher = request.getRequestDispatcher("");
-				dispatcher.forward(request,response);
-			}
-		}
-		else{
-			//Mot de passe actuel incorrect. Redirection vers la page de modification et message d'erreur.
-			RequestDispatcher dispatcher = request.getRequestDispatcher("");
-			dispatcher.forward(request,response);
-		}
-		*/
-		
-	}
-
 }

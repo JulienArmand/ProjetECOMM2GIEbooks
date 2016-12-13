@@ -1,8 +1,8 @@
 app.controller("popoverConnexionCtrl", function($scope, $http, $rootScope){
 	$scope.connexion = function (pseudo, mdp) {
-		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
+		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function() {
 			var login = getCookie('login');
-			if (login != null && login != "") {
+			if (login !== null && login !== "") {
 				$rootScope.login = login;
 				$rootScope.estConnecte = true;
 				$http.get("GestionCommande", {
@@ -11,7 +11,7 @@ app.controller("popoverConnexionCtrl", function($scope, $http, $rootScope){
 					});	
 			}
 			var erreur = getCookie('erreur');
-			if (erreur == "true") {
+			if (erreur === "true") {
 				$rootScope.estConnecte = false;
 				document.getElementById('erreurIdentifiantPopoverConnexion').style.display = "block";
 			}
@@ -19,13 +19,13 @@ app.controller("popoverConnexionCtrl", function($scope, $http, $rootScope){
 	}
 });
 
-app.directive('hoverPopover2', function ($compile, $templateCache, $timeout, $rootScope, $compile) {
-	var getTemplate = function (contentType) {
+app.directive('hoverPopover2', function ($compile, $templateCache, $timeout, $rootScope) {
+	var getTemplate = function () {
 	    return $templateCache.get('templatePopoverMonCompte.html');
 	};
 	return {
 	    restrict: 'A',
-	    link: function (scope, element, attrs) {
+	    link: function (scope, element) {
 	    	
 	        var content = getTemplate();
 	        var compileContent = $compile(content)(scope);
@@ -41,13 +41,13 @@ app.directive('hoverPopover2', function ($compile, $templateCache, $timeout, $ro
 	};
 });
 
-app.directive('hoverPopover', function ($compile, $templateCache, $timeout, $rootScope, $compile) {
-	var getTemplate = function (contentType) {
+app.directive('hoverPopover', function ($compile, $templateCache, $timeout, $rootScope) {
+	var getTemplate = function () {
 	    return $templateCache.get('templatePopoverConnexion.html');
 	};
 	return {
 	    restrict: 'A',
-	    link: function (scope, element, attrs) {
+	    link: function (scope, element) {
 	    	
 	        var content = getTemplate();
 	        var compileContent = $compile(content)(scope);

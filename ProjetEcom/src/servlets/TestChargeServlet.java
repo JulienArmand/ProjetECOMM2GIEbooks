@@ -12,25 +12,36 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import beans.GestionAuteur;
+import beans.GestionAvis;
+import beans.GestionClient;
+import beans.GestionCommande;
+import beans.GestionEditeur;
+import beans.GestionGenre;
 import beans.GestionLivre;
+import beans.GestionPromotion;
+import beans.GestionVente;
+import model.Auteur;
+import model.Avis;
+import model.Client;
+import model.Commande;
+import model.Editeur;
+import model.Genre;
 import model.Livre;
+import model.Promotion;
+import model.Vente;
 
-public class GetLivreEnPromoServlet extends HttpServlet {
+public class TestChargeServlet extends HttpServlet {
 
-	private static final long serialVersionUID = -5204392351534805766L;
+	private static final long serialVersionUID = -3401197851263972685L;
 	
 	@EJB()  
 	private GestionLivre myBean; 
-	
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		GsonBuilder gb = new GsonBuilder();
-		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
-
-		List<Livre> l = myBean.getLesLivresEnPromotion();
-		String str = js.toJson(l);
 		
-		response.setContentType("application/json");
-		response.getWriter().println(str);
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		List<Livre> l = myBean.getLesLivresEnPromotion();
+		
 	}
 
 }

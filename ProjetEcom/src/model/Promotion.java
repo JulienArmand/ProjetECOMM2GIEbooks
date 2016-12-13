@@ -30,12 +30,7 @@ public class Promotion {
 	@OneToOne
 	private Livre livre;
 	
-	public Promotion() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public Promotion(int tauxReduc, Date dateDebut, Date dateFin) {
-		super();
 		this.tauxReduc = tauxReduc;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;

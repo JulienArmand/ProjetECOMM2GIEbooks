@@ -9,6 +9,11 @@ import javax.persistence.Query;
 
 import model.Client;
 
+/**
+ * A quoi sert cette classe ?????????
+ * @author Clement
+ *
+ */
 @Stateless
 public class InscriptionClientBean {
 	
@@ -17,6 +22,15 @@ public class InscriptionClientBean {
 	@PersistenceContext(unitName = "Database-unit") 
 	private EntityManager em; 
 	
+	/**
+	 * 
+	 * @param pseudo
+	 * @param email
+	 * @param motDePasse
+	 * @param nom
+	 * @param prenom
+	 * @return
+	 */
 	public Client creerClient(String pseudo, String email, String motDePasse, String nom, String prenom){
 		Client c = null;
 		if(!pseudoDejaPris(pseudo) && !emailDejaPris(email) ){
@@ -26,13 +40,18 @@ public class InscriptionClientBean {
 		return c;
 	}
 	
+	/**
+	 * @return
+	 */
 	public List<Client> getLesClients(){
 		
 		Query q = em.createQuery("select OBJECT(b) from Client b"); 
-		List<Client> list = (List<Client>) q.getResultList(); 
-		return list;
+		return(List<Client>) q.getResultList(); 
 	} 
 		
+	/**
+	 * 
+	 */
 	public void suppressionClients(){
 		
 	    Query q1 = em.createNativeQuery("DELETE FROM Client");
@@ -41,6 +60,10 @@ public class InscriptionClientBean {
 
 	}
 	
+	/**
+	 * @param pseudo
+	 * @return
+	 */
 	public boolean pseudoDejaPris(String pseudo){
 		List<Client> list = getLesClients();
 		for(Client c : list){
@@ -51,6 +74,10 @@ public class InscriptionClientBean {
 		return false;
 	}
 	
+	/**
+	 * @param email
+	 * @return
+	 */
 	public boolean emailDejaPris(String email){
 		List<Client> list = getLesClients();
 		for(Client c : list){

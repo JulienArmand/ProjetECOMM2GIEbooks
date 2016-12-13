@@ -60,31 +60,42 @@ public class GetTousServlet extends HttpServlet {
 
 		String str = null;
 		
-		if (request.getParameter("action").equals("auteurs")) {
+		String action = request.getParameter("action");
+		String auteurs = "auteurs";
+		String avis = "avis";
+		String clients = "clients";
+		String commandes = "commandes";
+		String editeurs = "editeurs";
+		String genres = "genres";
+		String livres = "livres";
+		String promotions = "promotions";
+		String ventes = "ventes";
+		
+		if (action.equals(auteurs)) {
 			List<Auteur> l = beanAuteur.getLesAuteurs();
 			str = js.toJson(l);			
-		} else if (request.getParameter("action").equals("avis")) {
+		} else if (action.equals(avis)) {
 			List<Avis> l = beanAvis.getLesAvis();
 			str = js.toJson(l);			
-		} else if (request.getParameter("action").equals("clients")) {
+		} else if (action.equals(clients)) {
 			List<Client> l = beanClient.getLesClients();
 			str = js.toJson(l);			
-		} else if (request.getParameter("action").equals("commandes")) {
+		} else if (action.equals(commandes)) {
 			List<Commande> l = beanCommande.getLesCommandes();
 			str = js.toJson(l);			
-		} else if (request.getParameter("action").equals("editeurs")) {
+		} else if (action.equals(editeurs)) {
 			List<Editeur> l = beanEditeur.getLesEditeurs();
 			str = js.toJson(l);			
-		} else if (request.getParameter("action").equals("genres")) {
+		} else if (action.equals(genres)) {
 			List<Genre> l = beanGenre.getLesGenres();
 			str = js.toJson(l);			
-		} else if (request.getParameter("action").equals("livres")) {
+		} else if (action.equals(livres)) {
 			List<Livre> l = beanLivre.getLesLivres();
 			str = js.toJson(l);			
-		} else if (request.getParameter("action").equals("promotions")) {
+		} else if (action.equals(promotions)) {
 			List<Promotion> l = beanPromotion.getLesPromotions();
 			str = js.toJson(l);			
-		} else if (request.getParameter("action").equals("ventes")) {
+		} else if (action.equals(ventes)) {
 			List<Vente> l = beanVente.getLesVentes();
 			str = js.toJson(l);			
 		}

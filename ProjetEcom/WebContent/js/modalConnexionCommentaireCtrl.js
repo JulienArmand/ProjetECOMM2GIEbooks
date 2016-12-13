@@ -8,9 +8,9 @@ app.controller("modalConnexionCommentaireCtrl", function($scope, $http, $uibModa
 	};
 	
 	$scope.connexion = function (pseudo, mdp) {
-		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function(response) {
+		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function() {
 			var login = getCookie('login');
-			if (login != null && login != "") {
+			if (login !== null && login !== "") {
 				$rootScope.login = login;
 				$rootScope.estConnecte = true;
 				$http.get("GestionCommande", {
@@ -19,7 +19,7 @@ app.controller("modalConnexionCommentaireCtrl", function($scope, $http, $uibModa
 					});	
 				$uibModalInstance.close();
 				$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": idLivre, "idClient" : getCookie('idClient')}}).then(function(response) {
-				   if(response.data != 'dejaCommente') { 
+				   if(response.data !== 'dejaCommente') { 
 					   $scope.livre = response.data; 
 				   } else {
 					   document.getElementById('erreurDejaCommente').style.display = "block"; 
@@ -27,7 +27,7 @@ app.controller("modalConnexionCommentaireCtrl", function($scope, $http, $uibModa
 				});
 			}
 			var erreur = getCookie('erreur');
-			if (erreur == "true") {
+			if (erreur === "true") {
 				$rootScope.estConnecte = false;
 				$rootScope.commandes = null;
 				document.getElementById('erreurIdentifiantModal').style.display = "block";

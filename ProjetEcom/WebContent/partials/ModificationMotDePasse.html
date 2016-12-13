@@ -9,9 +9,11 @@
 					<div class="panel-body">
 						<table WIDTH=100%>
 							<tr>
-							<span id="erreurChampVide" style="display: none; color: red;">Veuillez remplore tous les champs.</span>
+							<span id="erreurChampVide" style="display: none; color: red;">Veuillez remplir tous les champs.</span>
 							<span id="erreurMotDePasseActuel" style="display: none; color: red;">Vous avez saisi le mauvais mot de passe.</span>
 							<span id="erreurMotDePasseDifferents" style="display: none; color: red;">Les deux mots de passes saisis sont différents.</span>
+							<span id="erreurMotDePasseTropCourt" style="display: none; color: red;">Veuillez saisir un mot de passe de 8 caractères minimum.</span>
+							<span id="erreurCaracteresInterdits" style="display: none; color: red;">Veuillez ne pas utiliser de caractères interdits (%, ", *, $,¤, etc).</span>
 							<span id="confirmationModificationMotDePasse" style="display: none; color: green;">Votre mot de passe a été modifié.</span>
 								<td>Ancien mot de passe</td>
 								<td>:</td>
@@ -39,7 +41,7 @@
 							<tr>
 								<td></td>
 								<td></td>
-								<td ALIGN="right"><input type="submit" onclick="modificationMotDePasse()" value="Modifier"
+								<td ALIGN="right"><input type="submit" ng-click="modificationMotDePasse()" value="Modifier"
 									class="marginExt btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning ">
 								</td>
 							</tr>
