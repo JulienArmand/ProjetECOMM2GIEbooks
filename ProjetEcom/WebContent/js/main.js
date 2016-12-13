@@ -1,6 +1,6 @@
 var app = angular.module("app", [ 'ui.bootstrap', 'ngRoute', 'ngCart',
 		'routeAppControllers', 'slick',
-		'angularUtils.directives.dirPagination', 'elasticsearch' ]);
+		'angularUtils.directives.dirPagination', 'elasticsearch', 'ngResource' ]);
 
 var routeAppControllers = angular.module('routeAppControllers', []);
 
@@ -12,6 +12,11 @@ app.controller("coDecoCtrl", function($scope) {
 	}
 
 });
+
+app.config([ '$resourceProvider', function($resourceProvider) {
+	// Don't strip trailing slashes from calculated URLs
+	$resourceProvider.defaults.stripTrailingSlashes = false;
+} ]);
 
 app.config([ '$routeProvider', function($routeProvider) {
 
@@ -46,10 +51,10 @@ app.config([ '$routeProvider', function($routeProvider) {
 	}).when('/modificationMotDePasse', {
 		templateUrl : 'partials/ModificationMotDePasse.html',
 		controller : 'modificationMotDePasseCtrl'
-	}).when('/ajouterLivre',{
-    	templateUrl : 'partialsAdmin/ajoutLivre.html',
-    	controller: 'ajoutLivreCtrl'
-    })
+	}).when('/ajouterLivre', {
+		templateUrl : 'partialsAdmin/ajoutLivre.html',
+		controller : 'ajoutLivreCtrl'
+	})
 
 } ]);
 
@@ -120,10 +125,10 @@ function calculPromo(prix, promo) {
 	return roundPrix(prix - (prix * promo) / 100);
 }
 
-app.service('elasticSearchSuggestion', function (esFactory) {
-	  return esFactory({
-	    host: '152.77.78.20:9200'
-	  });
+app.service('elasticSearchSuggestion', function(esFactory) {
+	return esFactory({
+		host : '152.77.78.20:9200'
+	});
 });
 
 function dechiffrageString(value) {

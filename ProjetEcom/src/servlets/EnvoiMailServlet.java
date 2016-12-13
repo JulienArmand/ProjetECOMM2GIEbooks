@@ -33,9 +33,7 @@ public class EnvoiMailServlet extends HttpServlet {
 	private static final String	PROXY_PORT			= "3128";
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Envoie mail test");
 		envoyer_email();
-		System.out.println("Envoie mail test fini");
 	}
 
 	public void envoyer_email() {
@@ -68,11 +66,8 @@ public class EnvoiMailServlet extends HttpServlet {
 
 			message.setSubject("Testing Subject");
 			message.setText("Test envoi," + "\n\n Ceci est un test !");
-			System.out.println("Envoie");
 
 			Transport.send(message);
-
-			System.out.println("Done");
 
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
