@@ -30,6 +30,11 @@ import model.Livre;
 import model.Promotion;
 import tools.ElasticSearchTools;
 
+/**
+ * Bean servant a initialiser la base
+ * @author Clement
+ *
+ */
 @Stateless
 public class InitBean {
  
@@ -63,6 +68,10 @@ public class InitBean {
 	@EJB()
 	private ConfigurationGenerale config;
 
+	/**
+	 * Purge l'intégralité de la base
+	 * Créé l'index d'elasticseach
+	 */
 	public void suppressionBD() {
 
 		Query q1 = em.createNativeQuery("DELETE FROM Genre");
@@ -98,6 +107,13 @@ public class InitBean {
 		}
 	}
 
+	/**
+	 * Initialise la base
+	 * Lit un fichier csv de livres et les enregistres dans la base
+	 * Ajoutes des ventes et des avis 
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
 	public void initBDFromCSV() throws IOException, URISyntaxException {
 		Logger logger = Logger.getAnonymousLogger();
 		try {

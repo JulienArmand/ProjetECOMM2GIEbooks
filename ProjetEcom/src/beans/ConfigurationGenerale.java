@@ -11,13 +11,30 @@ import java.util.logging.Logger;
 
 import javax.ejb.Stateful;
 
+/**
+ * Bean servant a charger les parametres de configuration
+ * @author Clement
+ *
+ */
 @Stateful
 public class ConfigurationGenerale {
 
+	/**
+	 * Domaine sur lequel lire le ficheir de configuration
+	 */
 	private static final String			URLSERV		= "http://localhost";
+	/**
+	 * Port du serveur sur lequel lire le fichier de configuration 
+	 */
 	private static final String			PORTSERV	= "8080";
+	/**
+	 * 
+	 */
 	private final Map<String, String>	params;
 
+	/**
+	 * Constructeur. Lit le fichier /admin/confGenerale.txt et charge les parametres dans la Map params
+	 */
 	public ConfigurationGenerale() {
 
 		this.params = new HashMap<>();
