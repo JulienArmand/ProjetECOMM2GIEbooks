@@ -27,6 +27,7 @@ public class EnvoiMailServlet extends HttpServlet {
 	private GestionCommande		commandeBean;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		Long idCommande = Long.parseLong(request.getParameter("idCommande"));
 		
 		Commande c = commandeBean.getCommande(idCommande);
