@@ -70,5 +70,14 @@
 		<label for="dateF">Date de fin(jj/mm/aaaa) : </label><input type="text" id="dateF" name="dateF" required></input>
 		<input type="submit" id="submit" name="submit" value = "Submit" required></input>
 	</form>
+	<br>
+	<div>
+		<form action="../InscriptionClient" method="POST">
+			<input type="text" name="action" value="visualiser" style="display: none;"> <input type="submit" value="Voir les clients">
+		</form>
+		<form action="../InscriptionClient" method="POST">
+			<input type="text" name="action" value="supprimer" style="display: none;"> <input type="submit" value="Supprimer les clients">
+		</form>
+	</div>
 
 </div>

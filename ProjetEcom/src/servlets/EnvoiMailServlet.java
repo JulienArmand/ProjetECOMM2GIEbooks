@@ -62,7 +62,7 @@ public class EnvoiMailServlet extends HttpServlet {
 
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(address));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("sebastien.ochier@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
 
 			message.setSubject("Testing Subject");
 			message.setText("Test envoi," + "\n\n Ceci est un test !");
