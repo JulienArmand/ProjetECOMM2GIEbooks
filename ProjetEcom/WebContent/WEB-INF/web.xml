@@ -195,13 +195,31 @@
 		<url-pattern>/AjoutPromoServlet</url-pattern>
 	</servlet-mapping>
 	
-		<servlet>
+	<servlet>
 		<servlet-name>TestChargeServlet</servlet-name>
 		<servlet-class>servlets.TestChargeServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>TestChargeServlet</servlet-name>
 		<url-pattern>/TestChargeServlet</url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>TestChargeServlet2</servlet-name>
+		<servlet-class>servlets.TestChargeServlet2</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TestChargeServlet2</servlet-name>
+		<url-pattern>/TestChargeServlet2</url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>TestChargeServlet3</servlet-name>
+		<servlet-class>servlets.TestChargeServlet3</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TestChargeServlet3</servlet-name>
+		<url-pattern>/TestChargeServlet3</url-pattern>
 	</servlet-mapping>
 
 </web-app>
