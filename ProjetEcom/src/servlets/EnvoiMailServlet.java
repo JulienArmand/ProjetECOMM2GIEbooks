@@ -22,7 +22,7 @@ public class EnvoiMailServlet extends HttpServlet {
 
 	private static final long	serialVersionUID	= 6907236103034815181L;
 
-	public static final String	address				= "sebastien.ochier@etu.univ-grenoble-alpes.fr";
+	public static final String	address				= "futurabooksnoreply@gmail.com";
 
 	private static final String	HTTP_PROXY_HOST		= "http.proxyHost";
 	private static final String	HTTP_PROXY_PORT		= "http.proxyPort";
@@ -41,7 +41,7 @@ public class EnvoiMailServlet extends HttpServlet {
 	public void envoyer_email() {
 
 		final String username = address;
-		final String password = "sO101194";
+		final String password = "aqwzsx123";
 
 		System.setProperty(HTTP_PROXY_HOST, PROXY_HOST);
 		System.setProperty(HTTP_PROXY_PORT, PROXY_PORT);
@@ -52,7 +52,7 @@ public class EnvoiMailServlet extends HttpServlet {
 		props.setProperty("mail.smtp.host", "localhost");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.ujf-grenoble.fr");
+		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
 
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
