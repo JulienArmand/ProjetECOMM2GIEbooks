@@ -36,14 +36,15 @@ routeAppControllers.controller("inscriptionCtrl", function($scope, $http){
 					document.getElementById('erreurMailNonValide').style.display = "block";
 				}
 				else{
-					$http.get("ConfirmationInscriptionServlet", {
-						params : {
-							"id" : this._id
-						}
-					});
+					
 					$http.get("InscriptionClient",{params:{"identifiant":this._id,"nom":this._nom,"prenom":this._prenom,"motdepasse":this._mdp,"motdepasseconfirm":this._mdpc,"email":this._email}}).then(function(response) {
 						var data = response.data;
-						$scope.rez = data;						
+						$scope.rez = data;
+						$http.get("ConfirmationInscriptionServlet", {
+							params : {
+								"id" : this._id
+							}
+						});
 					});
 					$scope._email=this._email;
 					this._mdp='';
