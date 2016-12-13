@@ -10,7 +10,6 @@ routeAppControllers.controller("modificationMotDePasseCtrl", function($scope, $h
 	$("#menu").hide();
 	
 	$scope.modificationMotDePasse = function (){
-		alert("check start");
 		document.getElementById('erreurChampVide').style.display = "none";
 		document.getElementById('erreurMotDePasseActuel').style.display = "none";
 		document.getElementById('erreurMotDePasseDifferents').style.display = "none";
