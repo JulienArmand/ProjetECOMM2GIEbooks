@@ -52,6 +52,8 @@ public class Livre {
 	@Expose
 	private String				nomCouverture;
 	@Expose
+	private String				nomFichier;
+	@Expose
 	@Lob
 	@Column(length = 10000)
 	private String				resume;
@@ -89,6 +91,7 @@ public class Livre {
 		this.lesAuteurs = new LinkedList<Auteur>();
 		this.lesAvis = new LinkedList<Avis>();
 		this.lesVentes = new LinkedList<Vente>();
+		this.nomFichier="pdf/Exemple.pdf";
 	}
 
 	public Livre(String title, String isbn, Date dateDePublication, int nbPages, float prix, String langue, String langueOrigine) {
