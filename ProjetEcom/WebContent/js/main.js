@@ -46,7 +46,10 @@ app.config([ '$routeProvider', function($routeProvider) {
 	}).when('/modificationMotDePasse', {
 		templateUrl : 'partials/ModificationMotDePasse.html',
 		controller : 'modificationMotDePasseCtrl'
-	})
+	}).when('/ajouterLivre',{
+    	templateUrl : 'partialsAdmin/ajoutLivre.html',
+    	controller: 'ajoutLivreCtrl'
+    })
 
 } ]);
 

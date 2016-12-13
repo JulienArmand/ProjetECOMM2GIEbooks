@@ -53,32 +53,12 @@ public class GestionCommandeServlet extends HttpServlet {
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
 		String str = null;
 
-		String verifAchete = "verifAchete";
 		String post = "post";
 		String action = request.getParameter("action");
 		String commande = "commande";
 		String commandeClient = "commandeClient";
-		if (action.equals(verifAchete)) {
-			String idRequest = ChiffrageCookies.dechiffreString(request.getParameter("id"));
-			Long id = Long.parseLong(idRequest);
-			Client client = clientBean.getClientByCookie(request);
-			List<Commande> l = commandeBean.getCommandeClient(client);
-			Iterator<Commande> it= l.iterator();
-			boolean b = false;
-			while(it.hasNext()) {
-				Commande c = it.next();
-				Collection<Vente> ventes = c.getLesVentes();
-				Iterator<Vente> vIt = ventes.iterator();
-				while (vIt.hasNext()){
-					Vente v = vIt.next();
-					if(id.equals(v.getLivre().getId())){
-						b = true;
-						break;
-					}
-				}
-			}
-			str = js.toJson(b);
-		} else if (action.equals(post)) {
+		
+		if (action.equals(post)) {
 
 			// Creer commande
 			Cookie[] cookies = request.getCookies();

@@ -180,4 +180,13 @@ app.controller("ajoutLivreCtrl", function($scope, $http) {
 
 	$scope.selectedLivre = null;
 
+	
+	$scope.envoiMail = function() {
+		$http.get("EnvoiMailServlet", {
+			params : {}
+		}).then(function() {
+		});
+	}
+	
+	
 });

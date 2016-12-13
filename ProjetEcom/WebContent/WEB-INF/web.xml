@@ -221,5 +221,16 @@
 		<servlet-name>TestChargeServlet3</servlet-name>
 		<url-pattern>/TestChargeServlet3</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>EnvoiMailServlet</servlet-name>
+		<servlet-class>servlets.EnvoiMailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EnvoiMailServlet</servlet-name>
+		<url-pattern>/EnvoiMailServlet</url-pattern>
+	</servlet-mapping>
+	
 
 </web-app>
