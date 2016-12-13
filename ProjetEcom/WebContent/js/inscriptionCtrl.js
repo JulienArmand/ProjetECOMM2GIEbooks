@@ -27,7 +27,7 @@ routeAppControllers.controller("inscriptionCtrl", function($scope, $http){
 		}
 		else{
 			//Teste si le mot de passe est trop court
-			if(this._mdp.length < 9 || this._mdpc.length < 9){
+			if(this._mdp.length < 8 || this._mdpc.length < 8){
 				document.getElementById('erreurMotDePasseTropCourt').style.display = "block";
 			}
 			else{
