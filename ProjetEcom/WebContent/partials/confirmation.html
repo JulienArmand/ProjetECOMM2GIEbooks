@@ -31,7 +31,8 @@
 		<br>
 		<div class="alert alert-success" role="alert"> 
 		<div ng-repeat="v in commande.lesVentes">
-		<a href="#/info/{{v.livre.id}}" class="alert-link">{{v.livre.titre}}</a><br>
+		<a href="{{v.livre.nomFichier}}" download="{{v.livre.titre}}" class="alert-link">{{v.livre.titre}}</a><br>
+		
 		</div>
 		</div>
 		</p>
