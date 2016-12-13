@@ -149,12 +149,12 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart, $uibM
 				}).then(function(response) {
 					$rootScope.commandes = response.data;
 				});
-
-				var Mail = $resource("/EnvoiMailBeans/confirmation/mail", {cmd:"@cmd"});
 				
-				var mail = Mail.get({cmd:$rootScope.commande}, function(){
-					
-				})
+				$http.get("EnvoiMailServlet", {
+					params : {
+						"idCommande" : $rootScope.commande.id
+					}
+				});
 				
 				window.location.href = "#/confirmation";
 			});

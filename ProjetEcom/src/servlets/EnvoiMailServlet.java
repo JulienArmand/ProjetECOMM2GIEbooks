@@ -1,76 +1,52 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.Properties;
+import java.util.Iterator;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.GestionCommande;
+import beans.GestionLivre;
+import model.Client;
+import model.Commande;
+import model.Vente;
+import tools.EnvoiMail;
+
 public class EnvoiMailServlet extends HttpServlet {
 
 	private static final long	serialVersionUID	= 6907236103034815181L;
-
-	public static final String	address				= "futurabooksnoreply@gmail.com";
-
-	private static final String	HTTP_PROXY_HOST		= "http.proxyHost";
-	private static final String	HTTP_PROXY_PORT		= "http.proxyPort";
-	private static final String	HTTPS_PROXY_HOST	= "https.proxyHost";
-	private static final String	HTTPS_PROXY_PORT	= "https.proxyPort";
-
-	private static final String	PROXY_HOST			= "www-cache.ujf-grenoble.fr";
-	private static final String	PROXY_PORT			= "3128";
-
+	
+	@EJB() 
+	private GestionLivre		livreBean;
+	
+	@EJB() 
+	private GestionCommande		commandeBean;
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		envoyer_email();
-	}
-
-	public void envoyer_email() {
-
-		final String username = address;
-		final String password = "aqwzsx123";
-
-		System.setProperty(HTTP_PROXY_HOST, PROXY_HOST);
-		System.setProperty(HTTP_PROXY_PORT, PROXY_PORT);
-		System.setProperty(HTTPS_PROXY_HOST, PROXY_HOST);
-		System.setProperty(HTTPS_PROXY_PORT, PROXY_PORT);
-
-		Properties props = System.getProperties();
-		props.setProperty("mail.smtp.host", "localhost");
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
-
-		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(username, password);
-			}
-		});
-		try {
-
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(address));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
-
-			message.setSubject("Testing Subject");
-			message.setText("Test envoi," + "\n\n Ceci est un test !");
-
-			Transport.send(message);
-
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
+		Long idCommande = Long.parseLong(request.getParameter("idCommande"));
+		
+		Commande c = commandeBean.getCommande(idCommande);
+		Client client = c.getLeClient();
+		StringBuilder strBuild = new StringBuilder();
+		strBuild.append("Confirmation de votre commande\n");
+		strBuild.append("Bonjour, " + client.getPseudo() +"\n");
+		strBuild.append("Vous avez effectué une commande sur notre site le " + c.getDateDeVente() + " et nous vous en remercions.\n");
+		strBuild.append("Dont voici le détail : \n");
+		
+		Iterator<Vente> it = c.getLesVentes().iterator();
+		while(it.hasNext()){
+			Vente v = it.next();
+			strBuild.append(v.getLivre().getTitre() + " au prix de " + v.getPrix() + "€.\n");
 		}
+		
+		strBuild.append("\nNous vous remercions de votre confiance et bonne lecture.\nA très bientot sur notre site ! \n L'équipe FuturaBooks.");
+		
+		EnvoiMail.envoyer_email(client.getEmail(), "Confirmation commande", strBuild.toString());
 	}
+
+	
 }
