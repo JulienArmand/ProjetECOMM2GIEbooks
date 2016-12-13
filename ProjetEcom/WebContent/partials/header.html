@@ -19,7 +19,7 @@
 			<a ng-href="#/panier"><ngcart-summary></ngcart-summary></a>
 		</div>
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 no-padding">
-			<div ng-if="!estConnecte" id="connexion"  ng-controller="popoverConnexionCtrl" hover-popover>
+			<div data-affichage-non-connecte id="connexion"  ng-controller="popoverConnexionCtrl" >
 				<script type="text/ng-template" id="templatePopoverConnexion.html" >
 				<div>
 					<form>
@@ -35,16 +35,14 @@
 					<span>Pas encore inscrit? </span> <a ng-href="#/inscription"">Cliquez ici</a>
 				</div>
 	    		</script>
-				<a style="padding-bottom:3px" id="monCompteHeader" class="monCompteHeader" ><span class="iconeConnexion glyphicon glyphicon-user"></span><br>MON COMPTE <i class="glyphicon glyphicon-chevron-down"></i></a>
+				<a style="padding-bottom:3px" id="monCompteHeader" class="monCompteHeader" hover-popover><span class="iconeConnexion glyphicon glyphicon-user" ></span><br>MON COMPTE <i class="glyphicon glyphicon-chevron-down"></i></a>
 					<form>
 				<!-- -<input type="submit" onclick="getCookie('erreur')"
 					value="affiche Cookies">
 				</p>
 			</form> -->
-				
-				<!-- UTILISER DIRECTIVE ANGULAR ALERT -->
 			</div>
-			<div ng-if="estConnecte" id="profil" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+			<div data-affichage-quand-connecte id="profil" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
 				<script type="text/ng-template" id="templatePopoverMonCompte.html">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lienPopoverConnexion">
 					<a class="monCompteHeader lienPopoverConnexion" ng-href="#/compteClient" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Mon espace client</a>

@@ -135,6 +135,88 @@ function dechiffrageString(value) {
 	return value.split('').reverse().join('');
 }
 
+app.service("userService", function($rootScope, $http) {
+    return {
+    	isConnected: function() {
+        	var estConnecte = false;
+        	var login = getCookie('login');
+        	if (login !== null && login !== "") {
+        		$rootScope.login = login;
+        		estConnecte = true;
+        	}
+        	var erreur = getCookie('erreur');
+        	if (erreur === "true") {
+        		estConnecte = false;
+        		$rootScope.commandes = null;
+        	}
+        	return estConnecte;
+        },
+        signIn: function(pseudo, mdp, idMessageErreur) {
+        	
+    		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function() {
+    			var login = getCookie('login');
+    			if (login !== null && login !== "") {
+    				$rootScope.login = login;
+    				
+    				$http.get("GestionCommande", {
+    					params:{"action" :"commandeClient"}}).then(function(response) {
+    						$rootScope.commandes = response.data;
+    					});	
+    			}
+    			var erreur = getCookie('erreur');
+    			if (erreur === "true") {
+    				document.getElementById(idMessageErreur).style.display = "block";
+    			}
+    			$rootScope.$broadcast("connectionStateChanged");
+    		});
+        },
+        signOut: function() {
+    		$rootScope.commandes = null;
+    		user = false;
+    		document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    		document.cookie = "idClient=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    		document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            $rootScope.$broadcast("connectionStateChanged");
+        }
+    };
+});
+
+app.directive("affichageQuandConnecte", function (userService) {
+	    return {
+	        restrict: 'A',
+	        link: function (scope, element, attrs) {
+	            var showIfConnected = function() {
+	                if(userService.isConnected()) {
+	                    $(element).show();
+	                } else {
+	                    $(element).hide();
+	                }
+	            };
+	 
+	            showIfConnected();
+	            scope.$on("connectionStateChanged", showIfConnected);
+	        }
+	    };
+});
+
+app.directive("affichageNonConnecte", function (userService) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var hideIfConnected = function() {
+                if(userService.isConnected()) {
+                    $(element).hide();
+                } else {
+                    $(element).show();
+                }
+            };
+ 
+            hideIfConnected();
+            scope.$on("connectionStateChanged", hideIfConnected);
+        }
+    };
+});
+
 function getCookie(sName) {
 	var oRegex = new RegExp("(?:; )?" + sName + "=([^;]*);?");
 	if (oRegex.test(document.cookie)) {
