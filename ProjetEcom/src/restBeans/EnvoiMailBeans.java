@@ -1,6 +1,7 @@
 package restBeans;
 
 import java.util.Properties;
+import java.util.Iterator;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;
@@ -17,17 +18,14 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.hsqldb.lib.Iterator;
-
 import model.Client;
 import model.Commande;
 import model.Vente;
 
-
 @Stateless
 @Named
 @Path("/EnvoiMailBeans")
-public class EnvoiMailBeans{
+public class EnvoiMailBeans {
 
 	public static final String	address				= "futurabooksnoreply@gmail.com";
 
@@ -42,24 +40,24 @@ public class EnvoiMailBeans{
 	@GET
 	@Path("/confirmation")
 	@Produces(MediaType.APPLICATION_XML)
-    public void envoyerMailConfirmationCommande(@PathParam("cmd") Commande cmd) {
-		
+	public void envoyerMailConfirmationCommande(@PathParam("cmd") Commande cmd) {
+
 		Client c = cmd.getLeClient();
-		
+
 		StringBuilder strBuild = new StringBuilder();
 		strBuild.append("Confirmation de votre commande\n");
-		strBuild.append("Bonjour, " + c.getPseudo() +"\n");
+		strBuild.append("Bonjour, " + c.getPseudo() + "\n");
 		strBuild.append("Vous avez effectué une commande sur notre site le " + cmd.getDateDeVente() + " et nous vous en remercions.\n");
 		strBuild.append("Dont voici le détail : \n");
-		Iterator it = (Iterator) cmd.getLesVentes().iterator();
-		while (it.hasNext()){
+		Iterator<Vente> it = (cmd.getLesVentes()).iterator();
+		while (it.hasNext()) {
 			Vente v = (Vente) it.next();
 			strBuild.append(v.getLivre().getTitre() + " au prix de " + v.getPrix() + "\n");
 		}
 		strBuild.append("\nNous vous remercions de votre confiance et bonne lecture.\nA très bientot sur notre site ! \n L'équipe FuturaBooks.");
-		
+
 		envoyer_email(c.getEmail(), "Confirmation commande", strBuild.toString());
-	
+
 	}
 
 	public void envoyer_email(String email, String sujet, String msg) {
