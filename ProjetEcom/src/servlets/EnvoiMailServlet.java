@@ -22,7 +22,7 @@ public class EnvoiMailServlet extends HttpServlet {
 
 	private static final long	serialVersionUID	= 6907236103034815181L;
 
-	public static final String	address				= "sebastien.ochier@gmail.com";
+	public static final String	address				= "sebastien.ochier@etu.univ-grenoble-alpes.fr";
 
 	private static final String	HTTP_PROXY_HOST		= "http.proxyHost";
 	private static final String	HTTP_PROXY_PORT		= "http.proxyPort";
@@ -41,7 +41,7 @@ public class EnvoiMailServlet extends HttpServlet {
 	public void envoyer_email() {
 
 		final String username = address;
-		final String password = "sO10novembre1994";
+		final String password = "sO101194";
 
 		System.setProperty(HTTP_PROXY_HOST, PROXY_HOST);
 		System.setProperty(HTTP_PROXY_PORT, PROXY_PORT);
@@ -52,8 +52,8 @@ public class EnvoiMailServlet extends HttpServlet {
 		props.setProperty("mail.smtp.host", "localhost");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "25");
+		props.put("mail.smtp.host", "smtp.ujf-grenoble.fr");
+		props.put("mail.smtp.port", "587");
 
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -64,7 +64,7 @@ public class EnvoiMailServlet extends HttpServlet {
 
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(address));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("sebastien.ochier@etu.univ-grenoble-alpes.fr"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("sebastien.ochier@gmail.com"));
 
 			message.setSubject("Testing Subject");
 			message.setText("Test envoi," + "\n\n Ceci est un test !");
