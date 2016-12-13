@@ -21,9 +21,9 @@ function checkAnnee(value){
 
 function checkComptePaypal(value){
 	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)){
-		return (false);
+		return (true);
 	}  
-    return (true);
+    return (false);
 }
 
 app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart,
