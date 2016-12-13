@@ -26,6 +26,7 @@ function checkComptePaypal(value){
     return (false);
 }
 
+
 app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart,
 		$uibModal) {
 
