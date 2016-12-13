@@ -92,9 +92,7 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart,
 			}
 			$rootScope.commande = response.data;
 			$http.get("GestionCommande", {
-				params : {
-					"action" : "commandeClient"
-				}
+				params : { "action" : "commandeClient" }
 			}).then(function(response) {
 				$rootScope.commandes = response.data;
 			});

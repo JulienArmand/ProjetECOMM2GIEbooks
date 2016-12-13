@@ -194,5 +194,14 @@
 		<servlet-name>AjoutPromoServlet</servlet-name>
 		<url-pattern>/AjoutPromoServlet</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>EnvoiMailServlet</servlet-name>
+		<servlet-class>servlets.EnvoiMailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EnvoiMailServlet</servlet-name>
+		<url-pattern>/EnvoiMailServlet</url-pattern>
+	</servlet-mapping>
 
 </web-app>
