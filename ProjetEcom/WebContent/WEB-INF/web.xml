@@ -194,5 +194,14 @@
 		<servlet-name>AjoutPromoServlet</servlet-name>
 		<url-pattern>/AjoutPromoServlet</url-pattern>
 	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>TestChargeServlet</servlet-name>
+		<servlet-class>servlets.TestChargeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TestChargeServlet</servlet-name>
+		<url-pattern>/TestChargeServlet</url-pattern>
+	</servlet-mapping>
 
 </web-app>
