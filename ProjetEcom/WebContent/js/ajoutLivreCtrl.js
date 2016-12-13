@@ -183,9 +183,7 @@ app.controller("ajoutLivreCtrl", function($scope, $http) {
 	
 	$scope.envoiMail = function() {
 		$http.get("EnvoiMailServlet", {
-			params : {
-				
-			}
+			params : {}
 		}).then(function() {
 		});
 	}
