@@ -33,12 +33,18 @@ public class EnvoiMailServlet extends HttpServlet {
 	private static final String	PROXY_PORT			= "3128";
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String email = request.getParameter( "email" );
+        String sujet = request.getParameter( "sujet");
+        String message = request.getParameter( "message" );
+        System.out.println("Email: "+email);
+        System.out.println("Sujet: "+sujet);
+        System.out.println("message: "+message);
 		System.out.println("Envoie mail test");
-		envoyer_email();
+		envoyer_email(email,sujet,message);
 		System.out.println("Envoie mail test fini");
 	}
 
-	public void envoyer_email() {
+	public void envoyer_email(String to,String sujet,String text) {
 
 		final String username = address;
 		final String password = "aqwzsx123";
@@ -64,10 +70,10 @@ public class EnvoiMailServlet extends HttpServlet {
 
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(address));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 
-			message.setSubject("Testing Subject");
-			message.setText("Test envoi," + "\n\n Ceci est un test !");
+			message.setSubject(sujet);
+			message.setText(text);
 			System.out.println("Envoie");
 
 			Transport.send(message);
