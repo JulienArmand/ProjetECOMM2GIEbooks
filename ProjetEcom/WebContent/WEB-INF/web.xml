@@ -220,7 +220,6 @@
 	<servlet-mapping>
 		<servlet-name>TestChargeServlet3</servlet-name>
 		<url-pattern>/TestChargeServlet3</url-pattern>
->>>>>>> branch 'master' of https://github.com/JulienArmand/ProjetECOMM2GIEbooks.git
 	</servlet-mapping>
 
 </web-app>
