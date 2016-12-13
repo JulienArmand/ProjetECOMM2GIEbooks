@@ -1,3 +1,31 @@
+function checkNumeroCB(value){
+	isCorrectLength = (value.length == 16);
+	isNumeric = (!isNaN(parseFloat(value)) && isFinite(value));
+	return isCorrectLength && isNumeric;
+}
+
+function checkCryptogramme(value){
+	isCorrectLength = (value.length == 3);
+	isNumeric = (!isNaN(parseFloat(value)) && isFinite(value));
+	return isCorrectLength && isNumeric;
+}
+
+function checkAnnee(value){
+	isCorrectLength = (value.length == 4);
+	isNumeric = (!isNaN(parseFloat(value)) && isFinite(value));
+	currentTime = new Date();
+	currentYear = currentTime.getFullYear();
+	isFuture = (parseFloat(value)>=currentYear && parseFloat(value)<(currentYear+10));
+	return isCorrectLength && isNumeric && isFuture;
+}
+
+function checkComptePaypal(value){
+	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)){
+		return (false);
+	}  
+    return (true);
+}
+
 app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart,
 		$uibModal) {
 
@@ -47,6 +75,7 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart,
 	} ];
 
 	$scope.selectedMois = $scope.mois[0].value;
+	$scope.moisSelectionne = 0;
 
 	$scope.changeRadio = function(idForm, bool) {
 		$(idForm).hidden(bool);
@@ -58,6 +87,10 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart,
 
 	$scope.setMoyen = function(str) {
 		$scope.moyenPaiement.moyen = str;
+	}
+	
+	$scope.setMois = function(str){
+		$scope.moisSelectionne = str;
 	}
 
 	$scope.passerPaiement = function() {
@@ -80,26 +113,75 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart,
 			if (i !== (ngCart.getCart().items.length - 1))
 				idLivres += ","
 		}
-		$http.get("GestionCommande", {
-			params : {
-				"action" : "post",
-				"type" : $scope.moyenPaiement.moyen,
-				"livres" : idLivres
+		
+		var check = true;
+		document.getElementById('erreurChampVide').style.display = "none";
+		document.getElementById('erreurNumeroCarte').style.display = "none";
+		document.getElementById('erreurCryptogramme').style.display = "none";
+		document.getElementById('erreurMoisNonSelectionne').style.display = "none";
+		document.getElementById('erreurAnnee').style.display = "none";
+		document.getElementById('erreurPaypal').style.display = "none";
+		//Si moyen de paiment est CB :
+		if($scope.moyenPaiement.moyen === "CB"){
+			//Vérifier champs non vides
+			if($("#titulaireCB").val().length <= 0 || $("#numeroCarte").val().length <= 0 || $("#annee").val().length <= 0 || $("#cryptogramme").val().length <= 0 || $scope.moisSelectionne == 0){
+				document.getElementById('erreurChampVide').style.display = "block";
+				check = false;
 			}
-		}).then(function(response) {
-			for (var i = ngCart.getItems().length; i >= 0; i--) {
-				ngCart.removeItem(i);
+			else{
+				//Vérifier numéro CB correct
+				if(!checkNumeroCB($("#numeroCarte").val())){
+					document.getElementById('erreurNumeroCarte').style.display = "block";
+					check = false;
+				}
+				else{
+					//Vérifier cryptogramme correct
+					if(!checkCryptogramme($("#cryptogramme").val())){
+						document.getElementById('erreurCryptogramme').style.display = "block";
+						check = false;
+					}
+					else{
+						//Vérifier année fin carte correcte
+						if(!checkAnnee($("#annee").val())){
+							document.getElementById('erreurAnnee').style.display = "block";
+							check = false;
+						}
+					}
+				}
 			}
-			$rootScope.commande = response.data;
+		}
+		//Si moyen de paiement est Paypal :
+		else{
+			//Vérifier adresse du compte correcte
+			if(!checkComptePaypal($("#comptePaypal").val())){
+				document.getElementById('erreurPaypal').style.display = "block";
+				check = false;
+			}
+		}
+		//Si les vérifications se sont déroulées sans problème :
+		if(check){
 			$http.get("GestionCommande", {
 				params : {
-					"action" : "commandeClient"
+					"action" : "post",
+					"type" : $scope.moyenPaiement.moyen,
+					"livres" : idLivres
 				}
 			}).then(function(response) {
-				$rootScope.commandes = response.data;
-			});
+				for (var i = ngCart.getItems().length; i >= 0; i--) {
+					ngCart.removeItem(i);
+				}
+				$rootScope.commande = response.data;
+				$http.get("GestionCommande", {
+					params : {
+						"action" : "commandeClient"
+					}
+				}).then(function(response) {
+					$rootScope.commandes = response.data;
+				});
 
-			window.location.href = "#/confirmation";
-		});
+				window.location.href = "#/confirmation";
+			});
+		}
+		
 	}
 });

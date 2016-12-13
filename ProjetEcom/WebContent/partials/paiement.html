@@ -18,6 +18,12 @@
 			class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bg-primary text-center btn disabled">Confirmation</div>
 		<div style="clear: both;"></div>
 		<h2 class="titre">Moyen de paiement</h2>
+		<span id="erreurChampVide" style="display: none; color: red;">Veuillez remplir tous les champs.</span>
+		<span id="erreurNumeroCarte" style="display: none; color: red;">Veuillez saisir un numéro de carte bancaire valide (16 chiffres tout attaché).</span>
+		<span id="erreurCryptogramme" style="display: none; color: red;">Veuillez saisir un cryptogramme valide (3 chiffres tout attaché).</span>
+		<span id="erreurMoisNonSelectionne" style="display: none; color: red;">Veuillez sélectionner un mois.</span>
+		<span id="erreurAnnee" style="display: none; color: red;">Veuillez saisir une année valide.</span>
+		<span id="erreurPaypal" style="display: none; color: red;">Veuillez saisir un compte Paypal valide.</span>
 		<div ng-switch="moyenPaiement.moyen">
 			<div class="radio">
 				<div class="container-fluid navbar navbar-default" style="padding: 0.5em;">
@@ -31,14 +37,14 @@
 							<div id="formulaireCB">
 								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 									<div class="form-group">
-										<input type="text" class="form-control"
+										<input type="text" id="titulaireCB" class="form-control"
 											placeholder="Titulaire de la carte">
 									</div>
 								</div>
 								<div style="clear: both;"></div>
 								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 									<div class="form-group">
-										<input type="text" class="form-control"
+										<input type="text" id="numeroCarte" class="form-control"
 											placeholder="Numéro de carte">
 									</div>
 								</div>
@@ -46,22 +52,22 @@
 
 								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 									<div class="form-group">
-										<select class="form-control" ng-model="selectedMois">
-											<option ng-repeat="m in mois" value="{{m.valeur}}"
+										<select class="form-control" ng-model="selectedMois" ng-change='setMois(selectedMois)'>
+											<option ng-repeat="m in mois" value="{{m.valeur}}" id="moisId"
 												ng-selected="{{m.selected}}" ng-disabled="{{m.disabled}}">{{m.nom}}</option>
 										</select>
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Année">
+										<input type="text" id = "annee" class="form-control" placeholder="Année">
 									</div>
 								</div>
 							</div>
 							<div style="clear: both;"></div>
 							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 								<div class="form-group">
-									<input type="text" class="form-control"
+									<input type="text" id="cryptogramme" class="form-control"
 										placeholder="Cryptogramme">
 								</div>
 							</div>
@@ -84,7 +90,7 @@
 							<div id="formulairePaypal">
 								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 									<div class="form-group">
-										<input type="text" class="form-control"
+										<input type="text" id="comptePaypal" class="form-control"
 											placeholder="Adresse du compte">
 									</div>
 								</div>
