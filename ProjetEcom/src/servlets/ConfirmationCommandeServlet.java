@@ -16,7 +16,7 @@ import model.Commande;
 import model.Vente;
 import tools.EnvoiMail;
 
-public class EnvoiMailServlet extends HttpServlet {
+public class ConfirmationCommandeServlet extends HttpServlet {
 
 	private static final long	serialVersionUID	= 6907236103034815181L;
 	

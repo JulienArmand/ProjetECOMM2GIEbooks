@@ -36,16 +36,22 @@ routeAppControllers.controller("inscriptionCtrl", function($scope, $http){
 					document.getElementById('erreurMailNonValide').style.display = "block";
 				}
 				else{
-					$http.get("InscriptionClient",{params:{"identifiant":this._id,"nom":this._nom,"prenom":this._prenom,"motdepasse":this._mdp,"motdepasseconfirm":this._mdpc,"email":this._email}}).then(function(response) {
+					$http.get("InscriptionClient",
+							{params:{"identifiant":this._id,"nom":this._nom,"prenom":this._prenom,"motdepasse":this._mdp,"motdepasseconfirm":this._mdpc,"email":this._email}})
+							.then(function(response) {
 						var data = response.data;
 						$scope.rez = data;
 					});
 					var sujet = "Bienvenue sur Futura Books";
 					var texte = "Bonjour "+this._nom+" "+this._prenom+"\nBienvenue sur Futura Books\nVos identifiants de connexion: \nLogin: "+this._id+"\nMdp: "+this._mdp;
-					$http.get("EnvoiMailServlet",{params:{"email":this._email,"sujet":sujet,"message":texte}});
 					$scope._email=this._email;
 					this._mdp='';
 					this._mdpc='';
+					$http.get("ConfirmationInscriptionServlet", {
+						params : {
+							"id" : this._id
+						}
+					});
 				}
 			}		
 		}

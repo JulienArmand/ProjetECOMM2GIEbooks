@@ -224,12 +224,21 @@
 	
 	
 	<servlet>
-		<servlet-name>EnvoiMailServlet</servlet-name>
-		<servlet-class>servlets.EnvoiMailServlet</servlet-class>
+		<servlet-name>ConfirmationCommandeServlet</servlet-name>
+		<servlet-class>servlets.ConfirmationCommandeServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>EnvoiMailServlet</servlet-name>
-		<url-pattern>/EnvoiMailServlet</url-pattern>
+		<servlet-name>ConfirmationCommandeServlet</servlet-name>
+		<url-pattern>/ConfirmationCommandeServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ConfirmationInscriptionServlet</servlet-name>
+		<servlet-class>servlets.ConfirmationInscriptionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ConfirmationInscriptionServlet</servlet-name>
+		<url-pattern>/ConfirmationInscriptionServlet</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

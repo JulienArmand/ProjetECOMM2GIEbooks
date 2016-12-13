@@ -150,7 +150,7 @@ app.controller("paiementCtrl", function($scope, $http, $rootScope, ngCart, $uibM
 					$rootScope.commandes = response.data;
 				});
 				
-				$http.get("EnvoiMailServlet", {
+				$http.get("ConfirmationCommandeServlet", {
 					params : {
 						"idCommande" : $rootScope.commande.id
 					}
