@@ -19,6 +19,10 @@ import beans.CoupleLivreVente;
 import beans.GestionLivre;
 import tools.Tools;
 
+/**
+ * @author ochiers
+ * Servlet de gestion de la recherche
+ */
 public class RechercheViaBarreServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -3969291627640520522L;
@@ -26,6 +30,9 @@ public class RechercheViaBarreServlet extends HttpServlet {
 	@EJB() 
 	private GestionLivre myBean; 
 	
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();

@@ -12,6 +12,10 @@ import javax.persistence.TemporalType;
 
 import com.google.gson.annotations.Expose;
 
+/**
+ * @author ochiers
+ * Bean entity représentant une promotion
+ */
 @Entity
 public class Promotion {
 
@@ -30,6 +34,12 @@ public class Promotion {
 	@OneToOne
 	private Livre livre;
 	
+	/**
+	 * Constructeur créant une promotion
+	 * @param tauxReduc Taux de réduction entre 0 et 100
+	 * @param dateDebut 
+	 * @param dateFin
+	 */
 	public Promotion(int tauxReduc, Date dateDebut, Date dateFin) {
 		this.tauxReduc = tauxReduc;
 		this.dateDebut = dateDebut;

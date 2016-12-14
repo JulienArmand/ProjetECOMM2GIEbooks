@@ -10,12 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.GestionLivre;
 
+/**
+ * Servlet permettant d'ajouter une promotion à la BD
+ * @author ochiers
+ *
+ */
 public class AjoutPromoServlet extends HttpServlet {
 
 	private static final long	serialVersionUID	= 268367471001606128L;
 	@EJB()
 	private GestionLivre myBean;
 	
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Long id = Long.parseLong(request.getParameter("id"));
@@ -27,6 +35,9 @@ public class AjoutPromoServlet extends HttpServlet {
 		response.sendRedirect("admin.html");
 	}
 
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Long id = Long.parseLong(request.getParameter("id"));

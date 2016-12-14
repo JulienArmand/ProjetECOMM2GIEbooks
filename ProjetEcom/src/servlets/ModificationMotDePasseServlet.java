@@ -15,12 +15,19 @@ import beans.GestionClient;
 import model.Client;
 import tools.ChiffrageCookies;
 
+/**
+ * @author ochiers
+ * Servlet de gestion de la modification du mot de passe
+ */
 public class ModificationMotDePasseServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = -6094862300127773927L;
 	@EJB()
 	private GestionClient myBean;
 	
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String motDePasseActuel = request.getParameter("ancienMotDePasse");
 		String nouveauMotDePasse = request.getParameter("nouveauMotDePasse");

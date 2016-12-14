@@ -9,6 +9,10 @@ import javax.persistence.ManyToOne;
 
 import com.google.gson.annotations.Expose;
 
+/**
+ * @author ochiers
+ * Beans entity représentant une vente
+ */
 @Entity
 public class Vente {
 
@@ -28,6 +32,10 @@ public class Vente {
 	@JoinColumn(name = "Commande_id")
 	private Commande	laCommande;
 
+	/**
+	 * Constructeur créant une vente
+	 * @param prix Prix du livre au moment de la commande
+	 */
 	public Vente(float prix) {
 		super();
 		this.prix = prix;

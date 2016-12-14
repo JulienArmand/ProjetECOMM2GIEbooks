@@ -52,10 +52,16 @@ public class InitBean {
 	
 	@EJB
 	private GestionClient gestionClient;
+	
+	@EJB
+	private GestionCommande gestionCommande;
 
 	@EJB 
 	private GestionGenre gestionGenre;
-
+	
+	@EJB
+	private GestionPaiement gestionPaiement;
+	
 	@EJB
 	private GestionPromotion gestionPromotion;
 
@@ -67,6 +73,8 @@ public class InitBean {
 	
 	@EJB()
 	private ConfigurationGenerale config;
+	
+	private static final String MSGERREUR = "an exception was thrown";
 
 	/**
 	 * Purge l'intégralité de la base
@@ -74,36 +82,47 @@ public class InitBean {
 	 */
 	public void suppressionBD() {
 
-		Query q1 = em.createNativeQuery("DELETE FROM Genre");
-		Query q2 = em.createNativeQuery("DELETE FROM Vente");
-		Query q3 = em.createNativeQuery("DELETE FROM Editeur");
-		Query q4 = em.createNativeQuery("DELETE FROM Livre");
-		Query q6 = em.createNativeQuery("DELETE FROM Avis");
-		Query q7 = em.createNativeQuery("DELETE FROM Promotion");
+//		Query q1 = em.createNativeQuery("DELETE FROM Genre");
+//		Query q2 = em.createNativeQuery("DELETE FROM Vente");
+//		Query q3 = em.createNativeQuery("DELETE FROM Editeur");
+//		Query q4 = em.createNativeQuery("DELETE FROM Livre");
+//		Query q6 = em.createNativeQuery("DELETE FROM Avis");
+//		Query q7 = em.createNativeQuery("DELETE FROM Promotion");
 		Query q8 = em.createNativeQuery("DELETE FROM LIVRE_AUTEUR_LIEN");
-		Query q9 = em.createNativeQuery("DELETE FROM Auteur");
-		Query q10 = em.createNativeQuery("DELETE FROM Commande");
-		Query q11 = em.createNativeQuery("DELETE FROM MoyenPaiement");
-		Query q12 = em.createNativeQuery("DELETE FROM Client");
-
-		q1.executeUpdate();
-		q2.executeUpdate();
-		q3.executeUpdate();
-		q4.executeUpdate();
-		q6.executeUpdate();
-		q7.executeUpdate();
+//		Query q9 = em.createNativeQuery("DELETE FROM Auteur");
+//		Query q10 = em.createNativeQuery("DELETE FROM Commande");
+//		Query q11 = em.createNativeQuery("DELETE FROM MoyenPaiement");
+//		Query q12 = em.createNativeQuery("DELETE FROM Client");
+//
+//		q1.executeUpdate();
+//		q2.executeUpdate();
+//		q3.executeUpdate();
+//		q4.executeUpdate();
+//		q6.executeUpdate();
+//		q7.executeUpdate();
 		q8.executeUpdate();
-		q9.executeUpdate();
-		q10.executeUpdate();
-		q11.executeUpdate();
-		q12.executeUpdate();
+//		q9.executeUpdate();
+//		q10.executeUpdate();
+//		q11.executeUpdate();
+//		q12.executeUpdate();
+		
+		gestionGenre.supprimerTous();
+		gestionVente.supprimerTous();
+		gestionEditeur.supprimerTous();
+		gestionLivre.supprimerTous();
+		gestionAvis.supprimerTous();
+		gestionPromotion.supprimerTous();
+		gestionAuteur.supprimerTous();
+		gestionCommande.supprimerTous();
+		gestionPaiement.supprimerTous();
+		gestionClient.supprimerTous();		
 		
 		Logger logger = Logger.getAnonymousLogger();
 		
 		try {
 			ElasticSearchTools.creerIndex("http://"+config.get("IP_ELASTICSEARCH")+":"+config.get("PORT_ELASTICSEARCH")+"/livres");
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, "an exception was thrown : Erreur durant la céation de l'index : ", e);
+			logger.log(Level.SEVERE, MSGERREUR +  " Erreur durant la céation de l'index : ", e);
 		}
 	}
 
@@ -119,7 +138,7 @@ public class InitBean {
 		try {
 			suppressionBD();
 		} catch (Exception e1) {
-			logger.log(Level.SEVERE, "an exception was thrown ", e1);
+			logger.log(Level.SEVERE, MSGERREUR, e1);
 		}
 
 		URL url = new URL("http://localhost:8080/exemplesBD.csv");
@@ -156,7 +175,7 @@ public class InitBean {
 			try {
 				datePub = format.parse(date);
 			} catch (ParseException e) {
-				logger.log(Level.WARNING, "an exception was thrown : Mauvais format de date : ", e);
+				logger.log(Level.WARNING, MSGERREUR + " Mauvais format de date : ", e);
 				datePub = Date.from(Instant.now());
 			}
 
@@ -182,41 +201,12 @@ public class InitBean {
 						langueO, couv, promo, resume, datePub);
 				livres.add(livre);
 			} catch (Exception e) {
-				logger.log(Level.SEVERE, "an exception was thrown ", e);
+				logger.log(Level.SEVERE, MSGERREUR, e);
 				
 			}
 		}
 
 		r.close();
-		gestionVente.creerVente(livres.get(0));
-		gestionVente.creerVente(livres.get(1));
-		gestionVente.creerVente(livres.get(0));
-		gestionVente.creerVente(livres.get(1));
-		gestionVente.creerVente(livres.get(0));
-		gestionVente.creerVente(livres.get(1));
-
-		gestionVente.creerVente(livres.get(2));
-		gestionVente.creerVente(livres.get(2));
-		gestionVente.creerVente(livres.get(2));
-		gestionVente.creerVente(livres.get(2));
-
-		String commentaire = "Je referme \"le premier miracle\" de Gilles Legardinier. \nHabitué aux comédies loufoques qui m'ont valu des fous rires mémorables, l'auteur revient un peu à ses premières amours, le thriller. Ce nouveau roman, savant mélange d'aventure et d'humour, nous prouve que Gilles a plus d'une corde à son arc. L'impression d'être dans un Indiana Jones, parcourant le monde avec les personnages, découvrant des pans entiers de l'histoire de l'humanité, tentant de percer le secret du premier miracle. Un vrai régal. Le tout bourré d'humour. Les personnages sont touchants, attachants, à la personnalité riche, que l'on découvre au fil des pages. Avec une jolie histoire d'amour à la clé. Un bon moment de lecture.";
-		try {
-			Client s = gestionClient.creerClient("sevaeb", "seb@seb.fr", "prout", "Ochier", "Sébastien");
-			gestionAvis.creerAvis(livres.get(2), s, 0, commentaire);
-			gestionAvis.creerAvis(livres.get(2), s, 1, commentaire);
-			gestionAvis.creerAvis(livres.get(2), s, 1, commentaire);
-
-			gestionAvis.creerAvis(livres.get(0), s, 4, commentaire);
-			gestionAvis.creerAvis(livres.get(0), s, 4, commentaire);
-			gestionAvis.creerAvis(livres.get(0), s, 5, commentaire);
-
-			gestionAvis.creerAvis(livres.get(1), s, 3, commentaire);
-			gestionAvis.creerAvis(livres.get(1), s, 2, commentaire);
-			gestionAvis.creerAvis(livres.get(1), s, 2, commentaire);
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "an exception was thrown ", e);
-		}
 	}
 
 }

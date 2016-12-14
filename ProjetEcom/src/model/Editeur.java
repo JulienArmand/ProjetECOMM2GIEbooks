@@ -13,6 +13,10 @@ import javax.persistence.OneToMany;
 
 import com.google.gson.annotations.Expose;
 
+/**
+ * @author ochiers
+ * Bean représentant un éditeur
+ */
 @Entity
 public class Editeur {
 
@@ -26,6 +30,10 @@ public class Editeur {
 	@OneToMany(mappedBy = "editeur", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Livre>	lesLivres;
 
+	/**
+	 * Créer un éditeur
+	 * @param nom
+	 */
 	public Editeur(String nom) {
 		this.lesLivres = new LinkedList<>();
 		this.nom = nom;
@@ -55,6 +63,10 @@ public class Editeur {
 		this.lesLivres = lesLivres;
 	}
 
+	/**
+	 * Ajout d'un livre à l'éditeur
+	 * @param l
+	 */
 	public void addLivre(Livre l) {
 		if (l != null) {
 			if (this.lesLivres == null)

@@ -14,6 +14,10 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import model.Auteur;
 import model.Livre;
 
+/**
+ * @author ochiers
+ * Outil de recherche
+ */
 public class ElasticSearchTools {
 	
 	private static final String HTTP_PROXY_HOST = "http.proxyHost";
@@ -24,6 +28,14 @@ public class ElasticSearchTools {
 	private static final String PROXY_HOST = "www-cache.ujf-grenoble.fr";
 	private static final String PROXY_PORT = "3128";
 
+	/**
+	 * Recherche
+	 * @param urlS
+	 * @param methode
+	 * @param data
+	 * @return
+	 * @throws IOException
+	 */
 	public static InputStream doRequest(String urlS, String methode, String data) throws IOException {
 
 		System.setProperty(HTTP_PROXY_HOST, PROXY_HOST);
@@ -50,6 +62,11 @@ public class ElasticSearchTools {
 
 	}
 
+	/**
+	 * Index les données
+	 * @param url
+	 * @throws IOException
+	 */
 	public static void creerIndex(String url) throws IOException {
 
 		System.setProperty(HTTP_PROXY_HOST, PROXY_HOST);
@@ -70,6 +87,15 @@ public class ElasticSearchTools {
 		rd.close();
 	}
 
+	/**
+	 * Recherche
+	 * @param requeteBarre
+	 * @param d
+	 * @param e
+	 * @param genre
+	 * @param avisMin
+	 * @return
+	 */
 	public static String rechercheElasticSearch(String requeteBarre, Double d, Double e, String genre, int avisMin){
 
 		String reqBarre = Tools.normalisationString(StringEscapeUtils.unescapeHtml4(requeteBarre));
@@ -119,6 +145,12 @@ public class ElasticSearchTools {
 
 	}
 
+	/**
+	 * Enregistre les données dans l'index
+	 * @param url
+	 * @param l
+	 * @throws IOException
+	 */
 	public static void enregistrerDansLIndexage(String url, Livre l) throws IOException {
 		StringBuilder auteursBuild = new StringBuilder();
 
@@ -170,6 +202,11 @@ public class ElasticSearchTools {
 		rd.close();
 	}
 
+	/**
+	 * MAJ d'un avis
+	 * @param l
+	 * @throws IOException
+	 */
 	public static void updateAvis(Livre l) throws IOException {
 		String req = "\n{\"doc\" : {\"avis\":" + l.calculMoyenneAvis() + "}}";
 
@@ -205,6 +242,11 @@ public class ElasticSearchTools {
 		rd.close();
 	}
 
+	/**
+	 * Supprime l'index
+	 * @param url
+	 * @throws IOException
+	 */
 	public static void supprimerIndex(String url) throws IOException {
 
 		System.setProperty(HTTP_PROXY_HOST, PROXY_HOST);

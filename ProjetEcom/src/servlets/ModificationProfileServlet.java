@@ -17,6 +17,10 @@ import model.Client;
 import tools.ChiffrageCookies;
 import tools.GestionCookies;
 
+/**
+ * @author ochiers
+ * Servlet de gestion de la modification de profil
+ */
 public class ModificationProfileServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 32260626432449654L;
@@ -24,6 +28,9 @@ public class ModificationProfileServlet extends HttpServlet {
 	@EJB()
 	private GestionClient myBean;
 	
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");

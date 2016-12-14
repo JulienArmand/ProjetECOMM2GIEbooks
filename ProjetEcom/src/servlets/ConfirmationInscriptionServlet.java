@@ -12,12 +12,19 @@ import beans.GestionClient;
 import model.Client;
 import tools.EnvoiMail;
 
+/**
+ * @author ochiers
+ * Servlet d'envoi de mail de confirmation à l'inscription
+ */
 public class ConfirmationInscriptionServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -5577148761542306852L;
 	@EJB()
 	private GestionClient clientBean;
 	
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String pseudo = request.getParameter("id");
@@ -31,7 +38,7 @@ public class ConfirmationInscriptionServlet extends HttpServlet {
 				
 		strBuild.append("\nNous vous remercions de votre confiance et bonne lecture.\nA très bientot sur notre site ! \n L'équipe FuturaBooks.");
 		
-		EnvoiMail.envoyer_email(client.getEmail(), "Confirmation inscription", strBuild.toString());
+		EnvoiMail.envoyerEmail(client.getEmail(), "Confirmation inscription", strBuild.toString());
 	}
 
 	
