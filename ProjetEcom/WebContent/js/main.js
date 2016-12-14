@@ -131,7 +131,7 @@ app.service('elasticSearchSuggestion', function(esFactory) {
 	});
 });
 
-app.service("userService", function($rootScope, $http, $cookies) {
+app.service("userService", function($rootScope, $http, $cookies, dechiffrageChiffrage) {
     return {
     	isConnected: function() {
         	var estConnecte = false;
@@ -142,7 +142,7 @@ app.service("userService", function($rootScope, $http, $cookies) {
         	var erreur = $cookies.get('erreur');
         	if (erreur === "true") {
         		estConnecte = false;
-        		//$rootScope.commandes = null;
+        		$rootScope.commandes = null;
         	}
         	return estConnecte;
         },
@@ -155,6 +155,7 @@ app.service("userService", function($rootScope, $http, $cookies) {
     					params:{"action" :"commandeClient"}}).then(function(response) {
     						$rootScope.commandes = response.data;
     					});	
+    				document.getElementById(idMessageErreur).style.display = "none";
     			}
     			var erreur = $cookies.get('erreur');
     			if (erreur === "true") {
@@ -168,9 +169,6 @@ app.service("userService", function($rootScope, $http, $cookies) {
     		$cookies.remove("login");
     		$cookies.remove("idClient");
     		$cookies.remove("erreur");
-    		/*document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    		document.cookie = "idClient=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    		document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";*/
             $rootScope.$broadcast("connectionStateChanged");
         }
     };
