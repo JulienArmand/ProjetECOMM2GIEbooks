@@ -43,9 +43,12 @@ app.controller("headerCtrl", function($scope, ngCart, $rootScope, elasticSearchS
 		});
 	}
 	
-	// METTRE SERVICE
-	
-	
+	if(userService.isConnected()) {
+		$http.get("GestionCommande", {
+			params:{"action" :"commandeClient"}}).then(function(response) {
+				$rootScope.commandes = response.data;
+		});
+	}
 	
 	$scope.redirection = function(){
 		window.location.href = "index.html";

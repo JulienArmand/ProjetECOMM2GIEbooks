@@ -142,7 +142,7 @@ app.service("userService", function($rootScope, $http, $cookies) {
         	var erreur = $cookies.get('erreur');
         	if (erreur === "true") {
         		estConnecte = false;
-        		$rootScope.commandes = null;
+        		//$rootScope.commandes = null;
         	}
         	return estConnecte;
         },
@@ -150,7 +150,7 @@ app.service("userService", function($rootScope, $http, $cookies) {
         	
     		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function() {
     			var login = $cookies.get('login');
-    			if (login !== null && login !== "") {
+    			if (login !== null && login !== "" && login !== undefined) {
     				$http.get("GestionCommande", {
     					params:{"action" :"commandeClient"}}).then(function(response) {
     						$rootScope.commandes = response.data;
