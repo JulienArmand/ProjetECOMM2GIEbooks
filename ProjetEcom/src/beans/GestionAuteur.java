@@ -63,9 +63,7 @@ public class GestionAuteur {
 	 */
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Auteur");
-		Query q2 = em.createNativeQuery("ALTER TABLE Auteur {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
-		q2.executeUpdate();
 	}
 
 	/**

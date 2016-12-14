@@ -52,7 +52,7 @@ public class ConnexionClientServlet extends HttpServlet {
 				response.addCookie(login);
 				response.addCookie(idClient);
 		} else{
-			Cookie erreur = new Cookie("erreur", ChiffrageCookies.chiffreString("true"));
+			Cookie erreur = new Cookie("erreur", "true");
 			response.addCookie(erreur);
 		}
 	}

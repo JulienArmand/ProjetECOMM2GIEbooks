@@ -180,9 +180,9 @@ input.tri:checked + label {
 }
 
 input.avis:checked + img {
-	border-width:1px;
+	border-width:2px;
  	border-style:dotted;
- 	border-color:black;
+ 	border-color:#3232b8;
 }
 
 .triFiltres{

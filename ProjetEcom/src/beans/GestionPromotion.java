@@ -115,8 +115,6 @@ public class GestionPromotion {
 	 */
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Promotion");
-		Query q2 = em.createNativeQuery("ALTER TABLE Promotion {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
-		q2.executeUpdate();
 	}
 }

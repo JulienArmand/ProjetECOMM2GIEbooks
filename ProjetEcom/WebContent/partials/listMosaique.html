@@ -15,11 +15,11 @@
 				</ul>
 			</div>
 		</nav>
-		<div layout="row" ng-if="modeAffichage == 'mosaique'" layout-wrap>
+		<div layout="row" ng-if="modeAffichage == 'mosaique' && livres.length > 0" layout-wrap>
 			<div class="mosaique-item" dir-paginate="livre in livres | orderBy:ordonneur | itemsPerPage: pageSizeMos" current-page="currentPage" flex="25">
 				<div class="item" style="height: 100%;">
 					<div>
-						<a ng-href="#/info/{{livre.id}}"> <img ng-src="{{livre.nomCouverture}}" class="img-responsive imageListeRechercheMosaique" />
+						<a ng-href="#/info/{{livre.id}}" title="{{livre.titre}}" > <img alt="{{livre.titre}}" ng-src="{{livre.nomCouverture}}" class="img-responsive imageListeRechercheMosaique" />
 						</a>
 					</div>
 					<div>
@@ -42,10 +42,10 @@
 				</div>
 			</div>
 		</div>
-		<div ng-if="modeAffichage == 'liste'">
+		<div ng-if="modeAffichage == 'liste' && livres.length > 0">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 affichageList no-padding" dir-paginate="livre in livres | orderBy:ordonneur | itemsPerPage: pageSizeList" current-page="currentPage">
 				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding">
-					<a ng-href="#/info/{{livre.id}}"> <img ng-src="{{livre.nomCouverture}}" class="img-responsive" />
+					<a ng-href="#/info/{{livre.id}}" title="{{livre.titre}}"> <img alt="{{livre.titre}}" ng-src="{{livre.nomCouverture}}" class="img-responsive" />
 					</a>
 				</div>
 				<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
@@ -68,6 +68,10 @@
 				</div>
 				<div id="trait2" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding"></div>
 			</div>
+		</div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-if="livres.length == 0">
+		Nous n'avons pas trouvé de résultat pour votre recherche.
+		
 		</div>
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="text-center">

@@ -7,7 +7,7 @@
 			<ul class="list-unstyled">
 				<li ng-repeat="genre in genres">
 				<input class="radioNoCircle tri" name="genre" id="{{genre.id}}" type="radio" ng-click="setGenre(genre.nom, genre.id); rechercheMenu()">
-				<label size="2" for="{{genre.id}}">{{genre.nom}}</label>
+				<label size="2" for="{{genre.id}}">{{genre.nom.replace("_"," ")}}</label>
 				</li>
 			</ul>
 		</div>
