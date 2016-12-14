@@ -6,7 +6,7 @@ function checkCaracteresInterdits(value){
 	return result;
 }
 
-routeAppControllers.controller("modificationMotDePasseCtrl", function($scope, $http){	
+routeAppControllers.controller("modificationMotDePasseCtrl", function($scope, $http, $cookies){	
 	$("#menu").hide();
 	
 	$scope.modificationMotDePasse = function (){
@@ -27,7 +27,7 @@ routeAppControllers.controller("modificationMotDePasseCtrl", function($scope, $h
 			}
 			else{
 				$http.get("ModificationMotDePasse", {params:{
-					"pseudo": getCookie('login'),
+					"pseudo": $cookies.get('login'),
 					"ancienMotDePasse" : $("#ancienMotDePasse").val(),
 					"nouveauMotDePasse" : $("#nouveauMotDePasse").val(),
 					"confirmationNouveauMotDePasse" : $("#confirmationNouveauMotDePasse").val()
