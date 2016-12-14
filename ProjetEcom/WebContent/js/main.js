@@ -1,6 +1,6 @@
 var app = angular.module("app", [ 'ui.bootstrap', 'ngRoute', 'ngCart',
 		'routeAppControllers', 'slick',
-		'angularUtils.directives.dirPagination', 'elasticsearch', 'ngResource' ]);
+		'angularUtils.directives.dirPagination', 'elasticsearch', 'ngResource', 'ngCookies' ]);
 
 var routeAppControllers = angular.module('routeAppControllers', []);
 
@@ -131,39 +131,32 @@ app.service('elasticSearchSuggestion', function(esFactory) {
 	});
 });
 
-function dechiffrageString(value) {
-	return value.split('').reverse().join('');
-}
-
-app.service("userService", function($rootScope, $http) {
+app.service("userService", function($rootScope, $http, $cookies) {
     return {
     	isConnected: function() {
         	var estConnecte = false;
-        	var login = getCookie('login');
-        	if (login !== null && login !== "") {
-        		$rootScope.login = login;
+        	var login = $cookies.get('login');
+        	if (login !== null && login !== "" && login !== undefined) {
         		estConnecte = true;
         	}
-        	var erreur = getCookie('erreur');
+        	var erreur = $cookies.get('erreur');
         	if (erreur === "true") {
         		estConnecte = false;
-        		$rootScope.commandes = null;
+        		//$rootScope.commandes = null;
         	}
         	return estConnecte;
         },
         signIn: function(pseudo, mdp, idMessageErreur) {
         	
     		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function() {
-    			var login = getCookie('login');
-    			if (login !== null && login !== "") {
-    				$rootScope.login = login;
-    				
+    			var login = $cookies.get('login');
+    			if (login !== null && login !== "" && login !== undefined) {
     				$http.get("GestionCommande", {
     					params:{"action" :"commandeClient"}}).then(function(response) {
     						$rootScope.commandes = response.data;
     					});	
     			}
-    			var erreur = getCookie('erreur');
+    			var erreur = $cookies.get('erreur');
     			if (erreur === "true") {
     				document.getElementById(idMessageErreur).style.display = "block";
     			}
@@ -172,27 +165,29 @@ app.service("userService", function($rootScope, $http) {
         },
         signOut: function() {
     		$rootScope.commandes = null;
-    		user = false;
-    		document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    		$cookies.remove("login");
+    		$cookies.remove("idClient");
+    		$cookies.remove("erreur");
+    		/*document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     		document.cookie = "idClient=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    		document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    		document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";*/
             $rootScope.$broadcast("connectionStateChanged");
         }
     };
 });
 
-app.directive("affichageQuandConnecte", function (userService) {
+app.directive("affichageQuandConnecte", function (userService, dechiffrageChiffrage, $cookies) {
 	    return {
 	        restrict: 'A',
 	        link: function (scope, element, attrs) {
 	            var showIfConnected = function() {
 	                if(userService.isConnected()) {
+						scope.login = dechiffrageChiffrage.dechiffrageString($cookies.get('login'));
 	                    $(element).show();
 	                } else {
 	                    $(element).hide();
 	                }
 	            };
-	 
 	            showIfConnected();
 	            scope.$on("connectionStateChanged", showIfConnected);
 	        }
@@ -217,11 +212,14 @@ app.directive("affichageNonConnecte", function (userService) {
     };
 });
 
-function getCookie(sName) {
-	var oRegex = new RegExp("(?:; )?" + sName + "=([^;]*);?");
-	if (oRegex.test(document.cookie)) {
-		return dechiffrageString(decodeURIComponent(RegExp["$1"]));
-	} else {
-		return null;
-	}
-}
+
+app.service("dechiffrageChiffrage", function($rootScope, $http) {
+    return {
+    	chiffrageString: function(aChiffrer) {
+    		return aChiffrer.split('').reverse().join('');
+        },
+        dechiffrageString: function(aDechiffrer) {
+        	return aDechiffrer.split('').reverse().join('');
+        }
+    };
+});

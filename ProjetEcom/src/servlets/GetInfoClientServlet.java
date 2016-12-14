@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder;
 
 import beans.GestionClient;
 import model.Client;
+import tools.ChiffrageCookies;
 
 /**
  * @author ochiers
@@ -31,7 +32,7 @@ public class GetInfoClientServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
-		String pseudo = request.getParameter("pseudo");
+		String pseudo = ChiffrageCookies.dechiffreString(request.getParameter("pseudo"));
 		Client c = myBean.getClientFromPseudo(pseudo);
 		String str = js.toJson(c);
 		response.setContentType("application/json");

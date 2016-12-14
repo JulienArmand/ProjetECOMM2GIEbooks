@@ -1,7 +1,14 @@
-routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http, $document, $uibModal, $location, $anchorScroll, userService){
+routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http, $document, $uibModal, $location, $anchorScroll, userService, $cookies, $rootScope){
 	
 	$("#menu").show();
 	
+	if($rootScope.req == "@" && $rootScope.genre == "@" && $rootScope.minPrix == -1 && $rootScope.maxPrix == -1 && $rootScope.avisMin == -1 ){
+		$scope.retourUrl = "";
+	}else{
+		$scope.retourUrl = "#/recherche/"+$rootScope.req+"/"+$rootScope.genre+"/"+$rootScope.minPrix+"/"+$rootScope.maxPrix+"/"+$rootScope.avisMin;
+	}
+		
+		
     $http.get("LivreAvecId", {params:{"id": $routeParams.id}}).then(function(response) {
     	$scope.livre = response.data;
     	$scope.moyenne = $scope.calculeMoyenne($scope.livre.lesAvis);
@@ -57,9 +64,9 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     }
     
     $scope.posterCommentaire = function(note, commentaire) {
-    	var login = getCookie('login');
+    	var login = $cookies.get('login');
     	if(userService.isConnected()) {
-    		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : getCookie('idClient')}}).then(function(response) {
+    		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : $cookies.get('idClient')}}).then(function(response) {
     			if(response.data === 'dejaCommente') {
     				document.getElementById('erreurDejaCommente').style.display = "block";
     			} else if (response.data === 'pasAchete') {

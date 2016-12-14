@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder;
 
 import beans.GestionClient;
 import model.Client;
+import tools.ChiffrageCookies;
 
 /**
  * @author ochiers
@@ -31,7 +32,7 @@ public class ModificationMotDePasseServlet extends HttpServlet {
 		String motDePasseActuel = request.getParameter("ancienMotDePasse");
 		String nouveauMotDePasse = request.getParameter("nouveauMotDePasse");
 		String confirmationNouveauMotDePasse = request.getParameter("confirmationNouveauMotDePasse");
-		String pseudo = request.getParameter("pseudo");
+		String pseudo = ChiffrageCookies.dechiffreString(request.getParameter("pseudo"));
 		String erreur = "InitError";
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();

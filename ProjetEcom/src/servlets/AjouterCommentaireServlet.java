@@ -19,6 +19,7 @@ import beans.GestionLivre;
 import beans.GestionVente;
 import model.Client;
 import model.Livre;
+import tools.ChiffrageCookies;
 
 /**
  * Servlet permettant d'ajouter un commentaire sur un livre
@@ -51,7 +52,7 @@ public class AjouterCommentaireServlet extends HttpServlet {
 		int note = Integer.parseInt(request.getParameter("note"));
 		String commentaire = request.getParameter("commentaire");
 		int idLivre = Integer.parseInt(request.getParameter("idLivre"));
-		int idClient = Integer.parseInt(request.getParameter("idClient"));
+		int idClient = Integer.parseInt(ChiffrageCookies.dechiffreString(request.getParameter("idClient")));
 		
 		String str;
 		if (checkDejaCommente(idClient, idLivre)) {
