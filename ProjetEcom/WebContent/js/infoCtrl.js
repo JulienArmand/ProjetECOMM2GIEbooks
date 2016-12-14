@@ -1,4 +1,4 @@
-routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http, $document, $uibModal, $location, $anchorScroll){
+routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http, $document, $uibModal, $location, $anchorScroll, userService){
 	
 	$("#menu").show();
 	
@@ -58,7 +58,7 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     
     $scope.posterCommentaire = function(note, commentaire) {
     	var login = getCookie('login');
-    	if(login !== null && login !== "" && note !== undefined && commentaire !== undefined) {
+    	if(userService.isConnected()) {
     		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : getCookie('idClient')}}).then(function(response) {
     			if(response.data === 'dejaCommente') {
     				document.getElementById('erreurDejaCommente').style.display = "block";

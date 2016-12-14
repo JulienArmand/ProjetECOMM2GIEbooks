@@ -19,7 +19,7 @@ public class InitBDServlet extends HttpServlet {
 	@EJB()  
 	private InitBean myBean; 
 	
-
+ 
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

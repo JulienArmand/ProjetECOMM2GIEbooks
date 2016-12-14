@@ -1,4 +1,4 @@
-app.controller("modalConnexionPaiementCtrl", function($scope, $http, $uibModalInstance, $rootScope){
+app.controller("modalConnexionPaiementCtrl", function($scope, $http, $uibModalInstance, $rootScope, userService){
 	$scope.cancel = function () {
 	    $uibModalInstance.dismiss('cancel');
 	};
@@ -8,24 +8,13 @@ app.controller("modalConnexionPaiementCtrl", function($scope, $http, $uibModalIn
 	};
 	
 	$scope.connexion = function (pseudo, mdp) {
-		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function() {
-			var login = getCookie('login');
-			if (login !== null && login !== "") {
-				$rootScope.login = login;
-				$rootScope.estConnecte = true;
-				$http.get("GestionCommande", {
-					params:{"action" :"commandeClient"}}).then(function(response) {
-						$rootScope.commandes = response.data;
-					});	
-				$uibModalInstance.close();
-				window.location.href = "#/paiement";
-			}
-			var erreur = getCookie('erreur');
-			if (erreur === "true") {
-				$rootScope.estConnecte = false;
-				$rootScope.commandes = null;
-				document.getElementById('erreurIdentifiantModal').style.display = "block";
-			}
-		});
+		userService.signIn(pseudo, mdp, "erreurIdentifiantModal");
 	}
+	
+	$scope.$on('connectionStateChanged', function (pseudo, mdp) {
+		if (userService.isConnected()) {
+			$uibModalInstance.close();
+			window.location.href = "#/paiement";
+		}
+	});
 });

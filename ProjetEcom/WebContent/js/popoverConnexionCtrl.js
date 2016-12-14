@@ -1,21 +1,7 @@
-app.controller("popoverConnexionCtrl", function($scope, $http, $rootScope){
+app.controller("popoverConnexionCtrl", function($scope, $http, $rootScope, userService){
+	
 	$scope.connexion = function (pseudo, mdp) {
-		$http.get("ConnexionClient", {params:{"pseudo": pseudo, "motDePasse": mdp}}).then(function() {
-			var login = getCookie('login');
-			if (login !== null && login !== "") {
-				$rootScope.login = login;
-				$rootScope.estConnecte = true;
-				$http.get("GestionCommande", {
-					params:{"action" :"commandeClient"}}).then(function(response) {
-						$rootScope.commandes = response.data;
-					});	
-			}
-			var erreur = getCookie('erreur');
-			if (erreur === "true") {
-				$rootScope.estConnecte = false;
-				document.getElementById('erreurIdentifiantPopoverConnexion').style.display = "block";
-			}
-		});
+		userService.signIn(pseudo, mdp, "erreurIdentifiantPopoverConnexion");
 	}
 });
 
