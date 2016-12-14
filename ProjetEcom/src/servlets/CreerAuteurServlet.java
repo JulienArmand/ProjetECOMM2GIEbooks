@@ -10,12 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.GestionAuteur;
 
+/**
+ * @author ochiers
+ * Servlet de création d'un auteur
+ */
 public class CreerAuteurServlet extends HttpServlet {
 
 	private static final long	serialVersionUID	= 268367471001606128L;
 	@EJB()
 	private GestionAuteur myBean;
 	
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String creer = "creer";
 		String modif = "modif";

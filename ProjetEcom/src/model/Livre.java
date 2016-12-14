@@ -25,6 +25,10 @@ import javax.persistence.TemporalType;
 
 import com.google.gson.annotations.Expose;
 
+/**
+ * @author ochiers
+ * Bean représentant un livre en BD
+ */
 @Entity
 public class Livre {
 
@@ -82,14 +86,27 @@ public class Livre {
 	@JoinColumn(name = "Editeur_id")
 	private Editeur				editeur;
 
+	/**
+	 * Créer les listes d'un livre
+	 */
 	public Livre() {
 		super();
-		this.lesAuteurs = new LinkedList<Auteur>();
-		this.lesAvis = new LinkedList<Avis>();
-		this.lesVentes = new LinkedList<Vente>();
+		this.lesAuteurs = new LinkedList<>();
+		this.lesAvis = new LinkedList<>();
+		this.lesVentes = new LinkedList<>();
 		this.nomFichier="pdf/Exemple.pdf";
 	}
 
+	/**
+	 * Créer un livre et associe les valeurs aux champs d'un livre
+	 * @param title
+	 * @param isbn
+	 * @param dateDePublication
+	 * @param nbPages
+	 * @param prix
+	 * @param langue
+	 * @param langueOrigine
+	 */
 	public Livre(String title, String isbn, Date dateDePublication, int nbPages, float prix, String langue, String langueOrigine) {
 		this();
 		this.titre = title;

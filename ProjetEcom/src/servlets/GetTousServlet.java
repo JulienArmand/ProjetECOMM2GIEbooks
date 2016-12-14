@@ -31,6 +31,10 @@ import model.Livre;
 import model.Promotion;
 import model.Vente;
 
+/**
+ * @author ochiers
+ * Servlet permettant de retournant l'ensemble d'une table de la BD
+ */
 public class GetTousServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -3401197051263972685L;
@@ -54,6 +58,9 @@ public class GetTousServlet extends HttpServlet {
 	@EJB()  
 	private GestionVente beanVente;
 		
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();

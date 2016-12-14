@@ -49,16 +49,6 @@ public class InscriptionClientBean {
 		return(List<Client>) q.getResultList(); 
 	} 
 		
-	/**
-	 * 
-	 */
-	public void suppressionClients(){
-		
-	    Query q1 = em.createNativeQuery("DELETE FROM Client");
-	    
-	    q1.executeUpdate();
-
-	}
 	
 	/**
 	 * @param pseudo

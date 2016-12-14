@@ -25,6 +25,11 @@ import model.Editeur;
 import model.Genre;
 import model.Livre;
 
+/**
+ * Servlet permettant d'ajouter un livre à la BD
+ * @author ochiers
+ *
+ */
 public class AjouterLivreServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = -2746891563648869068L;
@@ -38,6 +43,9 @@ public class AjouterLivreServlet extends HttpServlet {
 	@EJB()
 	private GestionGenre beanGenre;
 	
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();

@@ -13,8 +13,17 @@ import java.text.Normalizer;
 
 import javax.imageio.ImageIO;
 
+/**
+ * @author ochiers
+ * Classe contenant quelques méthodes utiles au projet
+ */
 public class Tools {
 
+	/**
+	 * Retourne une chaine de caractère sans caractère spéciaux
+	 * @param s
+	 * @return
+	 */
 	public static String normalisationString(String s) {
 		return Normalizer.normalize(s, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "").replaceAll("\"", "")
 				.replaceAll("'", "");

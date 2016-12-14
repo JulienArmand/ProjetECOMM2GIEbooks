@@ -13,6 +13,10 @@ import javax.persistence.OneToMany;
 
 import com.google.gson.annotations.Expose;
 
+/**
+ * @author ochiers
+ * Bean représentant un genre
+ */
 @Entity
 public class Genre {
 	
@@ -25,6 +29,10 @@ public class Genre {
 	@OneToMany(mappedBy="genre",cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
 	private Collection<Livre> lesLivres;
 
+	/**
+	 * Constructeur d'un genre
+	 * @param nom
+	 */
 	public Genre(String nom) {
 		this.lesLivres = new LinkedList<>();
 		this.nom = nom;

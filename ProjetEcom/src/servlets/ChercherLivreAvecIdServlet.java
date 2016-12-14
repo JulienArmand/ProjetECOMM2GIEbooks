@@ -13,6 +13,10 @@ import com.google.gson.GsonBuilder;
 import beans.GestionLivre;
 import model.Livre;
 
+/**
+ * @author ochiers
+ * Servlet retournant un livre par son id
+ */
 public class ChercherLivreAvecIdServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 8577531702230813988L;
@@ -20,6 +24,9 @@ public class ChercherLivreAvecIdServlet extends HttpServlet {
 	@EJB()
 	private GestionLivre myBean; 
 		
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();

@@ -14,6 +14,10 @@ import com.google.gson.GsonBuilder;
 import beans.GestionClient;
 import model.Client;
 
+/**
+ * @author ochiers
+ * Servlet retournant les infos d'un client
+ */
 public class GetInfoClientServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -4348818455195397252L;
@@ -21,6 +25,9 @@ public class GetInfoClientServlet extends HttpServlet {
 	@EJB()
 	private GestionClient myBean;
 	
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();

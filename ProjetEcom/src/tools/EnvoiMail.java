@@ -1,6 +1,8 @@
 package tools;
 
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -10,9 +12,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * @author ochiers
+ * Class gérant l'envoi d'un mail
+ */
 public class EnvoiMail {
 
-	private static final String	address				= "futurabooksnoreply@gmail.com";
+	private static final String	ADDRESS				= "futurabooksnoreply@gmail.com";
 
 	private static final String	HTTP_PROXY_HOST		= "http.proxyHost";
 	private static final String	HTTP_PROXY_PORT		= "http.proxyPort";
@@ -21,11 +27,19 @@ public class EnvoiMail {
 
 	private static final String	PROXY_HOST			= "www-cache.ujf-grenoble.fr";
 	private static final String	PROXY_PORT			= "3128";
+	
+	private static final String	MDP			= "aqwzsx123";
 
-	public static void envoyer_email(String mail, String sujet, String msg) {
+	/**
+	 * Envoi d'un mail
+	 * @param mail Destinataire
+	 * @param sujet Sujet du mail
+	 * @param msg Corps du mail
+	 */
+	public static void envoyerEmail(String mail, String sujet, String msg) {
 
-		final String username = address;
-		final String password = "aqwzsx123";
+		final String username = ADDRESS;
+		final String password = MDP;
 
 		System.setProperty(HTTP_PROXY_HOST, PROXY_HOST);
 		System.setProperty(HTTP_PROXY_PORT, PROXY_PORT);
@@ -44,10 +58,11 @@ public class EnvoiMail {
 				return new PasswordAuthentication(username, password);
 			}
 		});
+		Logger logger = Logger.getAnonymousLogger();
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(address));
+			message.setFrom(new InternetAddress(ADDRESS));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail));
 
 			message.setSubject(sujet);
@@ -56,7 +71,7 @@ public class EnvoiMail {
 			Transport.send(message);
 
 		} catch (MessagingException e) {
-			throw new RuntimeException(e);
+			logger.log(Level.FINE, "an exception was thrown	", e);
 		}
 	}
 }

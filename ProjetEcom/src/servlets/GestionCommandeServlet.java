@@ -3,7 +3,6 @@ package servlets;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,6 +28,10 @@ import model.Vente;
 import tools.ChiffrageCookies;
 import tools.GestionCookies;
 
+/**
+ * @author ochiers
+ * Servlet de gestion des commandes (création, récupération)
+ */
 public class GestionCommandeServlet extends HttpServlet {
 
 	private static final long	serialVersionUID	= 268367471001606128L;
@@ -48,6 +51,9 @@ public class GestionCommandeServlet extends HttpServlet {
 	@EJB() 
 	private GestionLivre		livreBean;
 
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();

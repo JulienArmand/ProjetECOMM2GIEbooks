@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+/**
+ * @author ochiers
+ * Bean représentant un moyen de paiement en BD
+ */
 @Entity
 public abstract class MoyenPaiement {
 
@@ -27,6 +31,9 @@ public abstract class MoyenPaiement {
 	@JoinColumn(name = "Client_id")
 	private Client					leClient;
 
+	/**
+	 * Constructeur rendant actif un moyen de paiement
+	 */
 	public MoyenPaiement() {
 		this.actif = true;
 	}

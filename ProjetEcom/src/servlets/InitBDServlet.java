@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import beans.InitBean;
  
+/**
+ * Servlet permettant l'initialisation de la BD avec un jeu de données restreint
+ * @author ochiers
+ *
+ */
 public class InitBDServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -1205140827058517536L;
@@ -20,14 +25,19 @@ public class InitBDServlet extends HttpServlet {
 	private InitBean myBean; 
 	
  
-
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		initBD();
 		response.getWriter().println("BD initialisée");
 
 	}
-
+	
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		initBD();

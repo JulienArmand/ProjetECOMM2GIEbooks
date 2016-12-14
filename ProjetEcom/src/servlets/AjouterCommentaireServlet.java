@@ -20,6 +20,11 @@ import beans.GestionVente;
 import model.Client;
 import model.Livre;
 
+/**
+ * Servlet permettant d'ajouter un commentaire sur un livre
+ * @author ochiers
+ *
+ */
 public class AjouterCommentaireServlet extends HttpServlet {
 
 	private static final long	serialVersionUID	= 268367471001606128L;
@@ -32,7 +37,12 @@ public class AjouterCommentaireServlet extends HttpServlet {
 	private GestionLivre		beanLivre;
 	@EJB()
 	private GestionVente		beanVente;
+	
+	private static final String MSGERREUR = "an exception was thrown";
 
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GsonBuilder gb = new GsonBuilder();
 		Gson js = gb.excludeFieldsWithoutExposeAnnotation().create();
@@ -63,7 +73,7 @@ public class AjouterCommentaireServlet extends HttpServlet {
 		try {
 			beanAvis.creerAvis(l, c, note, commentaire);
 		} catch (Exception e) {
-			logger.log(Level.FINE, "an exception was thrown", e);
+			logger.log(Level.FINE, MSGERREUR, e);
 		}
 		return l;
 	}
@@ -74,7 +84,7 @@ public class AjouterCommentaireServlet extends HttpServlet {
 		try {
 			existe = beanAvis.existe(idClient, idLivre);
 		} catch (Exception e) {
-			logger.log(Level.FINE, "an exception was thrown", e);
+			logger.log(Level.FINE, MSGERREUR, e);
 		}
 		return existe;
 	}
@@ -85,7 +95,7 @@ public class AjouterCommentaireServlet extends HttpServlet {
 		try {
 			achete = beanVente.aAchete(idClient, idLivre);
 		} catch (Exception e) {
-			logger.log(Level.FINE, "an exception was thrown", e);
+			logger.log(Level.FINE, MSGERREUR, e);
 		}
 		return achete;
 	}

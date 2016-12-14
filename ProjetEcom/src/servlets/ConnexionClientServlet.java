@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import beans.ConnexionClient;
 import tools.ChiffrageCookies;
 
+/**
+ * @author ochiers
+ * Servlet qui vérifie qu'un client peut se connecter
+ */
 public class ConnexionClientServlet extends HttpServlet {
 	
 
@@ -19,13 +23,19 @@ public class ConnexionClientServlet extends HttpServlet {
 	@EJB()
 	private ConnexionClient myBean;
 		
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
 	
+	/** 
+	 * {@inheritDoc}
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pseudo = request.getParameter("pseudo");
-		if(checkPseudoClientExiste(pseudo) && checkMotDePasseCorrect(pseudo, request.getParameter("motDePasse"))){
+		if(myBean.checkPseudoExiste(pseudo) && myBean.checkMotDePasseCorrect(pseudo, request.getParameter("motDePasse"))){
 				//Pseudo existe et mot de passe correct -> valider la connexion
 				Cookie[] cookies = request.getCookies();
 				//Supression des anciens cookies d'erreurs
@@ -45,14 +55,6 @@ public class ConnexionClientServlet extends HttpServlet {
 			Cookie erreur = new Cookie("erreur", ChiffrageCookies.chiffreString("true"));
 			response.addCookie(erreur);
 		}
-	}
-	
-	private boolean checkPseudoClientExiste(String pseudo){
-		return myBean.checkPseudoExiste(pseudo);
-	}
-	
-	private boolean checkMotDePasseCorrect(String pseudo, String motDePasse){
-		return myBean.checkMotDePasseCorrect(pseudo, motDePasse);
 	}
 	
 }
