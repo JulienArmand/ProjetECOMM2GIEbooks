@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.GestionClient;
+import tools.ChiffrageCookies;
 
 public class SupprimerClientServlet extends HttpServlet {
 
@@ -18,8 +19,7 @@ public class SupprimerClientServlet extends HttpServlet {
 	private GestionClient beanClient; 
 		
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		beanClient.desinscriptionClient(beanClient.getClient(Long.parseLong(request.getParameter("idClient"))));
-
+		long idCient = Long.parseLong(ChiffrageCookies.dechiffreString(request.getParameter("idClient")));
+		beanClient.desinscriptionClient(beanClient.getClient(idCient));
 	}	
 }

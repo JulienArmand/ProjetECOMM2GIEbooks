@@ -1,8 +1,7 @@
-routeAppControllers.controller("compteClient", function($scope, $http, $location, $rootScope){	
+routeAppControllers.controller("compteClient", function($scope, $http, $location, $rootScope, $cookies, userService){	
 	
 	$("#menu").hide();
-		
-	$http.get("GetInfoClient", {params:{"pseudo": getCookie('login')}}).then(function(response) {
+	$http.get("GetInfoClient", {params:{"pseudo": $cookies.get('login')}}).then(function(response) {
 		var data = response.data;
     	$scope.pseudo = data.pseudo;
     	$scope.nom = data.nom;
@@ -61,13 +60,10 @@ routeAppControllers.controller("compteClient", function($scope, $http, $location
 	
 	$scope.supprimerProfil = function (){
 		$http.get("SupprimerClient", {params:{
-			"idClient" : getCookie('idClient')
+			"idClient" : $cookies.get('idClient')
 			}}).then(function() {
-				$rootScope.estConnecte = false;
 				$rootScope.commandes = null;
-				document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-				document.cookie = "idClient=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-				document.cookie = "erreur=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+				userService.signOut();
 				window.location.href = "#";
 	    });
 	}

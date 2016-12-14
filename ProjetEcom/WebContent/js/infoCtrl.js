@@ -1,4 +1,4 @@
-routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http, $document, $uibModal, $location, $anchorScroll, userService){
+routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http, $document, $uibModal, $location, $anchorScroll, userService, $cookies){
 	
 	$("#menu").show();
 	
@@ -57,9 +57,9 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     }
     
     $scope.posterCommentaire = function(note, commentaire) {
-    	var login = getCookie('login');
+    	var login = $cookies.get('login');
     	if(userService.isConnected()) {
-    		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : getCookie('idClient')}}).then(function(response) {
+    		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : $cookies.get('idClient')}}).then(function(response) {
     			if(response.data === 'dejaCommente') {
     				document.getElementById('erreurDejaCommente').style.display = "block";
     			} else if (response.data === 'pasAchete') {

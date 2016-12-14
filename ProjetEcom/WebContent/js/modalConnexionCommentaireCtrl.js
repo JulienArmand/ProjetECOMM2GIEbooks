@@ -1,4 +1,4 @@
-app.controller("modalConnexionCommentaireCtrl", function($scope, $http, $uibModalInstance, $rootScope, note, commentaire, idLivre, userService){
+app.controller("modalConnexionCommentaireCtrl", function($scope, $http, $uibModalInstance, $rootScope, note, commentaire, idLivre, userService, $cookies){
 	$scope.cancel = function () {
 	    $uibModalInstance.dismiss('cancel');
 	};
@@ -10,7 +10,7 @@ app.controller("modalConnexionCommentaireCtrl", function($scope, $http, $uibModa
 	$scope.$on('connectionStateChanged', function (pseudo, mdp) {
 		if (userService.isConnected()) {
 			$uibModalInstance.close();
-			$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": idLivre, "idClient" : getCookie('idClient')}}).then(function(response) {
+			$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": idLivre, "idClient" : $cookies.get('idClient')}}).then(function(response) {
 				   if(response.data !== 'dejaCommente') { 
 					   $scope.livre = response.data; 
 				   } else {
