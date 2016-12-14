@@ -73,9 +73,7 @@ public class GestionVente {
 	 */
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Vente");
-		Query q2 = em.createNativeQuery("ALTER TABLE Vente {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
-		q2.executeUpdate();
 	}
 	
 	

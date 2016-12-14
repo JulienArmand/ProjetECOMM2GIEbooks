@@ -78,8 +78,6 @@ public class GestionPaiement {
 	 */
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM MoyenPaiement");
-		Query q2 = em.createNativeQuery("ALTER TABLE MoyenPaiement {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
-		q2.executeUpdate();
 	}
 }

@@ -98,9 +98,7 @@ public class GestionCommande {
 	 */
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Commande");
-		Query q2 = em.createNativeQuery("ALTER TABLE Commande {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
-		q2.executeUpdate();
 	}
 
 }

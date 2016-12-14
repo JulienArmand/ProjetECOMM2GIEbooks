@@ -75,9 +75,7 @@ public class GestionClient {
 	 */
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Client");
-		Query q2 = em.createNativeQuery("ALTER TABLE Client {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
-		q2.executeUpdate();
 	}
 
 	/**

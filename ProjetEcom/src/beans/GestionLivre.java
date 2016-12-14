@@ -207,9 +207,7 @@ public class GestionLivre {
 	 */
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Livre");
-		Query q2 = em.createNativeQuery("ALTER TABLE Livre {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
-		q2.executeUpdate();
 	}
 
 	/**

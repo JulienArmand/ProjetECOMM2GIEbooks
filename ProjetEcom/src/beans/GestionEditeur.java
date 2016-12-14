@@ -61,9 +61,7 @@ public class GestionEditeur {
 	 */
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Editeur");
-		Query q2 = em.createNativeQuery("ALTER TABLE Editeur {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
-		q2.executeUpdate();
 	}
 
 	/**

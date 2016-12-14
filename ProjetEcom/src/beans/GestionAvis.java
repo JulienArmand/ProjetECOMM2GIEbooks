@@ -1,11 +1,13 @@
 package beans;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +29,8 @@ public class GestionAvis {
 	@PersistenceContext(unitName = "Database-unit")
 	private EntityManager em;
 
+	@EJB()
+	private ConfigurationGenerale config;
 	/**
 	 * Fonction servant a créer un avis proprement.
 	 * @param l Le livre associé a l'avis
@@ -48,6 +52,14 @@ public class GestionAvis {
 		c.getLesAvis().add(a);
 		
 		Logger logger = Logger.getAnonymousLogger();
+		
+		try {
+			ElasticSearchTools.enregistrerDansLIndexage("http://"+config.get("IP_ELASTICSEARCH")+":"+config.get("PORT_ELASTICSEARCH"), l);
+		} catch (Exception e) {
+			logger.log(Level.FINE, "an exception was thrown", e);
+		}
+		
+		
 		
 		try {
 			ElasticSearchTools.updateAvis(l);
@@ -73,9 +85,7 @@ public class GestionAvis {
 	 */
 	public void supprimerTous() {
 		Query q = em.createNativeQuery("DELETE FROM Avis");
-		Query q2 = em.createNativeQuery("ALTER TABLE Avis {ALTER id RESTART WITH 0} ");
 		q.executeUpdate();
-		q2.executeUpdate();
 	}
 	
 	/**
