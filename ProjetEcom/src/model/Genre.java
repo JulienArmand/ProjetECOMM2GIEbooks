@@ -62,6 +62,10 @@ public class Genre {
 		this.lesLivres = lesLivres;
 	}
 	
+	/**
+	 * Ajout un livre au genre
+	 * @param l
+	 */
 	public void addLivre(Livre l) {
 		if (l != null) {
 			if (this.lesLivres == null)

@@ -254,6 +254,10 @@ public class Livre {
 		this.resume = resume;
 	}
 
+	/**
+	 * Calcul la moyenne des avis
+	 * @return
+	 */
 	public int calculMoyenneAvis() {
 
 		if (this.lesAvis.isEmpty())
@@ -268,6 +272,10 @@ public class Livre {
 
 	}
 
+	/**
+	 * Ajoute un auteur au livre
+	 * @param a
+	 */
 	public void addAuteur(Auteur a) {
 
 		if (a != null) {
