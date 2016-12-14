@@ -15,19 +15,18 @@ import tools.EnvoiMail;
 public class ConfirmationInscriptionServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -5577148761542306852L;
-	
 	@EJB()
 	private GestionClient clientBean;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String pseudo = request.getParameter("id");
-		System.out.println(pseudo);
+		
 		Client client = clientBean.getClientFromPseudo(pseudo);
 		
 		StringBuilder strBuild = new StringBuilder();
 		strBuild.append("Confirmation inscription\n");
-		strBuild.append("Bonjour, " + pseudo +"\n");
+		strBuild.append("Bonjour, " + client.getPseudo() +"\n");
 		strBuild.append("Vous vous êtes inscrit sur notre site et nous vous en remercions.\n");
 				
 		strBuild.append("\nNous vous remercions de votre confiance et bonne lecture.\nA très bientot sur notre site ! \n L'équipe FuturaBooks.");
