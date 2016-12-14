@@ -64,7 +64,6 @@ routeAppControllers.controller("infoCtrl", function($scope, $routeParams, $http,
     }
     
     $scope.posterCommentaire = function(note, commentaire) {
-    	var login = $cookies.get('login');
     	if(userService.isConnected()) {
     		$http.get("AjouterCommentaire", {params:{"note": note, "commentaire": commentaire, "idLivre": $scope.livre.id, "idClient" : $cookies.get('idClient')}}).then(function(response) {
     			if(response.data === 'dejaCommente') {
